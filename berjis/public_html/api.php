@@ -68,15 +68,7 @@ try {
                     }
                 }
                 if (isset($body['style']) && is_array($body['style'])) {
-                    $clean = [];
-                    foreach (default_style() as $k => $def) {
-                        if (!array_key_exists($k, $body['style'])) continue;
-                        $v = $body['style'][$k];
-                        if (is_bool($def)) $clean[$k] = (bool)$v;
-                        elseif (is_int($def)) $clean[$k] = max(1, min(4, (int)$v));
-                        elseif (is_string($v) && preg_match('/^#[0-9a-fA-F]{6}$/', $v)) $clean[$k] = $v;
-                    }
-                    $s['style'] = array_merge((array)($s['style'] ?? []), $clean);
+                    $s['style'] = array_merge(sanitize_style((array)($s['style'] ?? [])), sanitize_style($body['style']));
                 }
                 if (isset($body['bale']) && is_array($body['bale'])) {
                     $b = (array)($s['bale'] ?? []);

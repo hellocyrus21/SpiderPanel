@@ -21,7 +21,7 @@
     loadSeq: 0,
     picking: false,
     alarmLines: [],
-    levelLines: [],
+    keepVisible: [],
   };
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -65,7 +65,17 @@
   function style() { return S.settings.style; }
 
   /* ------------------------------------------------------------------ چارت */
-  var chart, priceSeries, mxCandles, upLine, downLine, resLine, supLine, markers;
+  var chart, priceSeries, mxCandles, anchor, anchorMarkers;
+  var plots = {};
+  var PLOT_KEYS = ['up', 'down', 'res', 'sup', 'ups', 'dns'];
+  var PLOT_TITLE = { up: 'Up', down: 'Down', res: 'Res', sup: 'Sup', ups: '', dns: '' };
+  var IND_FMT = { type: 'price', precision: 2, minMove: 0.01 };
+  var DASH = { solid: 0, dotted: 1, dashed: 2 };
+
+  function hexA(hex, a) {
+    var n = parseInt(hex.slice(1), 16);
+    return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
 
   function buildChart() {
     var el = $('#chart');
@@ -91,18 +101,14 @@
 
     // پنل ۱: اندیکاتور
     mxCandles = chart.addSeries(LC.CandlestickSeries, {
-      borderVisible: false, wickVisible: false, priceLineVisible: false, lastValueVisible: false,
-      priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
+      borderVisible: false, wickVisible: false, priceLineVisible: false, lastValueVisible: false, priceFormat: IND_FMT,
     }, 1);
-    var lineOpt = function (title) {
-      return { lineWidth: 1, priceLineVisible: false, lastValueVisible: true, title: title,
-        crosshairMarkerVisible: false, priceFormat: { type: 'price', precision: 2, minMove: 0.01 } };
-    };
-    upLine = chart.addSeries(LC.LineSeries, lineOpt('Up'), 1);
-    downLine = chart.addSeries(LC.LineSeries, lineOpt('Down'), 1);
-    resLine = chart.addSeries(LC.LineSeries, lineOpt('Res'), 1);
-    supLine = chart.addSeries(LC.LineSeries, lineOpt('Sup'), 1);
-    markers = LC.createSeriesMarkers(mxCandles, []);
+    // لایه نامرئی برای سطوح OB/OS و خطوط آلارم؛ مستقل از روشن/خاموش بودن خطوط اندیکاتور
+    anchor = chart.addSeries(LC.LineSeries, {
+      lineVisible: false, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false,
+      priceFormat: IND_FMT, autoscaleInfoProvider: anchorRange,
+    }, 1);
+    anchorMarkers = LC.createSeriesMarkers(anchor, []);
 
     applyPaneSize(Number(lsGet('pane', '40')));
     chart.subscribeCrosshairMove(onCrosshair);
@@ -110,30 +116,110 @@
     chart.subscribeClick(onChartClick);
   }
 
-  function applyStyle() {
-    var st = style();
-    var w = Number(st.lineWidth) || 1;
-    mxCandles.applyOptions({ visible: !!st.showCandles });
-    upLine.applyOptions({ visible: !!st.showUp, color: st.upColor, lineWidth: w });
-    downLine.applyOptions({ visible: !!st.showDown, color: st.downColor, lineWidth: w });
-    resLine.applyOptions({ visible: !!st.showRes, color: st.resColor, lineWidth: w, lineStyle: LC.LineStyle.Solid });
-    supLine.applyOptions({ visible: !!st.showSup, color: st.supColor, lineWidth: w, lineStyle: LC.LineStyle.Solid });
-    var d = PRICE_DEC[S.symbol];
-    priceSeries.applyOptions({ priceFormat: { type: 'price', precision: d, minMove: Math.pow(10, -d) } });
-    drawLevels();
+  /** محدوده‌ای که همیشه در پنل اندیکاتور دیده شود (سطوح و خطوط آلارم) */
+  function anchorRange() {
+    var v = S.keepVisible || [];
+    if (!v.length) return null;
+    return { priceRange: { minValue: Math.min.apply(null, v), maxValue: Math.max.apply(null, v) } };
   }
 
-  function drawLevels() {
-    S.levelLines.forEach(function (l) { upLine.removePriceLine(l); });
-    S.levelLines = [];
-    var st = style(), p = params();
-    if (!st.showOBOS) return;
-    [[p.overbought, 'OB'], [0, ''], [p.oversold, 'OS']].forEach(function (x) {
-      S.levelLines.push(upLine.createPriceLine({
-        price: x[0], color: st.obosColor, lineWidth: 1, lineStyle: LC.LineStyle.Dotted,
-        axisLabelVisible: x[1] !== '', title: x[1],
-      }));
+  function makePlot(key) {
+    var st = style(), type = st[key + 'Type'], color = st[key + 'Color'], w = Number(st[key + 'Width']) || 1;
+    var o = {
+      priceLineVisible: false, lastValueVisible: !!PLOT_TITLE[key], title: PLOT_TITLE[key],
+      crosshairMarkerVisible: false, priceFormat: IND_FMT, visible: !!st[key + 'Show'],
+    };
+    if (type === 'histogram') {
+      return chart.addSeries(LC.HistogramSeries, Object.assign(o, { color: hexA(color, 0.7), base: 0 }), 1);
+    }
+    if (type === 'area') {
+      return chart.addSeries(LC.BaselineSeries, Object.assign(o, {
+        baseValue: { type: 'price', price: 0 }, lineWidth: w, lineStyle: DASH[st[key + 'Dash']] || 0,
+        topLineColor: color, bottomLineColor: color,
+        topFillColor1: hexA(color, 0.35), topFillColor2: hexA(color, 0.05),
+        bottomFillColor1: hexA(color, 0.05), bottomFillColor2: hexA(color, 0.35),
+      }), 1);
+    }
+    var dots = type === 'circles' || type === 'step_dots' || type === 'line_dots';
+    return chart.addSeries(LC.LineSeries, Object.assign(o, {
+      color: color, lineWidth: w, lineStyle: DASH[st[key + 'Dash']] || 0,
+      lineType: type === 'step' || type === 'step_dots' ? LC.LineType.WithSteps : LC.LineType.Simple,
+      lineVisible: type !== 'circles',
+      pointMarkersVisible: dots, pointMarkersRadius: type === 'circles' ? w + 1 : w + 1.5,
+    }), 1);
+  }
+
+  function applyStyle() {
+    var st = style();
+    PLOT_KEYS.forEach(function (k) {
+      if (plots[k]) chart.removeSeries(plots[k]);
+      plots[k] = makePlot(k);
     });
+    mxCandles.applyOptions({ visible: !!st.candlesShow });
+    var d = PRICE_DEC[S.symbol];
+    priceSeries.applyOptions({ priceFormat: { type: 'price', precision: d, minMove: Math.pow(10, -d) } });
+    renderAlarmLines();
+  }
+
+  /* خطوط افقی روی پنل اندیکاتور: OB/OS، آلارم‌های ثبت‌شده و پیش‌نمایش فرم آلارم */
+  function renderAlarmLines() {
+    if (!anchor || !S.settings) return;
+    S.alarmLines.forEach(function (l) { anchor.removePriceLine(l); });
+    S.alarmLines = [];
+    S.keepVisible = [];
+    var marks = [];
+    var st = style(), p = params();
+    var add = function (price, opt, keep) {
+      S.alarmLines.push(anchor.createPriceLine(Object.assign({ price: price, lineWidth: 1, axisLabelVisible: false, title: '' }, opt)));
+      if (keep) S.keepVisible.push(price);
+    };
+
+    if (st.obosShow) {
+      add(p.overbought, { color: st.obosColor, lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true, title: 'OB' }, true);
+      add(0, { color: hexA(st.obosColor, 0.5), lineStyle: LC.LineStyle.Dotted });
+      add(p.oversold, { color: st.obosColor, lineStyle: LC.LineStyle.Dotted, axisLabelVisible: true, title: 'OS' }, true);
+    }
+
+    var list = S.alarms.filter(function (a) { return a.enabled && a.symbol === S.symbol && a.tf === S.tf; });
+    var draft = draftAlarm();
+    if (draft) list = list.filter(function (a) { return a.id !== draft.id; }).concat([draft]);
+
+    var lastT = S.candles.length ? tt(S.candles[S.candles.length - 1][0]) : null;
+    list.forEach(function (a) {
+      var color = a.draft ? '#e2e8f0' : '#eab308';
+      var label = (a.draft ? '✎ ' : '🔔 ') + LINE_FA[a.line] + ' ' + COND_FA[a.condition];
+      if (a.target_type === 'value') {
+        var v = Number(a.target_value);
+        add(v, { color: color, lineWidth: 2, lineStyle: LC.LineStyle.Dashed, axisLabelVisible: true, title: label }, true);
+        if (a.condition === 'touch' && Number(a.tolerance) > 0) {
+          add(v + Number(a.tolerance), { color: hexA(color === '#eab308' ? '#eab308' : '#e2e8f0', 0.45), lineStyle: LC.LineStyle.Dotted });
+          add(v - Number(a.tolerance), { color: hexA(color === '#eab308' ? '#eab308' : '#e2e8f0', 0.45), lineStyle: LC.LineStyle.Dotted });
+        }
+      } else if (lastT !== null && S.matrix) {
+        // هدف = یک خط دیگر: علامت روی آخرین مقدار خط منبع
+        var cur = S.matrix[a.line][S.matrix[a.line].length - 1];
+        if (cur !== null) {
+          marks.push({
+            time: lastT, position: 'atPriceMiddle', price: cur, color: color,
+            shape: a.condition === 'cross_up' ? 'arrowUp' : a.condition === 'cross_down' ? 'arrowDown' : 'circle',
+            text: label + ' ← ' + LINE_FA[a.target_line], size: 1.2,
+          });
+        }
+      }
+    });
+    anchorMarkers.setMarkers(marks);
+    anchor.applyOptions({ autoscaleInfoProvider: anchorRange }); // بازمحاسبه مقیاس
+  }
+
+  /** آلارمی که در فرم در حال ساخت/ویرایش است (برای پیش‌نمایش روی اندیکاتور) */
+  function draftAlarm() {
+    var f = $('#alarm-form');
+    if (!f || f.symbol.value !== S.symbol || f.tf.value !== S.tf) return null;
+    var d = formData();
+    if (d.target_type === 'value' && (d.target_value === '' || !isFinite(Number(d.target_value)))) return null;
+    if (d.target_type === 'line' && d.target_line === d.line) return null;
+    d.draft = true;
+    return d;
   }
 
   function applyPaneSize(pct) {
@@ -173,32 +259,32 @@
   function tt(t) { return t + TZ_SHIFT; }
 
   function pointsAt(i) {
-    var c = S.candles[i], m = S.matrix, t = tt(c[0]);
+    var c = S.candles[i], m = S.matrix, t = tt(c[0]), st = style();
     var u = m.up[i], d = m.down[i];
     var mx = (u === null || d === null) ? { time: t } : {
       time: t, open: Math.min(u, d), high: Math.max(u, d), low: Math.min(u, d), close: Math.max(u, d),
-      color: u > d ? style().candleUp : style().candleDown,
+      color: u > d ? st.candleUp : st.candleDown,
     };
     var ln = function (v) { return v === null ? { time: t } : { time: t, value: v }; };
     return {
       price: { time: t, open: c[1], high: c[2], low: c[3], close: c[4] },
-      mx: mx, up: ln(u), down: ln(d), res: ln(m.res[i]), sup: ln(m.sup[i]),
+      mx: mx, anchor: { time: t, value: 0 },
+      up: ln(u), down: ln(d), res: ln(m.res[i]), sup: ln(m.sup[i]), ups: ln(m.upShape[i]), dns: ln(m.downShape[i]),
     };
   }
 
   function renderAll() {
-    var n = S.candles.length, arr = { price: [], mx: [], up: [], down: [], res: [], sup: [] };
-    for (var i = 0; i < n; i++) {
+    var keys = ['price', 'mx', 'anchor'].concat(PLOT_KEYS), arr = {};
+    keys.forEach(function (k) { arr[k] = []; });
+    for (var i = 0; i < S.candles.length; i++) {
       var p = pointsAt(i);
-      for (var k in arr) arr[k].push(p[k]);
+      keys.forEach(function (k) { arr[k].push(p[k]); });
     }
     priceSeries.setData(arr.price);
     mxCandles.setData(arr.mx);
-    upLine.setData(arr.up);
-    downLine.setData(arr.down);
-    resLine.setData(arr.res);
-    supLine.setData(arr.sup);
-    renderMarkers();
+    anchor.setData(arr.anchor);
+    PLOT_KEYS.forEach(function (k) { plots[k].setData(arr[k]); });
+    renderAlarmLines();
   }
 
   function renderFrom(start) {
@@ -206,24 +292,10 @@
       var p = pointsAt(i);
       priceSeries.update(p.price);
       mxCandles.update(p.mx);
-      upLine.update(p.up);
-      downLine.update(p.down);
-      resLine.update(p.res);
-      supLine.update(p.sup);
+      anchor.update(p.anchor);
+      PLOT_KEYS.forEach(function (k) { plots[k].update(p[k]); });
     }
-    renderMarkers();
-  }
-
-  function renderMarkers() {
-    var m = S.matrix, list = [];
-    if (style().showShapes) {
-      for (var i = 0; i < S.candles.length; i++) {
-        var t = tt(S.candles[i][0]);
-        if (m.upShape[i] !== null) list.push({ time: t, position: 'aboveBar', shape: 'circle', color: '#f43f5e', size: 0.4 });
-        if (m.downShape[i] !== null) list.push({ time: t, position: 'belowBar', shape: 'circle', color: '#22c55e', size: 0.4 });
-      }
-    }
-    markers.setMarkers(list);
+    renderAlarmLines();
   }
 
   function recompute() {
@@ -257,7 +329,6 @@
       var bars = Math.max(40, Math.min(160, Math.round($('#chart').clientWidth / 8)));
       chart.timeScale().setVisibleLogicalRange({ from: S.candles.length - bars, to: S.candles.length + 5 });
       afterData(j);
-      renderAlarmLines();
       schedulePoll(seq);
     });
   }
@@ -340,7 +411,8 @@
     var i = idx === null ? S.candles.length - 1 : idx, m = S.matrix, st = style();
     var trend = m.up[i] !== null && m.down[i] !== null ? (m.up[i] > m.down[i] ? '▲' : '▼') : '';
     $('#legend').innerHTML =
-      '<b>Matrix Series ' + S.tf + '</b> ' + trend +
+      '<b>MS ' + S.tf + '</b> <span class="muted">' + [params().smoother, params().supResPeriod, params().supResPercentage,
+        params().pricePeriod, params().overbought, params().oversold].join(' ') + '</span> ' + trend +
       ' <span style="color:' + st.upColor + '">Up ' + fmt(m.up[i], 2) + '</span>' +
       ' <span style="color:' + st.downColor + '">Down ' + fmt(m.down[i], 2) + '</span>' +
       ' <span style="color:' + st.resColor + '">Res ' + fmt(m.res[i], 2) + '</span>' +
@@ -360,11 +432,13 @@
     if (!S.picking || !param || !param.point) return;
     if (param.paneIndex !== 1) { toast('روی بخش اندیکاتور (پایین) کلیک کنید', true); return; }
     window.__lastClick = param.point;
-    var v = upLine.coordinateToPrice(param.point.y);
+    var v = anchor.coordinateToPrice(param.point.y);
     if (v === null) return;
     var f = $('#alarm-form');
+    setTargetType('value');
     f.target_value.value = Math.round(v * 100) / 100;
     setPicking(false);
+    renderAlarmLines();
     openDrawer();
     toast('عدد هدف: ' + f.target_value.value);
   }
@@ -417,19 +491,6 @@
     }).join('');
   }
 
-  function renderAlarmLines() {
-    if (!upLine) return;
-    S.alarmLines.forEach(function (l) { upLine.removePriceLine(l); });
-    S.alarmLines = [];
-    S.alarms.forEach(function (a) {
-      if (!a.enabled || a.symbol !== S.symbol || a.tf !== S.tf || a.target_type !== 'value') return;
-      S.alarmLines.push(upLine.createPriceLine({
-        price: Number(a.target_value), color: '#eab308', lineWidth: 1, lineStyle: LC.LineStyle.Dashed,
-        axisLabelVisible: true, title: '🔔 ' + LINE_FA[a.line] + ' ' + COND_FA[a.condition],
-      }));
-    });
-  }
-
   function formData() {
     var f = $('#alarm-form'), o = {};
     ['id', 'symbol', 'tf', 'line', 'condition', 'target_type', 'target_value', 'target_line', 'tolerance', 'mode', 'repeat', 'note']
@@ -449,6 +510,7 @@
     $('#alarm-err').textContent = '';
     syncFormVisibility();
     updateNowValues();
+    renderAlarmLines();
   }
 
   function editAlarm(a) {
@@ -468,6 +530,7 @@
     $('#tt-value').hidden = v !== 'value';
     $('#tt-line').hidden = v !== 'line';
     $('#alarm-form').target_value.required = v === 'value';
+    renderAlarmLines();
   }
 
   function syncFormVisibility() {
@@ -517,16 +580,23 @@
     ['overbought', 'Overbought (اشباع خرید)', 'any'],
     ['oversold', 'Oversold (اشباع فروش)', 'any'],
   ];
-  var STYLE_FIELDS = [
-    ['showCandles', 'کندل‌های Matrix', 'candleUp', 'رنگ صعودی'],
-    [null, null, 'candleDown', 'رنگ نزولی'],
-    ['showUp', 'خط Up', 'upColor'],
-    ['showDown', 'خط Down', 'downColor'],
-    ['showRes', 'خط مقاومت', 'resColor'],
-    ['showSup', 'خط حمایت', 'supColor'],
-    ['showOBOS', 'سطوح OB/OS و صفر', 'obosColor'],
-    ['showShapes', 'نقاط اشباع (UP/DOWN shape)', null],
+  var PLOT_FA = {
+    up: 'خط Up (سریع)', down: 'خط Down (کند)', res: 'Resistance (مقاومت)', sup: 'Support (حمایت)',
+    ups: 'UPshape (اشباع خرید)', dns: 'DOWNshape (اشباع فروش)',
+  };
+  var TYPE_FA = [
+    ['line', 'خط'], ['step', 'پله‌ای (Step line)'], ['step_dots', 'پله‌ای با نقطه'], ['line_dots', 'خط با نقطه'],
+    ['circles', 'نقطه/دایره'], ['histogram', 'هیستوگرام/ستونی'], ['area', 'ناحیه‌ای (Area)'],
   ];
+  var DASH_FA = [['solid', '━ ممتد'], ['dashed', '╌ خط‌چین'], ['dotted', '┈ نقطه‌چین']];
+
+  function opts(list, cur) {
+    return list.map(function (o) {
+      var v = Array.isArray(o) ? o[0] : o, t = Array.isArray(o) ? o[1] : o;
+      return '<option value="' + v + '"' + (String(cur) === String(v) ? ' selected' : '') + '>' + t + '</option>';
+    }).join('');
+  }
+
   var indDraft = null, indTf = null;
 
   function buildIndicatorForm(tf) {
@@ -540,16 +610,22 @@
       return '<label>' + f[1] + '<input type="number" data-p="' + f[0] + '" step="' + f[2] + '" value="' + p[f[0]] + '"></label>';
     }).join('');
     var st = indDraft.style;
-    $('#ind-style').innerHTML = STYLE_FIELDS.map(function (f) {
-      var h = '<div class="style-row">';
-      if (f[0]) h += '<label class="check"><input type="checkbox" data-s="' + f[0] + '" ' + (st[f[0]] ? 'checked' : '') + '> ' + f[1] + '</label>';
-      else h += '<span></span>';
-      if (f[2]) h += '<label class="color">' + (f[3] || '') + '<input type="color" data-s="' + f[2] + '" value="' + st[f[2]] + '"></label>';
-      return h + '</div>';
-    }).join('') +
-      '<div class="style-row"><label>ضخامت خطوط<select data-s="lineWidth">' + [1, 2, 3, 4].map(function (w) {
-        return '<option ' + (Number(st.lineWidth) === w ? 'selected' : '') + '>' + w + '</option>';
-      }).join('') + '</select></label></div>';
+    var chk = function (k, label) {
+      return '<label class="check"><input type="checkbox" data-s="' + k + '"' + (st[k] ? ' checked' : '') + '> ' + label + '</label>';
+    };
+    var col = function (k, title) {
+      return '<input type="color" data-s="' + k + '" value="' + st[k] + '" title="' + (title || '') + '">';
+    };
+    $('#ind-style').innerHTML =
+      '<div class="style-row">' + chk('candlesShow', 'کندل‌های Matrix') +
+      '<span class="style-ctl">' + col('candleUp', 'صعودی') + col('candleDown', 'نزولی') + '</span></div>' +
+      PLOT_KEYS.map(function (k) {
+        return '<div class="style-row">' + chk(k + 'Show', PLOT_FA[k]) + '<span class="style-ctl">' + col(k + 'Color') +
+          '<select data-s="' + k + 'Type" title="نوع رسم">' + opts(TYPE_FA, st[k + 'Type']) + '</select>' +
+          '<select data-s="' + k + 'Width" data-num="1" title="ضخامت">' + opts([1, 2, 3, 4], st[k + 'Width']) + '</select>' +
+          '<select data-s="' + k + 'Dash" title="نوع خط">' + opts(DASH_FA, st[k + 'Dash']) + '</select></span></div>';
+      }).join('') +
+      '<div class="style-row">' + chk('obosShow', 'سطوح OB / OS و خط صفر') + '<span class="style-ctl">' + col('obosColor') + '</span></div>';
     $('#ind-err').textContent = '';
   }
 
@@ -557,7 +633,7 @@
     var p = indDraft.indicator[indTf];
     $$('#ind-params input').forEach(function (i) { p[i.dataset.p] = Number(i.value); });
     $$('#ind-style [data-s]').forEach(function (i) {
-      indDraft.style[i.dataset.s] = i.type === 'checkbox' ? i.checked : (i.tagName === 'SELECT' ? Number(i.value) : i.value);
+      indDraft.style[i.dataset.s] = i.type === 'checkbox' ? i.checked : (i.dataset.num ? Number(i.value) : i.value);
     });
   }
 
@@ -625,10 +701,13 @@
     // فرم آلارم
     $('#target-type').addEventListener('click', function (e) { if (e.target.dataset.v) setTargetType(e.target.dataset.v); });
     f.condition.addEventListener('change', syncFormVisibility);
+    // پیش‌نمایش زنده آلارم روی پنل اندیکاتور
+    f.addEventListener('input', renderAlarmLines);
+    f.addEventListener('change', renderAlarmLines);
     f.symbol.addEventListener('change', updateNowValues);
     f.tf.addEventListener('change', updateNowValues);
     $('#now-values').addEventListener('click', function (e) {
-      if (e.target.dataset.v) { setTargetType('value'); f.target_value.value = e.target.dataset.v; }
+      if (e.target.dataset.v) { setTargetType('value'); f.target_value.value = e.target.dataset.v; renderAlarmLines(); }
     });
     $('#pick-btn').addEventListener('click', function () {
       if (f.symbol.value !== S.symbol || f.tf.value !== S.tf) { f.symbol.value = S.symbol; f.tf.value = S.tf; }

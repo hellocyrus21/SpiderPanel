@@ -109,25 +109,51 @@ function default_indicator_params(): array
     ];
 }
 
+const PLOT_TYPES = ['line', 'step', 'step_dots', 'line_dots', 'circles', 'histogram', 'area'];
+const PLOT_DASHES = ['solid', 'dotted', 'dashed'];
+
+/**
+ * ظاهر اندیکاتور. هر خط: Show / Color / Type (نوع رسم) / Width / Dash
+ * رنگ‌ها مثل اسکریپت تریدینگ‌ویو: مقاومت سبز، حمایت قرمز، علامت‌ها فیروزه‌ای
+ */
 function default_style(): array
 {
-    return [
-        'showCandles'  => true,
-        'candleUp'     => '#22c55e',
-        'candleDown'   => '#ef4444',
-        'showUp'       => true,
-        'upColor'      => '#38bdf8',
-        'showDown'     => true,
-        'downColor'    => '#f59e0b',
-        'showRes'      => true,
-        'resColor'     => '#f43f5e',
-        'showSup'      => true,
-        'supColor'     => '#10b981',
-        'showOBOS'     => true,
-        'obosColor'    => '#94a3b8',
-        'showShapes'   => true,
-        'lineWidth'    => 1,
+    $plot = fn($show, $color, $type = 'line', $width = 1) =>
+        ['Show' => $show, 'Color' => $color, 'Type' => $type, 'Width' => $width, 'Dash' => 'solid'];
+    $st = [
+        'candlesShow' => true,
+        'candleUp'    => '#22c55e',
+        'candleDown'  => '#ef4444',
+        'obosShow'    => true,
+        'obosColor'   => '#94a3b8',
     ];
+    $plots = [
+        'up'  => $plot(true, '#38bdf8'),
+        'down'=> $plot(true, '#f59e0b'),
+        'res' => $plot(true, '#22c55e'),
+        'sup' => $plot(true, '#ef4444'),
+        'ups' => $plot(true, '#22d3ee', 'circles', 2),
+        'dns' => $plot(true, '#22d3ee', 'circles', 2),
+    ];
+    foreach ($plots as $key => $fields) {
+        foreach ($fields as $f => $v) $st[$key . $f] = $v;
+    }
+    return $st;
+}
+
+function sanitize_style(array $in): array
+{
+    $clean = [];
+    foreach (default_style() as $k => $def) {
+        if (!array_key_exists($k, $in)) continue;
+        $v = $in[$k];
+        if (is_bool($def)) $clean[$k] = (bool)$v;
+        elseif (is_int($def)) $clean[$k] = max(1, min(4, (int)$v));
+        elseif (substr($k, -4) === 'Type') { if (in_array($v, PLOT_TYPES, true)) $clean[$k] = $v; }
+        elseif (substr($k, -4) === 'Dash') { if (in_array($v, PLOT_DASHES, true)) $clean[$k] = $v; }
+        elseif (is_string($v) && preg_match('/^#[0-9a-fA-F]{6}$/', $v)) $clean[$k] = $v;
+    }
+    return $clean;
 }
 
 function get_settings(): array
@@ -135,7 +161,7 @@ function get_settings(): array
     $s = store_read('settings', []);
     $out = [
         'indicator'  => [],
-        'style'      => array_merge(default_style(), (array)($s['style'] ?? [])),
+        'style'      => array_merge(default_style(), sanitize_style((array)($s['style'] ?? []))),
         'bale'       => array_merge(['token' => '', 'chat_id' => '', 'enabled' => true], (array)($s['bale'] ?? [])),
         'worker_url' => trim((string)($s['worker_url'] ?? '')) ?: cfg('worker_url'),
     ];

@@ -152,7 +152,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
 <dialog id="dlg-indicator" class="dlg">
   <form method="dialog" class="form" id="ind-form">
     <div class="drawer-head"><h2>تنظیمات Matrix Series</h2><button class="x" value="cancel">✕</button></div>
-    <p class="muted">برای هر تایم‌فریم تنظیمات جدا دارید. آلارم‌ها هم با همین تنظیمات در سرور محاسبه می‌شوند.</p>
+    <p class="muted">برای هر تایم‌فریم تنظیمات جدا دارید. آلارم‌ها هم با همین تنظیمات در سرور محاسبه می‌شوند. برای مقایسه با تریدینگ‌ویو، همان اعداد جلوی «MS» در تریدینگ‌ویو را اینجا وارد کنید (به ترتیب: Smoother، SupResPeriod، SupResPercentage، PricePeriod، OB، OS).</p>
     <div class="seg small" id="ind-tfs"></div>
     <div class="grid2" id="ind-params"></div>
     <div class="row">
@@ -160,7 +160,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
       <button type="button" class="btn sm ghost" id="ind-reset">پیش‌فرض</button>
     </div>
     <h3>ظاهر</h3>
-    <div class="grid2" id="ind-style"></div>
+    <div class="list" id="ind-style"></div>
     <div class="row end">
       <button type="button" class="btn primary" id="ind-save">ذخیره</button>
     </div>
