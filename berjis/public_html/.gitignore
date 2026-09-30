@@ -1,0 +1,5 @@
+data/*.json.php
+data/*.lock
+data/*.tmp
+data/cache/*
+!data/cache/.keep
