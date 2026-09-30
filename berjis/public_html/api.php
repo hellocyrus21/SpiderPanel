@@ -131,6 +131,9 @@ try {
             // وقتی صفحه باز است، علاوه بر کرون، مرورگر هم بررسی را صدا می‌زند
             json_out(['ok' => true, 'result' => run_alarm_check(), 'last_cron' => store_read('cron_status', null)]);
 
+        case 'cron_status':
+            json_out(['ok' => true, 'result' => null, 'last_cron' => store_read('cron_status', null)]);
+
         case 'bale_test':
             if (!$isPost) fail('POST لازم است');
             $b = get_settings()['bale'];

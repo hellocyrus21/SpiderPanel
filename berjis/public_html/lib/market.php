@@ -15,7 +15,7 @@ if (!defined('BERJIS')) { http_response_code(404); exit; }
 const KC_TYPES = ['1m' => '1min', '5m' => '5min', '15m' => '15min', '1h' => '1hour'];
 const CACHE_TTL = ['1m' => 3, '5m' => 5, '15m' => 8, '1h' => 15];
 
-function http_get(string $url, int $timeout = 12): array
+function http_get(string $url, int $timeout = 8): array
 {
     if (function_exists('curl_init')) {
         $ch = curl_init($url);
@@ -25,7 +25,7 @@ function http_get(string $url, int $timeout = 12): array
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS      => 3,
             CURLOPT_TIMEOUT        => $timeout,
-            CURLOPT_CONNECTTIMEOUT => 7,
+            CURLOPT_CONNECTTIMEOUT => 4,
             CURLOPT_USERAGENT      => 'Berjis/' . BERJIS_VERSION,
             CURLOPT_HTTPHEADER     => ['Accept: application/json'],
             CURLOPT_SSL_VERIFYPEER => $verify,
@@ -127,9 +127,14 @@ function fetch_candles_upstream(string $symbol, string $tf, int $limit): array
     }
 
     $errors = [];
+    $deadline = microtime(true) + 12; // سقف کل زمان؛ تا پروسه‌های PHP روی هاست جمع نشوند
+    $workerDown = false;
     foreach ($strategies as $name => $url) {
+        if (microtime(true) > $deadline) { $errors[] = "$name: زمان تمام شد"; break; }
+        $isWorker = strpos($name, 'worker') === 0;
+        if ($isWorker && $workerDown) { $errors[] = "$name: رد شد (ورکر در دسترس نیست)"; continue; }
         [$code, $body, $err] = http_get($url);
-        if ($body === null) { $errors[] = "$name: $err"; continue; }
+        if ($body === null) { $errors[] = "$name: $err"; if ($isWorker) $workerDown = true; continue; }
         if ($code >= 400) { $errors[] = "$name: HTTP $code"; continue; }
         $candles = parse_candles($body);
         if (!$candles) { $errors[] = "$name: پاسخ نامعتبر"; continue; }
@@ -160,8 +165,23 @@ function get_candles(string $symbol, string $tf, ?int $maxAge = null): array
         return ['ok' => true] + $cached;
     }
 
+    // اگر همین الان اتصال شکست خورده، تا ۲۰ ثانیه دوباره تلاش نکن (جلوگیری از خطای 508 هاست)
+    $failKey = "cache/f_{$symbol}_{$tf}";
+    $fail = store_read($failKey, null);
+    if ($fail && (microtime(true) - $fail['at']) < 20) {
+        return stale_or_error($cached, $fail['errors'] ?? []);
+    }
+
     $lock = fopen(BERJIS_DATA . "/cache/c_{$symbol}_{$tf}.lock", 'c');
-    flock($lock, LOCK_EX);
+    // اگر درخواست دیگری در حال دریافت است، منتظر نمان؛ حداکثر ۳ ثانیه صبر و بعد داده کش
+    $got = false;
+    for ($i = 0; $i < 15 && !($got = flock($lock, LOCK_EX | LOCK_NB)); $i++) usleep(200000);
+    if (!$got) {
+        fclose($lock);
+        $cached = store_read($key, null);
+        if ($cached && (microtime(true) - $cached['at']) < 120) return ['ok' => true] + $cached;
+        return stale_or_error($cached, ['در حال دریافت توسط درخواست دیگر']);
+    }
     try {
         // شاید درخواست دیگری همین الان کش را تازه کرده باشد
         $cached = store_read($key, null);
@@ -175,15 +195,21 @@ function get_candles(string $symbol, string $tf, ?int $maxAge = null): array
             store_write($key, $data);
             return ['ok' => true] + $data;
         }
-        // اتصال قطع شد: تا ۱۵ دقیقه از داده قبلی استفاده کن
-        if ($cached && (microtime(true) - $cached['at']) < 900) {
-            return ['ok' => true, 'stale' => true, 'errors' => $r['errors']] + $cached;
-        }
-        return ['ok' => false, 'error' => 'اتصال به کوکوین (از طریق ورکر) برقرار نشد', 'errors' => $r['errors']];
+        store_write($failKey, ['at' => microtime(true), 'errors' => $r['errors']]);
+        return stale_or_error($cached, $r['errors']);
     } finally {
         flock($lock, LOCK_UN);
         fclose($lock);
     }
+}
+
+/** اتصال قطع است: تا ۱۵ دقیقه از داده قبلی استفاده کن */
+function stale_or_error(?array $cached, array $errors): array
+{
+    if ($cached && (microtime(true) - $cached['at']) < 900) {
+        return ['ok' => true, 'stale' => true, 'errors' => $errors] + $cached;
+    }
+    return ['ok' => false, 'error' => 'اتصال به کوکوین (از طریق ورکر) برقرار نشد', 'errors' => $errors];
 }
 
 /** اندیس آخرین کندل بسته‌شده */

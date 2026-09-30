@@ -318,10 +318,12 @@
       if (!j.ok) {
         setMsg((j.error || 'خطا در دریافت داده') + ' — دوباره تلاش می‌شود…');
         setStatus(false);
-        S.pollTimer = setTimeout(loadChart, 5000);
+        S.failCount = (S.failCount || 0) + 1;
+        S.pollTimer = setTimeout(loadChart, Math.min(60000, 5000 * S.failCount));
         return;
       }
       setMsg('');
+      S.failCount = 0;
       S.candles = j.candles;
       recompute();
       applyStyle();
@@ -335,7 +337,9 @@
 
   function schedulePoll(seq) {
     clearTimeout(S.pollTimer);
-    S.pollTimer = setTimeout(function () { poll(seq); }, POLL_MS[S.tf]);
+    // بعد از خطا، فاصله درخواست‌ها بیشتر می‌شود تا به هاست فشار نیاید
+    var wait = POLL_MS[S.tf] * Math.pow(2, Math.min(4, S.failCount || 0));
+    S.pollTimer = setTimeout(function () { poll(seq); }, Math.min(60000, wait));
   }
 
   function poll(seq) {
@@ -349,8 +353,10 @@
           recompute();
           if (start === -1) renderAll(); else renderFrom(start);
         }
+        S.failCount = j.stale ? (S.failCount || 0) + 1 : 0;
         afterData(j);
       } else {
+        S.failCount = (S.failCount || 0) + 1;
         setStatus(false);
       }
       schedulePoll(seq);
@@ -807,7 +813,11 @@
 
   /* ------------------------------------------------------------------ بررسی آلارم از مرورگر (پشتیبان کرون) */
   function backgroundCheck() {
-    api('check', {}).then(function (j) {
+    // وقتی کرون سرور فعال است، مرورگر بررسی نمی‌کند (کاهش بار هاست)
+    var c = S.lastCron;
+    var action = c && (Date.now() / 1000 - c.at) < 150 ? 'cron_status' : 'check';
+    api(action, action === 'check' ? {} : undefined).then(function (j) {
+      if (j.ok) S.lastCron = j.last_cron;
       if (j.ok && j.result && j.result.fired) { toast('🔔 ' + j.result.fired + ' آلارم ارسال شد'); }
       if (j.ok) {
         var c = j.last_cron;
@@ -833,6 +843,6 @@
     loadChart();
     loadAlarms();
     backgroundCheck();
-    setInterval(function () { if (!document.hidden) backgroundCheck(); }, 20000);
+    setInterval(function () { if (!document.hidden) backgroundCheck(); }, 30000);
   });
 })();
