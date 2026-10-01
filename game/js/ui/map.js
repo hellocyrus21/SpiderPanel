@@ -22,6 +22,7 @@
    * @param {(id:string|null)=>string} opts.fillFor  رنگ هر کشور
    * @param {(id:string)=>string} opts.nameFor       نام فارسی کشور
    * @param {()=>{right:number,bottom:number}} [opts.getOcclusion]  چند پیکسل از راست/پایین نقشه زیر پنل پنهان است
+   * @param {(armyId:string)=>void} [opts.onArmyClick]  کلیک روی نشان ارتش
    */
   function create(container, topo, opts) {
     const obj = topo.objects.countries;
@@ -92,6 +93,41 @@
       .attr('y', d => d.centroid[1])
       .text(d => opts.nameFor(d.id));
 
+    // --- لایه‌ی ارتش‌ها (روی همه چیز) ---
+    // هر ارتش: خط‌چین مسیر حرکت + نشان (آیکون و تعداد واحد) با اندازه‌ی ثابت روی صفحه
+    const routeLayer = root.append('g').attr('class', 'army-routes');
+    const armyLayer = root.append('g').attr('class', 'armies');
+    let armyData = [];
+
+    function setArmies(list) {
+      armyData = list.map(a => {
+        const [x, y] = projection(a.pos);
+        const dest = a.dest ? projection(a.dest) : null;
+        return { ...a, x, y, dx: dest && dest[0], dy: dest && dest[1] };
+      });
+      routeLayer.selectAll('line').data(armyData.filter(a => a.dest), d => d.id).join('line')
+        .attr('x1', d => d.x).attr('y1', d => d.y).attr('x2', d => d.dx).attr('y2', d => d.dy);
+      const g = armyLayer.selectAll('g.army').data(armyData, d => d.id).join(enter => {
+        const e = enter.append('g').attr('class', 'army').style('cursor', 'pointer')
+          .on('click', (event, d) => { event.stopPropagation(); if (opts.onArmyClick) opts.onArmyClick(d.id); });
+        e.append('rect').attr('x', -21).attr('y', -12).attr('width', 42).attr('height', 24).attr('rx', 6);
+        e.append('text').attr('class', 'a-icon').attr('x', 9).attr('y', 1);
+        e.append('text').attr('class', 'a-num').attr('x', -9).attr('y', 1);
+        e.append('text').attr('class', 'a-eta').attr('y', -18);
+        return e;
+      });
+      g.classed('moving', d => !!d.dest).classed('selected', d => !!d.selected).classed('low', d => d.supply < 50);
+      g.select('.a-icon').text(d => d.icon);
+      g.select('.a-num').text(d => d.label);
+      g.select('.a-eta').text(d => d.eta || '');
+      scaleArmies();
+    }
+
+    function scaleArmies() {
+      const k = currentK || 1;
+      armyLayer.selectAll('g.army').attr('transform', d => `translate(${d.x},${d.y}) scale(${1 / k})`);
+    }
+
     // --- راهنمای موس (فقط دسکتاپ) ---
     const tooltip = d3.select(container).append('div').attr('class', 'map-tooltip').style('display', 'none');
     const hasMouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -126,6 +162,7 @@
       const k = currentK;
       labelLayer.attr('font-size', LABEL_PX / k);
       labels.attr('display', d => (d.area * k * k > LABEL_MIN_AREA ? null : 'none'));
+      scaleArmies();
     }
 
     function size() {
@@ -171,6 +208,17 @@
       svg.transition().duration(750).call(zoom.transform, t);
     }
 
+    /** زوم روی یک نقطه (مثلاً محل ارتش) */
+    function zoomToPoint(lonlat, relZoom = 6) {
+      updateExtent();
+      const occ = opts.getOcclusion ? opts.getOcclusion() : { right: 0, bottom: 0 };
+      const full = size();
+      const w = Math.max(full.w - occ.right, 100), h = Math.max(full.h - occ.bottom, 100);
+      const [x, y] = projection(lonlat);
+      const k = fitScale * relZoom;
+      svg.transition().duration(700).call(zoom.transform, d3.zoomIdentity.translate(w / 2 - x * k, h / 2 - y * k).scale(k));
+    }
+
     function zoomBy(factor) {
       svg.transition().duration(250).call(zoom.scaleBy, factor);
     }
@@ -205,7 +253,7 @@
     resetView(false);
     updateLabels();
 
-    return { refresh, setSelected, setPlayer, zoomTo, zoomBy, resetView };
+    return { refresh, setSelected, setPlayer, zoomTo, zoomBy, resetView, setArmies, zoomToPoint };
   }
 
   SG.MapView = { create };

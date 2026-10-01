@@ -63,11 +63,14 @@
     const eff = clamp(0.65 + 0.35 * c.stability / 100 + modSum(c, 'taxEff'), 0.3, 1.1);
     const tax = c.gdp * e.taxRate * eff;
 
-    const surplus = c.energy.production - c.energy.consumption;
+    // ارتش بازیکن سوخت اضافه مصرف می‌کند (نسبت به شروع بازی)
+    const milFuel = c.mil && c.mil.useUnits ? SG.Military.extraFuel(c) : 0;
+    const surplus = c.energy.production - c.energy.consumption - milFuel;
     const energyExport = surplus > 0 ? surplus * price * EXPORT_SHARE * (1 - 0.7 * pressure) : 0;
     const energyImport = surplus < 0 ? -surplus * price * IMPORT_SHARE : 0;
 
-    const military = c.gdp * p.military;
+    // بازیکن: هزینه‌ی نظامی = نگهداری واحدهای واقعی. بقیه: سهم ثابت از GDP
+    const military = c.mil && c.mil.useUnits ? SG.Military.upkeepMonthly(c) * 12 : c.gdp * p.military;
     const welfare = c.gdp * p.welfare;
     const investment = c.gdp * p.investment;
     const admin = c.gdp * (ADMIN + modSum(c, 'expense'));
@@ -80,7 +83,7 @@
       eff, tax, energyExport, aid: e.aid, revenue,
       military, welfare, investment, admin, interest, energyImport, expenses,
       net: revenue - expenses, monthly: (revenue - expenses) / 12,
-      rate, pressure,
+      rate, pressure, surplus, milFuel,
     };
   }
 
@@ -210,7 +213,7 @@
 
     // ۵) ارتش: قدرت به سمت سطحی می‌رود که بودجه‌ی نظامی پشتیبانی می‌کند
     // (در مرحله‌ی ۳ با تولید واحدهای واقعی جایگزین می‌شود)
-    if (e.ref.military > 0) {
+    if (e.ref.military > 0 && !(c.mil && c.mil.useUnits)) {
       const f = Math.sqrt(e.policy.military / e.ref.military);
       for (const k of Object.keys(e.milBase)) {
         if (typeof e.milBase[k] !== 'number' || k === 'active') continue;

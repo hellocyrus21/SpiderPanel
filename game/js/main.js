@@ -158,14 +158,52 @@
   // -------------------------------------------------------------------
   // دکمه‌های نوار منابع و نوار فرمان
   // -------------------------------------------------------------------
-  function openPanel(name) {
+  function openPanel(name, sub) {
     if (name === 'government') SG.Government.open(app.state, app.state.playerId, onPolicyChange);
+    else if (name === 'military') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowArmy: showArmy }, sub);
     else if (name === 'advisor') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true));
   }
 
   function onPolicyChange() {
     renderHud();
     SG.Save.save(app.state);
+  }
+
+  function onMilitaryChange() {
+    renderHud();
+    renderArmies();
+    SG.Save.save(app.state);
+  }
+
+  // -------------------------------------------------------------------
+  // ارتش‌ها روی نقشه
+  // -------------------------------------------------------------------
+  function renderArmies() {
+    if (app.phase !== 'game') { app.map.setArmies([]); return; }
+    const c = app.state.countries[app.state.playerId];
+    const defs = window.SG_DATA.units;
+    const list = (c.mil?.armies || []).map(a => {
+      // آیکون = واحدی که بیشترین سهم قدرت را دارد
+      let best = null, bestP = -1, n = 0;
+      for (const [k, cnt] of Object.entries(a.units)) {
+        n += cnt;
+        if (cnt * defs[k].power > bestP) { bestP = cnt * defs[k].power; best = k; }
+      }
+      return {
+        id: a.id, pos: a.pos, icon: defs[best]?.icon || '🎖️', label: F.num(n),
+        dest: a.move ? a.move.to : null, eta: a.move ? F.num(a.move.left) + ' ماه' : '',
+        supply: a.supply, selected: a.id === app.selectedArmy,
+      };
+    });
+    app.map.setArmies(list);
+  }
+
+  function showArmy(armyId) {
+    const a = SG.Military.findArmy(app.state, app.state.playerId, armyId);
+    if (!a) return;
+    app.selectedArmy = armyId;
+    renderArmies();
+    app.map.zoomToPoint(a.move ? [(a.pos[0] + a.move.to[0]) / 2, (a.pos[1] + a.move.to[1]) / 2] : a.pos);
   }
 
   document.addEventListener('click', e => {
@@ -195,6 +233,8 @@
     renderTopbar();
     renderHud();
     if (app.mapMode !== 'political' && app.mapMode !== 'alliances') app.map.refresh();
+    renderArmies();
+    SG.MilitaryPanel.refresh();
     if (app.selected && app.panel.isOpen()) app.panel.show(app.state, app.selected, 'game', { keepScroll: true });
     SG.Government.refresh();
     SG.NotifyUI.showNew(fresh);
@@ -224,6 +264,8 @@
   // -------------------------------------------------------------------
   function onNotificationAction(act, n) {
     if (act === 'newgame') { newGame(); return; }
+    if (act === 'open:army') { openPanel('military', 'army:' + n.data.armyId); return; }
+    if (act === 'show:army') { showArmy(n.data.armyId); return; }
     if (act.startsWith('open:')) { openPanel(act.slice(5)); return; }
     if (act.startsWith('decree:')) {
       const r = SG.Government.runDecree(app.state, app.state.playerId, act.slice(7));
@@ -242,12 +284,42 @@
         <div class="card"><h3>بازی</h3>
           <p class="muted small">بازی بعد از هر نوبت خودکار ذخیره می‌شود. بذر این دنیا: ${app.state.seed}</p>
           <button class="btn" data-newgame>🔄 شروع بازی جدید</button>
+        </div>
+        <div class="card"><h3>انتقال به دستگاه دیگر</h3>
+          <p class="muted small">ذخیره داخل همین مرورگر است. برای ادامه روی دستگاه دیگر: اینجا فایل ذخیره را بگیرید،
+            به آن دستگاه بفرستید و در صفحه‌ی اول بازی با «بارگذاری فایل ذخیره» بازش کنید.</p>
+          <button class="btn" data-export>💾 دانلود فایل ذخیره</button>
         </div>`,
       onClick: e => {
         if (e.target.closest('[data-newgame]') && confirm('بازی فعلی پاک شود و بازی جدید شروع شود؟')) newGame();
+        if (e.target.closest('[data-export]')) exportSave();
       },
     });
     SG.NotifyUI.bindSettings(document.querySelector('.modal-body'));
+  }
+
+  function exportSave() {
+    const s = app.state, p = s.countries[s.playerId];
+    const blob = new Blob([SG.Save.exportText(s)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `geopolitics2026-${s.playerId}-${s.date.year}-${s.date.month}.json`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    SG.NotifyUI.simpleToast(`💾 فایل ذخیره‌ی ${F.esc(p.name)} دانلود شد.`, 'lvl-info');
+  }
+
+  /** بارگذاری فایل ذخیره (از صفحه‌ی اول) */
+  function importSave(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const s = SG.Save.importText(reader.result);
+      if (!s) { alert('این فایل، فایل ذخیره‌ی بازی نیست.'); return; }
+      SG.Save.save(s);
+      continueGame(s);
+    };
+    reader.readAsText(file);
   }
 
   function newGame() {
@@ -275,7 +347,7 @@
     app.map.setPlayer(app.state.playerId);
     app.map.refresh();
     document.body.classList.add('in-game');
-    renderTopbar(); renderLegend(); renderMapModes(); renderHud();
+    renderTopbar(); renderLegend(); renderMapModes(); renderHud(); renderArmies();
   }
 
   function startGame(id) {
@@ -287,7 +359,7 @@
   }
 
   function continueGame(saved) {
-    app.state = saved;
+    app.state = E.migrate(saved, window.SG_DATA.countries);
     app.politicalColor = buildPoliticalColors(app.state.countries);
     enterGame();
     app.map.zoomTo(saved.playerId);
@@ -319,6 +391,7 @@
       onSelect: id => select(id),
       fillFor,
       nameFor: id => app.state.countries[id]?.name || id,
+      onArmyClick: id => { app.selectedArmy = id; renderArmies(); openPanel('military', 'army:' + id); },
       getOcclusion: () => {
         const el = document.getElementById('info-panel');
         if (!el.classList.contains('open')) return { right: 0, bottom: 0 };
@@ -343,6 +416,7 @@
       onBrowse: () => app.start.hide(),
       onContinue: () => continueGame(saved),
       onNewGame: () => { SG.Save.clear(); app.start.render(app.state, null); },
+      onImport: file => importSave(file),
     });
 
     document.getElementById('zoom-in').addEventListener('click', () => app.map.zoomBy(1.6));

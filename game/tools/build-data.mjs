@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as topojson from 'topojson-client';
+import { geoCentroid, geoArea } from 'd3';
 import * as S from './source-data.mjs';
 
 const require = createRequire(import.meta.url);
@@ -53,6 +54,45 @@ const seaNeighbors = {};
 for (const [a, b] of S.SEA_NEIGHBORS) {
   (seaNeighbors[a] ||= new Set()).add(b);
   (seaNeighbors[b] ||= new Set()).add(a);
+}
+
+// ---------- ۲ب) موقعیت روی نقشه: پایتخت (یا مرکز سرزمین اصلی) و نقطه‌های مرزی ----------
+const r2 = v => Math.round(v * 100) / 100;
+const homePos = {};
+for (const g of geoms) {
+  const id = g.properties.o;
+  if (!id || g.id !== id) continue;           // فقط سرزمین اصلی
+  const f = topojson.feature(world, g);
+  const polys = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates];
+  let best = null, bestA = -1;
+  for (const coords of polys) {
+    const poly = { type: 'Polygon', coordinates: coords };
+    const a = geoArea(poly);
+    if (a > bestA) { bestA = a; best = poly; }
+  }
+  homePos[id] = geoCentroid(best).map(r2);
+}
+for (const [id, p] of Object.entries(S.CAPITAL_POS)) homePos[id] = p;
+// کشورهایی که سرزمین اصلی‌شان شناسه‌ی جدا دارد
+for (const g of geoms) {
+  const id = g.properties.o;
+  if (id && !homePos[id]) homePos[id] = geoCentroid(topojson.feature(world, g)).map(r2);
+}
+
+// نقطه‌ی مرزی هر جفت همسایه‌ی زمینی = نقطه‌ی وسط طولانی‌ترین تکه‌ی مرز مشترک
+const borderPos = {};
+for (const [a, set] of Object.entries(landNeighbors)) {
+  for (const b of set) {
+    if (a > b) continue;
+    const mesh = topojson.mesh(world, world.objects.countries, (x, y) =>
+      (x.properties.o === a && y.properties.o === b) || (x.properties.o === b && y.properties.o === a));
+    let line = null;
+    for (const l of mesh.coordinates) if (!line || l.length > line.length) line = l;
+    if (!line) continue;
+    const p = line[Math.floor(line.length / 2)].map(r2);
+    (borderPos[a] ||= {})[b] = p;
+    (borderPos[b] ||= {})[a] = p;
+  }
 }
 
 // ---------- ۳) ساخت داده‌ی هر کشور ----------
@@ -108,6 +148,8 @@ for (const [id, [gdp, pop, pct, gov, stab]] of Object.entries(S.BASE)) {
     military,
     energy: { production, consumption },
     terrain: d?.terrain || 'plain',
+    pos: homePos[id] || [0, 0],                // [طول, عرض] محل پایتخت/مرکز
+    borderPos: borderPos[id] || {},            // نقطه‌ی مرزی با هر همسایه‌ی زمینی
     neighbors: [...(landNeighbors[id] || [])].sort(),
     seaNeighbors: [...(seaNeighbors[id] || [])].filter(x => !landNeighbors[id]?.has(x)).sort(),
   };
@@ -124,6 +166,7 @@ S.DEFENSE_PACTS.flat().forEach(m => check(m, 'DEFENSE_PACTS'));
 S.SANCTIONS.flat().forEach(m => check(m, 'SANCTIONS'));
 S.SEA_NEIGHBORS.flat().forEach(m => check(m, 'SEA_NEIGHBORS'));
 Object.keys(S.MACRO).forEach(m => check(m, 'MACRO'));
+Object.keys(S.CAPITAL_POS).forEach(m => check(m, 'CAPITAL_POS'));
 
 // ---------- ۴) نوشتن فایل‌ها ----------
 // داده‌ها به‌صورت فایل .js (نه .json) نوشته می‌شوند تا بازی با دابل‌کلیک روی

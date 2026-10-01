@@ -31,6 +31,20 @@ SG_DATA.countries = {
    "consumption": 2200
   },
   "terrain": "plain",
+  "pos": [
+   -77.04,
+   38.9
+  ],
+  "borderPos": {
+   "MEX": [
+    -102.89,
+    29.22
+   ],
+   "CAN": [
+    -82.2,
+    43.82
+   ]
+  },
   "neighbors": [
    "CAN",
    "MEX"
@@ -71,6 +85,16 @@ SG_DATA.countries = {
    "consumption": 340
   },
   "terrain": "plain",
+  "pos": [
+   -75.7,
+   45.42
+  ],
+  "borderPos": {
+   "USA": [
+    -82.2,
+    43.82
+   ]
+  },
   "neighbors": [
    "USA"
   ],
@@ -106,6 +130,24 @@ SG_DATA.countries = {
    "consumption": 190
   },
   "terrain": "mountain",
+  "pos": [
+   -99.13,
+   19.43
+  ],
+  "borderPos": {
+   "USA": [
+    -102.89,
+    29.22
+   ],
+   "GTM": [
+    -90.45,
+    16.26
+   ],
+   "BLZ": [
+    -88.86,
+    17.93
+   ]
+  },
   "neighbors": [
    "BLZ",
    "GTM",
@@ -143,6 +185,28 @@ SG_DATA.countries = {
    "consumption": 13.2
   },
   "terrain": "plain",
+  "pos": [
+   -90.37,
+   15.69
+  ],
+  "borderPos": {
+   "MEX": [
+    -90.45,
+    16.26
+   ],
+   "HND": [
+    -89.14,
+    15.07
+   ],
+   "SLV": [
+    -89.67,
+    14.18
+   ],
+   "BLZ": [
+    -89.23,
+    16.14
+   ]
+  },
   "neighbors": [
    "BLZ",
    "HND",
@@ -181,6 +245,20 @@ SG_DATA.countries = {
    "consumption": 0.4
   },
   "terrain": "plain",
+  "pos": [
+   -88.72,
+   17.19
+  ],
+  "borderPos": {
+   "MEX": [
+    -88.86,
+    17.93
+   ],
+   "GTM": [
+    -89.23,
+    16.14
+   ]
+  },
   "neighbors": [
    "GTM",
    "MEX"
@@ -217,6 +295,20 @@ SG_DATA.countries = {
    "consumption": 4.2
   },
   "terrain": "plain",
+  "pos": [
+   -88.87,
+   13.74
+  ],
+  "borderPos": {
+   "HND": [
+    -88.45,
+    13.85
+   ],
+   "GTM": [
+    -89.67,
+    14.18
+   ]
+  },
   "neighbors": [
    "GTM",
    "HND"
@@ -253,6 +345,24 @@ SG_DATA.countries = {
    "consumption": 5
   },
   "terrain": "plain",
+  "pos": [
+   -86.62,
+   14.83
+  ],
+  "borderPos": {
+   "NIC": [
+    -85.2,
+    14.39
+   ],
+   "SLV": [
+    -88.45,
+    13.85
+   ],
+   "GTM": [
+    -89.14,
+    15.07
+   ]
+  },
   "neighbors": [
    "GTM",
    "NIC",
@@ -290,6 +400,20 @@ SG_DATA.countries = {
    "consumption": 2.8
   },
   "terrain": "plain",
+  "pos": [
+   -85.03,
+   12.85
+  ],
+  "borderPos": {
+   "HND": [
+    -85.2,
+    14.39
+   ],
+   "CRI": [
+    -84.64,
+    11.05
+   ]
+  },
   "neighbors": [
    "CRI",
    "HND"
@@ -326,6 +450,20 @@ SG_DATA.countries = {
    "consumption": 9.3
   },
   "terrain": "plain",
+  "pos": [
+   -84.19,
+   9.98
+  ],
+  "borderPos": {
+   "PAN": [
+    -82.74,
+    8.95
+   ],
+   "NIC": [
+    -84.64,
+    11.05
+   ]
+  },
   "neighbors": [
    "NIC",
    "PAN"
@@ -362,6 +500,20 @@ SG_DATA.countries = {
    "consumption": 8.6
   },
   "terrain": "plain",
+  "pos": [
+   -80.11,
+   8.53
+  ],
+  "borderPos": {
+   "CRI": [
+    -82.74,
+    8.95
+   ],
+   "COL": [
+    -77.35,
+    7.71
+   ]
+  },
   "neighbors": [
    "COL",
    "CRI"
@@ -398,6 +550,11 @@ SG_DATA.countries = {
    "consumption": 6
   },
   "terrain": "plain",
+  "pos": [
+   -78.91,
+   21.63
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "HTI",
@@ -435,6 +592,11 @@ SG_DATA.countries = {
    "consumption": 2.2
   },
   "terrain": "plain",
+  "pos": [
+   -77.31,
+   18.16
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "CUB"
@@ -470,6 +632,16 @@ SG_DATA.countries = {
    "consumption": 4
   },
   "terrain": "plain",
+  "pos": [
+   -72.68,
+   18.93
+  ],
+  "borderPos": {
+   "DOM": [
+    -71.73,
+    18.86
+   ]
+  },
   "neighbors": [
    "DOM"
   ],
@@ -507,6 +679,16 @@ SG_DATA.countries = {
    "consumption": 13.2
   },
   "terrain": "plain",
+  "pos": [
+   -70.51,
+   18.9
+  ],
+  "borderPos": {
+   "HTI": [
+    -71.73,
+    18.86
+   ]
+  },
   "neighbors": [
    "HTI"
   ],
@@ -542,6 +724,11 @@ SG_DATA.countries = {
    "consumption": 1.4
   },
   "terrain": "plain",
+  "pos": [
+   -78.04,
+   24.7
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "USA"
@@ -577,6 +764,11 @@ SG_DATA.countries = {
    "consumption": 15
   },
   "terrain": "plain",
+  "pos": [
+   -61.29,
+   10.42
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "VEN"
@@ -612,6 +804,11 @@ SG_DATA.countries = {
    "consumption": 0.6
   },
   "terrain": "plain",
+  "pos": [
+   -59.56,
+   13.18
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -645,6 +842,11 @@ SG_DATA.countries = {
    "consumption": 0.2
   },
   "terrain": "plain",
+  "pos": [
+   -61.79,
+   17.08
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -678,6 +880,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   -61.36,
+   15.44
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -711,6 +918,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   -61.68,
+   12.12
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -744,6 +956,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   -62.75,
+   17.33
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -777,6 +994,11 @@ SG_DATA.countries = {
    "consumption": 0.3
   },
   "terrain": "plain",
+  "pos": [
+   -60.97,
+   13.89
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -810,6 +1032,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   -61.2,
+   13.25
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -843,6 +1070,48 @@ SG_DATA.countries = {
    "consumption": 310
   },
   "terrain": "plain",
+  "pos": [
+   -53.24,
+   -10.69
+  ],
+  "borderPos": {
+   "VEN": [
+    -64.23,
+    3.49
+   ],
+   "URY": [
+    -55.09,
+    -31.31
+   ],
+   "SUR": [
+    -55.89,
+    2.49
+   ],
+   "PER": [
+    -73.72,
+    -7.78
+   ],
+   "PRY": [
+    -56.45,
+    -22.08
+   ],
+   "GUY": [
+    -59.67,
+    1.8
+   ],
+   "COL": [
+    -69.15,
+    0.66
+   ],
+   "BOL": [
+    -63.04,
+    -12.75
+   ],
+   "ARG": [
+    -54.88,
+    -27.6
+   ]
+  },
   "neighbors": [
    "ARG",
    "BOL",
@@ -886,6 +1155,32 @@ SG_DATA.countries = {
    "consumption": 85
   },
   "terrain": "plain",
+  "pos": [
+   -64.75,
+   -34.54
+  ],
+  "borderPos": {
+   "URY": [
+    -58.03,
+    -31.42
+   ],
+   "PRY": [
+    -58.19,
+    -26.59
+   ],
+   "CHL": [
+    -71.41,
+    -39.21
+   ],
+   "BRA": [
+    -54.88,
+    -27.6
+   ],
+   "BOL": [
+    -64.84,
+    -22.14
+   ]
+  },
   "neighbors": [
    "BOL",
    "BRA",
@@ -927,6 +1222,32 @@ SG_DATA.countries = {
    "consumption": 45
   },
   "terrain": "plain",
+  "pos": [
+   -73.08,
+   3.9
+  ],
+  "borderPos": {
+   "VEN": [
+    -69.44,
+    6.14
+   ],
+   "PER": [
+    -72.66,
+    -2.36
+   ],
+   "PAN": [
+    -77.35,
+    7.71
+   ],
+   "ECU": [
+    -77,
+    0.3
+   ],
+   "BRA": [
+    -69.15,
+    0.66
+   ]
+  },
   "neighbors": [
    "BRA",
    "ECU",
@@ -966,6 +1287,24 @@ SG_DATA.countries = {
    "consumption": 33.6
   },
   "terrain": "plain",
+  "pos": [
+   -70.95,
+   -34.36
+  ],
+  "borderPos": {
+   "PER": [
+    -69.8,
+    -17.99
+   ],
+   "BOL": [
+    -68.73,
+    -20.15
+   ],
+   "ARG": [
+    -71.41,
+    -39.21
+   ]
+  },
   "neighbors": [
    "ARG",
    "BOL",
@@ -1003,6 +1342,32 @@ SG_DATA.countries = {
    "consumption": 31.3
   },
   "terrain": "plain",
+  "pos": [
+   -74.42,
+   -9.11
+  ],
+  "borderPos": {
+   "ECU": [
+    -78.6,
+    -4.16
+   ],
+   "COL": [
+    -72.66,
+    -2.36
+   ],
+   "CHL": [
+    -69.8,
+    -17.99
+   ],
+   "BRA": [
+    -73.72,
+    -7.78
+   ],
+   "BOL": [
+    -69.36,
+    -14.8
+   ]
+  },
   "neighbors": [
    "BOL",
    "BRA",
@@ -1042,6 +1407,24 @@ SG_DATA.countries = {
    "consumption": 50
   },
   "terrain": "plain",
+  "pos": [
+   -66.18,
+   7.12
+  ],
+  "borderPos": {
+   "GUY": [
+    -60.32,
+    7.09
+   ],
+   "COL": [
+    -69.44,
+    6.14
+   ],
+   "BRA": [
+    -64.23,
+    3.49
+   ]
+  },
   "neighbors": [
    "BRA",
    "COL",
@@ -1081,6 +1464,20 @@ SG_DATA.countries = {
    "consumption": 18
   },
   "terrain": "plain",
+  "pos": [
+   -78.39,
+   -1.44
+  ],
+  "borderPos": {
+   "PER": [
+    -78.6,
+    -4.16
+   ],
+   "COL": [
+    -77,
+    0.3
+   ]
+  },
   "neighbors": [
    "COL",
    "PER"
@@ -1117,6 +1514,32 @@ SG_DATA.countries = {
    "consumption": 6.4
   },
   "terrain": "plain",
+  "pos": [
+   -64.7,
+   -16.68
+  ],
+  "borderPos": {
+   "PER": [
+    -69.36,
+    -14.8
+   ],
+   "PRY": [
+    -61.51,
+    -19.61
+   ],
+   "CHL": [
+    -68.73,
+    -20.15
+   ],
+   "BRA": [
+    -63.04,
+    -12.75
+   ],
+   "ARG": [
+    -64.84,
+    -22.14
+   ]
+  },
   "neighbors": [
    "ARG",
    "BRA",
@@ -1156,6 +1579,24 @@ SG_DATA.countries = {
    "consumption": 5.1
   },
   "terrain": "plain",
+  "pos": [
+   -58.44,
+   -23.21
+  ],
+  "borderPos": {
+   "BRA": [
+    -56.45,
+    -22.08
+   ],
+   "BOL": [
+    -61.51,
+    -19.61
+   ],
+   "ARG": [
+    -58.19,
+    -26.59
+   ]
+  },
   "neighbors": [
    "ARG",
    "BOL",
@@ -1193,6 +1634,20 @@ SG_DATA.countries = {
    "consumption": 8
   },
   "terrain": "plain",
+  "pos": [
+   -56.03,
+   -32.79
+  ],
+  "borderPos": {
+   "BRA": [
+    -55.09,
+    -31.31
+   ],
+   "ARG": [
+    -58.03,
+    -31.42
+   ]
+  },
   "neighbors": [
    "ARG",
    "BRA"
@@ -1229,6 +1684,24 @@ SG_DATA.countries = {
    "consumption": 2.4
   },
   "terrain": "plain",
+  "pos": [
+   -58.98,
+   4.79
+  ],
+  "borderPos": {
+   "VEN": [
+    -60.32,
+    7.09
+   ],
+   "SUR": [
+    -57.65,
+    3.52
+   ],
+   "BRA": [
+    -59.67,
+    1.8
+   ]
+  },
   "neighbors": [
    "BRA",
    "SUR",
@@ -1266,6 +1739,20 @@ SG_DATA.countries = {
    "consumption": 0.5
   },
   "terrain": "plain",
+  "pos": [
+   -55.91,
+   4.13
+  ],
+  "borderPos": {
+   "GUY": [
+    -57.65,
+    3.52
+   ],
+   "BRA": [
+    -55.89,
+    2.49
+   ]
+  },
   "neighbors": [
    "BRA",
    "GUY"
@@ -1302,6 +1789,16 @@ SG_DATA.countries = {
    "consumption": 170
   },
   "terrain": "plain",
+  "pos": [
+   -0.13,
+   51.5
+  ],
+  "borderPos": {
+   "IRL": [
+    -7.61,
+    54.14
+   ]
+  },
   "neighbors": [
    "IRL"
   ],
@@ -1345,6 +1842,44 @@ SG_DATA.countries = {
    "consumption": 230
   },
   "terrain": "plain",
+  "pos": [
+   2.35,
+   48.86
+  ],
+  "borderPos": {
+   "CHE": [
+    6.11,
+    46.52
+   ],
+   "ESP": [
+    -0.55,
+    42.8
+   ],
+   "DEU": [
+    7.45,
+    49.15
+   ],
+   "MCO": [
+    7.41,
+    43.77
+   ],
+   "LUX": [
+    6.01,
+    49.45
+   ],
+   "ITA": [
+    6.94,
+    44.86
+   ],
+   "BEL": [
+    4.16,
+    50.13
+   ],
+   "AND": [
+    1.71,
+    42.6
+   ]
+  },
   "neighbors": [
    "AND",
    "BEL",
@@ -1391,6 +1926,48 @@ SG_DATA.countries = {
    "consumption": 290
   },
   "terrain": "plain",
+  "pos": [
+   13.4,
+   52.52
+  ],
+  "borderPos": {
+   "CHE": [
+    8.4,
+    47.69
+   ],
+   "POL": [
+    14.69,
+    52.15
+   ],
+   "NLD": [
+    6.52,
+    51.85
+   ],
+   "LUX": [
+    6.49,
+    49.8
+   ],
+   "FRA": [
+    7.45,
+    49.15
+   ],
+   "DNK": [
+    9.34,
+    54.81
+   ],
+   "CZE": [
+    12.45,
+    50.35
+   ],
+   "BEL": [
+    6.2,
+    50.5
+   ],
+   "AUT": [
+    12.36,
+    47.69
+   ]
+  },
   "neighbors": [
    "AUT",
    "BEL",
@@ -1436,6 +2013,36 @@ SG_DATA.countries = {
    "consumption": 150
   },
   "terrain": "mountain",
+  "pos": [
+   12.5,
+   41.9
+  ],
+  "borderPos": {
+   "CHE": [
+    9.07,
+    46.1
+   ],
+   "VAT": [
+    12.43,
+    41.91
+   ],
+   "SVN": [
+    13.55,
+    46.09
+   ],
+   "SMR": [
+    12.44,
+    43.98
+   ],
+   "FRA": [
+    6.94,
+    44.86
+   ],
+   "AUT": [
+    11.97,
+    47.04
+   ]
+  },
   "neighbors": [
    "AUT",
    "CHE",
@@ -1482,6 +2089,24 @@ SG_DATA.countries = {
    "consumption": 120
   },
   "terrain": "plain",
+  "pos": [
+   -3.7,
+   40.42
+  ],
+  "borderPos": {
+   "PRT": [
+    -6.88,
+    41.06
+   ],
+   "FRA": [
+    -0.55,
+    42.8
+   ],
+   "AND": [
+    1.45,
+    42.44
+   ]
+  },
   "neighbors": [
    "AND",
    "FRA",
@@ -1521,6 +2146,16 @@ SG_DATA.countries = {
    "consumption": 30.4
   },
   "terrain": "plain",
+  "pos": [
+   -7.98,
+   39.65
+  ],
+  "borderPos": {
+   "ESP": [
+    -6.88,
+    41.06
+   ]
+  },
   "neighbors": [
    "ESP"
   ],
@@ -1556,6 +2191,20 @@ SG_DATA.countries = {
    "consumption": 65
   },
   "terrain": "plain",
+  "pos": [
+   5.63,
+   52.28
+  ],
+  "borderPos": {
+   "DEU": [
+    6.52,
+    51.85
+   ],
+   "BEL": [
+    4.82,
+    51.41
+   ]
+  },
   "neighbors": [
    "BEL",
    "DEU"
@@ -1594,6 +2243,28 @@ SG_DATA.countries = {
    "consumption": 63
   },
   "terrain": "plain",
+  "pos": [
+   4.65,
+   50.64
+  ],
+  "borderPos": {
+   "NLD": [
+    4.82,
+    51.41
+   ],
+   "LUX": [
+    5.74,
+    49.88
+   ],
+   "DEU": [
+    6.2,
+    50.5
+   ],
+   "FRA": [
+    4.16,
+    50.13
+   ]
+  },
   "neighbors": [
    "DEU",
    "FRA",
@@ -1634,6 +2305,24 @@ SG_DATA.countries = {
    "consumption": 8.7
   },
   "terrain": "plain",
+  "pos": [
+   6.07,
+   49.77
+  ],
+  "borderPos": {
+   "DEU": [
+    6.49,
+    49.8
+   ],
+   "FRA": [
+    6.01,
+    49.45
+   ],
+   "BEL": [
+    5.74,
+    49.88
+   ]
+  },
   "neighbors": [
    "BEL",
    "DEU",
@@ -1671,6 +2360,32 @@ SG_DATA.countries = {
    "consumption": 25
   },
   "terrain": "plain",
+  "pos": [
+   8.21,
+   46.8
+  ],
+  "borderPos": {
+   "LIE": [
+    9.49,
+    47.06
+   ],
+   "ITA": [
+    9.07,
+    46.1
+   ],
+   "DEU": [
+    8.4,
+    47.69
+   ],
+   "FRA": [
+    6.11,
+    46.52
+   ],
+   "AUT": [
+    10,
+    46.88
+   ]
+  },
   "neighbors": [
    "AUT",
    "DEU",
@@ -1710,6 +2425,44 @@ SG_DATA.countries = {
    "consumption": 50
   },
   "terrain": "plain",
+  "pos": [
+   14.11,
+   47.59
+  ],
+  "borderPos": {
+   "CHE": [
+    10,
+    46.88
+   ],
+   "SVK": [
+    16.86,
+    48.44
+   ],
+   "SVN": [
+    14.84,
+    46.58
+   ],
+   "LIE": [
+    9.57,
+    47.16
+   ],
+   "ITA": [
+    11.97,
+    47.04
+   ],
+   "HUN": [
+    16.64,
+    47.61
+   ],
+   "DEU": [
+    12.36,
+    47.69
+   ],
+   "CZE": [
+    15.16,
+    48.95
+   ]
+  },
   "neighbors": [
    "CHE",
    "CZE",
@@ -1752,6 +2505,16 @@ SG_DATA.countries = {
    "consumption": 54.8
   },
   "terrain": "plain",
+  "pos": [
+   -8.14,
+   53.16
+  ],
+  "borderPos": {
+   "GBR": [
+    -7.61,
+    54.14
+   ]
+  },
   "neighbors": [
    "GBR"
   ],
@@ -1789,6 +2552,16 @@ SG_DATA.countries = {
    "consumption": 40.5
   },
   "terrain": "plain",
+  "pos": [
+   9.35,
+   56.23
+  ],
+  "borderPos": {
+   "DEU": [
+    9.34,
+    54.81
+   ]
+  },
   "neighbors": [
    "DEU"
   ],
@@ -1827,6 +2600,24 @@ SG_DATA.countries = {
    "consumption": 45
   },
   "terrain": "mountain",
+  "pos": [
+   10.75,
+   59.91
+  ],
+  "borderPos": {
+   "SWE": [
+    14.14,
+    64.17
+   ],
+   "RUS": [
+    30.2,
+    69.58
+   ],
+   "FIN": [
+    25.25,
+    68.82
+   ]
+  },
   "neighbors": [
    "FIN",
    "RUS",
@@ -1866,6 +2657,20 @@ SG_DATA.countries = {
    "consumption": 60.1
   },
   "terrain": "plain",
+  "pos": [
+   16.25,
+   62.43
+  ],
+  "borderPos": {
+   "NOR": [
+    14.14,
+    64.17
+   ],
+   "FIN": [
+    23.46,
+    67.46
+   ]
+  },
   "neighbors": [
    "FIN",
    "NOR"
@@ -1908,6 +2713,24 @@ SG_DATA.countries = {
    "consumption": 28.7
   },
   "terrain": "plain",
+  "pos": [
+   26.21,
+   64.26
+  ],
+  "borderPos": {
+   "SWE": [
+    23.46,
+    67.46
+   ],
+   "RUS": [
+    29.81,
+    65.11
+   ],
+   "NOR": [
+    25.25,
+    68.82
+   ]
+  },
   "neighbors": [
    "NOR",
    "RUS",
@@ -1947,6 +2770,11 @@ SG_DATA.countries = {
    "consumption": 3.3
   },
   "terrain": "plain",
+  "pos": [
+   -18.58,
+   65
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "GBR"
@@ -1982,6 +2810,40 @@ SG_DATA.countries = {
    "consumption": 105
   },
   "terrain": "plain",
+  "pos": [
+   21.01,
+   52.23
+  ],
+  "borderPos": {
+   "UKR": [
+    23.71,
+    50.38
+   ],
+   "SVK": [
+    20.16,
+    49.32
+   ],
+   "RUS": [
+    20.67,
+    54.41
+   ],
+   "LTU": [
+    23.17,
+    54.28
+   ],
+   "DEU": [
+    14.69,
+    52.15
+   ],
+   "CZE": [
+    16.84,
+    50.19
+   ],
+   "BLR": [
+    23.18,
+    52.29
+   ]
+  },
   "neighbors": [
    "BLR",
    "CZE",
@@ -2025,6 +2887,28 @@ SG_DATA.countries = {
    "consumption": 35.8
   },
   "terrain": "plain",
+  "pos": [
+   15.32,
+   49.74
+  ],
+  "borderPos": {
+   "SVK": [
+    18.08,
+    49.07
+   ],
+   "POL": [
+    16.84,
+    50.19
+   ],
+   "DEU": [
+    12.45,
+    50.35
+   ],
+   "AUT": [
+    15.16,
+    48.95
+   ]
+  },
   "neighbors": [
    "AUT",
    "DEU",
@@ -2063,6 +2947,32 @@ SG_DATA.countries = {
    "consumption": 14.3
   },
   "terrain": "plain",
+  "pos": [
+   19.47,
+   48.71
+  ],
+  "borderPos": {
+   "UKR": [
+    22.39,
+    48.87
+   ],
+   "POL": [
+    20.16,
+    49.32
+   ],
+   "HUN": [
+    19.71,
+    48.2
+   ],
+   "CZE": [
+    18.08,
+    49.07
+   ],
+   "AUT": [
+    16.86,
+    48.44
+   ]
+  },
   "neighbors": [
    "AUT",
    "CZE",
@@ -2102,6 +3012,40 @@ SG_DATA.countries = {
    "consumption": 23
   },
   "terrain": "plain",
+  "pos": [
+   19.38,
+   47.17
+  ],
+  "borderPos": {
+   "UKR": [
+    22.52,
+    48.21
+   ],
+   "SVK": [
+    19.71,
+    48.2
+   ],
+   "SVN": [
+    16.37,
+    46.7
+   ],
+   "SRB": [
+    19.39,
+    46.05
+   ],
+   "ROU": [
+    21.49,
+    46.79
+   ],
+   "HRV": [
+    17.71,
+    45.83
+   ],
+   "AUT": [
+    16.64,
+    47.61
+   ]
+  },
   "neighbors": [
    "AUT",
    "HRV",
@@ -2143,6 +3087,32 @@ SG_DATA.countries = {
    "consumption": 38.9
   },
   "terrain": "plain",
+  "pos": [
+   24.98,
+   45.85
+  ],
+  "borderPos": {
+   "UKR": [
+    24.49,
+    47.95
+   ],
+   "SRB": [
+    21.35,
+    45.01
+   ],
+   "MDA": [
+    27.97,
+    47.04
+   ],
+   "HUN": [
+    21.49,
+    46.79
+   ],
+   "BGR": [
+    25.68,
+    43.71
+   ]
+  },
   "neighbors": [
    "BGR",
    "HUN",
@@ -2184,6 +3154,32 @@ SG_DATA.countries = {
    "consumption": 11.8
   },
   "terrain": "plain",
+  "pos": [
+   25.21,
+   42.77
+  ],
+  "borderPos": {
+   "TUR": [
+    27.01,
+    42.06
+   ],
+   "SRB": [
+    22.98,
+    43.19
+   ],
+   "ROU": [
+    25.68,
+    43.71
+   ],
+   "MKD": [
+    22.94,
+    41.78
+   ],
+   "GRC": [
+    24.77,
+    41.36
+   ]
+  },
   "neighbors": [
    "GRC",
    "MKD",
@@ -2223,6 +3219,28 @@ SG_DATA.countries = {
    "consumption": 22
   },
   "terrain": "mountain",
+  "pos": [
+   23.73,
+   37.98
+  ],
+  "borderPos": {
+   "TUR": [
+    26.33,
+    41.24
+   ],
+   "MKD": [
+    21.99,
+    41.13
+   ],
+   "BGR": [
+    24.77,
+    41.36
+   ],
+   "ALB": [
+    20.41,
+    40.05
+   ]
+  },
   "neighbors": [
    "ALB",
    "BGR",
@@ -2264,6 +3282,32 @@ SG_DATA.countries = {
    "consumption": 9.6
   },
   "terrain": "plain",
+  "pos": [
+   16.42,
+   45.16
+  ],
+  "borderPos": {
+   "SVN": [
+    15.29,
+    45.61
+   ],
+   "SRB": [
+    19.35,
+    45.25
+   ],
+   "MNE": [
+    18.44,
+    42.52
+   ],
+   "HUN": [
+    17.71,
+    45.83
+   ],
+   "BIH": [
+    16.23,
+    45.03
+   ]
+  },
   "neighbors": [
    "BIH",
    "HUN",
@@ -2303,6 +3347,28 @@ SG_DATA.countries = {
    "consumption": 7.1
   },
   "terrain": "plain",
+  "pos": [
+   14.8,
+   46.12
+  ],
+  "borderPos": {
+   "ITA": [
+    13.55,
+    46.09
+   ],
+   "HUN": [
+    16.37,
+    46.7
+   ],
+   "HRV": [
+    15.29,
+    45.61
+   ],
+   "AUT": [
+    14.84,
+    46.58
+   ]
+  },
   "neighbors": [
    "AUT",
    "HRV",
@@ -2341,6 +3407,44 @@ SG_DATA.countries = {
    "consumption": 9.5
   },
   "terrain": "plain",
+  "pos": [
+   20.81,
+   44.21
+  ],
+  "borderPos": {
+   "XKX": [
+    20.97,
+    43.12
+   ],
+   "ROU": [
+    21.35,
+    45.01
+   ],
+   "MNE": [
+    19.67,
+    43.16
+   ],
+   "MKD": [
+    21.98,
+    42.32
+   ],
+   "HUN": [
+    19.39,
+    46.05
+   ],
+   "HRV": [
+    19.35,
+    45.25
+   ],
+   "BGR": [
+    22.98,
+    43.19
+   ],
+   "BIH": [
+    19.55,
+    44.07
+   ]
+  },
   "neighbors": [
    "BGR",
    "BIH",
@@ -2383,6 +3487,24 @@ SG_DATA.countries = {
    "consumption": 3.2
   },
   "terrain": "plain",
+  "pos": [
+   17.77,
+   44.17
+  ],
+  "borderPos": {
+   "SRB": [
+    19.55,
+    44.07
+   ],
+   "MNE": [
+    18.75,
+    43.28
+   ],
+   "HRV": [
+    16.23,
+    45.03
+   ]
+  },
   "neighbors": [
    "HRV",
    "MNE",
@@ -2420,6 +3542,32 @@ SG_DATA.countries = {
    "consumption": 0.8
   },
   "terrain": "plain",
+  "pos": [
+   19.24,
+   42.79
+  ],
+  "borderPos": {
+   "SRB": [
+    19.67,
+    43.16
+   ],
+   "XKX": [
+    20.03,
+    42.73
+   ],
+   "HRV": [
+    18.44,
+    42.52
+   ],
+   "BIH": [
+    18.75,
+    43.28
+   ],
+   "ALB": [
+    19.6,
+    42.57
+   ]
+  },
   "neighbors": [
    "ALB",
    "BIH",
@@ -2459,6 +3607,32 @@ SG_DATA.countries = {
    "consumption": 1.7
   },
   "terrain": "plain",
+  "pos": [
+   21.68,
+   41.6
+  ],
+  "borderPos": {
+   "SRB": [
+    21.98,
+    42.32
+   ],
+   "XKX": [
+    21.14,
+    42.18
+   ],
+   "GRC": [
+    21.99,
+    41.13
+   ],
+   "BGR": [
+    22.94,
+    41.78
+   ],
+   "ALB": [
+    20.49,
+    41.27
+   ]
+  },
   "neighbors": [
    "ALB",
    "BGR",
@@ -2498,6 +3672,28 @@ SG_DATA.countries = {
    "consumption": 2.8
   },
   "terrain": "plain",
+  "pos": [
+   20.05,
+   41.13
+  ],
+  "borderPos": {
+   "MNE": [
+    19.6,
+    42.57
+   ],
+   "MKD": [
+    20.49,
+    41.27
+   ],
+   "XKX": [
+    20.41,
+    42.28
+   ],
+   "GRC": [
+    20.41,
+    40.05
+   ]
+  },
   "neighbors": [
    "GRC",
    "MKD",
@@ -2538,6 +3734,28 @@ SG_DATA.countries = {
    "consumption": 1.2
   },
   "terrain": "plain",
+  "pos": [
+   20.87,
+   42.57
+  ],
+  "borderPos": {
+   "SRB": [
+    20.97,
+    43.12
+   ],
+   "MNE": [
+    20.03,
+    42.73
+   ],
+   "MKD": [
+    21.14,
+    42.18
+   ],
+   "ALB": [
+    20.41,
+    42.28
+   ]
+  },
   "neighbors": [
    "ALB",
    "MKD",
@@ -2576,6 +3794,20 @@ SG_DATA.countries = {
    "consumption": 4.2
   },
   "terrain": "plain",
+  "pos": [
+   25.84,
+   58.68
+  ],
+  "borderPos": {
+   "RUS": [
+    27.53,
+    58.38
+   ],
+   "LVA": [
+    25.72,
+    57.91
+   ]
+  },
   "neighbors": [
    "LVA",
    "RUS"
@@ -2614,6 +3846,28 @@ SG_DATA.countries = {
    "consumption": 4.3
   },
   "terrain": "plain",
+  "pos": [
+   24.92,
+   56.86
+  ],
+  "borderPos": {
+   "LTU": [
+    24.37,
+    56.28
+   ],
+   "RUS": [
+    27.66,
+    56.84
+   ],
+   "EST": [
+    25.72,
+    57.91
+   ],
+   "BLR": [
+    27.46,
+    55.8
+   ]
+  },
   "neighbors": [
    "BLR",
    "EST",
@@ -2652,6 +3906,28 @@ SG_DATA.countries = {
    "consumption": 8.1
   },
   "terrain": "plain",
+  "pos": [
+   23.9,
+   55.32
+  ],
+  "borderPos": {
+   "RUS": [
+    22.57,
+    55.06
+   ],
+   "POL": [
+    23.17,
+    54.28
+   ],
+   "LVA": [
+    24.37,
+    56.28
+   ],
+   "BLR": [
+    25.7,
+    54.29
+   ]
+  },
   "neighbors": [
    "BLR",
    "LVA",
@@ -2692,6 +3968,32 @@ SG_DATA.countries = {
    "consumption": 25
   },
   "terrain": "plain",
+  "pos": [
+   27.56,
+   53.9
+  ],
+  "borderPos": {
+   "UKR": [
+    28.29,
+    51.58
+   ],
+   "RUS": [
+    31.08,
+    54.52
+   ],
+   "POL": [
+    23.18,
+    52.29
+   ],
+   "LTU": [
+    25.7,
+    54.29
+   ],
+   "LVA": [
+    27.46,
+    55.8
+   ]
+  },
   "neighbors": [
    "LTU",
    "LVA",
@@ -2731,6 +4033,40 @@ SG_DATA.countries = {
    "consumption": 85
   },
   "terrain": "plain",
+  "pos": [
+   30.52,
+   50.45
+  ],
+  "borderPos": {
+   "SVK": [
+    22.39,
+    48.87
+   ],
+   "RUS": [
+    37.95,
+    49.96
+   ],
+   "ROU": [
+    24.49,
+    47.95
+   ],
+   "POL": [
+    23.71,
+    50.38
+   ],
+   "MDA": [
+    29.51,
+    47.09
+   ],
+   "HUN": [
+    22.52,
+    48.21
+   ],
+   "BLR": [
+    28.29,
+    51.58
+   ]
+  },
   "neighbors": [
    "BLR",
    "HUN",
@@ -2774,6 +4110,20 @@ SG_DATA.countries = {
    "consumption": 2.1
   },
   "terrain": "plain",
+  "pos": [
+   28.47,
+   47.19
+  ],
+  "borderPos": {
+   "UKR": [
+    29.51,
+    47.09
+   ],
+   "ROU": [
+    27.97,
+    47.04
+   ]
+  },
   "neighbors": [
    "ROU",
    "UKR"
@@ -2810,6 +4160,11 @@ SG_DATA.countries = {
    "consumption": 3.5
   },
   "terrain": "plain",
+  "pos": [
+   33.01,
+   34.92
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "GRC",
@@ -2849,6 +4204,11 @@ SG_DATA.countries = {
    "consumption": 2.3
   },
   "terrain": "plain",
+  "pos": [
+   14.44,
+   35.89
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "ITA"
@@ -2884,6 +4244,20 @@ SG_DATA.countries = {
    "consumption": 0.4
   },
   "terrain": "plain",
+  "pos": [
+   1.56,
+   42.54
+  ],
+  "borderPos": {
+   "ESP": [
+    1.45,
+    42.44
+   ],
+   "FRA": [
+    1.71,
+    42.6
+   ]
+  },
   "neighbors": [
    "ESP",
    "FRA"
@@ -2920,6 +4294,16 @@ SG_DATA.countries = {
    "consumption": 0.8
   },
   "terrain": "plain",
+  "pos": [
+   7.41,
+   43.75
+  ],
+  "borderPos": {
+   "FRA": [
+    7.41,
+    43.77
+   ]
+  },
   "neighbors": [
    "FRA"
   ],
@@ -2955,6 +4339,16 @@ SG_DATA.countries = {
    "consumption": 0.2
   },
   "terrain": "plain",
+  "pos": [
+   12.46,
+   43.94
+  ],
+  "borderPos": {
+   "ITA": [
+    12.44,
+    43.98
+   ]
+  },
   "neighbors": [
    "ITA"
   ],
@@ -2990,6 +4384,20 @@ SG_DATA.countries = {
    "consumption": 0.6
   },
   "terrain": "plain",
+  "pos": [
+   9.54,
+   47.14
+  ],
+  "borderPos": {
+   "CHE": [
+    9.49,
+    47.06
+   ],
+   "AUT": [
+    9.57,
+    47.16
+   ]
+  },
   "neighbors": [
    "AUT",
    "CHE"
@@ -3026,6 +4434,16 @@ SG_DATA.countries = {
    "consumption": 0
   },
   "terrain": "plain",
+  "pos": [
+   12.43,
+   41.9
+  ],
+  "borderPos": {
+   "ITA": [
+    12.43,
+    41.91
+   ]
+  },
   "neighbors": [
    "ITA"
   ],
@@ -3061,6 +4479,68 @@ SG_DATA.countries = {
    "consumption": 800
   },
   "terrain": "plain",
+  "pos": [
+   37.62,
+   55.75
+  ],
+  "borderPos": {
+   "UKR": [
+    37.95,
+    49.96
+   ],
+   "POL": [
+    20.67,
+    54.41
+   ],
+   "NOR": [
+    30.2,
+    69.58
+   ],
+   "PRK": [
+    130.62,
+    42.42
+   ],
+   "MNG": [
+    97.95,
+    51.35
+   ],
+   "LTU": [
+    22.57,
+    55.06
+   ],
+   "LVA": [
+    27.66,
+    56.84
+   ],
+   "KAZ": [
+    61.93,
+    53.95
+   ],
+   "GEO": [
+    43.83,
+    42.57
+   ],
+   "FIN": [
+    29.81,
+    65.11
+   ],
+   "EST": [
+    27.53,
+    58.38
+   ],
+   "CHN": [
+    129.59,
+    49.29
+   ],
+   "BLR": [
+    31.08,
+    54.52
+   ],
+   "AZE": [
+    47.21,
+    41.46
+   ]
+  },
   "neighbors": [
    "AZE",
    "BLR",
@@ -3115,6 +4595,44 @@ SG_DATA.countries = {
    "consumption": 165
   },
   "terrain": "mountain",
+  "pos": [
+   32.86,
+   39.93
+  ],
+  "borderPos": {
+   "SYR": [
+    38.19,
+    36.9
+   ],
+   "IRQ": [
+    44.01,
+    37.31
+   ],
+   "IRN": [
+    44.32,
+    38.37
+   ],
+   "GRC": [
+    26.33,
+    41.24
+   ],
+   "GEO": [
+    42.76,
+    41.58
+   ],
+   "BGR": [
+    27.01,
+    42.06
+   ],
+   "AZE": [
+    44.78,
+    39.68
+   ],
+   "ARM": [
+    43.68,
+    40.24
+   ]
+  },
   "neighbors": [
    "ARM",
    "AZE",
@@ -3162,6 +4680,40 @@ SG_DATA.countries = {
    "consumption": 300
   },
   "terrain": "mountain",
+  "pos": [
+   51.39,
+   35.69
+  ],
+  "borderPos": {
+   "TKM": [
+    57.98,
+    37.83
+   ],
+   "TUR": [
+    44.32,
+    38.37
+   ],
+   "PAK": [
+    63.26,
+    27.21
+   ],
+   "IRQ": [
+    45.4,
+    33.97
+   ],
+   "AZE": [
+    48.13,
+    39.17
+   ],
+   "ARM": [
+    46.32,
+    38.91
+   ],
+   "AFG": [
+    60.49,
+    33.71
+   ]
+  },
   "neighbors": [
    "AFG",
    "ARM",
@@ -3212,6 +4764,36 @@ SG_DATA.countries = {
    "consumption": 60
   },
   "terrain": "desert",
+  "pos": [
+   44.36,
+   33.31
+  ],
+  "borderPos": {
+   "TUR": [
+    44.01,
+    37.31
+   ],
+   "SYR": [
+    41.36,
+    35.64
+   ],
+   "SAU": [
+    42.56,
+    30.72
+   ],
+   "KWT": [
+    47.15,
+    30
+   ],
+   "JOR": [
+    38.98,
+    32.47
+   ],
+   "IRN": [
+    45.4,
+    33.97
+   ]
+  },
   "neighbors": [
    "IRN",
    "JOR",
@@ -3252,6 +4834,40 @@ SG_DATA.countries = {
    "consumption": 280
   },
   "terrain": "desert",
+  "pos": [
+   46.68,
+   24.71
+  ],
+  "borderPos": {
+   "ARE": [
+    52.51,
+    22.99
+   ],
+   "YEM": [
+    45.24,
+    17.41
+   ],
+   "QAT": [
+    51.02,
+    24.57
+   ],
+   "OMN": [
+    55.09,
+    20.35
+   ],
+   "KWT": [
+    47.55,
+    28.73
+   ],
+   "JOR": [
+    37.65,
+    30.33
+   ],
+   "IRQ": [
+    42.56,
+    30.72
+   ]
+  },
   "neighbors": [
    "ARE",
    "IRQ",
@@ -3299,6 +4915,20 @@ SG_DATA.countries = {
    "consumption": 120
   },
   "terrain": "desert",
+  "pos": [
+   54.37,
+   24.45
+  ],
+  "borderPos": {
+   "SAU": [
+    52.51,
+    22.99
+   ],
+   "OMN": [
+    55.8,
+    24.38
+   ]
+  },
   "neighbors": [
    "OMN",
    "SAU"
@@ -3337,6 +4967,16 @@ SG_DATA.countries = {
    "consumption": 60
   },
   "terrain": "desert",
+  "pos": [
+   51.53,
+   25.29
+  ],
+  "borderPos": {
+   "SAU": [
+    51.02,
+    24.57
+   ]
+  },
   "neighbors": [
    "SAU"
   ],
@@ -3375,6 +5015,20 @@ SG_DATA.countries = {
    "consumption": 45
   },
   "terrain": "desert",
+  "pos": [
+   47.98,
+   29.37
+  ],
+  "borderPos": {
+   "SAU": [
+    47.55,
+    28.73
+   ],
+   "IRQ": [
+    47.15,
+    30
+   ]
+  },
   "neighbors": [
    "IRQ",
    "SAU"
@@ -3413,6 +5067,11 @@ SG_DATA.countries = {
    "consumption": 20
   },
   "terrain": "urban",
+  "pos": [
+   50.58,
+   26.23
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "IRN",
@@ -3450,6 +5109,24 @@ SG_DATA.countries = {
    "consumption": 35
   },
   "terrain": "desert",
+  "pos": [
+   58.41,
+   23.59
+  ],
+  "borderPos": {
+   "ARE": [
+    55.8,
+    24.38
+   ],
+   "YEM": [
+    52.51,
+    17.8
+   ],
+   "SAU": [
+    55.09,
+    20.35
+   ]
+  },
   "neighbors": [
    "ARE",
    "SAU",
@@ -3489,6 +5166,20 @@ SG_DATA.countries = {
    "consumption": 5
   },
   "terrain": "plain",
+  "pos": [
+   47.52,
+   15.94
+  ],
+  "borderPos": {
+   "SAU": [
+    45.24,
+    17.41
+   ],
+   "OMN": [
+    52.51,
+    17.8
+   ]
+  },
   "neighbors": [
    "OMN",
    "SAU"
@@ -3528,6 +5219,32 @@ SG_DATA.countries = {
    "consumption": 10
   },
   "terrain": "desert",
+  "pos": [
+   35.93,
+   31.95
+  ],
+  "borderPos": {
+   "SYR": [
+    36.82,
+    32.32
+   ],
+   "SAU": [
+    37.65,
+    30.33
+   ],
+   "PSE": [
+    35.53,
+    31.98
+   ],
+   "ISR": [
+    35.24,
+    30.67
+   ],
+   "IRQ": [
+    38.98,
+    32.47
+   ]
+  },
   "neighbors": [
    "IRQ",
    "ISR",
@@ -3567,6 +5284,32 @@ SG_DATA.countries = {
    "consumption": 25
   },
   "terrain": "urban",
+  "pos": [
+   34.78,
+   32.08
+  ],
+  "borderPos": {
+   "SYR": [
+    35.9,
+    33.14
+   ],
+   "LBN": [
+    35.58,
+    33.27
+   ],
+   "JOR": [
+    35.24,
+    30.67
+   ],
+   "PSE": [
+    34.96,
+    31.82
+   ],
+   "EGY": [
+    34.53,
+    30.45
+   ]
+  },
   "neighbors": [
    "EGY",
    "JOR",
@@ -3608,6 +5351,24 @@ SG_DATA.countries = {
    "consumption": 2.4
   },
   "terrain": "plain",
+  "pos": [
+   35.25,
+   31.95
+  ],
+  "borderPos": {
+   "JOR": [
+    35.53,
+    31.98
+   ],
+   "ISR": [
+    34.96,
+    31.82
+   ],
+   "EGY": [
+    34.21,
+    31.29
+   ]
+  },
   "neighbors": [
    "EGY",
    "ISR",
@@ -3645,6 +5406,20 @@ SG_DATA.countries = {
    "consumption": 8
   },
   "terrain": "mountain",
+  "pos": [
+   35.5,
+   33.89
+  ],
+  "borderPos": {
+   "SYR": [
+    36.28,
+    33.89
+   ],
+   "ISR": [
+    35.58,
+    33.27
+   ]
+  },
   "neighbors": [
    "ISR",
    "SYR"
@@ -3683,6 +5458,32 @@ SG_DATA.countries = {
    "consumption": 12
   },
   "terrain": "mountain",
+  "pos": [
+   36.29,
+   33.51
+  ],
+  "borderPos": {
+   "TUR": [
+    38.19,
+    36.9
+   ],
+   "LBN": [
+    36.28,
+    33.89
+   ],
+   "JOR": [
+    36.82,
+    32.32
+   ],
+   "ISR": [
+    35.9,
+    33.14
+   ],
+   "IRQ": [
+    41.36,
+    35.64
+   ]
+  },
   "neighbors": [
    "IRQ",
    "ISR",
@@ -3724,6 +5525,28 @@ SG_DATA.countries = {
    "consumption": 95
   },
   "terrain": "desert",
+  "pos": [
+   31.24,
+   30.04
+  ],
+  "borderPos": {
+   "SDN": [
+    31.46,
+    22.19
+   ],
+   "LBY": [
+    24.98,
+    27.83
+   ],
+   "ISR": [
+    34.53,
+    30.45
+   ],
+   "PSE": [
+    34.21,
+    31.29
+   ]
+  },
   "neighbors": [
    "ISR",
    "LBY",
@@ -3764,6 +5587,32 @@ SG_DATA.countries = {
    "consumption": 17
   },
   "terrain": "mountain",
+  "pos": [
+   49.87,
+   40.41
+  ],
+  "borderPos": {
+   "TUR": [
+    44.78,
+    39.68
+   ],
+   "RUS": [
+    47.21,
+    41.46
+   ],
+   "IRN": [
+    48.13,
+    39.17
+   ],
+   "GEO": [
+    46.63,
+    41.16
+   ],
+   "ARM": [
+    45.63,
+    40.01
+   ]
+  },
   "neighbors": [
    "ARM",
    "GEO",
@@ -3806,6 +5655,28 @@ SG_DATA.countries = {
    "consumption": 4
   },
   "terrain": "mountain",
+  "pos": [
+   44.51,
+   40.18
+  ],
+  "borderPos": {
+   "TUR": [
+    43.68,
+    40.24
+   ],
+   "IRN": [
+    46.32,
+    38.91
+   ],
+   "GEO": [
+    44.23,
+    41.21
+   ],
+   "AZE": [
+    45.63,
+    40.01
+   ]
+  },
   "neighbors": [
    "AZE",
    "GEO",
@@ -3844,6 +5715,28 @@ SG_DATA.countries = {
    "consumption": 5
   },
   "terrain": "mountain",
+  "pos": [
+   44.79,
+   41.72
+  ],
+  "borderPos": {
+   "TUR": [
+    42.76,
+    41.58
+   ],
+   "RUS": [
+    43.83,
+    42.57
+   ],
+   "AZE": [
+    46.63,
+    41.16
+   ],
+   "ARM": [
+    44.23,
+    41.21
+   ]
+  },
   "neighbors": [
    "ARM",
    "AZE",
@@ -3882,6 +5775,28 @@ SG_DATA.countries = {
    "consumption": 40
   },
   "terrain": "desert",
+  "pos": [
+   58.38,
+   37.95
+  ],
+  "borderPos": {
+   "UZB": [
+    60.11,
+    41.91
+   ],
+   "KAZ": [
+    54.86,
+    41.97
+   ],
+   "IRN": [
+    57.98,
+    37.83
+   ],
+   "AFG": [
+    63.18,
+    35.86
+   ]
+  },
   "neighbors": [
    "AFG",
    "IRN",
@@ -3922,6 +5837,32 @@ SG_DATA.countries = {
    "consumption": 50
   },
   "terrain": "plain",
+  "pos": [
+   63.29,
+   41.78
+  ],
+  "borderPos": {
+   "TKM": [
+    60.11,
+    41.91
+   ],
+   "TJK": [
+    68.79,
+    40.01
+   ],
+   "KGZ": [
+    72.11,
+    41.19
+   ],
+   "KAZ": [
+    65.27,
+    43.42
+   ],
+   "AFG": [
+    67.44,
+    37.26
+   ]
+  },
   "neighbors": [
    "AFG",
    "KAZ",
@@ -3961,6 +5902,32 @@ SG_DATA.countries = {
    "consumption": 90
   },
   "terrain": "plain",
+  "pos": [
+   71.45,
+   51.17
+  ],
+  "borderPos": {
+   "UZB": [
+    65.27,
+    43.42
+   ],
+   "TKM": [
+    54.86,
+    41.97
+   ],
+   "RUS": [
+    61.93,
+    53.95
+   ],
+   "KGZ": [
+    74.82,
+    42.98
+   ],
+   "CHN": [
+    82.48,
+    45.12
+   ]
+  },
   "neighbors": [
    "CHN",
    "KGZ",
@@ -4003,6 +5970,28 @@ SG_DATA.countries = {
    "consumption": 2.5
   },
   "terrain": "plain",
+  "pos": [
+   74.51,
+   41.47
+  ],
+  "borderPos": {
+   "UZB": [
+    72.11,
+    41.19
+   ],
+   "TJK": [
+    70.61,
+    39.56
+   ],
+   "KAZ": [
+    74.82,
+    42.98
+   ],
+   "CHN": [
+    76.16,
+    40.38
+   ]
+  },
   "neighbors": [
    "CHN",
    "KAZ",
@@ -4041,6 +6030,28 @@ SG_DATA.countries = {
    "consumption": 2.8
   },
   "terrain": "plain",
+  "pos": [
+   71.03,
+   38.53
+  ],
+  "borderPos": {
+   "UZB": [
+    68.79,
+    40.01
+   ],
+   "KGZ": [
+    70.61,
+    39.56
+   ],
+   "CHN": [
+    74.52,
+    38.6
+   ],
+   "AFG": [
+    71.33,
+    38.17
+   ]
+  },
   "neighbors": [
    "AFG",
    "CHN",
@@ -4079,6 +6090,36 @@ SG_DATA.countries = {
    "consumption": 10
   },
   "terrain": "mountain",
+  "pos": [
+   69.17,
+   34.53
+  ],
+  "borderPos": {
+   "UZB": [
+    67.44,
+    37.26
+   ],
+   "TKM": [
+    63.18,
+    35.86
+   ],
+   "TJK": [
+    71.33,
+    38.17
+   ],
+   "PAK": [
+    69.57,
+    33.06
+   ],
+   "IRN": [
+    60.49,
+    33.71
+   ],
+   "CHN": [
+    74.67,
+    37.27
+   ]
+  },
   "neighbors": [
    "CHN",
    "IRN",
@@ -4119,6 +6160,68 @@ SG_DATA.countries = {
    "consumption": 4100
   },
   "terrain": "mountain",
+  "pos": [
+   116.4,
+   39.9
+  ],
+  "borderPos": {
+   "VNM": [
+    105.27,
+    23.34
+   ],
+   "TJK": [
+    74.52,
+    38.6
+   ],
+   "RUS": [
+    129.59,
+    49.29
+   ],
+   "PAK": [
+    75.95,
+    36.46
+   ],
+   "PRK": [
+    128.15,
+    41.39
+   ],
+   "NPL": [
+    85.16,
+    28.59
+   ],
+   "MNG": [
+    109.7,
+    42.55
+   ],
+   "LAO": [
+    101.74,
+    21.53
+   ],
+   "KGZ": [
+    76.16,
+    40.38
+   ],
+   "KAZ": [
+    82.48,
+    45.12
+   ],
+   "IND": [
+    78.74,
+    32.56
+   ],
+   "MMR": [
+    97.69,
+    24.13
+   ],
+   "BTN": [
+    90.33,
+    28.12
+   ],
+   "AFG": [
+    74.67,
+    37.27
+   ]
+  },
   "neighbors": [
    "AFG",
    "BTN",
@@ -4172,6 +6275,36 @@ SG_DATA.countries = {
    "consumption": 1000
   },
   "terrain": "plain",
+  "pos": [
+   77.2,
+   28.6
+  ],
+  "borderPos": {
+   "PAK": [
+    73.38,
+    29.93
+   ],
+   "NPL": [
+    83.9,
+    27.43
+   ],
+   "MMR": [
+    94.7,
+    25.1
+   ],
+   "CHN": [
+    78.74,
+    32.56
+   ],
+   "BTN": [
+    91.13,
+    26.8
+   ],
+   "BGD": [
+    89.57,
+    26.13
+   ]
+  },
   "neighbors": [
    "BGD",
    "BTN",
@@ -4215,6 +6348,28 @@ SG_DATA.countries = {
    "consumption": 110
   },
   "terrain": "mountain",
+  "pos": [
+   73.05,
+   33.68
+  ],
+  "borderPos": {
+   "IRN": [
+    63.26,
+    27.21
+   ],
+   "IND": [
+    73.38,
+    29.93
+   ],
+   "CHN": [
+    75.95,
+    36.46
+   ],
+   "AFG": [
+    69.57,
+    33.06
+   ]
+  },
   "neighbors": [
    "AFG",
    "CHN",
@@ -4253,6 +6408,20 @@ SG_DATA.countries = {
    "consumption": 45
   },
   "terrain": "plain",
+  "pos": [
+   90.41,
+   23.81
+  ],
+  "borderPos": {
+   "IND": [
+    89.57,
+    26.13
+   ],
+   "MMR": [
+    92.37,
+    21.41
+   ]
+  },
   "neighbors": [
    "IND",
    "MMR"
@@ -4289,6 +6458,20 @@ SG_DATA.countries = {
    "consumption": 10
   },
   "terrain": "mountain",
+  "pos": [
+   85.32,
+   27.72
+  ],
+  "borderPos": {
+   "IND": [
+    83.9,
+    27.43
+   ],
+   "CHN": [
+    85.16,
+    28.59
+   ]
+  },
   "neighbors": [
    "CHN",
    "IND"
@@ -4325,6 +6508,20 @@ SG_DATA.countries = {
    "consumption": 0.4
   },
   "terrain": "plain",
+  "pos": [
+   90.4,
+   27.41
+  ],
+  "borderPos": {
+   "IND": [
+    91.13,
+    26.8
+   ],
+   "CHN": [
+    90.33,
+    28.12
+   ]
+  },
   "neighbors": [
    "CHN",
    "IND"
@@ -4361,6 +6558,11 @@ SG_DATA.countries = {
    "consumption": 11.8
   },
   "terrain": "plain",
+  "pos": [
+   80.7,
+   7.61
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "IND"
@@ -4396,6 +6598,11 @@ SG_DATA.countries = {
    "consumption": 0.7
   },
   "terrain": "plain",
+  "pos": [
+   73.5,
+   4.2
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "IND"
@@ -4431,6 +6638,11 @@ SG_DATA.countries = {
    "consumption": 400
   },
   "terrain": "mountain",
+  "pos": [
+   139.69,
+   35.69
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "CHN",
@@ -4469,6 +6681,16 @@ SG_DATA.countries = {
    "consumption": 300
   },
   "terrain": "mountain",
+  "pos": [
+   126.98,
+   37.57
+  ],
+  "borderPos": {
+   "PRK": [
+    127.53,
+    38.31
+   ]
+  },
   "neighbors": [
    "PRK"
   ],
@@ -4507,6 +6729,24 @@ SG_DATA.countries = {
    "consumption": 15
   },
   "terrain": "mountain",
+  "pos": [
+   125.75,
+   39.03
+  ],
+  "borderPos": {
+   "KOR": [
+    127.53,
+    38.31
+   ],
+   "RUS": [
+    130.62,
+    42.42
+   ],
+   "CHN": [
+    128.15,
+    41.39
+   ]
+  },
   "neighbors": [
    "CHN",
    "KOR",
@@ -4544,6 +6784,11 @@ SG_DATA.countries = {
    "consumption": 115
   },
   "terrain": "mountain",
+  "pos": [
+   121.56,
+   25.03
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "CHN",
@@ -4581,6 +6826,20 @@ SG_DATA.countries = {
    "consumption": 6
   },
   "terrain": "plain",
+  "pos": [
+   103.12,
+   46.96
+  ],
+  "borderPos": {
+   "RUS": [
+    97.95,
+    51.35
+   ],
+   "CHN": [
+    109.7,
+    42.55
+   ]
+  },
   "neighbors": [
    "CHN",
    "RUS"
@@ -4617,6 +6876,24 @@ SG_DATA.countries = {
    "consumption": 100
   },
   "terrain": "plain",
+  "pos": [
+   106.35,
+   16.55
+  ],
+  "borderPos": {
+   "LAO": [
+    103.89,
+    19.3
+   ],
+   "CHN": [
+    105.27,
+    23.34
+   ],
+   "KHM": [
+    105.95,
+    11.68
+   ]
+  },
   "neighbors": [
    "CHN",
    "KHM",
@@ -4654,6 +6931,28 @@ SG_DATA.countries = {
    "consumption": 140
   },
   "terrain": "plain",
+  "pos": [
+   101,
+   15.1
+  ],
+  "borderPos": {
+   "MYS": [
+    100.98,
+    5.77
+   ],
+   "LAO": [
+    102.6,
+    17.87
+   ],
+   "KHM": [
+    102.91,
+    14.14
+   ],
+   "MMR": [
+    98.47,
+    16.9
+   ]
+  },
   "neighbors": [
    "KHM",
    "LAO",
@@ -4692,6 +6991,24 @@ SG_DATA.countries = {
    "consumption": 95
   },
   "terrain": "plain",
+  "pos": [
+   114.72,
+   3.62
+  ],
+  "borderPos": {
+   "THA": [
+    100.98,
+    5.77
+   ],
+   "IDN": [
+    114.7,
+    1.85
+   ],
+   "BRN": [
+    114.79,
+    4.46
+   ]
+  },
   "neighbors": [
    "BRN",
    "IDN",
@@ -4731,6 +7048,11 @@ SG_DATA.countries = {
    "consumption": 90
   },
   "terrain": "plain",
+  "pos": [
+   103.82,
+   1.36
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "IDN",
@@ -4767,6 +7089,24 @@ SG_DATA.countries = {
    "consumption": 250
   },
   "terrain": "plain",
+  "pos": [
+   114.01,
+   -0.19
+  ],
+  "borderPos": {
+   "TLS": [
+    125.15,
+    -9.12
+   ],
+   "PNG": [
+    140.98,
+    -6.06
+   ],
+   "MYS": [
+    114.7,
+    1.85
+   ]
+  },
   "neighbors": [
    "MYS",
    "PNG",
@@ -4808,6 +7148,11 @@ SG_DATA.countries = {
    "consumption": 62.4
   },
   "terrain": "plain",
+  "pos": [
+   121.42,
+   15.95
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "CHN",
@@ -4845,6 +7190,32 @@ SG_DATA.countries = {
    "consumption": 14
   },
   "terrain": "plain",
+  "pos": [
+   96.49,
+   21.15
+  ],
+  "borderPos": {
+   "LAO": [
+    100.52,
+    20.92
+   ],
+   "IND": [
+    94.7,
+    25.1
+   ],
+   "CHN": [
+    97.69,
+    24.13
+   ],
+   "THA": [
+    98.47,
+    16.9
+   ],
+   "BGD": [
+    92.37,
+    21.41
+   ]
+  },
   "neighbors": [
    "BGD",
    "CHN",
@@ -4884,6 +7255,24 @@ SG_DATA.countries = {
    "consumption": 7.1
   },
   "terrain": "plain",
+  "pos": [
+   104.91,
+   12.72
+  ],
+  "borderPos": {
+   "VNM": [
+    105.95,
+    11.68
+   ],
+   "THA": [
+    102.91,
+    14.14
+   ],
+   "LAO": [
+    106.35,
+    14.45
+   ]
+  },
   "neighbors": [
    "LAO",
    "THA",
@@ -4921,6 +7310,32 @@ SG_DATA.countries = {
    "consumption": 2.6
   },
   "terrain": "plain",
+  "pos": [
+   103.78,
+   18.49
+  ],
+  "borderPos": {
+   "VNM": [
+    103.89,
+    19.3
+   ],
+   "THA": [
+    102.6,
+    17.87
+   ],
+   "MMR": [
+    100.52,
+    20.92
+   ],
+   "CHN": [
+    101.74,
+    21.53
+   ],
+   "KHM": [
+    106.35,
+    14.45
+   ]
+  },
   "neighbors": [
    "CHN",
    "KHM",
@@ -4960,6 +7375,16 @@ SG_DATA.countries = {
    "consumption": 4
   },
   "terrain": "plain",
+  "pos": [
+   114.59,
+   4.49
+  ],
+  "borderPos": {
+   "MYS": [
+    114.79,
+    4.46
+   ]
+  },
   "neighbors": [
    "MYS"
   ],
@@ -4995,6 +7420,16 @@ SG_DATA.countries = {
    "consumption": 0.4
   },
   "terrain": "plain",
+  "pos": [
+   125.92,
+   -8.81
+  ],
+  "borderPos": {
+   "IDN": [
+    125.15,
+    -9.12
+   ]
+  },
   "neighbors": [
    "IDN"
   ],
@@ -5030,6 +7465,11 @@ SG_DATA.countries = {
    "consumption": 150
   },
   "terrain": "plain",
+  "pos": [
+   123.58,
+   -12.43
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "IDN",
@@ -5067,6 +7507,11 @@ SG_DATA.countries = {
    "consumption": 24.2
   },
   "terrain": "plain",
+  "pos": [
+   170.61,
+   -43.95
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
    "AUS"
@@ -5102,6 +7547,16 @@ SG_DATA.countries = {
    "consumption": 4.5
   },
   "terrain": "plain",
+  "pos": [
+   144.23,
+   -6.6
+  ],
+  "borderPos": {
+   "IDN": [
+    140.98,
+    -6.06
+   ]
+  },
   "neighbors": [
    "IDN"
   ],
@@ -5139,6 +7594,11 @@ SG_DATA.countries = {
    "consumption": 0.7
   },
   "terrain": "plain",
+  "pos": [
+   177.97,
+   -17.82
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5172,6 +7632,11 @@ SG_DATA.countries = {
    "consumption": 0.3
   },
   "terrain": "plain",
+  "pos": [
+   160.17,
+   -9.62
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5205,6 +7670,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   166.85,
+   -15.23
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5238,6 +7708,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   -172.44,
+   -13.63
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5271,6 +7746,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   -175.22,
+   -21.17
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5304,6 +7784,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   158.23,
+   6.89
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5337,6 +7822,11 @@ SG_DATA.countries = {
    "consumption": 0
   },
   "terrain": "plain",
+  "pos": [
+   171.19,
+   7.11
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5370,6 +7860,11 @@ SG_DATA.countries = {
    "consumption": 0
   },
   "terrain": "plain",
+  "pos": [
+   134.58,
+   7.51
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5403,6 +7898,11 @@ SG_DATA.countries = {
    "consumption": 0
   },
   "terrain": "plain",
+  "pos": [
+   -157.37,
+   1.85
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5436,6 +7936,11 @@ SG_DATA.countries = {
    "consumption": 0
   },
   "terrain": "plain",
+  "pos": [
+   166.93,
+   -0.52
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -5469,6 +7974,28 @@ SG_DATA.countries = {
    "consumption": 160
   },
   "terrain": "plain",
+  "pos": [
+   8.08,
+   9.59
+  ],
+  "borderPos": {
+   "TCD": [
+    13.93,
+    13.26
+   ],
+   "NER": [
+    6.87,
+    13.04
+   ],
+   "CMR": [
+    11.85,
+    7.4
+   ],
+   "BEN": [
+    3.14,
+    9.45
+   ]
+  },
   "neighbors": [
    "BEN",
    "CMR",
@@ -5507,6 +8034,36 @@ SG_DATA.countries = {
    "consumption": 135
   },
   "terrain": "plain",
+  "pos": [
+   25.19,
+   -28.97
+  ],
+  "borderPos": {
+   "SWZ": [
+    30.79,
+    -26.77
+   ],
+   "ZWE": [
+    30.46,
+    -22.33
+   ],
+   "NAM": [
+    17.7,
+    -28.77
+   ],
+   "MOZ": [
+    31.86,
+    -24.04
+   ],
+   "LSO": [
+    27.42,
+    -29.36
+   ],
+   "BWA": [
+    24.33,
+    -25.74
+   ]
+  },
   "neighbors": [
    "BWA",
    "LSO",
@@ -5547,6 +8104,36 @@ SG_DATA.countries = {
    "consumption": 32.4
   },
   "terrain": "plain",
+  "pos": [
+   39.61,
+   8.61
+  ],
+  "borderPos": {
+   "SSD": [
+    33.51,
+    7.71
+   ],
+   "SDN": [
+    35.06,
+    11.62
+   ],
+   "SOM": [
+    47.31,
+    8
+   ],
+   "KEN": [
+    37.76,
+    3.86
+   ],
+   "ERI": [
+    39.02,
+    14.63
+   ],
+   "DJI": [
+    41.87,
+    10.96
+   ]
+  },
   "neighbors": [
    "DJI",
    "ERI",
@@ -5587,6 +8174,32 @@ SG_DATA.countries = {
    "consumption": 19.3
   },
   "terrain": "plain",
+  "pos": [
+   37.8,
+   0.6
+  ],
+  "borderPos": {
+   "UGA": [
+    34.98,
+    1.72
+   ],
+   "TZA": [
+    37.68,
+    -3.18
+   ],
+   "SSD": [
+    34.64,
+    4.88
+   ],
+   "SOM": [
+    40.97,
+    1.38
+   ],
+   "ETH": [
+    37.76,
+    3.86
+   ]
+  },
   "neighbors": [
    "ETH",
    "SOM",
@@ -5626,6 +8239,44 @@ SG_DATA.countries = {
    "consumption": 18.2
   },
   "terrain": "plain",
+  "pos": [
+   34.79,
+   -6.27
+  ],
+  "borderPos": {
+   "ZMB": [
+    31.82,
+    -8.9
+   ],
+   "UGA": [
+    31.66,
+    -1
+   ],
+   "RWA": [
+    30.82,
+    -1.97
+   ],
+   "MOZ": [
+    37.37,
+    -11.71
+   ],
+   "MWI": [
+    34.52,
+    -10.07
+   ],
+   "KEN": [
+    37.68,
+    -3.18
+   ],
+   "COD": [
+    29.51,
+    -6.17
+   ],
+   "BDI": [
+    30.81,
+    -3.2
+   ]
+  },
   "neighbors": [
    "BDI",
    "COD",
@@ -5668,6 +8319,32 @@ SG_DATA.countries = {
    "consumption": 12.9
   },
   "terrain": "plain",
+  "pos": [
+   32.37,
+   1.27
+  ],
+  "borderPos": {
+   "TZA": [
+    31.66,
+    -1
+   ],
+   "SSD": [
+    32.14,
+    3.52
+   ],
+   "RWA": [
+    30.1,
+    -1.37
+   ],
+   "KEN": [
+    34.98,
+    1.72
+   ],
+   "COD": [
+    31.16,
+    1.92
+   ]
+  },
   "neighbors": [
    "COD",
    "KEN",
@@ -5707,6 +8384,36 @@ SG_DATA.countries = {
    "consumption": 65
   },
   "terrain": "plain",
+  "pos": [
+   2.63,
+   28.06
+  ],
+  "borderPos": {
+   "TUN": [
+    7.95,
+    34.47
+   ],
+   "NER": [
+    6.99,
+    20.47
+   ],
+   "MAR": [
+    -3.81,
+    31.17
+   ],
+   "MRT": [
+    -6.8,
+    26.18
+   ],
+   "MLI": [
+    1.93,
+    20.27
+   ],
+   "LBY": [
+    9.69,
+    26.44
+   ]
+  },
   "neighbors": [
    "LBY",
    "MAR",
@@ -5749,6 +8456,20 @@ SG_DATA.countries = {
    "consumption": 20.6
   },
   "terrain": "plain",
+  "pos": [
+   -8.73,
+   29.77
+  ],
+  "borderPos": {
+   "MRT": [
+    -12.08,
+    23.43
+   ],
+   "DZA": [
+    -3.81,
+    31.17
+   ]
+  },
   "neighbors": [
    "DZA",
    "MRT"
@@ -5787,6 +8508,20 @@ SG_DATA.countries = {
    "consumption": 6.8
   },
   "terrain": "plain",
+  "pos": [
+   9.55,
+   34.09
+  ],
+  "borderPos": {
+   "LBY": [
+    10.47,
+    31.74
+   ],
+   "DZA": [
+    7.95,
+    34.47
+   ]
+  },
   "neighbors": [
    "DZA",
    "LBY"
@@ -5825,6 +8560,36 @@ SG_DATA.countries = {
    "consumption": 20
   },
   "terrain": "plain",
+  "pos": [
+   18.07,
+   27.02
+  ],
+  "borderPos": {
+   "TUN": [
+    10.47,
+    31.74
+   ],
+   "SDN": [
+    24.97,
+    20
+   ],
+   "NER": [
+    13.86,
+    22.9
+   ],
+   "TCD": [
+    19.19,
+    21.86
+   ],
+   "EGY": [
+    24.98,
+    27.83
+   ],
+   "DZA": [
+    9.69,
+    26.44
+   ]
+  },
   "neighbors": [
    "DZA",
    "EGY",
@@ -5867,6 +8632,40 @@ SG_DATA.countries = {
    "consumption": 10.4
   },
   "terrain": "plain",
+  "pos": [
+   29.91,
+   15.97
+  ],
+  "borderPos": {
+   "SSD": [
+    31.79,
+    10.38
+   ],
+   "TCD": [
+    22.34,
+    14.03
+   ],
+   "LBY": [
+    24.97,
+    20
+   ],
+   "ETH": [
+    35.06,
+    11.62
+   ],
+   "ERI": [
+    37.45,
+    17.11
+   ],
+   "EGY": [
+    31.46,
+    22.19
+   ],
+   "CAF": [
+    23.6,
+    9.26
+   ]
+  },
   "neighbors": [
    "CAF",
    "EGY",
@@ -5910,6 +8709,36 @@ SG_DATA.countries = {
    "consumption": 2
   },
   "terrain": "plain",
+  "pos": [
+   30.25,
+   7.31
+  ],
+  "borderPos": {
+   "UGA": [
+    32.14,
+    3.52
+   ],
+   "SDN": [
+    31.79,
+    10.38
+   ],
+   "KEN": [
+    34.64,
+    4.88
+   ],
+   "ETH": [
+    33.51,
+    7.71
+   ],
+   "COD": [
+    29.15,
+    4.39
+   ],
+   "CAF": [
+    26.09,
+    6.87
+   ]
+  },
   "neighbors": [
    "CAF",
    "COD",
@@ -5950,6 +8779,24 @@ SG_DATA.countries = {
    "consumption": 3.9
   },
   "terrain": "plain",
+  "pos": [
+   45.68,
+   4.74
+  ],
+  "borderPos": {
+   "KEN": [
+    40.97,
+    1.38
+   ],
+   "ETH": [
+    47.31,
+    8
+   ],
+   "DJI": [
+    43.16,
+    11.37
+   ]
+  },
   "neighbors": [
    "DJI",
    "ETH",
@@ -5987,6 +8834,24 @@ SG_DATA.countries = {
    "consumption": 0.6
   },
   "terrain": "plain",
+  "pos": [
+   42.56,
+   11.75
+  ],
+  "borderPos": {
+   "SOM": [
+    43.16,
+    11.37
+   ],
+   "ETH": [
+    41.87,
+    10.96
+   ],
+   "ERI": [
+    42.71,
+    12.38
+   ]
+  },
   "neighbors": [
    "ERI",
    "ETH",
@@ -6026,6 +8891,24 @@ SG_DATA.countries = {
    "consumption": 0.8
   },
   "terrain": "plain",
+  "pos": [
+   38.85,
+   15.36
+  ],
+  "borderPos": {
+   "SDN": [
+    37.45,
+    17.11
+   ],
+   "ETH": [
+    39.02,
+    14.63
+   ],
+   "DJI": [
+    42.71,
+    12.38
+   ]
+  },
   "neighbors": [
    "DJI",
    "ETH",
@@ -6066,6 +8949,28 @@ SG_DATA.countries = {
    "consumption": 18
   },
   "terrain": "plain",
+  "pos": [
+   17.56,
+   -12.31
+  ],
+  "borderPos": {
+   "ZMB": [
+    23.34,
+    -13
+   ],
+   "NAM": [
+    17.3,
+    -17.39
+   ],
+   "COD": [
+    19.49,
+    -7.28
+   ],
+   "COG": [
+    12.5,
+    -4.59
+   ]
+  },
   "neighbors": [
    "COD",
    "COG",
@@ -6104,6 +9009,48 @@ SG_DATA.countries = {
    "consumption": 23.6
   },
   "terrain": "plain",
+  "pos": [
+   23.64,
+   -2.87
+  ],
+  "borderPos": {
+   "ZMB": [
+    29.2,
+    -13.4
+   ],
+   "UGA": [
+    31.16,
+    1.92
+   ],
+   "TZA": [
+    29.51,
+    -6.17
+   ],
+   "SSD": [
+    29.15,
+    4.39
+   ],
+   "RWA": [
+    29.15,
+    -2.13
+   ],
+   "COG": [
+    15.11,
+    -4.46
+   ],
+   "CAF": [
+    22.62,
+    4.44
+   ],
+   "BDI": [
+    29.21,
+    -3.36
+   ],
+   "AGO": [
+    19.49,
+    -7.28
+   ]
+  },
   "neighbors": [
    "AGO",
    "BDI",
@@ -6147,6 +9094,32 @@ SG_DATA.countries = {
    "consumption": 3
   },
   "terrain": "plain",
+  "pos": [
+   15.22,
+   -0.84
+  ],
+  "borderPos": {
+   "COD": [
+    15.11,
+    -4.46
+   ],
+   "GAB": [
+    14,
+    -2.49
+   ],
+   "CAF": [
+    17.44,
+    3.68
+   ],
+   "CMR": [
+    15.28,
+    1.98
+   ],
+   "AGO": [
+    12.5,
+    -4.59
+   ]
+  },
   "neighbors": [
    "AGO",
    "CAF",
@@ -6186,6 +9159,36 @@ SG_DATA.countries = {
    "consumption": 9.5
   },
   "terrain": "plain",
+  "pos": [
+   12.73,
+   5.68
+  ],
+  "borderPos": {
+   "CAF": [
+    14.71,
+    4.67
+   ],
+   "NGA": [
+    11.85,
+    7.4
+   ],
+   "GAB": [
+    12.36,
+    2.3
+   ],
+   "GNQ": [
+    9.98,
+    2.17
+   ],
+   "COG": [
+    15.28,
+    1.98
+   ],
+   "TCD": [
+    15.13,
+    9.98
+   ]
+  },
   "neighbors": [
    "CAF",
    "COG",
@@ -6226,6 +9229,24 @@ SG_DATA.countries = {
    "consumption": 3
   },
   "terrain": "plain",
+  "pos": [
+   11.79,
+   -0.59
+  ],
+  "borderPos": {
+   "GNQ": [
+    10.18,
+    1
+   ],
+   "COG": [
+    14,
+    -2.49
+   ],
+   "CMR": [
+    12.36,
+    2.3
+   ]
+  },
   "neighbors": [
    "CMR",
    "COG",
@@ -6263,6 +9284,20 @@ SG_DATA.countries = {
    "consumption": 2
   },
   "terrain": "plain",
+  "pos": [
+   10.47,
+   1.57
+  ],
+  "borderPos": {
+   "GAB": [
+    10.18,
+    1
+   ],
+   "CMR": [
+    9.98,
+    2.17
+   ]
+  },
   "neighbors": [
    "CMR",
    "GAB"
@@ -6299,6 +9334,36 @@ SG_DATA.countries = {
    "consumption": 1.1
   },
   "terrain": "plain",
+  "pos": [
+   20.46,
+   6.57
+  ],
+  "borderPos": {
+   "SSD": [
+    26.09,
+    6.87
+   ],
+   "SDN": [
+    23.6,
+    9.26
+   ],
+   "COD": [
+    22.62,
+    4.44
+   ],
+   "COG": [
+    17.44,
+    3.68
+   ],
+   "TCD": [
+    18.89,
+    8.89
+   ],
+   "CMR": [
+    14.71,
+    4.67
+   ]
+  },
   "neighbors": [
    "CMR",
    "COD",
@@ -6339,6 +9404,36 @@ SG_DATA.countries = {
    "consumption": 2
   },
   "terrain": "plain",
+  "pos": [
+   18.64,
+   15.28
+  ],
+  "borderPos": {
+   "SDN": [
+    22.34,
+    14.03
+   ],
+   "NGA": [
+    13.93,
+    13.26
+   ],
+   "NER": [
+    15.7,
+    19.5
+   ],
+   "LBY": [
+    19.19,
+    21.86
+   ],
+   "CAF": [
+    18.89,
+    8.89
+   ],
+   "CMR": [
+    15.13,
+    9.98
+   ]
+  },
   "neighbors": [
    "CAF",
    "CMR",
@@ -6379,6 +9474,40 @@ SG_DATA.countries = {
    "consumption": 6.1
   },
   "terrain": "plain",
+  "pos": [
+   9.33,
+   17.41
+  ],
+  "borderPos": {
+   "NGA": [
+    6.87,
+    13.04
+   ],
+   "TCD": [
+    15.7,
+    19.5
+   ],
+   "MLI": [
+    3.71,
+    15.64
+   ],
+   "LBY": [
+    13.86,
+    22.9
+   ],
+   "BFA": [
+    0.98,
+    13.32
+   ],
+   "BEN": [
+    2.81,
+    12.38
+   ],
+   "DZA": [
+    6.99,
+    20.47
+   ]
+  },
   "neighbors": [
    "BEN",
    "BFA",
@@ -6420,6 +9549,40 @@ SG_DATA.countries = {
    "consumption": 5.8
   },
   "terrain": "plain",
+  "pos": [
+   -3.59,
+   17.32
+  ],
+  "borderPos": {
+   "SEN": [
+    -11.83,
+    13.32
+   ],
+   "NER": [
+    3.71,
+    15.64
+   ],
+   "MRT": [
+    -6.95,
+    15.5
+   ],
+   "GIN": [
+    -9.37,
+    12.48
+   ],
+   "CIV": [
+    -6.68,
+    10.63
+   ],
+   "BFA": [
+    -3.95,
+    13.4
+   ],
+   "DZA": [
+    1.93,
+    20.27
+   ]
+  },
   "neighbors": [
    "BFA",
    "CIV",
@@ -6461,6 +9624,36 @@ SG_DATA.countries = {
    "consumption": 5.6
   },
   "terrain": "plain",
+  "pos": [
+   -1.76,
+   12.27
+  ],
+  "borderPos": {
+   "TGO": [
+    0.49,
+    10.95
+   ],
+   "NER": [
+    0.98,
+    13.32
+   ],
+   "MLI": [
+    -3.95,
+    13.4
+   ],
+   "GHA": [
+    -2.23,
+    10.99
+   ],
+   "CIV": [
+    -4.18,
+    9.78
+   ],
+   "BEN": [
+    1.28,
+    11.27
+   ]
+  },
   "neighbors": [
    "BEN",
    "CIV",
@@ -6501,6 +9694,32 @@ SG_DATA.countries = {
    "consumption": 5.8
   },
   "terrain": "plain",
+  "pos": [
+   -14.47,
+   14.36
+  ],
+  "borderPos": {
+   "MRT": [
+    -13.76,
+    16.17
+   ],
+   "MLI": [
+    -11.83,
+    13.32
+   ],
+   "GNB": [
+    -15.84,
+    12.44
+   ],
+   "GIN": [
+    -12.89,
+    12.52
+   ],
+   "GMB": [
+    -14.01,
+    13.3
+   ]
+  },
   "neighbors": [
    "GIN",
    "GMB",
@@ -6540,6 +9759,16 @@ SG_DATA.countries = {
    "consumption": 0.7
   },
   "terrain": "plain",
+  "pos": [
+   -15.4,
+   13.45
+  ],
+  "borderPos": {
+   "SEN": [
+    -14.01,
+    13.3
+   ]
+  },
   "neighbors": [
    "SEN"
   ],
@@ -6575,6 +9804,20 @@ SG_DATA.countries = {
    "consumption": 0.5
   },
   "terrain": "plain",
+  "pos": [
+   -14.92,
+   12.06
+  ],
+  "borderPos": {
+   "SEN": [
+    -15.84,
+    12.44
+   ],
+   "GIN": [
+    -13.73,
+    11.96
+   ]
+  },
   "neighbors": [
    "GIN",
    "SEN"
@@ -6611,6 +9854,36 @@ SG_DATA.countries = {
    "consumption": 4.5
   },
   "terrain": "plain",
+  "pos": [
+   -10.93,
+   10.44
+  ],
+  "borderPos": {
+   "SLE": [
+    -11.05,
+    9.79
+   ],
+   "SEN": [
+    -12.89,
+    12.52
+   ],
+   "MLI": [
+    -9.37,
+    12.48
+   ],
+   "LBR": [
+    -9.38,
+    7.57
+   ],
+   "GNB": [
+    -13.73,
+    11.96
+   ],
+   "CIV": [
+    -7.74,
+    8.38
+   ]
+  },
   "neighbors": [
    "CIV",
    "GNB",
@@ -6651,6 +9924,20 @@ SG_DATA.countries = {
    "consumption": 2
   },
   "terrain": "plain",
+  "pos": [
+   -11.79,
+   8.57
+  ],
+  "borderPos": {
+   "LBR": [
+    -10.69,
+    7.74
+   ],
+   "GIN": [
+    -11.05,
+    9.79
+   ]
+  },
   "neighbors": [
    "GIN",
    "LBR"
@@ -6687,6 +9974,24 @@ SG_DATA.countries = {
    "consumption": 1.3
   },
   "terrain": "plain",
+  "pos": [
+   -9.32,
+   6.45
+  ],
+  "borderPos": {
+   "SLE": [
+    -10.69,
+    7.74
+   ],
+   "GIN": [
+    -9.38,
+    7.57
+   ],
+   "CIV": [
+    -7.83,
+    6.08
+   ]
+  },
   "neighbors": [
    "CIV",
    "GIN",
@@ -6724,6 +10029,32 @@ SG_DATA.countries = {
    "consumption": 12.6
   },
   "terrain": "plain",
+  "pos": [
+   -5.57,
+   7.63
+  ],
+  "borderPos": {
+   "MLI": [
+    -6.68,
+    10.63
+   ],
+   "LBR": [
+    -7.83,
+    6.08
+   ],
+   "GIN": [
+    -7.74,
+    8.38
+   ],
+   "GHA": [
+    -2.98,
+    7.26
+   ],
+   "BFA": [
+    -4.18,
+    9.78
+   ]
+  },
   "neighbors": [
    "BFA",
    "GHA",
@@ -6763,6 +10094,24 @@ SG_DATA.countries = {
    "consumption": 12.5
   },
   "terrain": "plain",
+  "pos": [
+   -1.22,
+   7.95
+  ],
+  "borderPos": {
+   "TGO": [
+    0.5,
+    8.89
+   ],
+   "CIV": [
+    -2.98,
+    7.26
+   ],
+   "BFA": [
+    -2.23,
+    10.99
+   ]
+  },
   "neighbors": [
    "BFA",
    "CIV",
@@ -6800,6 +10149,24 @@ SG_DATA.countries = {
    "consumption": 2.3
   },
   "terrain": "plain",
+  "pos": [
+   0.96,
+   8.52
+  ],
+  "borderPos": {
+   "GHA": [
+    0.5,
+    8.89
+   ],
+   "BFA": [
+    0.49,
+    10.95
+   ],
+   "BEN": [
+    1.6,
+    8.77
+   ]
+  },
   "neighbors": [
    "BEN",
    "BFA",
@@ -6837,6 +10204,28 @@ SG_DATA.countries = {
    "consumption": 4.1
   },
   "terrain": "plain",
+  "pos": [
+   2.33,
+   9.64
+  ],
+  "borderPos": {
+   "TGO": [
+    1.6,
+    8.77
+   ],
+   "NGA": [
+    3.14,
+    9.45
+   ],
+   "NER": [
+    2.81,
+    12.38
+   ],
+   "BFA": [
+    1.28,
+    11.27
+   ]
+  },
   "neighbors": [
    "BFA",
    "NER",
@@ -6875,6 +10264,28 @@ SG_DATA.countries = {
    "consumption": 1.8
   },
   "terrain": "plain",
+  "pos": [
+   -10.37,
+   20.22
+  ],
+  "borderPos": {
+   "MAR": [
+    -12.08,
+    23.43
+   ],
+   "SEN": [
+    -13.76,
+    16.17
+   ],
+   "MLI": [
+    -6.95,
+    15.5
+   ],
+   "DZA": [
+    -6.8,
+    26.18
+   ]
+  },
   "neighbors": [
    "DZA",
    "MAR",
@@ -6913,6 +10324,11 @@ SG_DATA.countries = {
    "consumption": 0.3
   },
   "terrain": "plain",
+  "pos": [
+   -23.64,
+   15.08
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -6946,6 +10362,11 @@ SG_DATA.countries = {
    "consumption": 0.1
   },
   "terrain": "plain",
+  "pos": [
+   6.61,
+   0.24
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -6979,6 +10400,40 @@ SG_DATA.countries = {
    "consumption": 5.8
   },
   "terrain": "plain",
+  "pos": [
+   27.81,
+   -13.46
+  ],
+  "borderPos": {
+   "ZWE": [
+    27.93,
+    -16.9
+   ],
+   "TZA": [
+    31.82,
+    -8.9
+   ],
+   "NAM": [
+    24.27,
+    -17.48
+   ],
+   "MOZ": [
+    31.13,
+    -14.69
+   ],
+   "MWI": [
+    33.3,
+    -11.89
+   ],
+   "COD": [
+    29.2,
+    -13.4
+   ],
+   "AGO": [
+    23.34,
+    -13
+   ]
+  },
   "neighbors": [
    "AGO",
    "COD",
@@ -7020,6 +10475,28 @@ SG_DATA.countries = {
    "consumption": 5.8
   },
   "terrain": "plain",
+  "pos": [
+   29.85,
+   -19
+  ],
+  "borderPos": {
+   "ZMB": [
+    27.93,
+    -16.9
+   ],
+   "ZAF": [
+    30.46,
+    -22.33
+   ],
+   "MOZ": [
+    32.72,
+    -18.83
+   ],
+   "BWA": [
+    27.62,
+    -20.48
+   ]
+  },
   "neighbors": [
    "BWA",
    "MOZ",
@@ -7058,6 +10535,24 @@ SG_DATA.countries = {
    "consumption": 4.3
   },
   "terrain": "plain",
+  "pos": [
+   34.28,
+   -13.21
+  ],
+  "borderPos": {
+   "MOZ": [
+    35.29,
+    -17.1
+   ],
+   "ZMB": [
+    33.3,
+    -11.89
+   ],
+   "TZA": [
+    34.52,
+    -10.07
+   ]
+  },
   "neighbors": [
    "MOZ",
    "TZA",
@@ -7095,6 +10590,36 @@ SG_DATA.countries = {
    "consumption": 7.3
   },
   "terrain": "plain",
+  "pos": [
+   35.6,
+   -17.2
+  ],
+  "borderPos": {
+   "ZWE": [
+    32.72,
+    -18.83
+   ],
+   "ZMB": [
+    31.13,
+    -14.69
+   ],
+   "TZA": [
+    37.37,
+    -11.71
+   ],
+   "SWZ": [
+    32.04,
+    -26.28
+   ],
+   "ZAF": [
+    31.86,
+    -24.04
+   ],
+   "MWI": [
+    35.29,
+    -17.1
+   ]
+  },
   "neighbors": [
    "MWI",
    "SWZ",
@@ -7135,6 +10660,11 @@ SG_DATA.countries = {
    "consumption": 6.3
   },
   "terrain": "plain",
+  "pos": [
+   46.74,
+   -19.32
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -7168,6 +10698,24 @@ SG_DATA.countries = {
    "consumption": 2.2
   },
   "terrain": "plain",
+  "pos": [
+   23.81,
+   -22.17
+  ],
+  "borderPos": {
+   "ZWE": [
+    27.62,
+    -20.48
+   ],
+   "ZAF": [
+    24.33,
+    -25.74
+   ],
+   "NAM": [
+    21.23,
+    -18.31
+   ]
+  },
   "neighbors": [
    "NAM",
    "ZAF",
@@ -7205,6 +10753,28 @@ SG_DATA.countries = {
    "consumption": 1.6
   },
   "terrain": "plain",
+  "pos": [
+   17.2,
+   -22.07
+  ],
+  "borderPos": {
+   "ZMB": [
+    24.27,
+    -17.48
+   ],
+   "ZAF": [
+    17.7,
+    -28.77
+   ],
+   "BWA": [
+    21.23,
+    -18.31
+   ],
+   "AGO": [
+    17.3,
+    -17.39
+   ]
+  },
   "neighbors": [
    "AGO",
    "BWA",
@@ -7243,6 +10813,16 @@ SG_DATA.countries = {
    "consumption": 0.6
   },
   "terrain": "plain",
+  "pos": [
+   28.23,
+   -29.58
+  ],
+  "borderPos": {
+   "ZAF": [
+    27.42,
+    -29.36
+   ]
+  },
   "neighbors": [
    "ZAF"
   ],
@@ -7278,6 +10858,20 @@ SG_DATA.countries = {
    "consumption": 0.6
   },
   "terrain": "plain",
+  "pos": [
+   31.48,
+   -26.56
+  ],
+  "borderPos": {
+   "ZAF": [
+    30.79,
+    -26.77
+   ],
+   "MOZ": [
+    32.04,
+    -26.28
+   ]
+  },
   "neighbors": [
    "MOZ",
    "ZAF"
@@ -7314,6 +10908,28 @@ SG_DATA.countries = {
    "consumption": 3.5
   },
   "terrain": "plain",
+  "pos": [
+   29.92,
+   -1.99
+  ],
+  "borderPos": {
+   "UGA": [
+    30.1,
+    -1.37
+   ],
+   "TZA": [
+    30.82,
+    -1.97
+   ],
+   "COD": [
+    29.15,
+    -2.13
+   ],
+   "BDI": [
+    29.89,
+    -2.66
+   ]
+  },
   "neighbors": [
    "BDI",
    "COD",
@@ -7352,6 +10968,24 @@ SG_DATA.countries = {
    "consumption": 2.5
   },
   "terrain": "plain",
+  "pos": [
+   29.88,
+   -3.36
+  ],
+  "borderPos": {
+   "TZA": [
+    30.81,
+    -3.2
+   ],
+   "RWA": [
+    29.89,
+    -2.66
+   ],
+   "COD": [
+    29.21,
+    -3.36
+   ]
+  },
   "neighbors": [
    "COD",
    "RWA",
@@ -7389,6 +11023,11 @@ SG_DATA.countries = {
    "consumption": 0.3
   },
   "terrain": "plain",
+  "pos": [
+   43.34,
+   -11.65
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -7422,6 +11061,11 @@ SG_DATA.countries = {
    "consumption": 1.6
   },
   "terrain": "plain",
+  "pos": [
+   57.57,
+   -20.28
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  },
@@ -7455,6 +11099,11 @@ SG_DATA.countries = {
    "consumption": 0.2
   },
   "terrain": "plain",
+  "pos": [
+   55.48,
+   -4.66
+  ],
+  "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
  }

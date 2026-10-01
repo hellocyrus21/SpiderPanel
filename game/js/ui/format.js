@@ -15,7 +15,8 @@
   /** GDP (ورودی به میلیارد دلار) */
   function money(billions) {
     if (billions >= 1000) return num(Math.round(billions / 100) / 10) + ' تریلیون دلار';
-    if (billions >= 1) return num(Math.round(billions)) + ' میلیارد دلار';
+    if (billions >= 10) return num(Math.round(billions)) + ' میلیارد دلار';
+    if (billions >= 1) return num(Math.round(billions * 10) / 10) + ' میلیارد دلار';
     return num(Math.round(billions * 1000)) + ' میلیون دلار';
   }
 

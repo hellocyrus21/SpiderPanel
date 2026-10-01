@@ -46,12 +46,16 @@
     }
     w.gdp = Object.values(state.countries).reduce((s, c) => s + c.gdp, 0);
 
+    // ---------- ۲ب) ارتش بازیکن: تولید، حرکت، تدارکات ----------
+    const milEvents = SG.Military.step(state, pid, rng);
+
     // تاریخچه‌ی بازیکن (برای گزارش و نمودار)
     player.eco.history.push({ turn: state.turn, gdp: Math.round(player.gdp), treasury: Math.round(player.eco.treasury), stability: Math.round(player.stability) });
     if (player.eco.history.length > 240) player.eco.history.shift();
 
     // ---------- ۳) اعلان‌های بازیکن ----------
     playerChecks(state, rng, before[pid], playerEvents, oldPrice);
+    militaryNotifications(state, milEvents);
 
     // ---------- ۴) اخبار جهان ----------
     worldNews(state, rng, before);
@@ -139,6 +143,45 @@
     // --- سال نو ---
     if (state.date.month === 1) {
       N.add(state, { type: 'new_year', level: 'info', category: 'world', speaker: 'news', data: { year: state.date.year } });
+    }
+  }
+
+  // -------------------------------------------------------------------
+  function militaryNotifications(state, events) {
+    const pid = state.playerId;
+    const c = state.countries[pid];
+    for (const ev of events) {
+      if (ev.type === 'built') {
+        N.add(state, { type: 'unit_built', level: 'info', category: 'military', speaker: 'commander',
+          data: { unit: ev.unit, qty: ev.qty } });
+      } else if (ev.type === 'arrived') {
+        const a = SG.Military.findArmy(state, pid, ev.army);
+        if (!a) continue;
+        if (ev.kind === 'home') {
+          N.add(state, { type: 'army_home', level: 'info', category: 'military', speaker: 'commander', focus: pid,
+            data: { army: a.name, commander: a.commander.name, armyId: a.id } });
+          continue;
+        }
+        N.add(state, { type: 'army_arrived', level: 'warning', category: 'military', speaker: 'commander', focus: ev.target,
+          data: { army: a.name, commander: a.commander.name, country: ev.target, armyId: a.id } });
+        // تجمع نیرو در مرز، همسایه را نگران می‌کند
+        const k = SG.Engine.relKey(pid, ev.target);
+        state.relations[k] = Math.max(-100, (state.relations[k] ?? 0) - 4);
+        if (N.cooldownOk(state, 'massing_' + ev.target, 4)) {
+          N.add(state, { type: 'border_tension', level: 'info', category: 'diplomacy', speaker: 'foreign', focus: ev.target,
+            data: { country: ev.target } });
+        }
+      } else if (ev.type === 'supply_low') {
+        const a = SG.Military.findArmy(state, pid, ev.army);
+        if (a) N.add(state, { type: 'army_supply_low', level: 'warning', category: 'military', speaker: 'commander',
+          data: { army: a.name, commander: a.commander.name, supply: a.supply, armyId: a.id } });
+      }
+    }
+    // هزینه‌ی سنگین ارتش
+    const share = SG.Military.upkeepMonthly(c) * 12 / c.gdp;
+    if (share > 0.08 && N.cooldownOk(state, 'mil_costly', 6)) {
+      N.add(state, { type: 'military_costly', level: 'warning', category: 'economy', speaker: 'economy',
+        data: { pct: share * 100 } });
     }
   }
 

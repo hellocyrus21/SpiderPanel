@@ -127,7 +127,7 @@
           ${c.military.nuclear ? '<span class="badge warn">هسته‌ای</span>' : ''}
           ${wars.length ? '<span class="badge danger">در جنگ</span>' : ''}
         </div>
-        <div class="sub">${F.GOV[c.gov] || ''}${c.capital ? ' · پایتخت: ' + F.esc(c.capital) : ''} · زمین ${F.TERRAIN[c.terrain] || ''}</div>
+        <div class="sub">${F.GOV[c.gov] || ''}${c.capital ? ' | پایتخت: ' + F.esc(c.capital) : ''} | زمین ${F.TERRAIN[c.terrain] || ''}</div>
       </header>`;
 
       // --- انتخاب کشور (فقط در صفحه‌ی انتخاب) ---

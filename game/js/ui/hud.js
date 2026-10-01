@@ -55,6 +55,7 @@
     const over = !!state.gameOver;
     el.innerHTML = `
       <button class="ab" data-open="government">🏛️<span>دولت</span></button>
+      <button class="ab" data-open="military">⚔️<span>ارتش</span></button>
       <button class="ab" data-open="advisor">🧑‍💼<span>مشاور</span></button>
       <div class="ab-turn">
         <button class="ab" data-play title="${autoplay.on ? 'توقف' : 'پخش خودکار'}" ${over ? 'disabled' : ''}>${autoplay.on ? '⏸' : '▶'}</button>

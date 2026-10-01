@@ -19,6 +19,10 @@
     });
     el.querySelector('[data-action="browse"]').addEventListener('click', () => handlers.onBrowse());
     el.querySelector('[data-action="guide"]').addEventListener('click', () => SG.Guide.open());
+    // بارگذاری فایل ذخیره (انتقال از دستگاه دیگر)
+    const fileInput = el.querySelector('input[type=file]');
+    el.querySelector('[data-action="import"]').addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => { if (fileInput.files[0]) handlers.onImport(fileInput.files[0]); fileInput.value = ''; });
 
     // کارت «ادامه‌ی بازی ذخیره‌شده»
     const cont = el.querySelector('.continue-box');
@@ -32,7 +36,7 @@
         const p = saved.countries[saved.playerId];
         cont.innerHTML = `<div class="continue-card">
           <div><b>بازی ذخیره‌شده: ${F.esc(p.name)}</b>
-            <div class="muted small">${F.date(saved.date)} · ماه ${F.num(saved.turn)} از بازی${saved.gameOver ? ' · پایان‌یافته' : ''}</div></div>
+            <div class="muted small">${F.date(saved.date)} | ماه ${F.num(saved.turn)} از بازی${saved.gameOver ? ' | پایان‌یافته' : ''}</div></div>
           <button class="btn primary" data-action="continue">▶ ادامه‌ی بازی</button>
           <button class="btn ghost" data-action="discard">پاک کردن</button>
         </div>`;

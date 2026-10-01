@@ -52,6 +52,8 @@
         <div class="start-actions">
           <button class="btn ghost" data-action="browse">اول نقشه را ببینم</button>
           <button class="btn ghost" data-action="guide">❓ راهنمای بازی</button>
+          <button class="btn ghost" data-action="import">📂 بارگذاری فایل ذخیره</button>
+          <input type="file" accept=".json,application/json" hidden>
         </div>
       </div>
     </section>
@@ -68,11 +70,13 @@
   <script src="data/countries.js"></script>
   <script src="data/scenario_2026.js"></script>
   <script src="data/messages.js"></script>
+  <script src="data/units.js"></script>
 
   <!-- موتور بازی (بدون وابستگی به صفحه) -->
   <script src="js/engine/rng.js"></script>
   <script src="js/engine/notify.js"></script>
   <script src="js/engine/economy.js"></script>
+  <script src="js/engine/military.js"></script>
   <script src="js/engine/actions.js"></script>
   <script src="js/engine/state.js"></script>
   <script src="js/engine/turn.js"></script>
@@ -90,6 +94,7 @@
   <script src="js/ui/notifications.js"></script>
   <script src="js/ui/government.js"></script>
   <script src="js/ui/hud.js"></script>
+  <script src="js/ui/militaryPanel.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

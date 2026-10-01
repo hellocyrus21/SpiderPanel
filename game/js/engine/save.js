@@ -22,6 +22,20 @@
     } catch (e) { return null; }
   }
 
+  /** فایل ذخیره برای انتقال به دستگاه دیگر */
+  function exportText(state) {
+    return JSON.stringify({ game: 'geopolitics2026', exported: new Date().toISOString(), state });
+  }
+
+  /** خواندن فایل ذخیره. خروجی: state یا null */
+  function importText(text) {
+    try {
+      const o = JSON.parse(text);
+      const s = o && o.game === 'geopolitics2026' ? o.state : o;
+      return s && s.playerId && s.countries ? s : null;
+    } catch (e) { return null; }
+  }
+
   function clear() {
     try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
   }
@@ -35,5 +49,5 @@
     try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); } catch (e) { /* ignore */ }
   }
 
-  SG.Save = { save, load, clear, loadSettings, saveSettings };
+  SG.Save = { save, load, clear, loadSettings, saveSettings, exportText, importText };
 })(window.SG = window.SG || {});

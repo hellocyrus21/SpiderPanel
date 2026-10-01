@@ -152,7 +152,7 @@
     }
     if (a.targets.length) {
       opp += `<div class="row-label">همسایه‌های ضعیف‌تر و غیردوست</div>`;
-      opp += a.targets.map(t => `<p>${chip(t.id)} قدرت ${F.num(t.power)}${t.energyRich ? ' · 🛢️ نفت‌خیز' : ''}
+      opp += a.targets.map(t => `<p>${chip(t.id)} قدرت ${F.num(t.power)}${t.energyRich ? ' | 🛢️ نفت‌خیز' : ''}
         — ${t.risky ? `<span class="bad">خطرناک: متحدان قوی دارد (${t.defenders.map(name).join('، ')})</span>`
           : t.defenders.length ? `متحدانش: ${t.defenders.map(name).join('، ')}` : '<span class="good">متحد نظامی ندارد</span>'}</p>`).join('');
     }

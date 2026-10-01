@@ -39,7 +39,7 @@
     }
 
     const state = {
-      version: 2,
+      version: 3,
       seed,
       scenarioId: scenario.id,
       date: { ...scenario.startDate },
@@ -57,7 +57,25 @@
     };
     state.relations = buildRelations(state, scenario, rng);
     SG.Economy.init(state);
+    SG.Military.init(state);
     state.rngState = rng.getState();   // ادامه‌ی همان دنباله‌ی تصادفی در نوبت‌ها
+    return state;
+  }
+
+  /**
+   * ارتقای ذخیره‌ی قدیمی به نسخه‌ی فعلی (تا بازیکن با آپدیت بازی، بازی‌اش را از دست ندهد)
+   * نسخه‌ی ۲ (مرحله‌ی ۲) ← ۳: اضافه شدن واحدهای نظامی و موقعیت روی نقشه
+   */
+  function migrate(state, countriesData) {
+    if (!state.version || state.version < 3) {
+      for (const [id, c] of Object.entries(state.countries)) {
+        const fresh = countriesData[id];
+        if (fresh) { c.pos = fresh.pos; c.borderPos = fresh.borderPos; }
+      }
+      SG.Military.init(state);
+      if (state.playerId) SG.Military.startPlayer(state, state.playerId);
+      state.version = 3;
+    }
     return state;
   }
 
@@ -66,6 +84,7 @@
     const c = state.countries[playerId];
     if (!c || !c.playable) throw new Error('Country is not playable: ' + playerId);
     state.playerId = playerId;
+    SG.Military.startPlayer(state, playerId);
     SG.Notify.add(state, { type: 'welcome', level: 'warning', category: 'domestic', speaker: 'advisor', focus: playerId, data: { country: playerId } });
     return state;
   }
@@ -177,7 +196,7 @@
   }
 
   SG.Engine = {
-    createWorld, startGame, relKey, getRelation, alliancesOf, defensePartners, warsOf, isAtWar,
+    createWorld, startGame, migrate, relKey, getRelation, alliancesOf, defensePartners, warsOf, isAtWar,
     sanctionedBy, areAllied, militaryPower, rankOf,
   };
 })(window.SG = window.SG || {});

@@ -55,7 +55,7 @@
           </div>
           <div>
             <div class="b-title bad">هزینه ${m(b.expenses)}</div>
-            ${row('ارتش', m(b.military))}
+            ${row('ارتش (نگهداری)', m(b.military))}
             ${row('رفاه', m(b.welfare))}
             ${row('سرمایه‌گذاری', m(b.investment))}
             ${row('اداره‌ی دولت', m(b.admin))}
@@ -64,9 +64,9 @@
           </div>
         </div>
         <div class="b-foot muted small">
-          بدهی: ${pct(c.eco.debt / c.gdp)} GDP · تورم: ${F.num(Math.round(c.eco.inflation * 10) / 10)}٪
-          ${b.pressure > 0.01 ? ` · فشار تحریم: ${pct(b.pressure)}` : ''}
-          · قیمت انرژی: ${F.num(Math.round(state.world.energyPrice / 0.6 * 100))}٪ قیمت پایه
+          بدهی: ${pct(c.eco.debt / c.gdp)} GDP | تورم: ${F.num(Math.round(c.eco.inflation * 10) / 10)}٪
+          ${b.pressure > 0.01 ? ` | فشار تحریم: ${pct(b.pressure)}` : ''}
+          | قیمت انرژی: ${F.num(Math.round(state.world.energyPrice / 0.6 * 100))}٪ قیمت پایه
         </div>
       </details>`;
   }
@@ -89,7 +89,14 @@
 
   function slidersHtml() {
     const c = ctx.state.countries[ctx.id];
+    const units = c.mil && c.mil.useUnits;
     return SLIDERS.map(s => {
+      if (s.key === 'military' && units) {
+        // با سیستم واحدها، هزینه‌ی نظامی از تعداد واحدها می‌آید (پنل ارتش)
+        return `<div class="slider"><div class="s-head"><b>بودجه‌ی نظامی</b>
+          <span class="s-val">${pct(SG.Military.upkeepMonthly(c) * 12 / c.gdp)}</span></div>
+          <small class="muted">هزینه‌ی نظامی = نگهداری واحدها. برای تغییرش از پنل ⚔️ ارتش واحد بسازید یا مرخص کنید.</small></div>`;
+      }
       const [lo, hi] = A.LIMITS[s.key];
       const v = valueOf(c, s.key);
       const ref = s.key === 'taxRate' ? c.eco.ref.tax : c.eco.ref[s.key];

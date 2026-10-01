@@ -416,6 +416,53 @@ body.in-game #actionbar {
 .d-main small { color: var(--muted); font-size: 11px; line-height: 1.4; }
 .d-cost { font-size: 11px; color: var(--gold); white-space: nowrap; }
 
+/* ---------- پنل ارتش ---------- */
+.mil-tabs { margin: 10px 0 4px; width: max-content; max-width: 100%; }
+.mil-tabs button { padding: 6px 12px; }
+.btn.tiny { padding: 2px 9px; font-size: 12px; }
+.mil-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.mil-table th { text-align: right; color: var(--muted); font-weight: 400; padding: 3px 4px; border-bottom: 1px solid var(--line); }
+.mil-table td { padding: 4px; border-bottom: 1px solid #ffffff08; }
+.unit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.unit-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
+.unit-card.off { opacity: .55; }
+.uc-head { display: flex; align-items: center; gap: 6px; }
+.uc-icon { font-size: 20px; }
+.uc-stats { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--muted); }
+.uc-buy { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 2px; }
+.stepper { display: inline-flex; align-items: center; gap: 4px; }
+.stepper button { width: 26px; height: 26px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--line); line-height: 1; }
+.stepper button:disabled { opacity: .35; }
+.stepper b { min-width: 22px; text-align: center; }
+.q-item { display: grid; grid-template-columns: 1fr 1fr auto auto; align-items: center; gap: 8px; padding: 4px 0; font-size: 13px; }
+.army-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; margin-bottom: 6px; cursor: pointer; }
+.army-card:hover { border-color: var(--gold); }
+.ac-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+.ac-bars { display: grid; grid-template-columns: auto 1fr 28px; gap: 3px 8px; align-items: center; font-size: 12px; margin: 6px 0; }
+.ac-bars span { color: var(--muted); }
+.pool-row { display: flex; align-items: center; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #ffffff08; }
+.cmds { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.cmd { border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; cursor: pointer; font-size: 13px; }
+.cmd.on { border-color: var(--gold); }
+.dests { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.dest { display: flex; justify-content: space-between; align-items: center; gap: 6px; text-align: right;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 9px; }
+.dest:hover:not(:disabled) { border-color: var(--gold); }
+.dest.off { opacity: .45; }
+
+/* ارتش روی نقشه */
+.army-routes line { stroke: var(--gold); stroke-width: 2; stroke-dasharray: 6 5; vector-effect: non-scaling-stroke;
+  animation: march 1s linear infinite; pointer-events: none; }
+@keyframes march { to { stroke-dashoffset: -11; } }
+.army rect { fill: #1a212bf0; stroke: var(--gold); stroke-width: 1.5; }
+.army.selected rect { stroke: #fff; stroke-width: 2.5; }
+.army.low rect { stroke: var(--bad); }
+.army text { text-anchor: middle; dominant-baseline: middle; font-family: 'Vazirmatn', Tahoma, sans-serif; pointer-events: none; }
+.army .a-icon { font-size: 13px; }
+.army .a-num { font-size: 12px; fill: #fff; font-weight: 700; }
+.army .a-eta { font-size: 11px; fill: var(--gold); paint-order: stroke; stroke: #0b0f14; stroke-width: 3px; }
+.army.moving rect { stroke-dasharray: 4 3; }
+
 /* ---------- ادامه‌ی بازی ---------- */
 .continue-card {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between;
@@ -472,6 +519,9 @@ body.in-game #actionbar {
   .gov-kpis { grid-template-columns: 1fr 1fr; }
   .b-cols { grid-template-columns: 1fr; gap: 6px; }
   .gov-decrees { grid-template-columns: 1fr; }
+  .dests { grid-template-columns: 1fr; }
+  .unit-grid { grid-template-columns: 1fr; }
+  .q-item { grid-template-columns: 1fr 70px auto auto; }
   .btn.icon { padding: 4px 8px; }
   .btn.icon span { display: none; }
   .modal-wrap { padding: 0; align-items: flex-end; }

@@ -36,6 +36,7 @@
       if (MONEY_KEYS.includes(key)) return F.money(v);
       if (PCT_KEYS.includes(key)) return F.num(Math.round(v * 10) / 10);
       if (key === 'stability') return F.num(Math.round(v));
+      if (key === 'unit') return F.esc(D().units[v]?.name || v);
       if (key === 'year') return new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(v);
       if (typeof v === 'number') return F.num(v);
       return F.esc(v);
@@ -53,7 +54,10 @@
   }
 
   function speakerOf(n) {
-    return D().speakers[n.speaker] || { title: '', icon: '•' };
+    const sp = D().speakers[n.speaker] || { title: '', icon: '•' };
+    // فرمانده با نام خودش حرف می‌زند
+    if (n.speaker === 'commander' && n.data && n.data.commander) return { ...sp, title: sp.title + ' — ' + n.data.commander };
+    return sp;
   }
 
   function actionsOf(n) {
