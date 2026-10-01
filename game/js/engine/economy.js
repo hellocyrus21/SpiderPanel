@@ -36,6 +36,33 @@
     return clamp(sum / state.world.gdp, 0, 0.6);
   }
 
+  /**
+   * اثر جنگ و فتح (engine/war.js هر نوبت c.eco.occ را حساب می‌کند):
+   *   occ.gdp / occ.energy   ← سهمی از اقتصاد/انرژی کشور که دشمن اشغال کرده (از دست رفته)
+   *   occ.gdpGain / energyGain ← اقتصاد/انرژی شهرهایی که ما گرفته‌ایم (میلیارد دلار / واحد انرژی)
+   */
+  function occOf(c) { return (c.eco && c.eco.occ) || { gdp: 0, energy: 0, gdpGain: 0, energyGain: 0 }; }
+
+  /** تولید انرژی مؤثر (منهای میدان‌های اشغال‌شده، به‌علاوه‌ی میدان‌های تصرف‌شده) */
+  function energyProduction(c) {
+    const o = occOf(c);
+    return c.energy.production * (1 - o.energy) + o.energyGain;
+  }
+
+  /** غرامت و باج (سالانه): { income, payments } */
+  function warTransfers(state, id) {
+    let income = 0, payments = 0;
+    for (const r of state.reparations || []) {
+      if (r.to === id) income += r.monthly * 12;
+      if (r.from === id) payments += r.monthly * 12;
+    }
+    const c = state.countries[id];
+    if (c.puppetOf && state.countries[c.puppetOf]) payments += c.gdp * TRIBUTE;
+    for (const o of Object.values(state.countries)) if (o.puppetOf === id && !o.annexedBy) income += o.gdp * TRIBUTE;
+    return { income, payments };
+  }
+  const TRIBUTE = 0.012;   // باج سالانه‌ی دولت دست‌نشانده: ۱.۲٪ GDP خودش
+
   /** نرخ بهره‌ی بدهی (سالانه) */
   function interestRate(state, c, pressure) {
     const dr = c.eco.debt / Math.max(c.gdp, 0.1);
@@ -61,11 +88,14 @@
 
     // کارایی مالیات: کشور بی‌ثبات مالیاتش را کامل جمع نمی‌کند
     const eff = clamp(0.65 + 0.35 * c.stability / 100 + modSum(c, 'taxEff'), 0.3, 1.1);
-    const tax = c.gdp * e.taxRate * eff;
+    // شهرهای اشغال‌شده مالیات نمی‌دهند؛ شهرهای تصرف‌شده بخشی از اقتصادشان را به ما می‌دهند
+    const occ = occOf(c);
+    const taxBase = c.gdp * (1 - occ.gdp) + occ.gdpGain;
+    const tax = taxBase * e.taxRate * eff;
 
     // ارتش بازیکن سوخت اضافه مصرف می‌کند (نسبت به شروع بازی)
     const milFuel = c.mil && c.mil.useUnits ? SG.Military.extraFuel(c) : 0;
-    const surplus = c.energy.production - c.energy.consumption - milFuel;
+    const surplus = energyProduction(c) - c.energy.consumption - milFuel;
     const energyExport = surplus > 0 ? surplus * price * EXPORT_SHARE * (1 - 0.7 * pressure) : 0;
     const energyImport = surplus < 0 ? -surplus * price * IMPORT_SHARE : 0;
 
@@ -79,11 +109,12 @@
     const rate = interestRate(state, c, pressure);
     const interest = e.debt * rate;
 
-    const revenue = tax + energyExport + e.aid;
-    const expenses = military + production + welfare + investment + admin + interest + energyImport;
+    const tr = warTransfers(state, id);
+    const revenue = tax + energyExport + e.aid + tr.income;
+    const expenses = military + production + welfare + investment + admin + interest + energyImport + tr.payments;
     return {
-      eff, tax, energyExport, aid: e.aid, revenue,
-      military, production, welfare, investment, admin, interest, energyImport, expenses,
+      eff, tax, energyExport, aid: e.aid, warIncome: tr.income, revenue,
+      military, production, welfare, investment, admin, interest, energyImport, warPayments: tr.payments, expenses,
       net: revenue - expenses, monthly: (revenue - expenses) / 12,
       rate, pressure, surplus, milFuel,
     };
@@ -104,6 +135,8 @@
       - Math.max(0, e.inflation - 15) * 0.0005      // تورم بالا
       - Math.max(0, p.military - 0.04) * 0.25       // ارتش خیلی پرهزینه
       - Math.max(0, e.taxRate - 0.3) * 0.05         // مالیات خیلی بالا
+      - occOf(c).gdp * 0.06                          // خاک اشغال‌شده (تخریب و فرار سرمایه)
+      - (c.warWeariness || 0) / 100 * 0.012          // خستگی جنگ
       + modSum(c, 'growth');
   }
 
@@ -246,6 +279,6 @@
 
   SG.Economy = {
     init, step, computeBudget, growthRate, stabilityTarget, sanctionPressure,
-    canBorrow, monthsOfReserve, modSum,
+    canBorrow, monthsOfReserve, modSum, energyProduction, warTransfers, occOf,
   };
 })(window.SG = window.SG || {});

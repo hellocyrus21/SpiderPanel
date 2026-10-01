@@ -51,6 +51,7 @@
             ${row('مالیات', m(b.tax))}
             ${b.energyExport ? row('صادرات انرژی', m(b.energyExport)) : ''}
             ${b.aid ? row('کمک خارجی', m(b.aid)) : ''}
+            ${b.warIncome ? row('غرامت و باج دریافتی', m(b.warIncome)) : ''}
             ${row('کارایی جمع مالیات', pct(b.eff), 'muted')}
           </div>
           <div>
@@ -62,6 +63,7 @@
             ${row('اداره‌ی دولت', m(b.admin))}
             ${row(`بهره‌ی بدهی (${pct(b.rate)})`, m(b.interest))}
             ${b.energyImport ? row('واردات انرژی', m(b.energyImport)) : ''}
+            ${b.warPayments ? row('غرامت و باج پرداختی', m(b.warPayments)) : ''}
           </div>
         </div>
         <div class="b-foot muted small">

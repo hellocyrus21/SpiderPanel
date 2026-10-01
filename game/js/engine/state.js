@@ -39,7 +39,7 @@
     }
 
     const state = {
-      version: 4,
+      version: 5,
       seed,
       scenarioId: scenario.id,
       date: { ...scenario.startDate },
@@ -54,10 +54,15 @@
       notifications: [],   // اعلان‌ها (engine/notify.js)
       cooldowns: {},
       gameOver: null,
+      warsInfo: [],        // جنگ‌ها با جزئیات (engine/war.js) — state.wars فقط جفت‌هاست
+      control: {},         // شهرهای اشغال‌شده یا واگذارشده: { cityId: { by, kind, since, integ } }
+      reparations: [],     // غرامت‌ها: [{ from, to, monthly, left }]
+      truces: {},          // آتش‌بس بعد از صلح: { 'A|B': تا نوبت }
     };
     state.relations = buildRelations(state, scenario, rng);
     SG.Economy.init(state);
     SG.Military.init(state);
+    SG.War.initScenario(state);
     state.rngState = rng.getState();   // ادامه‌ی همان دنباله‌ی تصادفی در نوبت‌ها
     return state;
   }
@@ -79,6 +84,20 @@
       SG.Military.init(state);
       if (state.playerId) SG.Military.startPlayer(state, state.playerId);
       state.version = 4;
+    }
+    // نسخه‌ی ۵ (مرحله‌ی ۴): شهرهای جدید با سهم اقتصادی، جنگ با جزئیات، اشغال، خرید سلاح
+    if (state.version < 5) {
+      for (const [id, c] of Object.entries(state.countries)) {
+        const fresh = countriesData[id];
+        if (fresh) c.cities = deepCopy(fresh.cities);
+      }
+      state.control ||= {};
+      state.reparations ||= [];
+      state.truces ||= {};
+      const p = state.playerId && state.countries[state.playerId];
+      if (p && p.mil) { p.mil.orders ||= []; p.mil.deals ||= {}; }
+      SG.War.initScenario(state);
+      state.version = 5;
     }
     return state;
   }
@@ -191,16 +210,21 @@
     return Math.round(base + (m.nuclear ? 5 : 0));
   }
 
-  /** رتبه‌ی یک مقدار بین همه‌ی کشورها (۱ = بیشترین) */
+  /** رتبه‌ی یک مقدار بین همه‌ی کشورها (۱ = بیشترین) — کشورهای الحاق‌شده حساب نمی‌شوند */
   function rankOf(state, id, valueFn) {
     const mine = valueFn(state.countries[id]);
     let rank = 1;
-    for (const c of Object.values(state.countries)) if (valueFn(c) > mine) rank++;
+    for (const c of Object.values(state.countries)) if (!c.annexedBy && valueFn(c) > mine) rank++;
     return rank;
+  }
+
+  /** کشورهایی که هنوز وجود دارند (الحاق‌نشده) */
+  function activeCountries(state) {
+    return Object.values(state.countries).filter(c => !c.annexedBy);
   }
 
   SG.Engine = {
     createWorld, startGame, migrate, relKey, getRelation, alliancesOf, defensePartners, warsOf, isAtWar,
-    sanctionedBy, areAllied, militaryPower, rankOf,
+    sanctionedBy, areAllied, militaryPower, rankOf, activeCountries,
   };
 })(window.SG = window.SG || {});

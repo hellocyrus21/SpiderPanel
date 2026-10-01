@@ -590,3 +590,85 @@ body.in-game #actionbar {
   .modal { border-radius: 16px 16px 0 0; max-height: 92%; }
   .start-box h1 { font-size: 24px; }
 }
+
+/* =====================================================================
+   مرحله‌ی ۴: جنگ، گزارش نبرد، خرید سلاح
+   ===================================================================== */
+.btn.danger { background: #7a1f1c; border-color: var(--bad); color: #fff; }
+.btn.danger:hover { background: #932622; }
+.info-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.info-actions .btn { flex: 1 1 auto; }
+.row-label.bad { color: var(--bad); }
+
+/* نوار فرمان: دکمه‌ی جنگ */
+.ab { position: relative; }
+.ab.at-war { color: var(--bad); border-color: var(--bad); animation: war-pulse 1.6s ease-in-out infinite; }
+.ab-badge { position: absolute; top: 2px; left: 4px; background: var(--bad); color: #fff; border-radius: 8px; font-size: 10px;
+  font-style: normal; padding: 0 5px; line-height: 15px; }
+@keyframes war-pulse { 50% { box-shadow: 0 0 0 3px #e0605a33; } }
+
+/* پنل جنگ */
+.war-card h3 { color: var(--bad); }
+.war-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; margin: 8px 0; }
+.war-grid > div { display: grid; grid-template-columns: 1fr auto; gap: 2px 6px; align-items: center; font-size: 12px; }
+.war-grid > div > span { grid-column: 1 / -1; color: var(--muted); }
+.battle-list { display: flex; flex-direction: column; gap: 4px; margin: 4px 0 8px; }
+.battle-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--panel-2); border: 1px solid var(--line);
+  border-radius: 8px; padding: 6px 10px; text-align: start; }
+.battle-row > span { flex: 1 1 auto; }
+.battle-row.small { padding: 4px 10px; font-size: 12px; }
+.battle-row.static { cursor: default; }
+button.battle-row:hover { border-color: var(--gold); }
+details summary { cursor: pointer; color: var(--muted); margin: 6px 0; }
+
+/* گزارش نبرد */
+.rep-banner { padding: 10px 12px; border-radius: var(--radius); background: var(--panel-2); border: 1px solid var(--line); margin-bottom: 8px; }
+.rep-banner.good { border-color: var(--good); }
+.rep-banner.bad { border-color: var(--bad); }
+.rep-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rep-col { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; min-width: 0; }
+.rep-col.mine { border-color: var(--gold); }
+.rep-col .mil-table { width: 100%; font-size: 12px; }
+.factors { margin-top: 6px; font-size: 12px; }
+.factors .b-row.total { border-top: 1px solid var(--line); margin-top: 4px; padding-top: 4px; font-weight: 700; }
+
+/* پنجره‌ی دسته: حمله و پشتیبانی */
+.warn-card { border-color: var(--bad); }
+.attack-card { border-color: #9b3a33; }
+.dest.attack span small { display: block; }
+.stack-row.static { cursor: default; }
+
+/* خرید سلاح */
+.arms-types { margin: 6px 0 10px; }
+.offers { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.offer { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+.offer.off { opacity: .6; }
+.offer.open { border-color: var(--gold); }
+.offer-main { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.offer-main > span:first-child { flex: 1 1 100%; font-weight: 700; }
+.offer-main .btn { margin-inline-start: auto; }
+.buy-box { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.buy-box input[type=range] { width: 100%; }
+
+/* نقشه: شهرهای جبهه، اشغال، نبرد، شلیک، نیروی دشمن */
+.city .c-flag { font-size: 11px; display: none; paint-order: stroke; stroke: #0b0f14; stroke-width: 2px; }
+.city.occupied .c-flag { display: block; }
+.city .c-battle { font-size: 13px; display: none; }
+.city.battle .c-battle { display: block; animation: blink 1s steps(2, start) infinite; }
+.city.front .c-mark { fill: #ffb4ae; }
+.city.front.own .c-mark { fill: var(--gold); }
+@keyframes blink { to { visibility: hidden; } }
+.strike { fill: none; stroke-dasharray: 4 3; animation: strike-dash 1.2s linear infinite; pointer-events: none; }
+.strike.own { stroke: var(--gold); }
+.strike.enemy { stroke: #ff6b5e; }
+.boom { font-size: 12px; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+@keyframes strike-dash { to { stroke-dashoffset: -14; } }
+.force-routes line.enemy { stroke: #ff6b5e; }
+.chip.enemy rect { stroke: #ff6b5e; fill: #3a1614f0; }
+.chip.fighting rect { stroke-width: 2.2; }
+.fcompact.enemy rect { stroke: #ff6b5e; fill: #3a1614f0; }
+
+@media (max-width: 720px) {
+  .rep-cols { grid-template-columns: 1fr; }
+  .war-grid { grid-template-columns: 1fr; }
+}

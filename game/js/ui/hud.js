@@ -25,7 +25,7 @@
     const b = Eco.computeBudget(state, state.playerId);
     const h = c.eco.history;
     const prev = h.length >= 2 ? h[h.length - 2] : undefined;
-    const surplus = c.energy.production - c.energy.consumption;
+    const surplus = Eco.energyProduction(c) - c.energy.consumption;
     const stabCls = c.stability < 30 ? 'bad' : c.stability < 50 ? 'mid' : 'good';
     const inflCls = c.eco.inflation > 30 ? 'bad' : c.eco.inflation > 10 ? 'mid' : '';
 
@@ -53,9 +53,11 @@
   function renderActionBar(state, autoplay) {
     const el = document.getElementById('actionbar');
     const over = !!state.gameOver;
+    const atWar = SG.War ? SG.War.warsOfCountry(state, state.playerId).length : 0;
     el.innerHTML = `
       <button class="ab" data-open="government">🏛️<span>دولت</span></button>
       <button class="ab" data-open="military">⚔️<span>ارتش</span></button>
+      <button class="ab ${atWar ? 'at-war' : ''}" data-open="war" title="${atWar ? 'در جنگیم' : 'جنگ و صلح'}">🔥<span>جنگ</span>${atWar ? `<i class="ab-badge">${SG.Fmt.num(atWar)}</i>` : ''}</button>
       <button class="ab" data-open="advisor">🧑‍💼<span>مشاور</span></button>
       <div class="ab-turn">
         <button class="ab" data-play title="${autoplay.on ? 'توقف' : 'پخش خودکار'}" ${over ? 'disabled' : ''}>${autoplay.on ? '⏸' : '▶'}</button>

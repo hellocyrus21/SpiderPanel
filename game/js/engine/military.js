@@ -8,7 +8,8 @@
 //   - هر نوع واحد کارخانه‌ی خودش را دارد. تولید ماهانه = تعداد کارخانه × تولید هر کارخانه
 //     × توان فناوری کشور × تخصص کشور. کارخانه‌ی جدید هم می‌شود ساخت.
 //   - شاخص قدرت هر شاخه (land, air, ...) از تعداد واقعی واحدها حساب می‌شود.
-// نبرد در مرحله‌ی ۴ اضافه می‌شود. هیچ قانونی مخصوص کشور خاصی نیست؛ تفاوت‌ها از data/units.js است.
+// نبرد در engine/war.js است (مرحله‌ی ۴). کشورهای هوش مصنوعی فقط وقتی در جنگ‌اند دسته روی نقشه دارند
+// (c.wstacks)؛ بازیکن همیشه (c.mil.stacks). هیچ قانونی مخصوص کشور خاصی نیست؛ تفاوت‌ها از data/units.js است.
 // =====================================================================
 (function (SG) {
   'use strict';
@@ -51,6 +52,20 @@
   function capability(c, type) {
     const b = D().units[type].branch;
     return 0.4 + 0.8 * clamp((c.tech[b] || 0) / 100, 0, 1);
+  }
+
+  /** دسته‌های روی نقشه‌ی یک کشور: بازیکن ← c.mil.stacks ، هوش مصنوعی در جنگ ← c.wstacks */
+  function stacksOf(c) {
+    if (c.mil && c.mil.useUnits) return c.mil.stacks;
+    return c.wstacks || [];   // کشور بسیج‌نشده دسته ندارد (war.mobilize آرایه را می‌سازد)
+  }
+  const hasStacks = c => !!((c.mil && c.mil.useUnits) || c.wstacks);
+
+  /** شهرهای این کشور که الان دست خودش است (شهر اشغال‌شده حساب نمی‌شود) */
+  function ownCities(state, c) {
+    if (!state || !SG.War) return c.cities;
+    const list = c.cities.filter(x => SG.War.controller(state, x.id) === c.id);
+    return list.length ? list : c.cities;
   }
 
   function specialty(c, type) {
@@ -112,19 +127,21 @@
   // بازیکن: دسته‌ها روی نقشه
   // -------------------------------------------------------------------
   /** شهر مناسب برای یک نوع واحد (بندر برای ناو، پایگاه هوایی برای هواپیما، ...) */
-  function homeCityFor(c, type) {
+  function homeCityFor(c, type, state) {
+    const cities = ownCities(state, c);
     const tag = NAVY.includes(type) ? 'port' : AIR.includes(type) ? 'air' : (type === 'ballistic' || type === 'cruise') ? 'missile' : null;
     if (tag) {
-      const city = c.cities.find(x => x.tags.includes(tag));
+      const city = cities.find(x => x.tags.includes(tag));
       if (city) return city;
     }
-    return c.cities[0];
+    return cities.find(x => x.capital) || cities[0];
   }
 
   /** شهر محل تحویل تولید کارخانه‌ها */
-  function factoryCityFor(c, type) {
-    if (NAVY.includes(type)) { const p = c.cities.find(x => x.tags.includes('port')); if (p) return p; }
-    return c.cities.find(x => x.tags.includes('industry')) || c.cities[0];
+  function factoryCityFor(c, type, state) {
+    const cities = ownCities(state, c);
+    if (NAVY.includes(type)) { const p = cities.find(x => x.tags.includes('port')); if (p) return p; }
+    return cities.find(x => x.tags.includes('industry')) || cities[0];
   }
 
   function cityLoc(c, city) {
@@ -137,22 +154,47 @@
   }
 
   /** افزودن نیرو به یک محل (اگر دسته‌ی هم‌نوع آن‌جا هست، ادغام می‌شود) */
-  function addToLocation(state, c, type, count, loc, pos) {
-    if (count <= 0) return null;
-    const existing = c.mil.stacks.find(s => s.type === type && !s.move && sameLoc(s.loc, loc));
-    if (existing) { existing.count += count; return existing; }
-    const s = {
+  function newStack(state, type, count, loc, pos, from) {
+    return {
       id: 'S' + (state.nextStackId = (state.nextStackId || 0) + 1),
-      type, count, loc: { ...loc }, pos: pos.slice(), move: null, supply: 100,
+      type, count, loc: { ...loc }, pos: pos.slice(), move: null,
+      supply: from ? from.supply : 100,
+      morale: from ? (from.morale ?? 75) : 75,   // روحیه (۰..۱۰۰) — نبرد
+      exp: from ? (from.exp || 0) : 0,           // تجربه (۰..۱۰۰) — برنده‌ی نبرد +۵
+      dmg: 0,                                    // آسیب جزئی واحدهای «لشکر/تیپ» (کسر یک واحد)
     };
-    c.mil.stacks.push(s);
+  }
+
+  function addToLocation(state, c, type, count, loc, pos) {
+    if (count <= 0 || !hasStacks(c)) return null;
+    const list = stacksOf(c);
+    const existing = list.find(s => s.type === type && !s.move && sameLoc(s.loc, loc));
+    if (existing) { existing.count += count; return existing; }
+    const s = newStack(state, type, count, loc, pos);
+    list.push(s);
     return s;
   }
 
-  /** همه‌ی نیروهای بازیکن = جمع دسته‌ها */
+  /** ادغام یک دسته‌ی رسیده با دسته‌ی هم‌نوع همان محل (میانگین وزنی روحیه و تجربه) */
+  function mergeInto(state, c, s, loc, pos) {
+    const list = stacksOf(c);
+    const other = list.find(x => x !== s && x.type === s.type && !x.move && sameLoc(x.loc, loc));
+    if (!other) { s.loc = { ...loc }; s.pos = pos.slice(); s.move = null; return s; }
+    const n = other.count + s.count || 1;
+    other.morale = ((other.morale ?? 75) * other.count + (s.morale ?? 75) * s.count) / n;
+    other.exp = ((other.exp || 0) * other.count + (s.exp || 0) * s.count) / n;
+    other.supply = Math.min(other.supply, s.supply);
+    other.dmg = (other.dmg || 0) + (s.dmg || 0);
+    other.count += s.count;
+    const i = list.indexOf(s); if (i >= 0) list.splice(i, 1);
+    return other;
+  }
+
+  /** همه‌ی نیروها = جمع دسته‌ها */
   function syncForces(c) {
+    if (!hasStacks(c)) return c.forces;   // هوش مصنوعیِ بسیج‌نشده: نیروها همان c.forces است
     const f = emptyForces();
-    for (const s of c.mil.stacks) f[s.type] += s.count;
+    for (const s of stacksOf(c)) f[s.type] += s.count;
     c.forces = f;
     return f;
   }
@@ -171,7 +213,7 @@
           addToLocation(state, c, type, share, cityLoc(c, city), city.pos);
         });
       } else {
-        const city = homeCityFor(c, type);
+        const city = homeCityFor(c, type, state);
         addToLocation(state, c, type, n, cityLoc(c, city), city.pos);
       }
     }
@@ -226,7 +268,8 @@
     const defs = D().units;
     let s = 0;
     if (c.mil && c.mil.stacks) {
-      for (const st of c.mil.stacks) s += st.count * defs[st.type].fuel * (st.move ? 2 : st.loc.kind === 'border' ? 1.3 : 1);
+      // در حرکت ×۲، در نبرد ×۲، در مرز یا خاک دشمن ×۱.۳
+      for (const st of c.mil.stacks) s += st.count * defs[st.type].fuel * (st.move || st.inBattle ? 2 : (st.loc.kind === 'border' || st.loc.country !== c.id) ? 1.3 : 1);
     } else {
       for (const [k, n] of Object.entries(c.forces)) s += n * defs[k].fuel;
     }
@@ -315,25 +358,41 @@
     return state.countries[pid].mil.stacks.find(s => s.id === id);
   }
 
-  /** مقصدهای ممکن برای یک دسته */
+  /**
+   * مقصدهای ممکن برای یک دسته:
+   *   شهرهای خودی (و شهرهای تصرف‌شده)، مرز زمینی/دریایی همسایه‌ها،
+   *   و در جنگ: «حمله به شهر» دشمن — از مرز همان کشور یا از شهری که داخل خاک آن کشور گرفته‌ایم.
+   */
   function destinations(state, pid, stack) {
     const c = state.countries[pid];
     const type = stack.type;
     const speed = D().units[type].speed;
     const list = [];
     const isNavy = NAVY.includes(type), isAir = AIR.includes(type), isLand = LAND.includes(type);
-    for (const city of c.cities) {
+    const W = SG.War;
+    for (const city of ownCities(state, c)) {
       if (isNavy && !city.tags.includes('port')) continue;
       list.push({ kind: 'city', city: city.id, country: pid, name: city.name, pos: city.pos.slice(), capital: city.capital });
     }
+    // شهرهای تصرف‌شده (جز ناو، مگر بندر باشد)
+    if (W) for (const city of W.citiesControlledAbroad(state, pid)) {
+      if (isNavy && !city.tags.includes('port')) continue;
+      list.push({ kind: 'city', city: city.id, country: W.origOf(city.id), name: city.name, pos: city.pos.slice(), capital: false, held: true });
+    }
     if (isLand || isAir) {
-      for (const n of c.neighbors) if (c.borderPos[n]) list.push({ kind: 'border', target: n, pos: c.borderPos[n].slice(), sea: false });
+      for (const n of c.neighbors) if (c.borderPos[n] && state.countries[n] && !state.countries[n].annexedBy) list.push({ kind: 'border', target: n, pos: c.borderPos[n].slice(), sea: false });
     }
     if (isNavy || isAir) {
       for (const n of c.seaNeighbors) {
         const o = state.countries[n];
-        if (!o) continue;
+        if (!o || o.annexedBy) continue;
         list.push({ kind: 'border', target: n, sea: true, pos: [c.pos[0] * 0.55 + o.pos[0] * 0.45, c.pos[1] * 0.55 + o.pos[1] * 0.45] });
+      }
+    }
+    // حمله: فقط نیروی زمینی، و فقط وقتی از مرز یا داخل خاک کشور دشمن حرکت می‌کند
+    if (isLand && W && !stack.move) {
+      for (const city of W.attackTargets(state, pid, stack)) {
+        list.push({ kind: 'city', city: city.id, country: W.origOf(city.id), name: city.name, pos: city.pos.slice(), capital: city.capital, attack: true });
       }
     }
     return list
@@ -348,14 +407,30 @@
     if (!s || s.move || count <= 0) return null;
     count = Math.min(count, s.count);
     const turns = Math.max(1, Math.ceil(distanceKm(s.pos, dest.pos) / D().units[s.type].speed));
+    return moveStack(state, c, s, count, dest, turns);
+  }
+
+  /**
+   * جدا کردن count از دسته‌ی s و حرکتش به dest (برای بازیکن و هوش مصنوعی).
+   * maxTurns: سقف زمان (برای اعزام راهبردی متحدان از راه دور)
+   */
+  function moveStack(state, c, s, count, dest, turns, maxTurns) {
+    count = Math.min(count, s.count);
+    if (count <= 0) return null;
+    if (turns === undefined) turns = Math.max(1, Math.ceil(distanceKm(s.pos, dest.pos) / D().units[s.type].speed));
+    if (maxTurns) turns = Math.min(turns, maxTurns);
     let mover = s;
     if (count < s.count) {
+      // آسیب جزئی به نسبت تقسیم می‌شود
+      const share = count / s.count;
       s.count -= count;
-      mover = { id: 'S' + (state.nextStackId = (state.nextStackId || 0) + 1), type: s.type, count, loc: { ...s.loc }, pos: s.pos.slice(), move: null, supply: s.supply };
-      c.mil.stacks.push(mover);
+      mover = newStack(state, s.type, count, s.loc, s.pos, s);
+      mover.dmg = (s.dmg || 0) * share; s.dmg = (s.dmg || 0) * (1 - share);
+      stacksOf(c).push(mover);
     }
+    mover.inBattle = false;
     mover.move = { from: mover.pos.slice(), to: dest.pos.slice(), total: turns, left: turns,
-      dest: dest.kind === 'city' ? { kind: 'city', city: dest.city, country: pid } : { kind: 'border', target: dest.target, sea: !!dest.sea } };
+      dest: dest.kind === 'city' ? { kind: 'city', city: dest.city, country: dest.country || c.id } : { kind: 'border', target: dest.target, sea: !!dest.sea } };
     return mover;
   }
 
@@ -387,7 +462,7 @@
       const n = Math.floor(c.mil.progress[type]);
       if (n > 0) {
         c.mil.progress[type] -= n;
-        const city = factoryCityFor(c, type);
+        const city = factoryCityFor(c, type, state);
         addToLocation(state, c, type, n, cityLoc(c, city), city.pos);
         delivered[type] = n;
       }
@@ -404,31 +479,7 @@
     c.mil.construction = c.mil.construction.filter(x => x.left > 0);
 
     // ۳) حرکت و تدارکات
-    const pressure = SG.Economy.sanctionPressure(state, pid);
-    const energyShort = c.energy.production < c.energy.consumption + extraFuel(c);
-    const arrived = [];
-    for (const s of c.mil.stacks.slice()) {
-      if (s.move) {
-        s.move.left--;
-        const t = 1 - s.move.left / s.move.total;
-        s.pos = [s.move.from[0] + (s.move.to[0] - s.move.from[0]) * t, s.move.from[1] + (s.move.to[1] - s.move.from[1]) * t];
-        if (s.move.left <= 0) {
-          const dest = s.move.dest, to = s.move.to;
-          c.mil.stacks = c.mil.stacks.filter(x => x !== s);
-          const merged = addToLocation(state, c, s.type, s.count, dest, to);
-          merged.supply = Math.min(merged.supply, s.supply);
-          arrived.push({ type: s.type, count: s.count, dest, stackId: merged.id });
-          continue;
-        }
-      }
-      let target = s.move ? 85 : s.loc.kind === 'city' ? 100 : s.loc.sea ? 80 : 92;
-      if (energyShort && pressure > 0.3) target -= 10;
-      if (c.eco.treasury <= 0) target -= 15;
-      const before = s.supply;
-      s.supply = clamp(s.supply + (target - s.supply) * 0.3, 0, 100);
-      if (before >= 55 && s.supply < 55) events.push({ type: 'supply_low', stack: s.id, unit: s.type });
-    }
-    if (arrived.length) events.push({ type: 'arrived', list: arrived });
+    stepStacks(state, c, events);
 
     // ۴) شاخص‌ها و سهم بودجه‌ی نظامی (برای فرمول رشد اقتصاد)
     syncForces(c);
@@ -437,11 +488,58 @@
     return events;
   }
 
+  /**
+   * هدف تدارکات یک دسته (۰..۱۰۰):
+   *   شهر خودی ۱۰۰، مرز زمینی ۹۲، مرز دریایی ۸۰، در حرکت ۸۵
+   *   خاک دشمن یا شهر تصرف‌شده: ۹۵ منهای ۱۰ برای هر ۳۰۰ کیلومتر فاصله تا نزدیک‌ترین نقطه‌ی خودی (حداقل ۳۰)
+   */
+  function supplyTarget(state, c, s) {
+    if (s.move) return 85;
+    if (s.loc.kind === 'border') return s.loc.sea ? 80 : 92;
+    const W = SG.War;
+    if (!W) return 100;
+    const ctrl = W.controller(state, s.loc.city);
+    if (ctrl === c.id && W.origOf(s.loc.city) === c.id) return 100;
+    if (ctrl === c.id && W.isHomeCity(state, c, s.loc.city)) return 100;
+    const d = W.distanceToSupply(state, c, s.pos, s.loc.city);
+    return Math.max(30, 95 - 10 * Math.floor(d / 300));
+  }
+
+  /** حرکت دسته‌ها و تدارکات (برای بازیکن و کشورهای هوش مصنوعیِ درگیر جنگ) */
+  function stepStacks(state, c, events) {
+    const pressure = SG.Economy.sanctionPressure(state, c.id);
+    const energyShort = SG.Economy.energyProduction(c) < c.energy.consumption + extraFuel(c);
+    const arrived = [];
+    for (const s of stacksOf(c).slice()) {
+      if (s.move) {
+        s.move.left--;
+        const t = 1 - s.move.left / s.move.total;
+        s.pos = [s.move.from[0] + (s.move.to[0] - s.move.from[0]) * t, s.move.from[1] + (s.move.to[1] - s.move.from[1]) * t];
+        if (s.move.left <= 0) {
+          const dest = s.move.dest, to = s.move.to, count = s.count, type = s.type;
+          const merged = mergeInto(state, c, s, dest, to);
+          arrived.push({ type, count, dest, stackId: merged.id });
+          continue;
+        }
+      }
+      let target = supplyTarget(state, c, s);
+      if (energyShort && pressure > 0.3) target -= 10;
+      if (c.eco.treasury <= 0) target -= 15;
+      const before = s.supply;
+      s.supply = clamp(s.supply + (target - s.supply) * 0.3, 0, 100);
+      // روحیه بیرون از نبرد آرام به ۸۰ برمی‌گردد
+      if (!s.inBattle) s.morale = clamp((s.morale ?? 75) + (80 - (s.morale ?? 75)) * 0.15, 0, 100);
+      if (before >= 55 && s.supply < 55) events.push({ type: 'supply_low', stack: s.id, unit: s.type });
+    }
+    if (arrived.length) events.push({ type: 'arrived', list: arrived });
+  }
+
   /** نام محل یک دسته */
   function locName(state, loc) {
     if (loc.kind === 'city') {
       const c = state.countries[loc.country];
-      return c.cities.find(x => x.id === loc.city)?.name || c.name;
+      const city = c.cities.find(x => x.id === loc.city) || (SG.War && SG.War.cityById(state, loc.city));
+      return city?.name || c.name;
     }
     return 'مرز ' + state.countries[loc.target].name;
   }
@@ -450,6 +548,8 @@
     init, startPlayer, step, generateForces, generateFactories, refreshIndices, syncForces,
     upkeepMonthly, productionCostMonthly, productionRate, unitCost, factoryCost, capability, rangeOf,
     fuelUse, extraFuel, setLine, buildFactory, destinations, send, demobilize, findStack, locName,
-    distanceKm, branchStrength, sanctionHit, BRANCHES,
+    distanceKm, branchStrength, sanctionHit, BRANCHES, LAND, AIR, NAVY,
+    stacksOf, ownCities, addToLocation, moveStack, mergeInto, stepStacks, homeCityFor, cityLoc, sameLoc,
+    emptyForces, specialty, indexToStrength,
   };
 })(window.SG = window.SG || {});

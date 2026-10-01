@@ -76,6 +76,10 @@
       else if (b.dataset.action === 'back') handlers.onBack();
       else if (b.dataset.action === 'advisor') handlers.onAdvisor(b.dataset.id);
       else if (b.dataset.action === 'government') handlers.onGovernment();
+      else if (b.dataset.action === 'declare') handlers.onDeclare(b.dataset.id);
+      else if (b.dataset.action === 'war') handlers.onWar();
+      else if (b.dataset.action === 'arms') handlers.onArms(b.dataset.id);
+      else if (b.dataset.action === 'city') handlers.onCity(b.dataset.id);
     });
 
     // موبایل: کشیدن دستگیره به پایین = بستن
@@ -104,12 +108,13 @@
       const c = state.countries[id];
       const player = state.playerId;
       const isPlayer = id === player;
-      const total = Object.keys(state.countries).length;
+      const total = E.activeCountries(state).length;
       const power = E.militaryPower(c);
       const milRank = E.rankOf(state, id, E.militaryPower);
       const gdpRank = E.rankOf(state, id, x => x.gdp);
       const perCap = c.gdp / Math.max(c.population, 0.001) * 1000; // دلار
-      const energyBal = c.energy.production - c.energy.consumption;
+      const prod = c.eco ? SG.Economy.energyProduction(c) : c.energy.production;   // منهای میدان‌های اشغال‌شده
+      const energyBal = prod - c.energy.consumption;
       const alliances = E.alliancesOf(state, id);
       const pacts = E.defensePartners(state, id);
       const wars = E.warsOf(state, id);
@@ -126,8 +131,10 @@
           ${c.playable ? '<span class="badge">قابل‌بازی</span>' : ''}
           ${c.military.nuclear ? '<span class="badge warn">هسته‌ای</span>' : ''}
           ${wars.length ? '<span class="badge danger">در جنگ</span>' : ''}
+          ${c.warWeariness >= 1 ? `<span class="badge warn" title="خستگی جنگ">خستگی ${F.num(Math.round(c.warWeariness))}٪</span>` : ''}
         </div>
         ${SG.Leader.card(id, 48)}
+        ${c.annexedBy ? `<div class="badge danger">ضمیمه‌ی ${F.esc(state.countries[c.annexedBy].name)} شده</div>` : ''}
         <div class="sub">${F.GOV[c.gov] || ''}${c.capital ? ' | پایتخت: ' + F.esc(c.capital) : ''} | زمین ${F.TERRAIN[c.terrain] || ''}</div>
       </header>`;
 
@@ -159,7 +166,28 @@
             <span class="${lab.cls}">${atWar ? 'در جنگ' : lab.text}</span>
             ${allied ? '<span class="badge">هم‌پیمان</span>' : ''}</div>
           ${relationBar(v)}
+          ${mode === 'game' && !c.annexedBy ? `<div class="info-actions">
+            ${atWar ? '<button class="btn danger" data-action="war">🔥 پنل جنگ</button>'
+              : `<button class="btn" data-action="declare" data-id="${id}">⚔️ اعلان جنگ…</button>`}
+            <button class="btn" data-action="arms" data-id="${id}">🛒 خرید سلاح از ${F.esc(c.name)}</button>
+          </div>` : ''}
         </section>`;
+      }
+
+      // --- شهرها و اشغال (فقط داخل بازی) ---
+      if (mode === 'game' && SG.War) {
+        const W = SG.War;
+        const occ = c.cities.filter(x => W.controller(state, x.id) !== id);
+        const abroad = W.citiesControlledAbroad(state, id);
+        if (occ.length || abroad.length || c.puppetOf || c.eco?.occ) {
+          const cityBtn = city => `<button class="chip" data-action="city" data-id="${city.id}">${city.capital ? '★ ' : ''}${F.esc(city.name)}</button>`;
+          html += `<section class="card"><h3>🏴 خاک و شهرها</h3>
+            ${c.puppetOf ? `<p class="small">دولت دست‌نشانده‌ی <b>${F.esc(state.countries[c.puppetOf].name)}</b> (هر سال ۱.۲٪ تولیدش را باج می‌دهد).</p>` : ''}
+            ${occ.length ? `<div class="row-label bad">در دست دیگران</div><div class="chips">${occ.map(city => cityBtn(city) + `<small class="muted">${F.esc(state.countries[W.controller(state, city.id)].name)}</small>`).join(' ')}</div>` : ''}
+            ${abroad.length ? `<div class="row-label">شهرهای تصرف‌شده یا واگذارشده</div><div class="chips">${abroad.map(cityBtn).join('')}</div>` : ''}
+            ${c.eco?.occ?.gdp ? `<div class="muted small">${F.num(Math.round(c.eco.occ.gdp * 100))}٪ اقتصاد و ${F.num(Math.round(c.eco.occ.energy * 100))}٪ انرژی این کشور زیر اشغال است.</div>` : ''}
+          </section>`;
+        }
       }
 
       // --- ویژگی‌ها ---
@@ -175,7 +203,7 @@
           <dt>تولید ناخالص (GDP)</dt><dd>${F.money(c.gdp)} <small class="muted">رتبه ${F.num(gdpRank)}</small></dd>
           <dt>سرانه</dt><dd>${F.num(Math.round(perCap))} دلار</dd>
           <dt>جمعیت</dt><dd>${F.population(c.population)}</dd>
-          <dt>انرژی</dt><dd>تولید ${F.num(c.energy.production)} / مصرف ${F.num(c.energy.consumption)}
+          <dt>انرژی</dt><dd>تولید ${F.num(Math.round(prod))} / مصرف ${F.num(Math.round(c.energy.consumption))}
             <small class="${energyBal >= 0 ? 'good' : 'bad'}">${energyBal >= 0 ? 'مازاد' : 'کسری'}</small></dd>
           ${c.eco ? `<dt>رشد سالانه</dt><dd class="${c.eco.growth >= 0 ? 'good' : 'bad'}">${F.num(Math.round(c.eco.growth * 1000) / 10)}٪</dd>
           <dt>تورم</dt><dd>${F.num(Math.round(c.eco.inflation * 10) / 10)}٪</dd>

@@ -37,6 +37,7 @@
       if (PCT_KEYS.includes(key)) return F.num(Math.round(v * 10) / 10);
       if (key === 'stability') return F.num(Math.round(v));
       if (key === 'unit') return F.esc(D().units[v]?.name || v);
+      if (key === 'term') return F.esc(D().peaceTerms[v]?.name || v);
       if (key === 'year') return new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(v);
       if (typeof v === 'number') return F.num(v);
       return F.esc(v);
@@ -66,6 +67,8 @@
     if (!def || !def.actions || n.acted) return [];
     // دکمه‌ها فقط برای اعلان‌های تازه (اعلان‌های قدیمی ممکن است دیگر معنی نداشته باشند)
     if (n.turn < state.turn - 1 && n.type !== 'game_over_collapse') return [];
+    // پیشنهاد صلح: فقط شرط‌هایی که طرف مقابل می‌پذیرد
+    if (n.data && n.data.allowed) return def.actions.filter(a => !a.id.startsWith('peace:') || n.data.allowed.includes(a.id));
     return def.actions;
   }
 

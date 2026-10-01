@@ -44,7 +44,11 @@ SG_DATA.countries = {
      38.9
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.077
+    }
    },
    {
     "id": "USA-1",
@@ -57,7 +61,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.077
+    }
    },
    {
     "id": "USA-2",
@@ -69,7 +77,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.077
+    }
    },
    {
     "id": "USA-3",
@@ -81,7 +93,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.077
+    }
    },
    {
     "id": "USA-4",
@@ -93,8 +109,13 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry",
-     "missile"
-    ]
+     "missile",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.308
+    }
    },
    {
     "id": "USA-5",
@@ -106,7 +127,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.077
+    }
    },
    {
     "id": "USA-6",
@@ -118,7 +143,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.077
+    }
    },
    {
     "id": "USA-7",
@@ -131,7 +160,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.077
+    }
    },
    {
     "id": "USA-8",
@@ -143,7 +176,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.077
+    }
    },
    {
     "id": "USA-9",
@@ -156,7 +193,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.077
+    }
    }
   ],
   "borderPos": {
@@ -222,7 +263,11 @@ SG_DATA.countries = {
      45.42
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.25
+    }
    },
    {
     "id": "CAN-1",
@@ -234,7 +279,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "CAN-2",
@@ -246,7 +295,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "CAN-3",
@@ -258,7 +311,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    }
   ],
   "borderPos": {
@@ -315,7 +372,11 @@ SG_DATA.countries = {
      19.43
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.25
+    }
    },
    {
     "id": "MEX-1",
@@ -327,7 +388,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "MEX-2",
@@ -339,7 +404,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "MEX-3",
@@ -349,7 +418,11 @@ SG_DATA.countries = {
      32.51
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    }
   ],
   "borderPos": {
@@ -410,13 +483,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GTM-0",
-    "name": "پایتخت",
+    "name": "پایتخت گواتمالا",
     "pos": [
      -90.37,
      15.69
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "GTM-1",
+    "name": "جنوب گواتمالا",
+    "pos": [
+     -89.95,
+     14.78
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "GTM-2",
+    "name": "شرق گواتمالا",
+    "pos": [
+     -89.63,
+     15.32
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -482,13 +590,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BLZ-0",
-    "name": "پایتخت",
+    "name": "پایتخت بلیز",
     "pos": [
      -88.72,
      17.19
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -544,13 +657,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SLV-0",
-    "name": "پایتخت",
+    "name": "پایتخت السالوادور",
     "pos": [
      -88.87,
      13.74
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -606,13 +724,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "HND-0",
-    "name": "پایتخت",
+    "name": "پایتخت هندوراس",
     "pos": [
      -86.62,
      14.83
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "HND-1",
+    "name": "غرب هندوراس",
+    "pos": [
+     -88.13,
+     14.97
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "HND-2",
+    "name": "شرق هندوراس",
+    "pos": [
+     -85.77,
+     14.57
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -673,13 +826,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "NIC-0",
-    "name": "پایتخت",
+    "name": "پایتخت نیکاراگوئه",
     "pos": [
      -85.03,
      12.85
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "NIC-1",
+    "name": "جنوب نیکاراگوئه",
+    "pos": [
+     -84.8,
+     11.77
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -735,13 +908,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CRI-0",
-    "name": "پایتخت",
+    "name": "پایتخت کاستاریکا",
     "pos": [
      -84.19,
      9.98
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "CRI-1",
+    "name": "شرق کاستاریکا",
+    "pos": [
+     -83.32,
+     9.36
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -797,13 +990,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "PAN-0",
-    "name": "پایتخت",
+    "name": "پایتخت پاناما",
     "pos": [
      -80.11,
      8.53
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "PAN-1",
+    "name": "شرق پاناما",
+    "pos": [
+     -78.18,
+     7.96
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -859,13 +1072,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CUB-0",
-    "name": "پایتخت",
+    "name": "پایتخت کوبا",
     "pos": [
      -78.91,
      21.63
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -913,13 +1131,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "JAM-0",
-    "name": "پایتخت",
+    "name": "پایتخت جامائیکا",
     "pos": [
      -77.31,
      18.16
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -965,13 +1188,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "HTI-0",
-    "name": "پایتخت",
+    "name": "پایتخت هائیتی",
     "pos": [
      -72.68,
      18.93
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -1024,13 +1252,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "DOM-0",
-    "name": "پایتخت",
+    "name": "پایتخت جمهوری دومینیکن",
     "pos": [
      -70.51,
      18.9
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "DOM-1",
+    "name": "غرب جمهوری دومینیکن",
+    "pos": [
+     -71.24,
+     18.88
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -1081,13 +1329,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BHS-0",
-    "name": "پایتخت",
+    "name": "پایتخت باهاما",
     "pos": [
      -78.04,
      24.7
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1133,13 +1386,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "TTO-0",
-    "name": "پایتخت",
+    "name": "پایتخت ترینیداد و توباگو",
     "pos": [
      -61.29,
      10.42
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1185,13 +1443,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BRB-0",
-    "name": "پایتخت",
+    "name": "پایتخت باربادوس",
     "pos": [
      -59.56,
      13.18
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1235,13 +1498,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ATG-0",
-    "name": "پایتخت",
+    "name": "پایتخت آنتیگوا و باربودا",
     "pos": [
      -61.79,
      17.08
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1285,13 +1553,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "DMA-0",
-    "name": "پایتخت",
+    "name": "پایتخت دومینیکا",
     "pos": [
      -61.36,
      15.44
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1335,13 +1608,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GRD-0",
-    "name": "پایتخت",
+    "name": "پایتخت گرنادا",
     "pos": [
      -61.68,
      12.12
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1385,13 +1663,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "KNA-0",
-    "name": "پایتخت",
+    "name": "پایتخت سنت کیتس و نویس",
     "pos": [
      -62.75,
      17.33
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1435,13 +1718,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LCA-0",
-    "name": "پایتخت",
+    "name": "پایتخت سنت لوسیا",
     "pos": [
      -60.97,
      13.89
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1485,13 +1773,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "VCT-0",
-    "name": "پایتخت",
+    "name": "پایتخت سنت وینسنت",
     "pos": [
      -61.2,
      13.25
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -1535,13 +1828,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BRA-0",
-    "name": "پایتخت",
+    "name": "پایتخت برزیل",
     "pos": [
      -53.24,
      -10.69
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "BRA-1",
+    "name": "جنوب برزیل",
+    "pos": [
+     -54.35,
+     -23.06
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "BRA-2",
+    "name": "غرب برزیل",
+    "pos": [
+     -65.53,
+     -8.94
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -1632,13 +1960,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ARG-0",
-    "name": "پایتخت",
+    "name": "پایتخت آرژانتین",
     "pos": [
      -64.75,
      -34.54
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ARG-1",
+    "name": "شمال آرژانتین",
+    "pos": [
+     -64.8,
+     -27.1
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ARG-2",
+    "name": "شرق آرژانتین",
+    "pos": [
+     -58.83,
+     -30.38
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -1711,13 +2074,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "COL-0",
-    "name": "پایتخت",
+    "name": "پایتخت کلمبیا",
     "pos": [
      -73.08,
      3.9
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "COL-1",
+    "name": "جنوب کلمبیا",
+    "pos": [
+     -72.83,
+     0.14
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "COL-2",
+    "name": "غرب کلمبیا",
+    "pos": [
+     -75.64,
+     6.19
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -1788,13 +2186,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CHL-0",
-    "name": "پایتخت",
+    "name": "پایتخت شیلی",
     "pos": [
      -70.95,
      -34.36
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "CHL-1",
+    "name": "شمال شیلی",
+    "pos": [
+     -70.26,
+     -24.54
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "CHL-2",
+    "name": "جنوب شیلی",
+    "pos": [
+     -71.23,
+     -37.27
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -1855,13 +2288,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "PER-0",
-    "name": "پایتخت",
+    "name": "پایتخت پرو",
     "pos": [
      -74.42,
      -9.11
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "PER-1",
+    "name": "جنوب پرو",
+    "pos": [
+     -71.65,
+     -14.44
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "PER-2",
+    "name": "شمال پرو",
+    "pos": [
+     -73.36,
+     -5.06
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -1932,13 +2400,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "VEN-0",
-    "name": "پایتخت",
+    "name": "پایتخت ونزوئلا",
     "pos": [
      -66.18,
      7.12
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "VEN-1",
+    "name": "شرق ونزوئلا",
+    "pos": [
+     -62.66,
+     7.1
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "VEN-2",
+    "name": "جنوب ونزوئلا",
+    "pos": [
+     -65.01,
+     4.94
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -2001,13 +2504,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ECU-0",
-    "name": "پایتخت",
+    "name": "پایتخت اکوادور",
     "pos": [
      -78.39,
      -1.44
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ECU-1",
+    "name": "جنوب اکوادور",
+    "pos": [
+     -78.52,
+     -3.07
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ECU-2",
+    "name": "شمال اکوادور",
+    "pos": [
+     -77.56,
+     -0.4
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -2063,13 +2601,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BOL-0",
-    "name": "پایتخت",
+    "name": "پایتخت بولیوی",
     "pos": [
      -64.7,
      -16.68
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "BOL-1",
+    "name": "جنوب بولیوی",
+    "pos": [
+     -64.78,
+     -19.96
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "BOL-2",
+    "name": "غرب بولیوی",
+    "pos": [
+     -67.12,
+     -18.76
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -2140,13 +2713,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "PRY-0",
-    "name": "پایتخت",
+    "name": "پایتخت پاراگوئه",
     "pos": [
      -58.44,
      -23.21
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "PRY-1",
+    "name": "شمال پاراگوئه",
+    "pos": [
+     -60.28,
+     -21.05
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -2207,13 +2800,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "URY-0",
-    "name": "پایتخت",
+    "name": "پایتخت اروگوئه",
     "pos": [
      -56.03,
      -32.79
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "URY-1",
+    "name": "غرب اروگوئه",
+    "pos": [
+     -57.23,
+     -31.97
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -2269,13 +2882,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GUY-0",
-    "name": "پایتخت",
+    "name": "پایتخت گویان",
     "pos": [
      -58.98,
      4.79
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -2336,13 +2954,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SUR-0",
-    "name": "پایتخت",
+    "name": "پایتخت سورینام",
     "pos": [
      -55.91,
      4.13
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -2404,7 +3027,11 @@ SG_DATA.countries = {
      51.5
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.2
+    }
    },
    {
     "id": "GBR-1",
@@ -2416,7 +3043,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "GBR-2",
@@ -2428,7 +3059,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "GBR-3",
@@ -2440,7 +3075,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "GBR-4",
@@ -2452,7 +3091,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    }
   ],
   "borderPos": {
@@ -2517,7 +3160,11 @@ SG_DATA.countries = {
      48.86
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.2
+    }
    },
    {
     "id": "FRA-1",
@@ -2529,7 +3176,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "FRA-2",
@@ -2541,7 +3192,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "FRA-3",
@@ -2554,7 +3209,11 @@ SG_DATA.countries = {
     "tags": [
      "industry",
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "FRA-4",
@@ -2566,7 +3225,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    }
   ],
   "borderPos": {
@@ -2662,7 +3325,11 @@ SG_DATA.countries = {
      52.52
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.2
+    }
    },
    {
     "id": "DEU-1",
@@ -2674,7 +3341,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "DEU-2",
@@ -2686,7 +3357,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "DEU-3",
@@ -2698,7 +3373,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "DEU-4",
@@ -2710,7 +3389,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    }
   ],
   "borderPos": {
@@ -2809,7 +3492,11 @@ SG_DATA.countries = {
      41.9
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.25
+    }
    },
    {
     "id": "ITA-1",
@@ -2821,7 +3508,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "ITA-2",
@@ -2833,7 +3524,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "ITA-3",
@@ -2845,7 +3540,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    }
   ],
   "borderPos": {
@@ -2933,7 +3632,11 @@ SG_DATA.countries = {
      40.42
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
    },
    {
     "id": "ESP-1",
@@ -2946,7 +3649,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    },
    {
     "id": "ESP-2",
@@ -2958,7 +3665,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -3021,13 +3732,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "PRT-0",
-    "name": "پایتخت",
+    "name": "پایتخت پرتغال",
     "pos": [
      -7.98,
      39.65
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "PRT-1",
+    "name": "شمال پرتغال",
+    "pos": [
+     -7.32,
+     40.5
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -3078,13 +3809,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "NLD-0",
-    "name": "پایتخت",
+    "name": "پایتخت هلند",
     "pos": [
      5.63,
      52.28
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -3142,13 +3878,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BEL-0",
-    "name": "پایتخت",
+    "name": "پایتخت بلژیک",
     "pos": [
      4.65,
      50.64
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "BEL-1",
+    "name": "شرق بلژیک",
+    "pos": [
+     5.58,
+     50.56
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -3216,13 +3972,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LUX-0",
-    "name": "پایتخت",
+    "name": "پایتخت لوکزامبورگ",
     "pos": [
      6.07,
      49.77
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -3283,13 +4044,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CHE-0",
-    "name": "پایتخت",
+    "name": "پایتخت سوئیس",
     "pos": [
      8.21,
      46.8
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "CHE-1",
+    "name": "غرب سوئیس",
+    "pos": [
+     6.95,
+     46.63
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -3360,13 +4141,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "AUT-0",
-    "name": "پایتخت",
+    "name": "پایتخت اتریش",
     "pos": [
      14.11,
      47.59
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "AUT-1",
+    "name": "غرب اتریش",
+    "pos": [
+     11.39,
+     47.33
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -3452,13 +4253,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "IRL-0",
-    "name": "پایتخت",
+    "name": "پایتخت ایرلند",
     "pos": [
      -8.14,
      53.16
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -3511,13 +4317,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "DNK-0",
-    "name": "پایتخت",
+    "name": "پایتخت دانمارک",
     "pos": [
      9.35,
      56.23
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "DNK-1",
+    "name": "جنوب دانمارک",
+    "pos": [
+     9.34,
+     55.38
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -3579,7 +4405,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.167
+    }
    },
    {
     "id": "NOR-1",
@@ -3590,8 +4420,13 @@ SG_DATA.countries = {
     ],
     "capital": false,
     "tags": [
-     "port"
-    ]
+     "port",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.667
+    }
    },
    {
     "id": "NOR-2",
@@ -3603,7 +4438,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.167
+    }
    }
   ],
   "borderPos": {
@@ -3666,13 +4505,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SWE-0",
-    "name": "پایتخت",
+    "name": "پایتخت سوئد",
     "pos": [
      16.25,
      62.43
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SWE-1",
+    "name": "شرق سوئد",
+    "pos": [
+     20.58,
+     65.45
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SWE-2",
+    "name": "غرب سوئد",
+    "pos": [
+     14.98,
+     63.47
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -3734,13 +4608,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "FIN-0",
-    "name": "پایتخت",
+    "name": "پایتخت فنلاند",
     "pos": [
      26.21,
      64.26
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "FIN-1",
+    "name": "شمال فنلاند",
+    "pos": [
+     25.63,
+     67
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -3803,13 +4697,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ISL-0",
-    "name": "پایتخت",
+    "name": "پایتخت ایسلند",
     "pos": [
      -18.58,
      65
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -3861,7 +4760,11 @@ SG_DATA.countries = {
      52.23
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.25
+    }
    },
    {
     "id": "POL-1",
@@ -3873,7 +4776,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "POL-2",
@@ -3885,7 +4792,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "POL-3",
@@ -3897,7 +4808,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    }
   ],
   "borderPos": {
@@ -3980,13 +4895,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CZE-0",
-    "name": "پایتخت",
+    "name": "پایتخت چک",
     "pos": [
      15.32,
      49.74
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "CZE-1",
+    "name": "غرب چک",
+    "pos": [
+     13.6,
+     50.11
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "CZE-2",
+    "name": "شرق چک",
+    "pos": [
+     16.98,
+     49.34
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -4052,13 +5002,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SVK-0",
-    "name": "پایتخت",
+    "name": "پایتخت اسلواکی",
     "pos": [
      19.47,
      48.71
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "SVK-1",
+    "name": "شرق اسلواکی",
+    "pos": [
+     21.22,
+     48.81
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -4129,13 +5099,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "HUN-0",
-    "name": "پایتخت",
+    "name": "پایتخت مجارستان",
     "pos": [
      19.38,
      47.17
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "HUN-1",
+    "name": "شرق مجارستان",
+    "pos": [
+     21.26,
+     47.79
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -4216,13 +5206,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ROU-0",
-    "name": "پایتخت",
+    "name": "پایتخت رومانی",
     "pos": [
      24.98,
      45.85
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ROU-1",
+    "name": "غرب رومانی",
+    "pos": [
+     22.8,
+     45.35
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ROU-2",
+    "name": "شرق رومانی",
+    "pos": [
+     26.77,
+     46.56
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -4295,13 +5320,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BGR-0",
-    "name": "پایتخت",
+    "name": "پایتخت بلغارستان",
     "pos": [
      25.21,
      42.77
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "BGR-1",
+    "name": "غرب بلغارستان",
+    "pos": [
+     23.85,
+     42.18
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -4380,7 +5425,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
    },
    {
     "id": "GRC-1",
@@ -4392,7 +5441,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    },
    {
     "id": "GRC-2",
@@ -4404,7 +5457,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -4473,13 +5530,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "HRV-0",
-    "name": "پایتخت",
+    "name": "پایتخت کرواسی",
     "pos": [
      16.42,
      45.16
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "HRV-1",
+    "name": "شرق کرواسی",
+    "pos": [
+     18.18,
+     45.21
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -4550,13 +5627,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SVN-0",
-    "name": "پایتخت",
+    "name": "پایتخت اسلوونی",
     "pos": [
      14.8,
      46.12
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -4622,13 +5704,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SRB-0",
-    "name": "پایتخت",
+    "name": "پایتخت صربستان",
     "pos": [
      20.81,
      44.21
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "SRB-1",
+    "name": "شرق صربستان",
+    "pos": [
+     22.11,
+     43.6
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -4714,13 +5816,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BIH-0",
-    "name": "پایتخت",
+    "name": "پایتخت بوسنی و هرزگوین",
     "pos": [
      17.77,
      44.17
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "BIH-1",
+    "name": "شرق بوسنی و هرزگوین",
+    "pos": [
+     18.84,
+     44.11
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -4781,13 +5903,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MNE-0",
-    "name": "پایتخت",
+    "name": "پایتخت مونته‌نگرو",
     "pos": [
      19.24,
      42.79
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -4858,13 +5985,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MKD-0",
-    "name": "پایتخت",
+    "name": "پایتخت مقدونیه شمالی",
     "pos": [
      21.68,
      41.6
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -4935,13 +6067,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ALB-0",
-    "name": "پایتخت",
+    "name": "پایتخت آلبانی",
     "pos": [
      20.05,
      41.13
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5009,13 +6146,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "XKX-0",
-    "name": "پایتخت",
+    "name": "پایتخت کوزوو",
     "pos": [
      20.87,
      42.57
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5081,13 +6223,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "EST-0",
-    "name": "پایتخت",
+    "name": "پایتخت استونی",
     "pos": [
      25.84,
      58.68
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5145,13 +6292,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LVA-0",
-    "name": "پایتخت",
+    "name": "پایتخت لتونی",
     "pos": [
      24.92,
      56.86
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5217,13 +6369,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LTU-0",
-    "name": "پایتخت",
+    "name": "پایتخت لیتوانی",
     "pos": [
      23.9,
      55.32
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5297,7 +6454,11 @@ SG_DATA.countries = {
      53.9
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
    },
    {
     "id": "BLR-1",
@@ -5307,7 +6468,11 @@ SG_DATA.countries = {
      52.1
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    },
    {
     "id": "BLR-2",
@@ -5317,7 +6482,11 @@ SG_DATA.countries = {
      52.44
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -5394,7 +6563,11 @@ SG_DATA.countries = {
      50.45
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.2
+    }
    },
    {
     "id": "UKR-1",
@@ -5404,7 +6577,11 @@ SG_DATA.countries = {
      49.99
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "UKR-2",
@@ -5416,7 +6593,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "UKR-3",
@@ -5428,7 +6609,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "UKR-4",
@@ -5440,7 +6625,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    }
   ],
   "borderPos": {
@@ -5523,13 +6712,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MDA-0",
-    "name": "پایتخت",
+    "name": "پایتخت مولداوی",
     "pos": [
      28.47,
      47.19
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5585,13 +6779,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CYP-0",
-    "name": "پایتخت",
+    "name": "پایتخت قبرس",
     "pos": [
      33.01,
      34.92
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -5641,13 +6840,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MLT-0",
-    "name": "پایتخت",
+    "name": "پایتخت مالت",
     "pos": [
      14.44,
      35.89
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -5693,13 +6897,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "AND-0",
-    "name": "پایتخت",
+    "name": "پایتخت آندورا",
     "pos": [
      1.56,
      42.54
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5755,13 +6964,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MCO-0",
-    "name": "پایتخت",
+    "name": "پایتخت موناکو",
     "pos": [
      7.41,
      43.75
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5812,13 +7026,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SMR-0",
-    "name": "پایتخت",
+    "name": "پایتخت سان‌مارینو",
     "pos": [
      12.46,
      43.94
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5869,13 +7088,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LIE-0",
-    "name": "پایتخت",
+    "name": "پایتخت لیختن‌اشتاین",
     "pos": [
      9.54,
      47.14
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5931,13 +7155,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "VAT-0",
-    "name": "پایتخت",
+    "name": "پایتخت واتیکان",
     "pos": [
      12.43,
      41.9
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -5996,7 +7225,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.083
+    }
    },
    {
     "id": "RUS-1",
@@ -6009,7 +7242,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.081,
+     "energy": 0.083
+    }
    },
    {
     "id": "RUS-2",
@@ -6021,7 +7258,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.081,
+     "energy": 0.083
+    }
    },
    {
     "id": "RUS-3",
@@ -6033,7 +7274,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.081,
+     "energy": 0.083
+    }
    },
    {
     "id": "RUS-4",
@@ -6044,8 +7289,13 @@ SG_DATA.countries = {
     ],
     "capital": false,
     "tags": [
-     "industry"
-    ]
+     "industry",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.081,
+     "energy": 0.333
+    }
    },
    {
     "id": "RUS-5",
@@ -6057,7 +7307,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.081,
+     "energy": 0.083
+    }
    },
    {
     "id": "RUS-6",
@@ -6069,7 +7323,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.081,
+     "energy": 0.083
+    }
    },
    {
     "id": "RUS-7",
@@ -6081,7 +7339,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.081,
+     "energy": 0.083
+    }
    },
    {
     "id": "RUS-8",
@@ -6093,7 +7355,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.081,
+     "energy": 0.083
+    }
    }
   ],
   "borderPos": {
@@ -6223,7 +7489,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.143
+    }
    },
    {
     "id": "TUR-1",
@@ -6236,7 +7506,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.108,
+     "energy": 0.143
+    }
    },
    {
     "id": "TUR-2",
@@ -6248,7 +7522,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.108,
+     "energy": 0.143
+    }
    },
    {
     "id": "TUR-3",
@@ -6260,7 +7538,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.108,
+     "energy": 0.143
+    }
    },
    {
     "id": "TUR-4",
@@ -6272,7 +7554,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.108,
+     "energy": 0.143
+    }
    },
    {
     "id": "TUR-5",
@@ -6284,7 +7570,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.108,
+     "energy": 0.143
+    }
    },
    {
     "id": "TUR-6",
@@ -6296,7 +7586,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.108,
+     "energy": 0.143
+    }
    }
   ],
   "borderPos": {
@@ -6395,7 +7689,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.091
+    }
    },
    {
     "id": "IRN-1",
@@ -6408,7 +7706,11 @@ SG_DATA.countries = {
     "tags": [
      "industry",
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.091
+    }
    },
    {
     "id": "IRN-2",
@@ -6418,7 +7720,11 @@ SG_DATA.countries = {
      38.08
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.091
+    }
    },
    {
     "id": "IRN-3",
@@ -6428,7 +7734,11 @@ SG_DATA.countries = {
      36.3
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.091
+    }
    },
    {
     "id": "IRN-4",
@@ -6440,7 +7750,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.091
+    }
    },
    {
     "id": "IRN-5",
@@ -6452,7 +7766,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.091
+    }
    },
    {
     "id": "IRN-6",
@@ -6462,7 +7780,13 @@ SG_DATA.countries = {
      31.32
     ],
     "capital": false,
-    "tags": []
+    "tags": [
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.364
+    }
    },
    {
     "id": "IRN-7",
@@ -6474,7 +7798,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.091
+    }
    }
   ],
   "borderPos": {
@@ -6570,7 +7898,11 @@ SG_DATA.countries = {
      33.31
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.083
+    }
    },
    {
     "id": "IRQ-1",
@@ -6581,8 +7913,13 @@ SG_DATA.countries = {
     ],
     "capital": false,
     "tags": [
-     "port"
-    ]
+     "port",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.13,
+     "energy": 0.333
+    }
    },
    {
     "id": "IRQ-2",
@@ -6592,7 +7929,11 @@ SG_DATA.countries = {
      36.34
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.13,
+     "energy": 0.083
+    }
    },
    {
     "id": "IRQ-3",
@@ -6604,7 +7945,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.13,
+     "energy": 0.083
+    }
    },
    {
     "id": "IRQ-4",
@@ -6614,7 +7959,27 @@ SG_DATA.countries = {
      32.6
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.13,
+     "energy": 0.083
+    }
+   },
+   {
+    "id": "IRQ-5",
+    "name": "کرکوک",
+    "pos": [
+     44.39,
+     35.47
+    ],
+    "capital": false,
+    "tags": [
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.13,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -6698,7 +8063,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.125
+    }
    },
    {
     "id": "SAU-1",
@@ -6710,7 +8079,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.125
+    }
    },
    {
     "id": "SAU-2",
@@ -6721,8 +8094,13 @@ SG_DATA.countries = {
     ],
     "capital": false,
     "tags": [
-     "port"
-    ]
+     "port",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.5
+    }
    },
    {
     "id": "SAU-3",
@@ -6734,7 +8112,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.125
+    }
    },
    {
     "id": "SAU-4",
@@ -6746,7 +8128,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.125
+    }
    }
   ],
   "borderPos": {
@@ -6841,8 +8227,13 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "port",
-     "air"
-    ]
+     "air",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.8
+    }
    },
    {
     "id": "ARE-1",
@@ -6854,7 +8245,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.2
+    }
    }
   ],
   "borderPos": {
@@ -6920,8 +8315,13 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "port",
-     "air"
-    ]
+     "air",
+     "oil"
+    ],
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -6982,8 +8382,27 @@ SG_DATA.countries = {
     ],
     "capital": true,
     "tags": [
-     "port"
-    ]
+     "port",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.8
+    }
+   },
+   {
+    "id": "KWT-1",
+    "name": "الجهرا",
+    "pos": [
+     47.66,
+     29.34
+    ],
+    "capital": false,
+    "tags": [],
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.2
+    }
    }
   ],
   "borderPos": {
@@ -7049,7 +8468,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -7105,7 +8528,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
    },
    {
     "id": "OMN-1",
@@ -7117,7 +8544,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -7180,13 +8611,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "YEM-0",
-    "name": "پایتخت",
+    "name": "پایتخت یمن",
     "pos": [
      47.52,
      15.94
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "YEM-1",
+    "name": "شرق یمن",
+    "pos": [
+     50.51,
+     17.06
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "YEM-2",
+    "name": "غرب یمن",
+    "pos": [
+     46.15,
+     16.82
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -7251,7 +8717,11 @@ SG_DATA.countries = {
      31.95
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
    },
    {
     "id": "JOR-1",
@@ -7263,7 +8733,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -7342,7 +8816,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
    },
    {
     "id": "ISR-1",
@@ -7354,7 +8832,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    },
    {
     "id": "ISR-2",
@@ -7367,7 +8849,11 @@ SG_DATA.countries = {
     "tags": [
      "air",
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -7440,13 +8926,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "PSE-0",
-    "name": "پایتخت",
+    "name": "پایتخت فلسطین",
     "pos": [
      35.25,
      31.95
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -7515,7 +9006,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -7579,7 +9074,11 @@ SG_DATA.countries = {
      33.51
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
    },
    {
     "id": "SYR-1",
@@ -7589,7 +9088,11 @@ SG_DATA.countries = {
      36.2
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    },
    {
     "id": "SYR-2",
@@ -7601,7 +9104,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -7682,7 +9189,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.25
+    }
    },
    {
     "id": "EGY-1",
@@ -7694,7 +9205,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "EGY-2",
@@ -7706,7 +9221,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "EGY-3",
@@ -7718,7 +9237,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    }
   ],
   "borderPos": {
@@ -7793,8 +9316,13 @@ SG_DATA.countries = {
     ],
     "capital": true,
     "tags": [
-     "port"
-    ]
+     "port",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.667
+    }
    },
    {
     "id": "AZE-1",
@@ -7806,7 +9334,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.167
+    }
    },
    {
     "id": "AZE-2",
@@ -7816,7 +9348,11 @@ SG_DATA.countries = {
      39.21
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.167
+    }
    }
   ],
   "borderPos": {
@@ -7896,7 +9432,11 @@ SG_DATA.countries = {
      40.18
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
    },
    {
     "id": "ARM-1",
@@ -7908,7 +9448,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -7980,7 +9524,11 @@ SG_DATA.countries = {
      41.72
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
    },
    {
     "id": "GEO-1",
@@ -7992,7 +9540,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -8064,7 +9616,11 @@ SG_DATA.countries = {
      37.95
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.111
+    }
    },
    {
     "id": "TKM-1",
@@ -8075,8 +9631,13 @@ SG_DATA.countries = {
     ],
     "capital": false,
     "tags": [
-     "port"
-    ]
+     "port",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.444
+    }
    },
    {
     "id": "TKM-2",
@@ -8086,7 +9647,13 @@ SG_DATA.countries = {
      37.6
     ],
     "capital": false,
-    "tags": []
+    "tags": [
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.444
+    }
    }
   ],
   "borderPos": {
@@ -8154,13 +9721,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "UZB-0",
-    "name": "پایتخت",
+    "name": "پایتخت ازبکستان",
     "pos": [
      63.29,
      41.78
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "UZB-1",
+    "name": "شرق ازبکستان",
+    "pos": [
+     69.46,
+     41.37
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "UZB-2",
+    "name": "جنوب ازبکستان",
+    "pos": [
+     65.78,
+     39.07
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -8237,7 +9839,11 @@ SG_DATA.countries = {
      51.17
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.167
+    }
    },
    {
     "id": "KAZ-1",
@@ -8249,7 +9855,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.167
+    }
    },
    {
     "id": "KAZ-2",
@@ -8260,8 +9870,13 @@ SG_DATA.countries = {
     ],
     "capital": false,
     "tags": [
-     "port"
-    ]
+     "port",
+     "oil"
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.667
+    }
    }
   ],
   "borderPos": {
@@ -8335,13 +9950,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "KGZ-0",
-    "name": "پایتخت",
+    "name": "پایتخت قرقیزستان",
     "pos": [
      74.51,
      41.47
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "KGZ-1",
+    "name": "غرب قرقیزستان",
+    "pos": [
+     72.17,
+     40.32
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -8407,13 +10042,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "TJK-0",
-    "name": "پایتخت",
+    "name": "پایتخت تاجیکستان",
     "pos": [
      71.03,
      38.53
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "TJK-1",
+    "name": "شرق تاجیکستان",
+    "pos": [
+     73.12,
+     38.57
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "TJK-2",
+    "name": "غرب تاجیکستان",
+    "pos": [
+     69.69,
+     39.42
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -8485,7 +10155,11 @@ SG_DATA.countries = {
      34.53
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.25
+    }
    },
    {
     "id": "AFG-1",
@@ -8495,7 +10169,11 @@ SG_DATA.countries = {
      34.35
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "AFG-2",
@@ -8505,7 +10183,11 @@ SG_DATA.countries = {
      31.61
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    },
    {
     "id": "AFG-3",
@@ -8515,7 +10197,11 @@ SG_DATA.countries = {
      36.71
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.217,
+     "energy": 0.25
+    }
    }
   ],
   "borderPos": {
@@ -8599,7 +10285,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-1",
@@ -8612,7 +10302,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-2",
@@ -8624,7 +10318,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-3",
@@ -8636,7 +10334,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-4",
@@ -8649,7 +10351,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-5",
@@ -8662,7 +10368,11 @@ SG_DATA.countries = {
     "tags": [
      "industry",
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-6",
@@ -8674,7 +10384,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-7",
@@ -8686,7 +10400,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-8",
@@ -8696,7 +10414,11 @@ SG_DATA.countries = {
      39.47
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    },
    {
     "id": "CHN-9",
@@ -8706,7 +10428,11 @@ SG_DATA.countries = {
      29.65
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.072,
+     "energy": 0.1
+    }
    }
   ],
   "borderPos": {
@@ -8833,7 +10559,11 @@ SG_DATA.countries = {
      28.6
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.125
+    }
    },
    {
     "id": "IND-1",
@@ -8846,7 +10576,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.125
+    }
    },
    {
     "id": "IND-2",
@@ -8858,7 +10592,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.125
+    }
    },
    {
     "id": "IND-3",
@@ -8871,7 +10609,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.125
+    }
    },
    {
     "id": "IND-4",
@@ -8884,7 +10626,11 @@ SG_DATA.countries = {
     "tags": [
      "industry",
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.125
+    }
    },
    {
     "id": "IND-5",
@@ -8896,7 +10642,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.125
+    }
    },
    {
     "id": "IND-6",
@@ -8906,7 +10656,11 @@ SG_DATA.countries = {
      34.08
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.125
+    }
    },
    {
     "id": "IND-7",
@@ -8916,7 +10670,11 @@ SG_DATA.countries = {
      26.14
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.093,
+     "energy": 0.125
+    }
    }
   ],
   "borderPos": {
@@ -9001,7 +10759,11 @@ SG_DATA.countries = {
      33.68
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.2
+    }
    },
    {
     "id": "PAK-1",
@@ -9014,7 +10776,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "PAK-2",
@@ -9026,7 +10792,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "PAK-3",
@@ -9038,7 +10808,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "PAK-4",
@@ -9050,7 +10824,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    }
   ],
   "borderPos": {
@@ -9122,7 +10900,11 @@ SG_DATA.countries = {
      23.81
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
    },
    {
     "id": "BGD-1",
@@ -9134,7 +10916,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -9196,7 +10982,11 @@ SG_DATA.countries = {
      27.72
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -9252,13 +11042,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BTN-0",
-    "name": "پایتخت",
+    "name": "پایتخت بوتان",
     "pos": [
      90.4,
      27.41
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -9314,13 +11109,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LKA-0",
-    "name": "پایتخت",
+    "name": "پایتخت سری‌لانکا",
     "pos": [
      80.7,
      7.61
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -9366,13 +11166,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MDV-0",
-    "name": "پایتخت",
+    "name": "پایتخت مالدیو",
     "pos": [
      73.5,
      4.2
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -9426,7 +11231,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.2
+    }
    },
    {
     "id": "JPN-1",
@@ -9438,7 +11247,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "JPN-2",
@@ -9450,7 +11263,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "JPN-3",
@@ -9462,7 +11279,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    },
    {
     "id": "JPN-4",
@@ -9472,7 +11293,11 @@ SG_DATA.countries = {
      43.06
     ],
     "capital": false,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.163,
+     "energy": 0.2
+    }
    }
   ],
   "borderPos": {},
@@ -9529,7 +11354,11 @@ SG_DATA.countries = {
     "capital": true,
     "tags": [
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
    },
    {
     "id": "KOR-1",
@@ -9542,7 +11371,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    },
    {
     "id": "KOR-2",
@@ -9554,7 +11387,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -9614,7 +11451,11 @@ SG_DATA.countries = {
      39.03
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
    },
    {
     "id": "PRK-1",
@@ -9627,7 +11468,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "missile"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    },
    {
     "id": "PRK-2",
@@ -9639,7 +11484,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "port"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -9706,7 +11555,11 @@ SG_DATA.countries = {
      25.03
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
    },
    {
     "id": "TWN-1",
@@ -9719,7 +11572,11 @@ SG_DATA.countries = {
     "tags": [
      "port",
      "industry"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    },
    {
     "id": "TWN-2",
@@ -9731,7 +11588,11 @@ SG_DATA.countries = {
     "capital": false,
     "tags": [
      "air"
-    ]
+    ],
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {},
@@ -9779,13 +11640,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MNG-0",
-    "name": "پایتخت",
+    "name": "پایتخت مغولستان",
     "pos": [
      103.12,
      46.96
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "MNG-1",
+    "name": "شرق مغولستان",
+    "pos": [
+     107.07,
+     44.31
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -9841,13 +11722,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "VNM-0",
-    "name": "پایتخت",
+    "name": "پایتخت ویتنام",
     "pos": [
      106.35,
      16.55
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "VNM-1",
+    "name": "شمال ویتنام",
+    "pos": [
+     105.7,
+     20.62
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -9908,13 +11809,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "THA-0",
-    "name": "پایتخت",
+    "name": "پایتخت تایلند",
     "pos": [
      101,
      15.1
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "THA-1",
+    "name": "شمال تایلند",
+    "pos": [
+     101.96,
+     16.76
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "THA-2",
+    "name": "غرب تایلند",
+    "pos": [
+     99.48,
+     16.18
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -9980,13 +11916,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MYS-0",
-    "name": "پایتخت",
+    "name": "پایتخت مالزی",
     "pos": [
      114.72,
      3.62
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "MYS-1",
+    "name": "جنوب مالزی",
+    "pos": [
+     114.71,
+     2.56
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -10049,13 +12005,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SGP-0",
-    "name": "پایتخت",
+    "name": "پایتخت سنگاپور",
     "pos": [
      103.82,
      1.36
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10102,13 +12063,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "IDN-0",
-    "name": "پایتخت",
+    "name": "پایتخت اندونزی",
     "pos": [
      114.01,
      -0.19
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "IDN-1",
+    "name": "شرق اندونزی",
+    "pos": [
+     119.58,
+     -4.65
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "IDN-2",
+    "name": "شمال اندونزی",
+    "pos": [
+     114.42,
+     1.03
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -10173,13 +12169,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "PHL-0",
-    "name": "پایتخت",
+    "name": "پایتخت فیلیپین",
     "pos": [
      121.42,
      15.95
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10227,13 +12228,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MMR-0",
-    "name": "پایتخت",
+    "name": "پایتخت میانمار",
     "pos": [
      96.49,
      21.15
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MMR-1",
+    "name": "جنوب میانمار",
+    "pos": [
+     97.68,
+     18.6
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MMR-2",
+    "name": "شمال میانمار",
+    "pos": [
+     95.42,
+     23.52
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -10304,13 +12340,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "KHM-0",
-    "name": "پایتخت",
+    "name": "پایتخت کامبوج",
     "pos": [
      104.91,
      12.72
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "KHM-1",
+    "name": "غرب کامبوج",
+    "pos": [
+     103.71,
+     13.57
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "KHM-2",
+    "name": "شمال کامبوج",
+    "pos": [
+     105.77,
+     13.76
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -10371,13 +12442,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LAO-0",
-    "name": "پایتخت",
+    "name": "پایتخت لائوس",
     "pos": [
      103.78,
      18.49
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "LAO-1",
+    "name": "جنوب لائوس",
+    "pos": [
+     105.32,
+     16.07
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -10448,13 +12539,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BRN-0",
-    "name": "پایتخت",
+    "name": "پایتخت برونئی",
     "pos": [
      114.59,
      4.49
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -10505,13 +12601,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "TLS-0",
-    "name": "پایتخت",
+    "name": "پایتخت تیمور شرقی",
     "pos": [
      125.92,
      -8.81
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -10562,13 +12663,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "AUS-0",
-    "name": "پایتخت",
+    "name": "پایتخت استرالیا",
     "pos": [
      123.58,
      -12.43
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10616,13 +12722,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "NZL-0",
-    "name": "پایتخت",
+    "name": "پایتخت نیوزیلند",
     "pos": [
      170.61,
      -43.95
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10668,13 +12779,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "PNG-0",
-    "name": "پایتخت",
+    "name": "پایتخت پاپوا گینهٔ نو",
     "pos": [
      144.23,
      -6.6
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "PNG-1",
+    "name": "غرب پاپوا گینهٔ نو",
+    "pos": [
+     142.28,
+     -6.28
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -10727,13 +12858,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "FJI-0",
-    "name": "پایتخت",
+    "name": "پایتخت فیجی",
     "pos": [
      177.97,
      -17.82
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10777,13 +12913,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SLB-0",
-    "name": "پایتخت",
+    "name": "پایتخت جزایر سلیمان",
     "pos": [
      160.17,
      -9.62
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10827,13 +12968,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "VUT-0",
-    "name": "پایتخت",
+    "name": "پایتخت وانواتو",
     "pos": [
      166.85,
      -15.23
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10877,13 +13023,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "WSM-0",
-    "name": "پایتخت",
+    "name": "پایتخت ساموآ",
     "pos": [
      -172.44,
      -13.63
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10927,13 +13078,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "TON-0",
-    "name": "پایتخت",
+    "name": "پایتخت تونگا",
     "pos": [
      -175.22,
      -21.17
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -10977,13 +13133,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "FSM-0",
-    "name": "پایتخت",
+    "name": "پایتخت میکرونزی",
     "pos": [
      158.23,
      6.89
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -11027,13 +13188,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MHL-0",
-    "name": "پایتخت",
+    "name": "پایتخت جزایر مارشال",
     "pos": [
      171.19,
      7.11
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -11077,13 +13243,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "PLW-0",
-    "name": "پایتخت",
+    "name": "پایتخت پالائو",
     "pos": [
      134.58,
      7.51
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -11127,13 +13298,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "KIR-0",
-    "name": "پایتخت",
+    "name": "پایتخت کیریباتی",
     "pos": [
      -157.37,
      1.85
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -11177,13 +13353,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "NRU-0",
-    "name": "پایتخت",
+    "name": "پایتخت نائورو",
     "pos": [
      166.93,
      -0.52
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -11227,13 +13408,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "NGA-0",
-    "name": "پایتخت",
+    "name": "پایتخت نیجریه",
     "pos": [
      8.08,
      9.59
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "NGA-1",
+    "name": "شرق نیجریه",
+    "pos": [
+     11.59,
+     11.79
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "NGA-2",
+    "name": "غرب نیجریه",
+    "pos": [
+     5.12,
+     9.51
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11299,13 +13515,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ZAF-0",
-    "name": "پایتخت",
+    "name": "پایتخت افریقای جنوبی",
     "pos": [
      25.19,
      -28.97
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ZAF-1",
+    "name": "شمال افریقای جنوبی",
+    "pos": [
+     28.35,
+     -24.99
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ZAF-2",
+    "name": "شرق افریقای جنوبی",
+    "pos": [
+     29.19,
+     -26.01
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11381,13 +13632,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ETH-0",
-    "name": "پایتخت",
+    "name": "پایتخت اتیوپی",
     "pos": [
      39.61,
      8.61
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ETH-1",
+    "name": "شرق اتیوپی",
+    "pos": [
+     44.23,
+     8.24
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ETH-2",
+    "name": "غرب اتیوپی",
+    "pos": [
+     35.95,
+     8.07
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11463,13 +13749,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "KEN-0",
-    "name": "پایتخت",
+    "name": "پایتخت کنیا",
     "pos": [
      37.8,
      0.6
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "KEN-1",
+    "name": "شمال کنیا",
+    "pos": [
+     35.9,
+     3.17
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "KEN-2",
+    "name": "جنوب کنیا",
+    "pos": [
+     37.73,
+     -1.67
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11540,13 +13861,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "TZA-0",
-    "name": "پایتخت",
+    "name": "پایتخت تانزانیا",
     "pos": [
      34.79,
      -6.27
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "TZA-1",
+    "name": "شمال تانزانیا",
+    "pos": [
+     32.91,
+     -3.11
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "TZA-2",
+    "name": "جنوب تانزانیا",
+    "pos": [
+     36.34,
+     -9.53
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11632,13 +13988,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "UGA-0",
-    "name": "پایتخت",
+    "name": "پایتخت اوگاندا",
     "pos": [
      32.37,
      1.27
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "UGA-1",
+    "name": "جنوب اوگاندا",
+    "pos": [
+     31.01,
+     -0.31
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "UGA-2",
+    "name": "شرق اوگاندا",
+    "pos": [
+     33.94,
+     1.54
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11709,13 +14100,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "DZA-0",
-    "name": "پایتخت",
+    "name": "پایتخت الجزایر",
     "pos": [
      2.63,
      28.06
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "DZA-1",
+    "name": "غرب الجزایر",
+    "pos": [
+     -3.03,
+     26.93
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "DZA-2",
+    "name": "جنوب الجزایر",
+    "pos": [
+     5.25,
+     23.51
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11793,13 +14219,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MAR-0",
-    "name": "پایتخت",
+    "name": "پایتخت مراکش",
     "pos": [
      -8.73,
      29.77
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MAR-1",
+    "name": "جنوب مراکش",
+    "pos": [
+     -10.4,
+     26.6
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MAR-2",
+    "name": "شرق مراکش",
+    "pos": [
+     -5.78,
+     30.61
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11857,13 +14318,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "TUN-0",
-    "name": "پایتخت",
+    "name": "پایتخت تونس",
     "pos": [
      9.55,
      34.09
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "TUN-1",
+    "name": "جنوب تونس",
+    "pos": [
+     10.1,
+     32.68
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "TUN-2",
+    "name": "غرب تونس",
+    "pos": [
+     8.59,
+     34.32
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -11921,13 +14417,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LBY-0",
-    "name": "پایتخت",
+    "name": "پایتخت لیبی",
     "pos": [
      18.07,
      27.02
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "LBY-1",
+    "name": "جنوب لیبی",
+    "pos": [
+     22.21,
+     22.81
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -12005,13 +14521,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SDN-0",
-    "name": "پایتخت",
+    "name": "پایتخت سودان",
     "pos": [
      29.91,
      15.97
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SDN-1",
+    "name": "جنوب سودان",
+    "pos": [
+     26.12,
+     11.94
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SDN-2",
+    "name": "غرب سودان",
+    "pos": [
+     25.37,
+     14.81
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -12094,13 +14645,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SSD-0",
-    "name": "پایتخت",
+    "name": "پایتخت سودان جنوبی",
     "pos": [
      30.25,
      7.31
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SSD-1",
+    "name": "شرق سودان جنوبی",
+    "pos": [
+     32.88,
+     5.85
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SSD-2",
+    "name": "جنوب سودان جنوبی",
+    "pos": [
+     31.38,
+     5.04
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -12176,13 +14762,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SOM-0",
-    "name": "پایتخت",
+    "name": "پایتخت سومالی",
     "pos": [
      45.68,
      4.74
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SOM-1",
+    "name": "شمال سومالی",
+    "pos": [
+     43.92,
+     9.38
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SOM-2",
+    "name": "غرب سومالی",
+    "pos": [
+     42.85,
+     2.72
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -12243,13 +14864,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "DJI-0",
-    "name": "پایتخت",
+    "name": "پایتخت جیبوتی",
     "pos": [
      42.56,
      11.75
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -12312,13 +14938,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ERI-0",
-    "name": "پایتخت",
+    "name": "پایتخت اریتره",
     "pos": [
      38.85,
      15.36
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "ERI-1",
+    "name": "شمال اریتره",
+    "pos": [
+     38.01,
+     16.41
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -12382,13 +15028,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "AGO-0",
-    "name": "پایتخت",
+    "name": "پایتخت آنگولا",
     "pos": [
      17.56,
      -12.31
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "AGO-1",
+    "name": "شمال آنگولا",
+    "pos": [
+     14.52,
+     -7.68
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "AGO-2",
+    "name": "شرق آنگولا",
+    "pos": [
+     21.03,
+     -12.72
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -12454,13 +15135,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "COD-0",
-    "name": "پایتخت",
+    "name": "پایتخت کنگو (دموکراتیک)",
     "pos": [
      23.64,
      -2.87
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "COD-1",
+    "name": "جنوب کنگو (دموکراتیک)",
+    "pos": [
+     26.98,
+     -9.19
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "COD-2",
+    "name": "شمال کنگو (دموکراتیک)",
+    "pos": [
+     26.95,
+     1.49
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -12551,13 +15267,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "COG-0",
-    "name": "پایتخت",
+    "name": "پایتخت کنگو",
     "pos": [
      15.22,
      -0.84
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "COG-1",
+    "name": "شمال کنگو",
+    "pos": [
+     16.55,
+     1.87
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -12628,13 +15364,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CMR-0",
-    "name": "پایتخت",
+    "name": "پایتخت کامرون",
     "pos": [
      12.73,
      5.68
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "CMR-1",
+    "name": "شمال کامرون",
+    "pos": [
+     14.17,
+     8.26
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "CMR-2",
+    "name": "جنوب کامرون",
+    "pos": [
+     14.26,
+     3.46
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -12710,13 +15481,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GAB-0",
-    "name": "پایتخت",
+    "name": "پایتخت گابن",
     "pos": [
      11.79,
      -0.59
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -12777,13 +15553,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GNQ-0",
-    "name": "پایتخت",
+    "name": "پایتخت گینه استوایی",
     "pos": [
      10.47,
      1.57
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -12839,13 +15620,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CAF-0",
-    "name": "پایتخت",
+    "name": "پایتخت آفریقای مرکزی",
     "pos": [
      20.46,
      6.57
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "CAF-1",
+    "name": "غرب آفریقای مرکزی",
+    "pos": [
+     17.01,
+     5.43
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -12921,13 +15722,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "TCD-0",
-    "name": "پایتخت",
+    "name": "پایتخت چاد",
     "pos": [
      18.64,
      15.28
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "TCD-1",
+    "name": "شمال چاد",
+    "pos": [
+     18.97,
+     19.23
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "TCD-2",
+    "name": "جنوب چاد",
+    "pos": [
+     18.79,
+     11.45
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -13003,13 +15839,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "NER-0",
-    "name": "پایتخت",
+    "name": "پایتخت نیجر",
     "pos": [
      9.33,
      17.41
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "NER-1",
+    "name": "غرب نیجر",
+    "pos": [
+     4.32,
+     14.96
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "NER-2",
+    "name": "شمال نیجر",
+    "pos": [
+     12.05,
+     20.7
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -13090,13 +15961,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MLI-0",
-    "name": "پایتخت",
+    "name": "پایتخت مالی",
     "pos": [
      -3.59,
      17.32
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MLI-1",
+    "name": "غرب مالی",
+    "pos": [
+     -8.53,
+     14.92
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MLI-2",
+    "name": "شرق مالی",
+    "pos": [
+     0.79,
+     16.31
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -13177,13 +16083,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BFA-0",
-    "name": "پایتخت",
+    "name": "پایتخت بورکینافاسو",
     "pos": [
      -1.76,
      12.27
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "BFA-1",
+    "name": "جنوب بورکینافاسو",
+    "pos": [
+     -3.21,
+     10.78
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "BFA-2",
+    "name": "شرق بورکینافاسو",
+    "pos": [
+     0.06,
+     11.67
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -13259,13 +16200,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SEN-0",
-    "name": "پایتخت",
+    "name": "پایتخت سنگال",
     "pos": [
      -14.47,
      14.36
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SEN-1",
+    "name": "شرق سنگال",
+    "pos": [
+     -12.89,
+     13.74
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "SEN-2",
+    "name": "جنوب سنگال",
+    "pos": [
+     -13.52,
+     13.26
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -13336,13 +16312,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GMB-0",
-    "name": "پایتخت",
+    "name": "پایتخت گامبیا",
     "pos": [
      -15.4,
      13.45
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -13393,13 +16374,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GNB-0",
-    "name": "پایتخت",
+    "name": "پایتخت گینهٔ بیسائو",
     "pos": [
      -14.92,
      12.06
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -13455,13 +16441,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GIN-0",
-    "name": "پایتخت",
+    "name": "پایتخت گینه",
     "pos": [
      -10.93,
      10.44
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "GIN-1",
+    "name": "شرق گینه",
+    "pos": [
+     -9.02,
+     9.2
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "GIN-2",
+    "name": "جنوب گینه",
+    "pos": [
+     -10,
+     8.72
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -13537,13 +16558,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SLE-0",
-    "name": "پایتخت",
+    "name": "پایتخت سیرالئون",
     "pos": [
      -11.79,
      8.57
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "SLE-1",
+    "name": "شمال سیرالئون",
+    "pos": [
+     -11.35,
+     9.3
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -13599,13 +16640,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LBR-0",
-    "name": "پایتخت",
+    "name": "پایتخت لیبریا",
     "pos": [
      -9.32,
      6.45
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "LBR-1",
+    "name": "غرب لیبریا",
+    "pos": [
+     -10.14,
+     7.22
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -13666,13 +16727,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CIV-0",
-    "name": "پایتخت",
+    "name": "پایتخت ساحل عاج",
     "pos": [
      -5.57,
      7.63
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "CIV-1",
+    "name": "شمال ساحل عاج",
+    "pos": [
+     -6.24,
+     9.43
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "CIV-2",
+    "name": "غرب ساحل عاج",
+    "pos": [
+     -6.93,
+     6.7
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -13743,13 +16839,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "GHA-0",
-    "name": "پایتخت",
+    "name": "پایتخت غنا",
     "pos": [
      -1.22,
      7.95
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "GHA-1",
+    "name": "شمال غنا",
+    "pos": [
+     -1.83,
+     9.77
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "GHA-2",
+    "name": "شرق غنا",
+    "pos": [
+     -0.19,
+     8.51
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -13810,13 +16941,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "TGO-0",
-    "name": "پایتخت",
+    "name": "پایتخت توگو",
     "pos": [
      0.96,
      8.52
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "TGO-1",
+    "name": "شمال توگو",
+    "pos": [
+     0.68,
+     9.98
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -13877,13 +17028,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BEN-0",
-    "name": "پایتخت",
+    "name": "پایتخت بنین",
     "pos": [
      2.33,
      9.64
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "BEN-1",
+    "name": "شمال بنین",
+    "pos": [
+     2.62,
+     11.28
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -13949,13 +17120,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MRT-0",
-    "name": "پایتخت",
+    "name": "پایتخت موریتانی",
     "pos": [
      -10.37,
      20.22
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "MRT-1",
+    "name": "شمال موریتانی",
+    "pos": [
+     -8.23,
+     23.8
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -14021,13 +17212,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "CPV-0",
-    "name": "پایتخت",
+    "name": "پایتخت کیپ ورد",
     "pos": [
      -23.64,
      15.08
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -14071,13 +17267,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "STP-0",
-    "name": "پایتخت",
+    "name": "پایتخت سائوتومه و پرنسیپ",
     "pos": [
      6.61,
      0.24
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -14121,13 +17322,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ZMB-0",
-    "name": "پایتخت",
+    "name": "پایتخت زامبیا",
     "pos": [
      27.81,
      -13.46
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ZMB-1",
+    "name": "شمال زامبیا",
+    "pos": [
+     30.22,
+     -10.72
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ZMB-2",
+    "name": "شرق زامبیا",
+    "pos": [
+     31.1,
+     -12.52
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -14208,13 +17444,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "ZWE-0",
-    "name": "پایتخت",
+    "name": "پایتخت زیمبابوه",
     "pos": [
      29.85,
      -19
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ZWE-1",
+    "name": "جنوب زیمبابوه",
+    "pos": [
+     30.22,
+     -21
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "ZWE-2",
+    "name": "شرق زیمبابوه",
+    "pos": [
+     31.57,
+     -18.9
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -14280,13 +17551,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MWI-0",
-    "name": "پایتخت",
+    "name": "پایتخت مالاوی",
     "pos": [
      34.28,
      -13.21
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MWI-1",
+    "name": "جنوب مالاوی",
+    "pos": [
+     34.89,
+     -15.54
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MWI-2",
+    "name": "شمال مالاوی",
+    "pos": [
+     34.42,
+     -11.33
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -14347,13 +17653,48 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MOZ-0",
-    "name": "پایتخت",
+    "name": "پایتخت موزامبیک",
     "pos": [
      35.6,
      -17.2
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MOZ-1",
+    "name": "جنوب موزامبیک",
+    "pos": [
+     33.46,
+     -22.65
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
+   },
+   {
+    "id": "MOZ-2",
+    "name": "شمال موزامبیک",
+    "pos": [
+     36.66,
+     -13.91
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.325,
+     "energy": 0.333
+    }
    }
   ],
   "borderPos": {
@@ -14429,13 +17770,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MDG-0",
-    "name": "پایتخت",
+    "name": "پایتخت ماداگاسکار",
     "pos": [
      46.74,
      -19.32
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -14479,13 +17825,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BWA-0",
-    "name": "پایتخت",
+    "name": "پایتخت بوتسوانا",
     "pos": [
      23.81,
      -22.17
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -14546,13 +17897,33 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "NAM-0",
-    "name": "پایتخت",
+    "name": "پایتخت نامیبیا",
     "pos": [
      17.2,
      -22.07
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.35,
+     "energy": 0.5
+    }
+   },
+   {
+    "id": "NAM-1",
+    "name": "شرق نامیبیا",
+    "pos": [
+     20.74,
+     -19.77
+    ],
+    "capital": false,
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 0.65,
+     "energy": 0.5
+    }
    }
   ],
   "borderPos": {
@@ -14618,13 +17989,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "LSO-0",
-    "name": "پایتخت",
+    "name": "پایتخت لسوتو",
     "pos": [
      28.23,
      -29.58
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -14675,13 +18051,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SWZ-0",
-    "name": "پایتخت",
+    "name": "پایتخت اسواتینی",
     "pos": [
      31.48,
      -26.56
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -14737,13 +18118,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "RWA-0",
-    "name": "پایتخت",
+    "name": "پایتخت رواندا",
     "pos": [
      29.92,
      -1.99
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -14809,13 +18195,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "BDI-0",
-    "name": "پایتخت",
+    "name": "پایتخت بوروندی",
     "pos": [
      29.88,
      -3.36
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {
@@ -14876,13 +18267,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "COM-0",
-    "name": "پایتخت",
+    "name": "پایتخت کومورو",
     "pos": [
      43.34,
      -11.65
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -14926,13 +18322,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "MUS-0",
-    "name": "پایتخت",
+    "name": "پایتخت موریس",
     "pos": [
      57.57,
      -20.28
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},
@@ -14976,13 +18377,18 @@ SG_DATA.countries = {
   "cities": [
    {
     "id": "SYC-0",
-    "name": "پایتخت",
+    "name": "پایتخت سیشل",
     "pos": [
      55.48,
      -4.66
     ],
     "capital": true,
-    "tags": []
+    "tags": [],
+    "generic": true,
+    "share": {
+     "gdp": 1,
+     "energy": 1
+    }
    }
   ],
   "borderPos": {},

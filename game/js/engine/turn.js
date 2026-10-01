@@ -4,9 +4,11 @@
 // ترتیب هر نوبت:
 //   ۱) بازار جهانی (قیمت انرژی)
 //   ۲) اقتصاد همه‌ی کشورها (با قوانین یکسان)
+//   ۲ب) ارتش بازیکن (تولید، حرکت، تدارکات) و تحویل سلاح‌های خریداری‌شده
+//   ۲ج) جنگ‌ها: هوش مصنوعی، نبرد شهرها، تصرف، خستگی جنگ، صلح (engine/war.js)
 //   ۳) بررسی وضعیت بازیکن ← اعلان‌ها (وزیر اقتصاد، وزیر کشور، ...)
 //   ۴) اخبار جهان (بحران در کشورهای دیگر)
-//   ۵) جلو رفتن تاریخ، بررسی فروپاشی
+//   ۵) بررسی فروپاشی
 // =====================================================================
 (function (SG) {
   'use strict';
@@ -35,19 +37,28 @@
     if (state.date.month > 12) { state.date.month = 1; state.date.year++; }
 
     // ---------- ۲) اقتصاد همه‌ی کشورها ----------
+    const active = SG.Engine.activeCountries(state);   // کشورهای الحاق‌شده دیگر اقتصاد جدا ندارند
     const before = {};
-    for (const c of Object.values(state.countries)) {
+    for (const c of active) {
       before[c.id] = { stability: c.stability, gdp: c.gdp, inflation: c.eco.inflation, debt: c.eco.debt / c.gdp };
     }
     const playerEvents = [];
-    for (const id of Object.keys(state.countries)) {
-      const ev = SG.Economy.step(state, id, rng);
-      if (id === pid) playerEvents.push(...ev);
+    for (const c of active) {
+      const ev = SG.Economy.step(state, c.id, rng);
+      if (c.id === pid) playerEvents.push(...ev);
     }
-    w.gdp = Object.values(state.countries).reduce((s, c) => s + c.gdp, 0);
+    w.gdp = active.reduce((s, c) => s + c.gdp, 0);
 
-    // ---------- ۲ب) ارتش بازیکن: تولید، حرکت، تدارکات ----------
+    // ---------- ۲ب) ارتش بازیکن: تولید، حرکت، تدارکات + سلاح‌های خریداری‌شده ----------
     const milEvents = SG.Military.step(state, pid);
+    const armsEvents = SG.Arms.step(state, pid);
+
+    // ---------- ۲ج) جنگ‌ها ----------
+    const warEvents = SG.War.step(state, rng);
+    // تلفات نبرد ← نیروها، شاخص‌ها و هزینه‌ی ارتش بازیکن به‌روز
+    SG.Military.syncForces(player);
+    SG.Military.refreshIndices(player);
+    player.eco.policy.military = (SG.Military.upkeepMonthly(player) + SG.Military.productionCostMonthly(state, player)) * 12 / player.gdp;
 
     // تاریخچه‌ی بازیکن (برای گزارش و نمودار)
     player.eco.history.push({ turn: state.turn, gdp: Math.round(player.gdp), treasury: Math.round(player.eco.treasury), stability: Math.round(player.stability) });
@@ -56,6 +67,8 @@
     // ---------- ۳) اعلان‌های بازیکن ----------
     playerChecks(state, rng, before[pid], playerEvents, oldPrice);
     militaryNotifications(state, milEvents);
+    armsNotifications(state, armsEvents);
+    warNotifications(state, warEvents);
 
     // ---------- ۴) اخبار جهان ----------
     worldNews(state, rng, before);
@@ -201,12 +214,13 @@
   // -------------------------------------------------------------------
   function worldNews(state, rng, before) {
     const pid = state.playerId;
-    const all = Object.values(state.countries);
+    const all = SG.Engine.activeCountries(state);
 
     // بحران در کشورهای دیگر (فقط کشورهای با جمعیت قابل‌توجه، برای جلوگیری از اسپم)
     for (const c of all) {
       if (c.id === pid || c.population < 5) continue;
       const b = before[c.id];
+      if (!b) continue;
       if (crossedDown(b.stability, c.stability, 25) && N.cooldownOk(state, 'unrest_' + c.id, 18)) {
         N.add(state, { type: 'world_unrest', level: 'info', category: 'world', speaker: 'news', focus: c.id, groupKey: 'unrest', data: { country: c.id } });
       }
@@ -229,10 +243,94 @@
     }
     state.world.topGdp = rankNow;
 
-    // جنگ‌های در جریان: گاه‌به‌گاه خبر
-    for (const [a, b] of state.wars) {
-      if (a !== pid && b !== pid && rng.next() < 0.07) {
+    // جنگ‌های در جریان: گاه‌به‌گاه خبر (یک خبر برای هر جنگ، نه برای هر جفت متحد)
+    for (const war of state.warsInfo || []) {
+      const a = war.leaders.A, b = war.leaders.B;
+      if (a !== pid && b !== pid && !SG.War.sideOf(war, pid) && rng.next() < 0.07) {
         N.add(state, { type: 'world_war_ongoing', level: 'info', category: 'world', speaker: 'news', focus: b, data: { a, b } });
+      }
+    }
+  }
+
+  // -------------------------------------------------------------------
+  function armsNotifications(state, events) {
+    const chief = state.countries[state.playerId].mil.chief;
+    for (const ev of events) {
+      if (ev.type === 'arms_delivered') {
+        N.add(state, { type: 'arms_delivered', level: 'warning', category: 'military', speaker: 'commander',
+          data: { commander: chief, country: ev.seller, unit: ev.unit, qty: ev.count, city: ev.city, stackId: ev.stackId } });
+      } else if (ev.type === 'arms_cancelled') {
+        N.add(state, { type: 'arms_cancelled', level: 'warning', category: 'diplomacy', speaker: 'foreign', focus: ev.seller,
+          data: { country: ev.seller, unit: ev.unit, qty: ev.count, amount: ev.refund } });
+      }
+    }
+  }
+
+  // -------------------------------------------------------------------
+  function warNotifications(state, events) {
+    const pid = state.playerId;
+    const c = state.countries[pid];
+    const chief = c.mil.chief;
+    const W = SG.War;
+    const defs = window.SG_DATA.units;
+    const listText = units => Object.entries(units).map(([k, n]) => `${n.toLocaleString('fa-IR')} ${defs[k].unitWord} ${defs[k].short}`).join('، ');
+    for (const ev of events) {
+      if (ev.type === 'battle') {
+        const r = ev.report;
+        const weAtt = r.att.owners.includes(pid);
+        const ours = weAtt ? r.att : r.def, theirs = weAtt ? r.def : r.att;
+        const won = (r.result === 'att') === weAtt;
+        // فهرست تلفات: «۱.۲ لشکر پیاده، ۴۰ قبضه توپ»
+        const lossOf = side => {
+          const list = {};
+          for (const [k, [, l]] of Object.entries({ ...side.units, ...side.support })) {
+            const v = defs[k].counted === 'unit' ? Math.round(l * 10) / 10 : Math.round(l);
+            if (v > 0 && !['ballistic', 'cruise', 'drone'].includes(k)) list[k] = v;
+          }
+          return Object.keys(list).length ? listText(list) : '—';
+        };
+        if (ev.fresh && !r.fell) {
+          N.add(state, { type: weAtt ? 'battle_started' : 'battle_defending', level: 'warning', category: 'military', speaker: 'commander',
+            focus: r.country, groupKey: r.city, data: { commander: chief, city: r.cityName, country: theirs.owners[0], rid: r.id, war: r.war } });
+        }
+        if (!r.fell) {
+          N.add(state, { type: won ? 'battle_won' : 'battle_lost', level: 'info', category: 'military', speaker: 'commander', focus: r.country,
+            groupKey: r.city, data: { commander: chief, city: r.cityName, ratio: Math.round((weAtt ? r.ratio : 1 / Math.max(r.ratio, 1e-6)) * 10) / 10,
+              ours: lossOf(ours), theirs: lossOf(theirs), rid: r.id, war: r.war, cityId: r.city } });
+          // در حال باختن در حمله ← پیشنهاد عقب‌نشینی
+          if (weAtt && r.ratio < 0.7 && N.cooldownOk(state, 'losing_' + r.city, 3)) {
+            N.add(state, { type: 'battle_losing', level: 'warning', category: 'military', speaker: 'commander', focus: r.country,
+              data: { commander: chief, city: r.cityName, cityId: r.city, rid: r.id, war: r.war } });
+          }
+        }
+        // مهمات: تدارکات دسته‌های درگیر ما
+        for (const s of c.mil.stacks) {
+          if (!s.inBattle || s.supply >= 40) continue;
+          if (N.cooldownOk(state, 'ammo_' + s.id, 4)) {
+            N.add(state, { type: 'ammo_low', level: 'warning', category: 'military', speaker: 'commander', focus: r.country,
+              data: { commander: chief, city: r.cityName, turns: Math.max(1, Math.ceil((s.supply - 10) / 10)), unit: s.type, stackId: s.id } });
+          }
+        }
+      } else if (ev.type === 'captured') {
+        const city = W.cityById(state, ev.city);
+        const orig = W.origOf(ev.city);
+        if (!ev.playerWar) {
+          // جنگ‌های دیگران: خبر
+          N.add(state, { type: 'world_city_captured', level: 'info', category: 'world', speaker: 'news', focus: orig, groupKey: 'wcc',
+            data: { city: city.name, country: ev.by, other: ev.from } });
+        } else if (ev.by === pid) {
+          N.add(state, { type: ev.liberated ? 'city_liberated' : 'city_captured', level: 'warning', category: 'military', speaker: 'commander', focus: orig,
+            data: { commander: chief, city: city.name, country: orig, rid: ev.report, war: ev.war, cityId: ev.city } });
+        } else if (ev.from === pid) {
+          N.add(state, { type: 'city_lost', level: 'critical', category: 'military', speaker: 'commander', focus: orig,
+            data: { commander: chief, city: city.name, country: ev.by, rid: ev.report, war: ev.war, cityId: ev.city } });
+        } else {
+          // متحد یا دشمن دیگرِ همین جنگ
+          N.add(state, { type: 'war_city_changed', level: 'info', category: 'military', speaker: 'intel', focus: orig,
+            data: { city: city.name, country: ev.by, other: ev.from } });
+        }
+      } else if (ev.type === 'weariness') {
+        N.add(state, { type: 'war_weariness', level: 'warning', category: 'domestic', speaker: 'interior', data: { pct: ev.level } });
       }
     }
   }

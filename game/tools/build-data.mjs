@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as topojson from 'topojson-client';
-import { geoCentroid, geoArea } from 'd3';
+import { geoCentroid, geoArea, geoContains } from 'd3';
 import * as S from './source-data.mjs';
 
 const require = createRequire(import.meta.url);
@@ -118,14 +118,57 @@ function estimateMilitary(gdp, pop, pct) {
   };
 }
 
-/** شهرهای یک کشور: [{ id, name, pos, capital, tags }] — اولی همیشه پایتخت است */
-function buildCities(id, home, capitalName) {
+/**
+ * شهرهای یک کشور: [{ id, name, pos, capital, tags, share:{gdp,energy}, generic? }] — اولی همیشه پایتخت است.
+ * کشورهایی که فهرست دستی ندارند: پایتخت + (برای کشورهای پرجمعیت) ۱ تا ۲ «منطقه‌ی» مجازی
+ * به سمت طولانی‌ترین مرزها، تا جنگ با آن‌ها هم شهر به شهر پیش برود (generic = نامش ساختگی است).
+ * share = سهم شهر از اقتصاد و انرژی کشور (برای فتح، مرحله‌ی ۴): پایتخت ۳۵٪، شهرهای نفتی (oil) سهم انرژی بیشتر.
+ */
+const DIRS = (dx, dy) => (Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'شرق' : 'غرب') : (dy > 0 ? 'شمال' : 'جنوب'));
+function virtualCities(id, home, pop) {
+  const want = pop >= 10 ? 2 : pop >= 3 ? 1 : 0;
+  if (!want || !borderPos[id]) return [];
+  const shape = topojson.merge(world, geoms.filter(g => g.properties.o === id));
+  const cands = Object.values(borderPos[id])
+    .map(p => ({ p, d: Math.hypot(p[0] - home[0], p[1] - home[1]) }))
+    .filter(x => x.d > 1.2)
+    .sort((a, b) => b.d - a.d);
+  const out = [], used = new Set();
+  for (const { p } of cands) {
+    if (out.length >= want) break;
+    const dir = DIRS(p[0] - home[0], p[1] - home[1]);
+    if (used.has(dir)) continue;
+    // نقطه‌ای بین پایتخت و مرز که داخل خاک کشور باشد
+    for (const t of [0.6, 0.5, 0.4, 0.7]) {
+      const pt = [r2(home[0] + (p[0] - home[0]) * t), r2(home[1] + (p[1] - home[1]) * t)];
+      if (geoContains(shape, pt)) { out.push({ name: dir + ' ' + persianName(id), pos: pt }); used.add(dir); break; }
+    }
+  }
+  return out;
+}
+
+function withShares(list) {
+  const n = list.length;
+  const ew = list.map(c => (c.tags.includes('oil') ? 4 : 1));
+  const esum = ew.reduce((a, b) => a + b, 0);
+  const r3 = v => Math.round(v * 1000) / 1000;
+  list.forEach((c, i) => {
+    c.share = { gdp: r3(n === 1 ? 1 : c.capital ? 0.35 : 0.65 / (n - 1)), energy: r3(ew[i] / esum) };
+  });
+  return list;
+}
+
+function buildCities(id, home, capitalName, pop) {
   const list = S.CITIES[id];
-  if (!list) return [{ id: id + '-0', name: capitalName || 'پایتخت', pos: home, capital: true, tags: [] }];
-  return list.map(([name, lon, lat, tags], i) => ({
+  if (!list) {
+    const cap = { id: id + '-0', name: capitalName || 'پایتخت ' + persianName(id), pos: home, capital: true, tags: [], generic: !capitalName };
+    const extra = virtualCities(id, home, pop).map((v, i) => ({ id: id + '-' + (i + 1), name: v.name, pos: v.pos, capital: false, tags: [], generic: true }));
+    return withShares([cap, ...extra]);
+  }
+  return withShares(list.map(([name, lon, lat, tags], i) => ({
     id: id + '-' + i, name, pos: i === 0 ? home : [lon, lat], capital: i === 0,
     tags: tags ? tags.split(' ') : [],
-  }));
+  })));
 }
 
 const countries = {};
@@ -159,7 +202,7 @@ for (const [id, [gdp, pop, pct, gov, stab]] of Object.entries(S.BASE)) {
     energy: { production, consumption },
     terrain: d?.terrain || 'plain',
     pos: homePos[id] || [0, 0],                // [طول, عرض] محل پایتخت/مرکز
-    cities: buildCities(id, homePos[id] || [0, 0], d?.capital),
+    cities: buildCities(id, homePos[id] || [0, 0], d?.capital, pop),
     borderPos: borderPos[id] || {},            // نقطه‌ی مرزی با هر همسایه‌ی زمینی
     neighbors: [...(landNeighbors[id] || [])].sort(),
     seaNeighbors: [...(seaNeighbors[id] || [])].filter(x => !landNeighbors[id]?.has(x)).sort(),

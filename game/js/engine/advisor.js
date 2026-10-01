@@ -16,7 +16,7 @@
    */
   function analyze(state, id) {
     const c = state.countries[id];
-    const all = Object.values(state.countries);
+    const all = E.activeCountries(state);
     const power = E.militaryPower(c);
     const perCap = c.gdp / Math.max(c.population, 0.001);
     const econRank = E.rankOf(state, id, x => x.gdp);

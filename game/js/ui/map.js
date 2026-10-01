@@ -38,7 +38,16 @@
       .attr('role', 'img')
       .attr('aria-label', 'نقشه‌ی جهان');
 
+    // الگوی هاشور برای کشورهایی که بخشی از خاکشان اشغال شده
+    const defs = svg.append('defs');
+    const hatch = defs.append('pattern').attr('id', 'occ-hatch').attr('patternUnits', 'userSpaceOnUse')
+      .attr('width', 4).attr('height', 4).attr('patternTransform', 'rotate(45)');
+    hatch.append('rect').attr('width', 4).attr('height', 4).attr('fill', 'none');
+    hatch.append('line').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 4).attr('stroke', '#000').attr('stroke-opacity', 0.45).attr('stroke-width', 1.6);
+
     const root = svg.append('g').attr('class', 'map-root');
+    // صاحب فعلی هر ناحیه (بعد از الحاق ممکن است عوض شود)
+    let ownerOf = id => id;
 
     // اقیانوس و خطوط مختصات
     root.append('path').datum({ type: 'Sphere' }).attr('class', 'sphere').attr('d', path)
@@ -52,11 +61,17 @@
       .join('path')
       .attr('class', d => 'region' + (d.properties.o ? '' : ' unowned'))
       .attr('d', path)
-      .on('click', (event, d) => opts.onSelect(d.properties.o || null));
+      .on('click', (event, d) => opts.onSelect(d.properties.o ? ownerOf(d.properties.o) : null));
+
+    // لایه‌ی هاشور (اشغال)
+    const hatchLayer = root.append('g').attr('class', 'hatch-layer');
 
     // مرز بین کشورها (فقط جایی که مالک دو طرف فرق دارد) و خط ساحلی
-    root.append('path').attr('class', 'borders')
-      .attr('d', path(topojson.mesh(topo, obj, (a, b) => a !== b && a.properties.o !== b.properties.o)));
+    const bordersPath = root.append('path').attr('class', 'borders');
+    function drawBorders() {
+      bordersPath.attr('d', path(topojson.mesh(topo, obj, (a, b) => a !== b && ownerOf(a.properties.o) !== ownerOf(b.properties.o))));
+    }
+    drawBorders();
     root.append('path').attr('class', 'coast')
       .attr('d', path(topojson.mesh(topo, obj, (a, b) => a === b)));
 
@@ -99,20 +114,52 @@
     let cityData = [];
     function setCities(list) {
       cityData = list.map(c => { const [x, y] = projection(c.pos); return { ...c, x, y }; });
-      const g = cityLayer.selectAll('g.city').data(cityData, d => d.id).join(enter => {
-        const e = enter.append('g').attr('class', d => 'city' + (d.capital ? ' capital' : '') + (d.own ? ' own' : ''));
-        e.append('text').attr('class', 'c-mark').text(d => (d.capital ? '★' : '●'));
-        e.append('text').attr('class', 'c-name').attr('y', -9).text(d => d.name);
+      cityLayer.selectAll('g.city').data(cityData, d => d.id).join(enter => {
+        const e = enter.append('g');
+        e.append('text').attr('class', 'c-mark');
+        e.append('text').attr('class', 'c-flag').attr('x', 7).attr('y', -6).text('⚑');
+        e.append('text').attr('class', 'c-name').attr('y', -9);
+        e.append('text').attr('class', 'c-battle').attr('y', 14).text('⚔️');
         return e;
-      });
+      })
+        .attr('class', d => 'city' + (d.capital ? ' capital' : '') + (d.own ? ' own' : '') + (d.occ ? ' occupied' : '') + (d.battle ? ' battle' : '') + (d.front ? ' front' : ''))
+        .call(sel => {
+          sel.select('.c-mark').text(d => (d.capital ? '★' : '●'));
+          sel.select('.c-name').text(d => d.name);
+          sel.select('.c-flag').attr('fill', d => d.occ || null);
+        });
       updateCities();
     }
     function updateCities() {
       const k = currentK || 1, rel = k / fitScale;
       cityLayer.selectAll('g.city')
         .attr('transform', d => `translate(${d.x},${d.y}) scale(${1 / k})`)
-        .attr('display', d => (rel >= (d.capital ? 1.6 : d.own ? 2 : 4) ? null : 'none'))
-        .classed('named', d => rel >= (d.capital ? 2.5 : 4));
+        // شهرهای جبهه (جنگ، اشغال) زودتر دیده می‌شوند
+        .attr('display', d => (rel >= (d.capital ? 1.6 : d.own || d.front ? 2 : 4) ? null : 'none'))
+        .classed('named', d => rel >= (d.capital ? 2.5 : d.front ? 3 : 4));
+    }
+
+    // --- لایه‌ی شلیک موشک/پهپاد (خط کمانی از محل پرتاب تا هدف) ---
+    const strikeLayer = root.append('g').attr('class', 'strikes');
+    function setStrikes(list) {
+      // هم‌مسیرها یکی می‌شوند تا نقشه شلوغ نشود
+      const seen = new Set(), data = [];
+      for (const s of list) {
+        const key = s.from.map(v => Math.round(v)).join(',') + '>' + s.to.join(',') + s.own;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const [x1, y1] = projection(s.from), [x2, y2] = projection(s.to);
+        const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 - Math.hypot(x2 - x1, y2 - y1) * 0.25;
+        data.push({ ...s, key, d: `M${x1},${y1} Q${mx},${my} ${x2},${y2}`, x2, y2 });
+      }
+      strikeLayer.selectAll('path').data(data, d => d.key).join('path').attr('class', d => 'strike' + (d.own ? ' own' : ' enemy')).attr('d', d => d.d);
+      strikeLayer.selectAll('text').data(data, d => d.key).join('text').attr('class', 'boom').text('💥');
+      updateStrikes();
+    }
+    function updateStrikes() {
+      const k = currentK || 1;
+      strikeLayer.selectAll('path').attr('stroke-width', 1.6 / k);
+      strikeLayer.selectAll('text').attr('transform', d => `translate(${d.x2},${d.y2}) scale(${1 / k})`);
     }
 
     // --- لایه‌ی نیروها ---
@@ -128,7 +175,7 @@
       routeLayer.selectAll('line').data(routes.map(r => {
         const [x1, y1] = projection(r.from), [x2, y2] = projection(r.to);
         return { ...r, x1, y1, x2, y2 };
-      }), d => d.id).join('line')
+      }), d => d.id).join('line').classed('enemy', d => !!d.enemy)
         .attr('x1', d => d.x1).attr('y1', d => d.y1).attr('x2', d => d.x2).attr('y2', d => d.y2);
 
       const groupsSel = forceLayer.selectAll('g.fgroup').data(groupData, d => d.key).join('g').attr('class', 'fgroup');
@@ -136,10 +183,11 @@
       groupsSel.selectAll('g.fcompact').data(d => [d]).join(enter => {
         const e = enter.append('g').attr('class', 'fcompact')
           .on('click', (event, d) => { event.stopPropagation(); zoomToPoint(d.pos, 4); });
-        e.append('rect').attr('x', -20).attr('y', 6).attr('width', 40).attr('height', 18).attr('rx', 9);
-        e.append('text').attr('y', 16);
+        e.append('rect').attr('x', -20).attr('width', 40).attr('height', 18).attr('rx', 9);
+        e.append('text');
         return e;
-      }).classed('moving', d => d.moving).select('text').text(d => '🎖️' + d.stacks.length.toLocaleString('fa-IR'));
+      }).call(sel => { sel.select('rect').attr('y', d => (d.enemy ? -24 : 6)); sel.select('text').attr('y', d => (d.enemy ? -14 : 16)); })
+        .classed('moving', d => d.moving).classed('enemy', d => !!d.enemy).select('text').text(d => (d.enemy ? '☠️' : '🎖️') + d.stacks.length.toLocaleString('fa-IR'));
       // نشان هر نوع واحد (زوم زیاد)
       groupsSel.selectAll('g.chip').data(d => d.stacks.map((s, i) => ({ ...s, i, n: d.stacks.length })), s => s.id).join(enter => {
         const e = enter.append('g').attr('class', 'chip')
@@ -149,9 +197,12 @@
         e.append('text').attr('class', 'ch-num').attr('x', (CHIP_W - 22) / 2).attr('y', CHIP_H / 2);
         return e;
       })
+        .classed('enemy', s => !!s.enemy).classed('fighting', s => !!s.fighting)
         .attr('transform', s => {
+          // نیروی خودی زیر نقطه، نیروی دشمن بالای آن (تا در شهر درگیر روی هم نیفتند)
           const cols = Math.min(COLS, s.n), row = Math.floor(s.i / COLS), col = s.i % COLS;
-          return `translate(${-cols * CHIP_W / 2 + col * CHIP_W},${8 + row * CHIP_H})`;
+          const y = s.enemy ? -CHIP_H - 6 - row * CHIP_H : 8 + row * CHIP_H;
+          return `translate(${-cols * CHIP_W / 2 + col * CHIP_W},${y})`;
         })
         .classed('moving', s => s.moving).classed('low', s => s.low).classed('selected', s => s.selected)
         .call(sel => { sel.select('.ch-icon').text(s => s.icon); sel.select('.ch-num').text(s => s.label); });
@@ -168,7 +219,7 @@
       forceLayer.selectAll('g.chip').attr('display', compact ? 'none' : null);
     }
 
-    function scaleArmies() { updateCities(); updateForces(); }
+    function scaleArmies() { updateCities(); updateForces(); updateStrikes(); }
 
     // --- راهنمای موس (فقط دسکتاپ) ---
     const tooltip = d3.select(container).append('div').attr('class', 'map-tooltip').style('display', 'none');
@@ -178,7 +229,7 @@
         .on('mousemove', (event, d) => {
           if (!d.properties.o) { tooltip.style('display', 'none'); return; }
           const [x, y] = d3.pointer(event, container);
-          tooltip.style('display', 'block').text(opts.nameFor(d.properties.o))
+          tooltip.style('display', 'block').text(opts.nameFor(ownerOf(d.properties.o)))
             .style('left', (x + 14) + 'px').style('top', (y + 10) + 'px');
         })
         .on('mouseleave', () => tooltip.style('display', 'none'));
@@ -203,7 +254,8 @@
       labelFrame = null;
       const k = currentK;
       labelLayer.attr('font-size', LABEL_PX / k);
-      labels.attr('display', d => (d.area * k * k > LABEL_MIN_AREA ? null : 'none'));
+      labels.attr('display', d => (ownerOf(d.id) === d.id && d.area * k * k > LABEL_MIN_AREA ? null : 'none'));
+      hatch.attr('patternTransform', `rotate(45) scale(${1.4 / k})`);
       scaleArmies();
     }
 
@@ -268,19 +320,36 @@
     // --- رنگ‌آمیزی و هایلایت ---
     function outlineOf(id) {
       if (!id) return null;
-      return path(topojson.merge(topo, obj.geometries.filter(g => g.properties.o === id)));
+      return path(topojson.merge(topo, obj.geometries.filter(g => g.properties.o && ownerOf(g.properties.o) === id)));
     }
 
     function refresh() {
-      regions.attr('fill', d => opts.fillFor(d.properties.o || null));
+      regions.attr('fill', d => opts.fillFor(d.properties.o ? ownerOf(d.properties.o) : null));
+    }
+
+    /** صاحب نواحی عوض شد (الحاق): مرزها و دور کشورها دوباره رسم می‌شوند */
+    let playerId = null;
+    function setOwner(fn) {
+      ownerOf = fn || (id => id);
+      drawBorders();
+      if (playerId) playerOutline.attr('d', outlineOf(playerId));
+      updateLabels();
+    }
+
+    /** هاشور روی کشورهایی که بخشی از خاکشان اشغال شده */
+    function setHatch(ids) {
+      const set = new Set(ids);
+      hatchLayer.selectAll('path').data(features.filter(f => f.properties.o && set.has(f.properties.o)), f => f.id)
+        .join('path').attr('d', path).attr('fill', 'url(#occ-hatch)');
     }
 
     function setSelected(id) {
       selectOutline.attr('d', outlineOf(id));
-      regions.classed('selected', d => !!id && d.properties.o === id);
+      regions.classed('selected', d => !!id && !!d.properties.o && ownerOf(d.properties.o) === id);
     }
 
     function setPlayer(id) {
+      playerId = id;
       playerOutline.attr('d', outlineOf(id));
     }
 
@@ -295,7 +364,7 @@
     resetView(false);
     updateLabels();
 
-    return { refresh, setSelected, setPlayer, zoomTo, zoomBy, resetView, setForces, setCities, zoomToPoint };
+    return { refresh, setSelected, setPlayer, zoomTo, zoomBy, resetView, setForces, setCities, zoomToPoint, setStrikes, setOwner, setHatch };
   }
 
   SG.MapView = { create };
