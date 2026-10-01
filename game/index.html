@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#11161d">
+  <title>ژئوپلیتیک ۲۰۲۶</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="loading">
+  <div id="app">
+    <!-- نوار بالا (محتوا با js/main.js ساخته می‌شود) -->
+    <header id="topbar"></header>
+
+    <!-- نقشه -->
+    <main id="map-wrap">
+      <div id="map"></div>
+      <div class="zoom-ctrl">
+        <button id="zoom-in" aria-label="بزرگ‌نمایی">+</button>
+        <button id="zoom-out" aria-label="کوچک‌نمایی">−</button>
+        <button id="zoom-reset" aria-label="کل جهان">⌂</button>
+      </div>
+      <div id="legend" class="hidden"></div>
+    </main>
+
+    <!-- پنل اطلاعات کشور -->
+    <aside id="info-panel" class="panel" aria-live="polite">
+      <div class="panel-handle" aria-hidden="true"></div>
+      <button class="panel-close" aria-label="بستن">×</button>
+      <div class="panel-body"></div>
+    </aside>
+
+    <!-- صفحه‌ی انتخاب کشور -->
+    <section id="start-screen" class="overlay">
+      <div class="start-box">
+        <h1>ژئوپلیتیک ۲۰۲۶</h1>
+        <p class="lead">کشورت را انتخاب کن. اقتصاد، دیپلماسی، ثبات داخلی و ارتش همه هم‌زمان فشار می‌آورند — هر بازی متفاوت پیش می‌رود.</p>
+        <div class="country-grid"></div>
+        <button class="btn ghost" data-action="browse">اول نقشه را ببینم</button>
+      </div>
+    </section>
+
+    <div id="loader">در حال بارگذاری نقشه…</div>
+  </div>
+
+  <!-- کتابخانه‌ها (لوکال، بدون CDN) -->
+  <script src="lib/d3.min.js"></script>
+  <script src="lib/topojson-client.min.js"></script>
+
+  <!-- داده‌ها -->
+  <script src="data/world.js"></script>
+  <script src="data/countries.js"></script>
+  <script src="data/scenario_2026.js"></script>
+
+  <!-- موتور بازی (بدون وابستگی به صفحه) -->
+  <script src="js/engine/rng.js"></script>
+  <script src="js/engine/state.js"></script>
+
+  <!-- رابط کاربری -->
+  <script src="js/ui/format.js"></script>
+  <script src="js/ui/map.js"></script>
+  <script src="js/ui/infoPanel.js"></script>
+  <script src="js/ui/startScreen.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
