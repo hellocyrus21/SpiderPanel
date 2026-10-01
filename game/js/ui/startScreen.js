@@ -18,6 +18,7 @@
       if (card) handlers.onPick(card.dataset.id);
     });
     el.querySelector('[data-action="browse"]').addEventListener('click', () => handlers.onBrowse());
+    el.querySelector('[data-action="guide"]').addEventListener('click', () => SG.Guide.open());
 
     function render(state) {
       const playable = Object.values(state.countries)

@@ -252,6 +252,44 @@ button.chip:hover { border-color: var(--gold); }
 
 .fatal { padding: 40px; text-align: center; color: var(--bad); }
 
+/* ---------- پنجره (مودال): مشاور و راهنما ---------- */
+.modal-wrap {
+  position: fixed; inset: 0; z-index: 60; background: #0b0f14cc;
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.modal {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+  width: min(720px, 100%); max-height: 100%; display: flex; flex-direction: column;
+}
+.modal-head { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.modal-head h2 { margin: 0; font-size: 17px; flex: 1; color: var(--gold); }
+.modal-x { width: 32px; height: 32px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line); font-size: 20px; line-height: 1; }
+.modal-body { overflow-y: auto; padding: 4px 14px 16px; overscroll-behavior: contain; }
+.modal-body p { margin: 4px 0; }
+.modal-body ol, .modal-body ul { margin: 4px 0; padding-right: 20px; }
+.modal-body li { margin: 3px 0; }
+.btn.icon span { display: inline; }
+
+.adv-intro { background: var(--panel-2); border-radius: var(--radius); padding: 10px 12px; margin-top: 10px !important; }
+.adv-strategy { border-color: var(--gold); }
+.adv-item { display: flex; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); }
+.adv-item:first-of-type { border-top: 0; }
+.adv-icon { font-size: 18px; width: 24px; text-align: center; flex: none; }
+.adv-item.good b { color: var(--good); }
+.adv-item.bad b { color: var(--bad); }
+.adv-item p { margin: 2px 0 0; color: var(--muted); }
+
+.g-toc { margin-top: 10px; }
+.g-sec { scroll-margin-top: 8px; }
+.g-res { padding: 6px 0; border-top: 1px solid var(--line); }
+.g-res:first-of-type { border-top: 0; }
+.g-res p { color: var(--muted); }
+.soon {
+  display: inline-block; font-size: 11px; padding: 0 7px; border-radius: 999px;
+  border: 1px dashed var(--muted); color: var(--muted); white-space: nowrap;
+}
+.start-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+
 /* =====================================================================
    موبایل
    ===================================================================== */
@@ -285,5 +323,9 @@ button.chip:hover { border-color: var(--gold); }
   body:has(.panel.open) .zoom-ctrl, body:has(.panel.open) #legend { display: none; }
 
   .country-grid { grid-template-columns: 1fr; }
+  .btn.icon { padding: 4px 8px; }
+  .btn.icon span { display: none; }
+  .modal-wrap { padding: 0; align-items: flex-end; }
+  .modal { border-radius: 16px 16px 0 0; max-height: 92%; }
   .start-box h1 { font-size: 24px; }
 }

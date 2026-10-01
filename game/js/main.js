@@ -109,6 +109,7 @@
       bar.innerHTML = `
         <div class="brand">ژئوپلیتیک ۲۰۲۶</div>
         <div class="spacer"></div>
+        <button class="btn icon" data-top="guide" title="راهنما">❓<span> راهنما</span></button>
         <button class="btn" data-top="choose">انتخاب کشور</button>`;
     } else {
       const p = s.countries[s.playerId];
@@ -119,7 +120,9 @@
         <div class="spacer"></div>
         <div class="seg" role="group" aria-label="حالت نقشه">
           ${modes.map(([k, t]) => `<button class="${app.mapMode === k ? 'on' : ''}" data-mode="${k}">${t}</button>`).join('')}
-        </div>`;
+        </div>
+        <button class="btn icon" data-top="advisor" title="مشاور ارشد">🧑‍💼<span> مشاور</span></button>
+        <button class="btn icon" data-top="guide" title="راهنما">❓<span> راهنما</span></button>`;
     }
   }
 
@@ -131,6 +134,10 @@
       renderTopbar(); renderLegend(); app.map.refresh();
     } else if (b.dataset.top === 'choose') {
       app.panel.hide(); app.start.show();
+    } else if (b.dataset.top === 'guide') {
+      SG.Guide.open();
+    } else if (b.dataset.top === 'advisor') {
+      SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true));
     } else if (b.dataset.top === 'me') {
       select(app.state.playerId, true);
     }
@@ -190,6 +197,7 @@
       onGoto: id => select(id, true),
       onClose: () => select(null),
       onStart: id => startGame(id),
+      onAdvisor: id => SG.AdvisorPanel.open(app.state, id, gid => select(gid, true)),
       onBack: () => { select(null); app.start.show(); },
     });
 
@@ -203,7 +211,7 @@
     document.getElementById('zoom-reset').addEventListener('click', () => app.map.resetView());
 
     // کلید Esc پنل را می‌بندد
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') select(null); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !SG.Modal.isOpen()) select(null); });
 
     app.start.render(app.state);
     renderTopbar();

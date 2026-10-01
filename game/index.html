@@ -36,7 +36,10 @@
         <h1>ژئوپلیتیک ۲۰۲۶</h1>
         <p class="lead">کشورت را انتخاب کن. اقتصاد، دیپلماسی، ثبات داخلی و ارتش همه هم‌زمان فشار می‌آورند — هر بازی متفاوت پیش می‌رود.</p>
         <div class="country-grid"></div>
-        <button class="btn ghost" data-action="browse">اول نقشه را ببینم</button>
+        <div class="start-actions">
+          <button class="btn ghost" data-action="browse">اول نقشه را ببینم</button>
+          <button class="btn ghost" data-action="guide">❓ راهنمای بازی</button>
+        </div>
       </div>
     </section>
 
@@ -55,12 +58,16 @@
   <!-- موتور بازی (بدون وابستگی به صفحه) -->
   <script src="js/engine/rng.js"></script>
   <script src="js/engine/state.js"></script>
+  <script src="js/engine/advisor.js"></script>
 
   <!-- رابط کاربری -->
   <script src="js/ui/format.js"></script>
+  <script src="js/ui/modal.js"></script>
   <script src="js/ui/map.js"></script>
   <script src="js/ui/infoPanel.js"></script>
   <script src="js/ui/startScreen.js"></script>
+  <script src="js/ui/advisorPanel.js"></script>
+  <script src="js/ui/guide.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

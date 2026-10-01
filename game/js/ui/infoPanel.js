@@ -60,7 +60,7 @@
 
   /**
    * @param {HTMLElement} el      ظرف پنل
-   * @param {object} handlers     { onGoto(id), onClose(), onChoose(id), onStart(id), onBack() }
+   * @param {object} handlers     { onGoto(id), onClose(), onStart(id), onBack(), onAdvisor(id) }
    */
   function create(el, handlers) {
     const body = el.querySelector('.panel-body');
@@ -74,6 +74,7 @@
       if (b.dataset.goto) handlers.onGoto(b.dataset.goto);
       else if (b.dataset.action === 'start') handlers.onStart(b.dataset.id);
       else if (b.dataset.action === 'back') handlers.onBack();
+      else if (b.dataset.action === 'advisor') handlers.onAdvisor(b.dataset.id);
     });
 
     // موبایل: کشیدن دستگیره به پایین = بستن
@@ -134,6 +135,7 @@
             <div>سختی: <span class="stars">${'★'.repeat(c.difficulty)}${'☆'.repeat(5 - c.difficulty)}</span>
               <span class="muted">(سخت‌تر = امتیاز بیشتر)</span></div>
             <button class="btn primary big" data-action="start" data-id="${id}">شروع بازی با ${F.esc(c.name)}</button>
+            <button class="btn" data-action="advisor" data-id="${id}">🧑‍💼 مشاور: با ${F.esc(c.name)} چطور بازی کنم؟</button>
             <button class="btn ghost" data-action="back">بازگشت به فهرست کشورها</button>
           </div>`;
         } else {
