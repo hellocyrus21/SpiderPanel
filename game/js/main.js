@@ -160,7 +160,7 @@
   // -------------------------------------------------------------------
   function openPanel(name, sub) {
     if (name === 'government') SG.Government.open(app.state, app.state.playerId, onPolicyChange);
-    else if (name === 'military') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowStack: showStack }, sub);
+    else if (name === 'military') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowStack: showStack, onOpenWar: () => openPanel('war') }, sub);
     else if (name === 'advisor') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true), undefined, onPolicyChange);
     else if (name === 'econ') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true), 'economy', onPolicyChange);
     else if (name === 'arms') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowStack: showStack }, sub || 'arms');
@@ -168,7 +168,7 @@
   }
 
   function warHandlers() {
-    return { onChange: onWarChange, onFocusCity: focusCity, onGoto: id => select(id, true) };
+    return { onChange: onWarChange, onGoto: id => select(id, true) };
   }
 
   /** اعلان جنگ یا صلح: نقشه، نیروها، روابط و ذخیره به‌روز می‌شوند */
@@ -183,24 +183,26 @@
     SG.Save.save(app.state);
   }
 
-  function focusCity(cityId) {
-    const city = SG.War.cityById(app.state, cityId);
-    if (city) app.map.zoomToPoint(city.pos, 5);
+  /** رنگ فاتح روی نقشه */
+  function occColor(by) {
+    const pid = app.state.playerId;
+    if (by === pid) return PLAYER_COLOR;
+    if (pid && E.isAtWar(app.state, pid, by)) return '#d9534f';
+    return app.politicalColor[by] || '#888';
   }
 
-  /** نمایش جنگ روی نقشه: صاحب نواحی (الحاق)، هاشور اشغال، شهرها، نیروها، شلیک‌ها */
+  /** نمایش جنگ روی نقشه: صاحب نواحی (الحاق)، خاک تصرف‌شده (درصدی)، شهرها، نیروها */
   function renderWar() {
-    const s = app.state;
-    app.map.setOwner(id => SG.War.effectiveOwner(s, id));
-    const hatched = new Set();
-    for (const cid of Object.keys(s.control || {})) {
-      const k = s.control[cid];
-      if (k.kind === 'occupied') hatched.add(SG.War.origOf(cid));
-    }
-    app.map.setHatch([...hatched]);
+    const s = app.state, W = SG.War;
+    app.map.setOwner(id => W.effectiveOwner(s, id));
+    const areas = W.occupationAreas(s).map(a => ({
+      key: a.country + '>' + a.by + ':' + a.kind, country: a.country, center: W.frontPoint(s, a.country, a.by),
+      r: W.radiusFor(s, a.country, a.by, a.pct), color: occColor(a.by), war: a.kind === 'war',
+    })).filter(a => a.r > 0);
+    app.map.setOccupation(areas);
     renderCities();
     renderForces();
-    app.map.setStrikes(s.lastStrikes || []);
+    app.map.setStrikes([]);
   }
 
   function onPolicyChange() {
@@ -238,37 +240,41 @@
         low: s.supply < 50, selected: s.id === app.selectedStack, fighting: !!s.inBattle });
       if (s.move) routes.push({ id: s.id, from: s.pos, to: s.move.to });
     }
-    // نیروهای دشمن (فقط کشورهایی که با ما در جنگ‌اند) — قرمز
-    for (const { owner, s } of SG.War.enemyStacks(app.state, app.state.playerId)) {
-      const key = 'e:' + (s.move ? 'm:' + s.id : (s.loc.kind === 'city' ? s.loc.city : 'b:' + s.loc.target)) + ':' + owner;
-      const g = (groups[key] ||= { key, pos: s.pos, stacks: [], moving: !!s.move, enemy: true, eta: '' });
-      g.stacks.push({ id: s.id, type: s.type, icon: defs[s.type].icon, label: shortNum(s.count), moving: !!s.move, enemy: true, fighting: !!s.inBattle });
-      if (s.move) routes.push({ id: s.id, from: s.pos, to: s.move.to, enemy: true });
+    // نیروی دشمن در جبهه (فقط کشورهایی که با ما در جنگ‌اند) — قرمز، کلیک = اطلاعات
+    for (const f of SG.War.enemyFronts(app.state, app.state.playerId)) {
+      const key = 'e:' + f.war;
+      const g = (groups[key] ||= { key, pos: f.pos, stacks: [], moving: false, enemy: true, eta: '' });
+      for (const [type, n] of Object.entries(f.units)) {
+        if (n < 0.5) continue;
+        g.stacks.push({ id: 'E:' + f.war + ':' + type, type, icon: defs[type].icon, label: shortNum(Math.round(n)), enemy: true });
+      }
+      if (!g.stacks.length) delete groups[key];
     }
     for (const g of Object.values(groups)) g.stacks.sort((a, b) => typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type));
     app.map.setForces(Object.values(groups), routes);
   }
 
-  /** شهرهای همه‌ی کشورها (پایتخت‌ها و شهرهای مهم) + وضعیت جنگ */
+  /** شهرهای همه‌ی کشورها (پایتخت‌ها و شهرهای مهم) + شهرهایی که داخل خاک تصرف‌شده افتاده‌اند */
   function renderCities() {
     const s = app.state, W = SG.War;
     const pid = s.playerId;
-    const battles = new Set((s.lastBattles || []).map(b => b.city));
-    for (const w of s.warsInfo || []) if (pid && W.sideOf(w, pid)) for (const cid of w.active || []) battles.add(cid);
     const enemies = new Set(pid ? E.warsOf(s, pid) : []);
+    const taken = {};   // cityId ← فاتح
+    for (const a of W.occupationAreas(s)) for (const ct of W.citiesInside(s, a.country, a.by, a.pct)) taken[ct.id] = a.by;
     const list = [];
     for (const c of Object.values(s.countries)) {
+      if (c.annexedBy) {
+        // شهرهای کشور الحاق‌شده با پرچم فاتح
+        for (const city of c.cities) list.push({ id: city.id, name: city.name, pos: city.pos, capital: false, own: c.annexedBy === pid, occ: null, front: false });
+        continue;
+      }
       for (const city of c.cities || []) {
-        // شهرهای کپی‌شده در کشور فاتح (بعد از الحاق) دو بار رسم نشوند
-        if (W.origOf(city.id) !== c.id) continue;
-        const ctrl = W.controller(s, city.id);
-        const occ = ctrl !== W.effectiveOwner(s, c.id);
-        const front = occ || battles.has(city.id) || enemies.has(ctrl);
-        // نام ساختگی (پایتخت/منطقه‌ی کشورهای کوچک) فقط وقتی به جنگ مربوط است
-        if (city.generic && !front && !(pid && phaseGame() && enemies.has(c.id))) continue;
-        list.push({ id: city.id, name: city.name, pos: city.pos, capital: city.capital && !c.annexedBy,
-          own: ctrl === pid, occ: occ ? (ctrl === pid ? PLAYER_COLOR : enemies.has(ctrl) ? '#e0605a' : app.politicalColor[ctrl]) : null,
-          battle: battles.has(city.id), front });
+        if (city.id.slice(0, city.id.lastIndexOf('-')) !== c.id) continue;   // کپی شهرهای الحاقی
+        const by = taken[city.id];
+        const front = !!by || enemies.has(c.id) || (c.id === pid && enemies.size > 0);
+        if (city.generic && !front) continue;
+        list.push({ id: city.id, name: city.name, pos: city.pos, capital: city.capital, own: c.id === pid,
+          occ: by ? occColor(by) : null, battle: false, front });
       }
     }
     app.map.setCities(list);
@@ -311,7 +317,7 @@
     renderHud();
     if (app.mapMode !== 'political' && app.mapMode !== 'alliances') app.map.refresh();
     renderWar();
-    if (app.state.warsInfo.length || Object.keys(app.state.control || {}).length) app.map.refresh();
+    if (app.state.warsInfo.length || (app.state.territory || []).length) app.map.refresh();
     SG.MilitaryPanel.refresh();
     SG.WarPanel.refresh();
     if (app.selected && app.panel.isOpen()) app.panel.show(app.state, app.selected, 'game', { keepScroll: true });
@@ -345,19 +351,13 @@
   function onNotificationAction(act, n) {
     if (act === 'newgame') { newGame(); return; }
     if (act === 'show:stack') { showStack(n.data.stackId); return; }
-    if (act === 'show:battle') { SG.WarPanel.openReport(app.state, n.data.rid); return; }
-    if (act === 'show:city') { focusCity(n.data.cityId || (SG.War.warById(app.state, n.data.war)?.battles.find(b => b.id === n.data.rid)?.city)); return; }
-    if (act === 'retreat') {
-      const k = SG.War.retreat(app.state, app.state.playerId, n.data.cityId);
-      SG.NotifyUI.simpleToast(k ? `↩️ نیروها از ${F.esc(n.data.city)} عقب‌نشینی کردند.` : 'نیرویی برای عقب‌نشینی نماند.', 'lvl-info');
-      onMilitaryChange(); return;
-    }
+    if (act === 'show:front') { SG.WarPanel.setCtx({ state: app.state, pid: app.state.playerId, ...warHandlers() }); SG.WarPanel.openReport(app.state, n.data.rid); return; }
     if (act.startsWith('peace:')) {
       const term = act.slice(6);
       // peace:accept ← پذیرفتن شرط دشمن؛ بقیه ← شرط ما که دشمن پیشنهادش را پذیرفته
       const ok = term === 'accept'
-        ? SG.War.makePeace(app.state, n.data.war, n.data.term, n.data.winner)
-        : SG.War.makePeace(app.state, n.data.war, term, app.state.playerId);
+        ? SG.War.makePeace(app.state, n.data.war, n.data.term, n.data.winner, n.data.amount)
+        : SG.War.makePeace(app.state, n.data.war, term, app.state.playerId, n.data.amount);
       if (!ok) SG.NotifyUI.simpleToast('این جنگ دیگر در جریان نیست.', 'lvl-warning');
       onWarChange(); return;
     }
@@ -461,7 +461,7 @@
     enterGame();
     app.map.zoomTo(saved.playerId);
     SG.NotifyUI.updateBell();
-    if (saved.gameOver) SG.NotifyUI.showNew(saved.notifications.filter(n => n.type === 'game_over_collapse'));
+    if (saved.gameOver) SG.NotifyUI.showNew(saved.notifications.filter(n => n.type === 'game_over_collapse' || n.type === 'game_over_conquered'));
   }
 
   // -------------------------------------------------------------------
@@ -489,7 +489,10 @@
       fillFor,
       nameFor: id => app.state.countries[id]?.name || id,
       onStackClick: id => {
-        if (!SG.Military.findStack(app.state, app.state.playerId, id)) { SG.WarPanel.enemyInfo(app.state, app.state.playerId, id); return; }
+        if (id.startsWith('E:')) {
+          SG.WarPanel.setCtx({ state: app.state, pid: app.state.playerId, ...warHandlers() });
+          SG.WarPanel.enemyInfo(app.state, app.state.playerId, id.split(':')[1]); return;
+        }
         app.selectedStack = id; renderForces(); openPanel('military', 'stack:' + id);
       },
       getOcclusion: () => {
@@ -511,7 +514,7 @@
       onDeclare: id => SG.WarPanel.confirmDeclare(app.state, app.state.playerId, id, onWarChange),
       onWar: () => openPanel('war'),
       onArms: id => openPanel('arms', 'seller:' + id),
-      onCity: cityId => focusCity(cityId),
+      onCity: () => {},
     });
 
     const saved = SG.Save.load();

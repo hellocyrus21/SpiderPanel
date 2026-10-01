@@ -672,3 +672,20 @@ details summary { cursor: pointer; color: var(--muted); margin: 6px 0; }
   .rep-cols { grid-template-columns: 1fr; }
   .war-grid { grid-template-columns: 1fr; }
 }
+
+/* جنگ درصدی (بازسازی مرحله‌ی ۴) */
+.hatch-layer { pointer-events: none; }
+.occ-fill { fill-opacity: .82; }
+.occ-hatch { opacity: .9; }
+.front-box { background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 10px; margin: 8px 0; }
+.front-line { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; margin-top: 4px; }
+.front-bar { position: relative; }
+.front-bar i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--gold); }
+.advice { background: #2a2414; border: 1px solid #5c4a1c; border-radius: 8px; padding: 8px 10px; }
+.plan-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 6px 0; }
+.plan { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px; text-align: start; display: flex; flex-direction: column; gap: 3px; }
+.plan small { color: var(--muted); font-size: 11.5px; }
+.plan.on { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.salvo { margin: 4px 0 6px; }
+@media (max-width: 720px) { .plan-btns { grid-template-columns: 1fr; } }
+.war-card .gov-decrees { grid-template-columns: 1fr; }

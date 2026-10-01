@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as topojson from 'topojson-client';
-import { geoCentroid, geoArea, geoContains } from 'd3';
+import { geoCentroid, geoArea, geoContains, geoBounds, geoDistance } from 'd3';
 import * as S from './source-data.mjs';
 
 const require = createRequire(import.meta.url);
@@ -209,6 +209,47 @@ for (const [id, [gdp, pop, pct, gov, stab]] of Object.entries(S.BASE)) {
   };
 }
 
+// ---------- ۳ب) مساحت و «جدول جبهه» (جنگ درصدی، مرحله‌ی ۴) ----------
+// نقشه استان ندارد؛ پس پیشروی در جنگ «درصد خاک» است. برای هر همسایه‌ی زمینی حساب می‌کنیم
+// منطقه‌ی تصرف‌شده (دایره‌ای به مرکز نقطه‌ی مرزی) در ۱۰٪، ۲۰٪ ... ۱۰۰٪ خاک چه شعاعی (درجه) دارد،
+// و پایتخت در چند درصد سقوط می‌کند. روی نقشه همین دایره با شکل کشور بریده و رنگ فاتح می‌خورد.
+const DEG = 180 / Math.PI;
+for (const c of Object.values(countries)) {
+  const shape = topojson.merge(world, geoms.filter(g => g.properties.o === c.id));
+  const areaSr = geoArea(shape);
+  c.area = Math.round(areaSr * 6371 * 6371);          // کیلومتر مربع
+  const nb = c.neighbors.filter(n => c.borderPos[n]);
+  if (!nb.length) continue;
+  // نقاط نمونه داخل کشور (حدود ۱۵۰۰ نقطه، با وزن cos عرض جغرافیایی)
+  const [[x0, y0], [x1, y1]] = geoBounds(shape);
+  const w = x1 >= x0 ? x1 - x0 : x1 + 360 - x0;
+  const step = clamp(Math.sqrt(areaSr * DEG * DEG / 1500), 0.04, 1.2);
+  const pts = [];
+  for (let y = y0 + step / 2; y < y1; y += step) {
+    for (let dx = step / 2; dx < w; dx += step) {
+      let x = x0 + dx; if (x > 180) x -= 360;
+      if (geoContains(shape, [x, y])) pts.push({ p: [x, y], w: Math.cos(y / DEG) });
+    }
+  }
+  if (pts.length < 5) pts.push(...c.cities.map(ct => ({ p: ct.pos, w: 1 })), { p: c.pos, w: 1 });
+  const total = pts.reduce((a, b) => a + b.w, 0);
+  c.front = {};
+  for (const n of nb) {
+    const bp = c.borderPos[n];
+    const list = pts.map(q => ({ d: geoDistance(bp, q.p) * DEG, w: q.w })).sort((a, b) => a.d - b.d);
+    const r = [];
+    let acc = 0, k = 1;
+    for (const q of list) {
+      acc += q.w;
+      while (k <= 10 && acc >= total * k / 10) { r.push(Math.round(q.d * 100) / 100); k++; }
+    }
+    while (r.length < 10) r.push(Math.round(list[list.length - 1].d * 100) / 100 + 0.01);
+    const dc = geoDistance(bp, c.pos) * DEG;
+    let capW = 0; for (const q of list) { if (q.d <= dc) capW += q.w; else break; }
+    c.front[n] = { r, cap: Math.round(Math.min(0.97, Math.max(0.05, capW / total)) * 100) / 100 };
+  }
+}
+
 // کنترل: هر کشوری در جدول روی نقشه باشد
 const onMap = new Set(geoms.map(g => g.properties.o).filter(Boolean));
 for (const id of Object.keys(countries)) if (!onMap.has(id)) warnings.push(`not on map: ${id}`);
@@ -244,6 +285,7 @@ write('data/scenario_2026.js', 'SG_DATA.scenario = ' + JSON.stringify({
   blocBonus: S.BLOC_BONUS,
   relations: S.RELATIONS,
   wars: S.WARS,
+  warFronts: S.WAR_FRONTS,
   sanctions: S.SANCTIONS,
 }, null, 1) + ';\n');
 

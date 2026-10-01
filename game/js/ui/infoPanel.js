@@ -174,20 +174,21 @@
         </section>`;
       }
 
-      // --- شهرها و اشغال (فقط داخل بازی) ---
+      // --- خاک اشغالی و واگذارشده (فقط داخل بازی) ---
       if (mode === 'game' && SG.War) {
         const W = SG.War;
-        const occ = c.cities.filter(x => W.controller(state, x.id) !== id);
-        const abroad = W.citiesControlledAbroad(state, id);
-        if (occ.length || abroad.length || c.puppetOf || c.eco?.occ) {
-          const cityBtn = city => `<button class="chip" data-action="city" data-id="${city.id}">${city.capital ? '★ ' : ''}${F.esc(city.name)}</button>`;
-          html += `<section class="card"><h3>🏴 خاک و شهرها</h3>
-            ${c.puppetOf ? `<p class="small">دولت دست‌نشانده‌ی <b>${F.esc(state.countries[c.puppetOf].name)}</b> (هر سال ۱.۲٪ تولیدش را باج می‌دهد).</p>` : ''}
-            ${occ.length ? `<div class="row-label bad">در دست دیگران</div><div class="chips">${occ.map(city => cityBtn(city) + `<small class="muted">${F.esc(state.countries[W.controller(state, city.id)].name)}</small>`).join(' ')}</div>` : ''}
-            ${abroad.length ? `<div class="row-label">شهرهای تصرف‌شده یا واگذارشده</div><div class="chips">${abroad.map(cityBtn).join('')}</div>` : ''}
-            ${c.eco?.occ?.gdp ? `<div class="muted small">${F.num(Math.round(c.eco.occ.gdp * 100))}٪ اقتصاد و ${F.num(Math.round(c.eco.occ.energy * 100))}٪ انرژی این کشور زیر اشغال است.</div>` : ''}
-          </section>`;
+        const rows = [];
+        for (const w of W.warsOfCountry(state, id)) {
+          const s = W.sideOf(w, id), es = s === 'A' ? 'B' : 'A';
+          if (w.leaders[s] === id && W.occupied(w, s) > 0.001) rows.push(`<div class="b-row"><span>در اشغال ${F.esc(state.countries[w.leaders[es]].name)}</span><b class="bad">${F.num(Math.round(W.occupied(w, s) * 1000) / 10)}٪ خاک</b></div>`);
+          if (w.leaders[s] === id && W.occupied(w, es) > 0.001) rows.push(`<div class="b-row"><span>از خاک ${F.esc(state.countries[w.leaders[es]].name)} گرفته</span><b class="good">${F.num(Math.round(W.occupied(w, es) * 1000) / 10)}٪</b></div>`);
         }
+        for (const t of state.territory || []) {
+          if (t.country === id) rows.push(`<div class="b-row"><span>واگذارشده به ${F.esc(state.countries[t.by].name)} (با صلح)</span><b>${F.num(Math.round(t.pct * 100))}٪</b></div>`);
+          if (t.by === id && !state.countries[t.country].annexedBy) rows.push(`<div class="b-row"><span>خاک ضمیمه از ${F.esc(state.countries[t.country].name)}</span><b>${F.num(Math.round(t.pct * 100))}٪</b></div>`);
+        }
+        if (c.puppetOf) rows.push(`<p class="small">دولت دست‌نشانده‌ی <b>${F.esc(state.countries[c.puppetOf].name)}</b>.</p>`);
+        if (rows.length) html += `<section class="card"><h3>🏴 خاک</h3>${rows.join('')}</section>`;
       }
 
       // --- ویژگی‌ها ---

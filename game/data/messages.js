@@ -187,10 +187,13 @@ SG_DATA.messages = {
   // ---------- جنگ ----------
   war_declared: {
     variants: [
-      'قربان، جنگ با {country} آغاز شد. روی نیروهای مستقر در مرز بزنید و شهر هدف را انتخاب کنید؛ هواپیما، پهپاد و موشک‌ها از دور پشتیبانی می‌کنند.',
-      'فرمان جنگ با {country} صادر شد. نیروهای مرزی آماده‌اند — برای حمله روی هر دسته در مرز بزنید و شهر هدف را بزنید.',
+      'قربان، جنگ با {country} آغاز شد. پیشنهاد ارتش: اول با موشک، پهپاد و جنگنده پدافند دشمن ({ad} آتشبار) را نابود کنیم، بعد روی نیروی زمینی‌اش بمب و موشک بریزیم و هم‌زمان پیاده‌نظام، زرهی و توپخانه حمله کنند. این‌طور خیلی سریع‌تر پیش می‌رویم. حمله‌ی فقط زمینی کند است. دستور را در پنل جنگ انتخاب کنید.',
     ],
-    actions: [{ id: 'open:war', label: '🔥 پنل جنگ' }, { id: 'dismiss', label: 'متوجه شدم' }],
+    actions: [{ id: 'open:war', label: '🔥 دستور جنگ' }, { id: 'dismiss', label: 'متوجه شدم' }],
+  },
+  war_declared_air: {
+    variants: ['قربان، جنگ با {country} آغاز شد. مرز زمینی نداریم، پس فقط جنگ هوایی و موشکی ممکن است: اول پدافندش ({ad} آتشبار)، بعد نیروهایش. خاک گرفتن بدون مرز زمینی ممکن نیست؛ هدف، فشار برای صلح است.'],
+    actions: [{ id: 'open:war', label: '🔥 دستور جنگ' }, { id: 'dismiss', label: 'متوجه شدم' }],
   },
   ally_joined: {
     variants: ['{country} به حمایت از {other} وارد جنگ با ما شد!', '{country} اعلام کرد در کنار {other} می‌جنگد.'],
@@ -198,82 +201,108 @@ SG_DATA.messages = {
     actions: [{ id: 'open:war', label: '🔥 پنل جنگ' }],
   },
   sanctions_new: {
-    variants: ['{count} کشور به‌خاطر این حمله ما را تحریم کردند، از جمله {country}.', 'موج تحریم: {count} کشور (از جمله {country}) روابط تجاری با ما را قطع کردند.'],
+    variants: ['{n} کشور به‌خاطر این حمله ما را تحریم کردند، از جمله {country}.', 'موج تحریم: {n} کشور (از جمله {country}) روابط تجاری با ما را قطع کردند.'],
   },
   alliance_expelled: {
     variants: ['به‌خاطر حمله به یک هم‌پیمان، از «{alliance}» اخراج شدیم.'],
   },
-  battle_started: {
-    variants: ['نیروهای ما به {city} رسیدند و نبرد آغاز شد.', 'نبرد {city} شروع شد؛ گزارش هر دور را در پنل جنگ ببینید.'],
-    actions: [{ id: 'show:battle', label: '📋 گزارش نبرد' }, { id: 'show:city', label: '🗺️ نقشه' }],
+  tribute_paid: {
+    variants: ['{country} برای جلوگیری از جنگ {amount} پرداخت. ۲۴ ماه آتش‌بس برقرار شد.'],
   },
-  battle_defending: {
-    variants: ['دشمن به {city} حمله کرد! نیروهای ما در حال دفاع‌اند.', 'هشدار: {city} زیر حمله‌ی {country} است.'],
-    actions: [{ id: 'show:battle', label: '📋 گزارش نبرد' }, { id: 'show:city', label: '🗺️ نقشه' }],
+  front_advance: {
+    variants: ['جبهه‌ی {country}: این ماه {gain}٪ پیشروی کردیم؛ حالا {pct}٪ خاکش دست ماست.', 'نیروها {gain}٪ دیگر از خاک {country} را گرفتند (جمعاً {pct}٪).'],
+    actions: [{ id: 'show:front', label: '📋 گزارش ماه' }],
   },
-  battle_won: {
-    variants: ['نبرد {city}: برتری با ماست (نسبت قدرت {ratio} به ۱). تلفات ما: {ours}. تلفات دشمن: {theirs}.'],
-    actions: [{ id: 'show:battle', label: '📋 گزارش نبرد' }],
+  front_lost: {
+    variants: ['{country} این ماه {gain}٪ از خاک ما را گرفت (جمعاً {pct}٪)! نیروی زمینی بیشتری به مرز بفرستید.'],
+    actions: [{ id: 'show:front', label: '📋 گزارش ماه' }, { id: 'open:military', label: '⚔️ ارتش' }],
   },
-  battle_lost: {
-    variants: ['نبرد {city}: دشمن قوی‌تر بود (نسبت قدرت ما {ratio} به ۱). تلفات ما: {ours}. تلفات دشمن: {theirs}.'],
-    actions: [{ id: 'show:battle', label: '📋 گزارش نبرد' }],
+  front_liberated: {
+    variants: ['جبهه‌ی {country}: {gain}٪ از خاک خودمان را پس گرفتیم.'],
+    actions: [{ id: 'show:front', label: '📋 گزارش ماه' }],
   },
-  battle_losing: {
-    variants: ['قربان، در {city} داریم می‌بازیم. اگر ادامه دهیم تلفات سنگین می‌دهیم. عقب‌نشینی کنیم؟'],
-    actions: [{ id: 'retreat', label: '↩️ عقب‌نشینی' }, { id: 'show:battle', label: '📋 گزارش' }, { id: 'dismiss', label: 'ادامه بده' }],
+  front_pushed: {
+    variants: ['{country} {gain}٪ از خاکی را که گرفته بودیم پس گرفت.'],
+    actions: [{ id: 'show:front', label: '📋 گزارش ماه' }],
+  },
+  front_stalemate: {
+    variants: ['جبهه‌ی {country}: این ماه هیچ طرف پیش نرفت (هر دو تلفات دادند).'],
+    actions: [{ id: 'show:front', label: '📋 گزارش ماه' }],
+  },
+  front_empty: {
+    variants: ['قربان، در مرز {country} نیروی زمینی نداریم و دشمن پیش می‌آید! پیاده، زرهی و توپخانه به مرزش بفرستید.'],
+    actions: [{ id: 'open:military', label: '⚔️ ارتش' }],
+  },
+  air_report: {
+    variants: ['حمله‌ی هوایی و موشکی به {country}: {ad} آتشبار پدافند نابود شد؛ {left} آتشبار باقی مانده.'],
+    actions: [{ id: 'show:front', label: '📋 گزارش ماه' }],
+  },
+  ad_half: {
+    variants: ['🎯 نیمی از پدافند {country} نابود شد ({left} از {start} آتشبار مانده). ادامه دهید تا آسمان باز شود.'],
+    actions: [{ id: 'open:war', label: '🔥 پنل جنگ' }],
+  },
+  ad_gone: {
+    variants: ['🎯 پدافند هوایی {country} کاملاً نابود شد! حالا جنگنده‌ها، بمب‌افکن‌ها، موشک و پهپادها روی نیروی زمینی‌اش می‌ریزند و پیشروی زمینی سریع‌تر می‌شود.'],
+    actions: [{ id: 'open:war', label: '🔥 پنل جنگ' }],
+  },
+  our_ad_half: {
+    variants: ['⚠️ نیمی از پدافند هوایی ما نابود شد ({left} از {start} آتشبار مانده). کارخانه‌ی پدافند بسازید یا پدافند بخرید.'],
+    actions: [{ id: 'open:military', label: '⚔️ ارتش' }],
+  },
+  our_ad_gone: {
+    variants: ['🚨 پدافند هوایی ما کاملاً نابود شد! از این به بعد دشمن مستقیم نیروهای ما را بمباران می‌کند.'],
+    actions: [{ id: 'open:military', label: '⚔️ ارتش' }, { id: 'open:war', label: '🔥 پنل جنگ' }],
   },
   ammo_low: {
-    variants: ['مهمات {unit} در جبهه‌ی {city} فقط برای {turns} نوبت دیگر کافی است.', 'خط تدارکات {city} کش آمده؛ مهمات {unit} تا {turns} نوبت دیگر تمام می‌شود.'],
+    variants: ['مهمات {unit} در جبهه‌ی {country} فقط برای {turns} نوبت دیگر کافی است؛ هرچه جلوتر می‌رویم خط تدارکات طولانی‌تر می‌شود.'],
     actions: [{ id: 'show:stack', label: '🗺️ نمایش' }],
   },
-  city_captured: {
-    variants: ['{city} سقوط کرد! شهر در دست نیروهای ماست.', 'پیروزی: {city} تصرف شد. بخشی از اقتصاد و انرژی‌اش از این ماه به ما می‌رسد.'],
-    actions: [{ id: 'show:battle', label: '📋 گزارش نبرد' }, { id: 'open:war', label: '🔥 پنل جنگ' }],
+  capital_captured: {
+    variants: ['🏴 {city}، پایتخت {country}، سقوط کرد! روحیه‌ی دشمن فرو ریخت؛ احتمالاً به‌زودی تسلیم می‌شود.'],
+    actions: [{ id: 'open:war', label: '🔥 پنل جنگ' }],
   },
-  city_liberated: {
-    variants: ['{city} آزاد شد!', 'نیروهای ما {city} را پس گرفتند.'],
-    actions: [{ id: 'show:battle', label: '📋 گزارش نبرد' }],
+  capital_lost: {
+    variants: ['🚨 پایتخت ({city}) به دست {other} افتاد! ثبات به‌شدت پایین آمد.'],
+    actions: [{ id: 'open:war', label: '🔥 پنل جنگ' }],
   },
-  city_lost: {
-    variants: ['{city} به دست {country} افتاد! نیروهای باقی‌مانده عقب نشستند.', 'قربان، {city} را از دست دادیم. دشمن شهر را گرفت.'],
-    actions: [{ id: 'show:battle', label: '📋 گزارش نبرد' }, { id: 'open:war', label: '🔥 پنل جنگ' }],
-  },
-  war_city_changed: {
-    variants: ['جبهه: {city} اکنون در دست {country} است.'],
-  },
+  capital_retaken: { variants: ['پایتخت ({city}) را پس گرفتیم!'] },
+  capital_freed: { variants: ['{country} پایتختش ({city}) را پس گرفت.'] },
   war_weariness: {
     variants: ['مردم از جنگ خسته شده‌اند (خستگی جنگ {pct}٪). ثبات پایین می‌آید و تورم بالا می‌رود؛ به صلح فکر کنید.'],
     actions: [{ id: 'open:war', label: '🔥 پنل جنگ' }],
   },
   peace_offer: {
-    variants: ['{country} پیشنهاد صلح داده. یکی از شرط‌ها را انتخاب کنید یا جنگ را ادامه دهید.',
-      'نماینده‌ی {country} برای مذاکره‌ی صلح آمده. چه شرطی می‌گذاریم؟'],
-    actions: [{ id: 'peace:annex', label: '🏴 الحاق کامل' }, { id: 'peace:cede', label: '🗺️ واگذاری شهرهای تصرف‌شده' },
-      { id: 'peace:puppet', label: '🎎 دولت دست‌نشانده' }, { id: 'peace:reparations', label: '💰 غرامت ۲۴ ماهه' },
-      { id: 'peace:white', label: '🕊️ صلح سفید' }, { id: 'dismiss', label: '⚔️ ادامه‌ی جنگ' }],
+    variants: ['{country} پیشنهاد صلح داده ({pct}٪ خاکش دست ماست). شرط را انتخاب کنید یا جنگ را ادامه دهید.'],
+    actions: [{ id: 'peace:annex', label: '🏴 فتح کامل' }, { id: 'peace:cede', label: '🗺️ واگذاری خاک تصرف‌شده' },
+      { id: 'peace:pay', label: '💰 دریافت {amount}' }, { id: 'peace:white', label: '🕊️ صلح سفید' }, { id: 'dismiss', label: '⚔️ ادامه‌ی جنگ' }],
+  },
+  surrender_offer: {
+    variants: ['{country} تسلیم شد! ({pct}٪ خاکش دست ماست.) می‌توانیم کل کشور را فتح کنیم: همه‌ی پول، تجهیزات و مردمش مال ما می‌شود.'],
+    actions: [{ id: 'peace:annex', label: '🏴 فتح کامل' }, { id: 'peace:cede', label: '🗺️ فقط خاک تصرف‌شده' },
+      { id: 'peace:pay', label: '💰 دریافت {amount}' }, { id: 'peace:white', label: '🕊️ صلح سفید' }, { id: 'dismiss', label: '⚔️ ادامه‌ی جنگ' }],
   },
   peace_demand: {
-    variants: ['{country} برای پایان جنگ شرط گذاشته: {term}. اگر نپذیریم جنگ ادامه دارد.'],
+    variants: ['{country} برای پایان جنگ شرط گذاشته: {term} ({pct}٪ خاک / {amount}). اگر نپذیریم جنگ ادامه دارد.'],
     actions: [{ id: 'peace:accept', label: '✅ می‌پذیریم' }, { id: 'dismiss', label: '❌ رد' }],
   },
   peace_signed: {
     variants: ['صلح با {country} امضا شد: {term}.', 'جنگ با {country} تمام شد ({term}).'],
   },
   annexed: {
-    variants: ['{country} رسماً به خاک ما پیوست! اقتصاد و نفتش طی چند ماه کامل ادغام می‌شود؛ مراقب ناآرامی و واکنش همسایه‌ها باشید.'],
+    variants: ['🏴 {country} فتح شد! همه‌ی پول خزانه‌اش ({amount})، همه‌ی تجهیزات و کارخانه‌هایش و {people} میلیون نفر جمعیتش مال ما شد. اقتصادش طی چند ماه کامل ادغام می‌شود؛ مراقب ناآرامی باشید.'],
   },
-  annexed_us: {
-    variants: ['کشور ما ضمیمه‌ی {a} شد.'],
+  annexed_us: { variants: ['کشور ما ضمیمه‌ی {a} شد.'] },
+  game_over_conquered: {
+    variants: ['تمام خاک کشور به دست {country} افتاد. دولت سقوط کرد. بازی به پایان رسید.'],
+    actions: [{ id: 'newgame', label: 'بازی جدید' }],
   },
 
   // ---------- جهان ----------
   world_war_declared: {
     variants: ['{a} به {b} اعلان جنگ داد.'],
   },
-  world_city_captured: {
-    variants: ['{country} شهر {city} را از {other} گرفت.', 'جبهه‌ی {other}: {city} به دست {country} افتاد.'],
-    plural: ['تغییر در جبهه‌ها: {count} شهر دست‌به‌دست شد، از جمله {city}.'],
+  world_front: {
+    variants: ['جنگ {a} و {b}: {a} حالا {pct}٪ خاک {b} را در دست دارد.'],
   },
   world_peace: {
     variants: ['جنگ {a} و {b} با صلح تمام شد ({term}).'],
@@ -312,10 +341,9 @@ SG_DATA.decrees = {
 
 // شرط‌های صلح (مرحله‌ی ۴)
 SG_DATA.peaceTerms = {
-  annex: { icon: '🏴', name: 'الحاق کامل', desc: 'کل کشور ضمیمه می‌شود. نیمی از اقتصادش فوراً و بقیه طی ~۲ سال ادغام می‌شود؛ ناآرامی و ترس همسایه‌ها.' },
-  cede: { icon: '🗺️', name: 'واگذاری شهرهای تصرف‌شده', desc: 'شهرهایی که گرفته‌ایم برای همیشه مال ما می‌شوند (سهم اقتصادشان از ۵۰٪ تا ۱۰۰٪ بالا می‌رود).' },
-  puppet: { icon: '🎎', name: 'دولت دست‌نشانده', desc: 'شهرها پس داده می‌شوند ولی کشور هر سال ۱.۲٪ تولیدش را به ما باج می‌دهد و هم‌پیمان ما می‌شود.' },
-  reparations: { icon: '💰', name: 'غرامت ۲۴ ماهه', desc: 'هر ماه معادل ۲٪ تولید سالانه‌اش تقسیم بر ۱۲، به مدت ۲ سال.' },
+  annex: { icon: '🏴', name: 'فتح کامل', desc: 'کل کشور ضمیمه می‌شود: همه‌ی پول خزانه، تجهیزات، کارخانه‌ها و مردمش مال ما. ۶۰٪ اقتصادش فوراً و بقیه طی ~۲ سال. فقط وقتی دشمن تسلیم است (پایتخت افتاده، ۶۰٪ خاک، یا ارتشش فروپاشیده).' },
+  cede: { icon: '🗺️', name: 'واگذاری خاک تصرف‌شده', desc: 'همان درصدی که گرفته‌ایم برای همیشه مال ما می‌شود: همان سهم از اقتصاد، مردم و انرژی‌اش.' },
+  pay: { icon: '💰', name: 'پرداخت پول', desc: 'بخشی از خزانه‌اش را یک‌جا می‌دهد (هرچه امتیاز جنگ بیشتر، بیشتر).' },
   white: { icon: '🕊️', name: 'صلح سفید', desc: 'همه‌چیز به قبل از جنگ برمی‌گردد.' },
 };
 

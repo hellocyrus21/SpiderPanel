@@ -49,9 +49,8 @@
     const groups = {};
     for (const s of c.mil.stacks) {
       const key = s.move ? 'moving' : (s.loc.kind === 'city' ? s.loc.city : 'b:' + s.loc.target + (s.loc.sea ? 's' : ''));
-      const enemyCity = !s.move && s.loc.kind === 'city' && W.controller(st, s.loc.city) !== ctx.id;
-      const held = !s.move && s.loc.kind === 'city' && !enemyCity && !W.isHomeCity(st, c, s.loc.city);
-      const icon = s.move ? '🚚 ' : enemyCity ? '⚔️ نبرد: ' : held ? '🏴 ' : s.loc.kind === 'city' ? '🏙️ ' : (s.loc.sea ? '⚓ ' : '🚩 ');
+      const front = !s.move && s.loc.kind === 'border' && !s.loc.sea && SG.Engine.isAtWar(st, ctx.id, s.loc.target);
+      const icon = s.move ? '🚚 ' : front ? '⚔️ جبهه‌ی ' : s.loc.kind === 'city' ? '🏙️ ' : (s.loc.sea ? '⚓ ' : '🚩 ');
       (groups[key] ||= { title: s.move ? '🚚 در حال حرکت' : icon + M.locName(st, s.loc), list: [] }).list.push(s);
     }
     const order = Object.keys(groups).sort((a, b) => (a === 'moving') - (b === 'moving') || (a.startsWith('b:')) - (b.startsWith('b:')));
@@ -59,7 +58,7 @@
       <div class="stack-list">${groups[k].list.map(s => `<button class="stack-row" data-stack="${s.id}">
         <span>${U()[s.type].icon} ${U()[s.type].name}</span><b>${qty(s.type, s.count)}</b>
         ${s.move ? `<small class="muted">→ ${F.esc(M.locName(st, s.move.dest))} | ${F.num(s.move.left)} ماه</small>` : ''}
-        ${s.hold ? '<small class="muted">⏸ بدون پشتیبانی</small>' : ''}${s.supply < 50 ? '<small class="bad">تدارکات ' + num(s.supply) + '</small>' : ''}
+        ${s.supply < 50 ? '<small class="bad">تدارکات ' + num(s.supply) + '</small>' : ''}
       </button>`).join('')}</div></div>`).join('');
     const totals = Object.entries(U()).filter(([k]) => c.forces[k] > 0)
       .map(([k, d]) => `<span class="total-chip">${d.icon} ${F.num(c.forces[k])}</span>`).join('');
@@ -105,7 +104,7 @@
           <div class="fac-actions">
             ${n ? `<button class="btn tiny ${on ? 'primary' : ''}" data-line="${k}">${on ? '⏸ خاموش کن' : '▶ روشن کن'}</button>
               ${on ? `<small class="muted">${F.money(rate * M.unitCost(st, c, k))} در ماه</small>` : ''}` : '<small class="muted">کارخانه‌ای ندارید</small>'}
-            <button class="btn tiny" data-build="${k}">➕ کارخانه‌ی جدید | ${F.money(M.factoryCost(st, c, k))} | ${F.num(d.factory.time)} ماه</button>
+            <button class="btn tiny" data-build="${k}">➕ کارخانه‌ی جدید | ${F.money(M.factoryCost(st, c, k))} | ${F.num(d.factory.time)} ماه | نگهداری ${F.money(d.factory.upkeep * (c.mil.costFactor || 1))}/ماه</button>
           </div>
           ${building.length ? `<div class="small">🏗️ در حال ساخت: ${building.map(b => F.num(b.left) + ' ماه').join('، ')}</div>` : ''}`
         : `<div class="muted small">🔒 فناوری لازم: ${F.BRANCH[d.branch]} ${F.num(d.factory.requires)} (شما ${num(c.tech[d.branch])}). با درخت پیشرفت (مرحله‌ی ۶) باز می‌شود.
@@ -113,7 +112,8 @@
       </div>`;
     }).join('');
     return `
-      <p class="muted small">تولید هر کارخانه به فناوری و تخصص کشور بستگی دارد. هزینه‌ی خطوط روشن هر ماه از بودجه کم می‌شود.
+      <p class="muted small">تولید هر کارخانه در همه‌ی کشورها یکسان است (مثلاً کارخانه‌ی موشک ماهی ۳۰ فروند)؛ کشور قوی‌تر کارخانه‌ی بیشتری دارد.
+        هر کارخانه نگهداری ماهانه دارد (حتی خاموش) و خطوط روشن هزینه‌ی ساخت هم دارند. نگهداری کارخانه‌ها: <b>${F.money(M.factoryUpkeepMonthly(c))}</b> در ماه.
         خزانه: <b>${F.money(c.eco.treasury)}</b></p>
       <div class="fac-grid">${rows}</div>`;
   }
@@ -141,45 +141,32 @@
     const dests = M.destinations(st, ctx.id, s);
     const destBtn = x => {
       let name, extra = '';
-      if (x.kind === 'city') name = `${x.held ? '🏴' : x.capital ? '★' : '🏙️'} ${F.esc(x.name)}`;
+      if (x.kind === 'city') name = `${x.capital ? '★' : '🏙️'} ${F.esc(x.name)}`;
       else {
         name = `${x.sea ? '⚓' : '🚩'} مرز ${F.esc(st.countries[x.target].name)}`;
         const atWar = SG.Engine.isAtWar(st, ctx.id, x.target);
         const lab = F.relationLabel(SG.Engine.getRelation(st, ctx.id, x.target));
-        extra = atWar ? ' <small class="bad">در جنگ</small>' : ` <small class="${lab.cls}">${lab.text}</small>`;
+        extra = atWar ? ' <small class="bad">جبهه‌ی جنگ</small>' : ` <small class="${lab.cls}">${lab.text}</small>`;
       }
       return `<button class="dest" data-dest="${x.kind}|${x.city || x.target}|${x.sea ? 1 : 0}"><span>${name}${extra}</span><small>${F.num(x.turns)} ماه</small></button>`;
     };
-    // حمله به شهر: با برآورد مدافعان و نسبت قدرت
-    const attackBtn = x => {
-      const pv = W.attackPreview(st, ctx.id, s, sendCount, x.city);
-      const units = Object.entries(pv.intel.units).map(([k, n]) => `${U()[k].icon}${F.num(Math.round(n))}`).join(' ') || 'بی‌دفاع';
-      const r = pv.ratio;
-      const cls = !pv.theirs ? 'good' : r >= 1.8 ? 'good' : r >= 1 ? 'mid' : 'bad';
-      return `<button class="dest attack" data-dest="city|${x.city}|0"><span>🎯 ${x.capital ? '★ ' : ''}${F.esc(x.name)}
-          <small class="muted">${F.esc(st.countries[W.origOf(x.city)].name)} | مدافع: ${units}</small></span>
-        <small><b class="${cls}">${pv.theirs ? '×' + F.num(Math.round(r * 10) / 10) : '✓'}</b> | ${F.num(x.turns)} ماه</small></button>`;
-    };
-    const attacks = dests.filter(x => x.attack);
-    const borders = dests.filter(x => x.kind === 'border'), cities = dests.filter(x => x.kind === 'city' && !x.attack);
+    const borders = dests.filter(x => x.kind === 'border'), cities = dests.filter(x => x.kind === 'city');
     const step = s.count >= 1000 ? 100 : s.count >= 100 ? 10 : 1;
-    const isLand = W.GROUND.includes(s.type), isSupport = W.SUPPORT.includes(s.type) || W.NAVAL.includes(s.type);
-    // در خاک دشمن و درگیر نبرد؟
-    const fighting = s.loc.kind === 'city' && W.controller(st, s.loc.city) !== ctx.id;
-    // در مرز کشوری که با آن در جنگ نیستیم ← اعلان جنگ
+    const isLand = W.GROUND.includes(s.type), isStrike = W.AIRSTRIKE.includes(s.type);
     const borderTarget = s.loc.kind === 'border' && !s.loc.sea ? s.loc.target : null;
-    const canDeclare = borderTarget && !SG.Engine.isAtWar(st, ctx.id, borderTarget) && !W.canDeclare(st, ctx.id, borderTarget);
-    const range = M.rangeOf(c, s.type);
-    const inRange = isSupport ? battlesInRange(st, s, range) : [];
+    const atFront = borderTarget && SG.Engine.isAtWar(st, ctx.id, borderTarget);
+    const canDeclare = borderTarget && !atFront && !W.canDeclare(st, ctx.id, borderTarget);
+    // در برد کدام جبهه‌ها هستیم؟
+    const inRange = isStrike ? W.warsOfCountry(st, ctx.id).filter(w => W.engaged(st, w, ctx.id, 'air').some(e => e.src === s))
+      .map(w => st.countries[w.leaders[W.sideOf(w, ctx.id) === 'A' ? 'B' : 'A']].name) : [];
+    const atWarAny = W.warsOfCountry(st, ctx.id).length > 0;
     return `<button class="btn ghost tiny" data-view="forces">→ همه‌ی نیروها</button>${head}
-      ${fighting ? `<section class="card warn-card"><h3>⚔️ در حال نبرد برای ${F.esc(M.locName(st, s.loc))}</h3>
-          <p class="small">هر نوبت یک دور نبرد. گزارش‌ها در 🔥 پنل جنگ.</p>
-          <button class="btn" data-retreat="${s.loc.city}">↩️ عقب‌نشینی همه‌ی نیروها از این شهر</button></section>` : ''}
-      ${isSupport ? `<section class="card"><h3>${W.NAVAL.includes(s.type) ? '⚓ پشتیبانی دریایی' : '🎯 پشتیبانی از نبردها'}</h3>
-          <p class="small muted">${W.NAVAL.includes(s.type) ? 'ناوها به نبرد شهرهای بندریِ تا ۴۵۰ کیلومتری کمک می‌کنند.' : `این نیرو از همین‌جا به نزدیک‌ترین نبردِ تا ${F.num(range)} کیلومتری کمک می‌کند.`}
-            ${['ballistic', 'cruise', 'drone'].includes(s.type) ? 'هر نوبت حدود ۶ تا ۸٪ آن شلیک (و مصرف) می‌شود.' : ''}</p>
-          ${inRange.length ? `<div class="small">نبردهای در برد: ${inRange.map(n => F.esc(n)).join('، ')}</div>` : '<div class="small muted">الان نبردی در برد نیست.</div>'}
-          <button class="btn tiny ${s.hold ? '' : 'primary'}" data-hold>${s.hold ? '▶ پشتیبانی را روشن کن' : '⏸ نگه دار (شلیک نکن)'}</button></section>` : ''}
+      ${atFront ? `<section class="card warn-card"><h3>⚔️ در جبهه‌ی ${F.esc(st.countries[borderTarget].name)}</h3>
+          <p class="small">این نیرو هر ماه در نبرد جبهه شرکت می‌کند. پیشروی به درصد خاک است و در پنل جنگ دیده می‌شود. برای عقب‌نشینی به یکی از شهرهای خودی بفرستید.</p>
+          <button class="btn tiny" data-openwar>🔥 دستور جنگ</button></section>` : ''}
+      ${isStrike && atWarAny ? `<section class="card"><h3>🎯 جنگ هوایی</h3>
+          <p class="small muted">هواپیما، پهپاد و موشک فقط وقتی در «نقشه‌ی ترکیبی» (پنل جنگ) و در برد دشمن باشند شلیک می‌کنند. برد: ${F.num(M.rangeOf(c, s.type))} کیلومتر.</p>
+          <div class="small">${inRange.length ? 'در برد جبهه‌ی: ' + inRange.map(F.esc).join('، ') : '<span class="bad">الان در برد هیچ جبهه‌ای نیست — به شهری نزدیک‌تر بفرستید.</span>'}</div></section>` : ''}
       <section class="card"><h3>چندتا بفرستیم؟</h3>
         <div class="send-count">
           <button class="btn tiny" data-cnt="-${step}">−${F.num(step)}</button>
@@ -193,27 +180,13 @@
           <button class="btn tiny ghost" data-frac="1">همه</button>
         </div>
       </section>
-      ${attacks.length ? `<section class="card attack-card"><h3>⚔️ حمله به شهر</h3>
-        <p class="muted small">عدد ×: قدرت حمله‌ی همین تعداد در برابر مدافعان فعلی (با زمین و استحکامات). برای تصرف معمولاً ×۱٫۸ یا بیشتر لازم است؛ هواپیما، پهپاد و موشک‌های در برد هم کمک می‌کنند.</p>
-        <div class="dests">${attacks.map(attackBtn).join('')}</div></section>` : ''}
       ${canDeclare && isLand ? `<section class="card"><h3>⚔️ حمله به ${F.esc(st.countries[borderTarget].name)}</h3>
-        <p class="muted small">با این کشور در جنگ نیستیم. اول باید اعلان جنگ بدهید.</p>
+        <p class="muted small">با این کشور در جنگ نیستیم. اول باید اعلان جنگ بدهید (کشور هدف ممکن است برای جلوگیری از جنگ پول پیشنهاد کند).</p>
         <button class="btn danger" data-declare="${borderTarget}">⚔️ اعلان جنگ به ${F.esc(st.countries[borderTarget].name)}…</button></section>` : ''}
-      ${borders.length ? `<section class="card"><h3>🚩 به مرز</h3><p class="muted small">در مرز آماده‌ی حمله می‌شوند. تجمع نیرو، همسایه را نگران می‌کند.</p>
+      ${borders.length ? `<section class="card"><h3>🚩 به مرز</h3><p class="muted small">نیروی زمینی در مرز کشوری که با آن در جنگیم، در جبهه می‌جنگد. تجمع نیرو در مرز، همسایه را نگران می‌کند.</p>
         <div class="dests">${borders.map(destBtn).join('')}</div></section>` : ''}
       ${cities.length ? `<section class="card"><h3>🏙️ به شهرهای خودی</h3><div class="dests">${cities.map(destBtn).join('')}</div></section>` : ''}
-      ${s.loc.kind === 'city' && W.isHomeCity(st, c, s.loc.city) ? `<button class="btn ghost tiny" data-demob title="هزینه‌ی نگهداری کم می‌شود؛ پولی برنمی‌گردد">مرخص کردن ${qty(s.type, sendCount)}</button>` : ''}`;
-  }
-
-  /** نام شهرهای درگیر نبرد که در برد این دسته‌اند */
-  function battlesInRange(st, s, range) {
-    const out = [];
-    for (const b of st.lastBattles || []) {
-      const city = W.cityById(st, b.city);
-      const lim = W.NAVAL.includes(s.type) ? Math.max(450, range) : range;
-      if (city && M.distanceKm(s.pos, city.pos) <= lim && !out.includes(city.name)) out.push(city.name);
-    }
-    return out;
+      ${s.loc.kind === 'city' ? `<button class="btn ghost tiny" data-demob title="هزینه‌ی نگهداری کم می‌شود؛ پولی برنمی‌گردد">مرخص کردن ${qty(s.type, sendCount)}</button>` : ''}`;
   }
 
   // -------------------------------------------------------------------
@@ -223,7 +196,7 @@
     war: 'در جنگیم', sanction: 'تحریم', seller_war: 'خودش در جنگ است', enemy_ally: 'هم‌پیمان دشمن ما',
     relation: 'رابطه کافی نیست', relation_adv: 'برای این سلاح رابطه‌ی خیلی خوب یا پیمان لازم است',
     tech: 'فناوری ما برای به‌کار بردنش کم است', cooldown: 'قرارداد قبلی تازه بسته شده', no_stock: 'موجودی ندارد',
-    no_factory: 'این را نمی‌سازد', gone: 'وجود ندارد', self: '', money: 'پول کافی نیست',
+    no_factory: 'این را نمی‌سازد', no_export: 'سلاح راهبردی؛ فروخته نمی‌شود', gone: 'وجود ندارد', self: '', money: 'پول کافی نیست',
   };
 
   function offerRow(st, o, showType) {
@@ -361,11 +334,7 @@
       buyPick = null; buyCount = 0; changed(); return;
     }
     if (ds.declare) { SG.WarPanel.confirmDeclare(st, id, ds.declare, () => { ctx.onChange(); }); return; }
-    if (ds.retreat) {
-      const n = W.retreat(st, id, ds.retreat);
-      if (n) SG.NotifyUI.simpleToast(`↩️ ${F.num(n)} دسته عقب‌نشینی کرد.`, 'lvl-info');
-      go('forces'); ctx.onChange(); return;
-    }
+    if (ds.openwar !== undefined) { ctx.onOpenWar && ctx.onOpenWar(); return; }
     if (ds.stack) { sendCount = 0; go('stack:' + ds.stack); return; }
     if (ds.line) { M.setLine(st, id, ds.line, !st.countries[id].mil.lines[ds.line]); changed(); return; }
     if (ds.build) {
@@ -376,7 +345,6 @@
     }
     const s = view.startsWith('stack:') ? M.findStack(st, id, view.slice(6)) : null;
     if (!s) return;
-    if (ds.hold !== undefined) { s.hold = !s.hold; changed(); return; }
     if (ds.cnt) { sendCount = Math.max(1, Math.min(s.count, sendCount + +ds.cnt)); rerender(); return; }
     if (ds.frac) { sendCount = Math.max(1, Math.round(s.count * +ds.frac)); rerender(); return; }
     if (ds.demob !== undefined) {
@@ -390,8 +358,7 @@
       const n = sendCount;
       const mover = M.send(st, id, s.id, n, d);
       if (mover) {
-        SG.NotifyUI.simpleToast(d.attack ? `⚔️ ${qty(mover.type, n)} ${U()[mover.type].name} برای حمله به ${F.esc(d.name)} حرکت کرد؛ ${F.num(d.turns)} ماه تا رسیدن و شروع نبرد.`
-          : `🚚 ${qty(mover.type, n)} ${U()[mover.type].name} به ${d.kind === 'city' ? F.esc(d.name) : 'مرز ' + F.esc(st.countries[d.target].name)} حرکت کرد؛ ${F.num(d.turns)} ماه تا رسیدن.`, 'lvl-info');
+        SG.NotifyUI.simpleToast(`🚚 ${qty(mover.type, n)} ${U()[mover.type].name} به ${d.kind === 'city' ? F.esc(d.name) : 'مرز ' + F.esc(st.countries[d.target].name)} حرکت کرد؛ ${F.num(d.turns)} ماه تا رسیدن.`, 'lvl-info');
         sendCount = 0;
         ctx.onChange();
         SG.Modal.close();
@@ -403,8 +370,8 @@
   function changed() { ctx.onChange(); rerender(); }
 
   /** @param {string} [startView] 'forces' | 'factories' | 'arms' | 'seller:<ISO3>' | 'stack:<id>' */
-  function open(state, id, { onChange, onShowStack }, startView) {
-    ctx = { state, id, onChange, onShowStack };
+  function open(state, id, { onChange, onShowStack, onOpenWar }, startView) {
+    ctx = { state, id, onChange, onShowStack, onOpenWar };
     if (startView) view = startView;
     if (startView && startView.startsWith('stack:')) sendCount = 0;
     buyPick = null;

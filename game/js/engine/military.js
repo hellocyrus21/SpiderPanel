@@ -5,8 +5,10 @@
 //   - نیروهای بازیکن به‌صورت «دسته» (stack) روی نقشه‌اند: یک نوع واحد + تعداد + محل.
 //     مثلاً «۲۸ زرهی در تهران». روی دسته می‌زنی، تعداد دلخواه را به یک مرز یا شهر می‌فرستی.
 //   - پیاده و زرهی «واحد» (لشکر/تیپ) شمرده می‌شوند؛ بقیه تعداد واقعی‌اند (فروند، قبضه، ...).
-//   - هر نوع واحد کارخانه‌ی خودش را دارد. تولید ماهانه = تعداد کارخانه × تولید هر کارخانه
-//     × توان فناوری کشور × تخصص کشور. کارخانه‌ی جدید هم می‌شود ساخت.
+//   - هر نوع واحد کارخانه‌ی خودش را دارد. تولید هر کارخانه در همه‌ی کشورها یکسان است
+//     (مثلاً کارخانه‌ی موشک ماهی ۳۰ فروند)؛ تفاوت کشورها در تعداد کارخانه‌هاست.
+//     فناوری فقط تعیین می‌کند کدام کارخانه را می‌شود داشت. هر کارخانه نگهداری ماهانه هم دارد.
+//   - تخصص کشور = انبار اولیه‌ی بیشتر + کارخانه‌ی بیشتر در شروع (data/units.js ← specialties).
 //   - شاخص قدرت هر شاخه (land, air, ...) از تعداد واقعی واحدها حساب می‌شود.
 // نبرد در engine/war.js است (مرحله‌ی ۴). کشورهای هوش مصنوعی فقط وقتی در جنگ‌اند دسته روی نقشه دارند
 // (c.wstacks)؛ بازیکن همیشه (c.mil.stacks). هیچ قانونی مخصوص کشور خاصی نیست؛ تفاوت‌ها از data/units.js است.
@@ -61,11 +63,9 @@
   }
   const hasStacks = c => !!((c.mil && c.mil.useUnits) || c.wstacks);
 
-  /** شهرهای این کشور که الان دست خودش است (شهر اشغال‌شده حساب نمی‌شود) */
+  /** شهرهای این کشور (جنگ درصدی است و شهرها جدا اشغال نمی‌شوند) */
   function ownCities(state, c) {
-    if (!state || !SG.War) return c.cities;
-    const list = c.cities.filter(x => SG.War.controller(state, x.id) === c.id);
-    return list.length ? list : c.cities;
+    return c.cities;
   }
 
   function specialty(c, type) {
@@ -80,14 +80,21 @@
   // -------------------------------------------------------------------
   // راه‌اندازی همه‌ی کشورها: نیرو، کارخانه، برد
   // -------------------------------------------------------------------
+  /** انبار اولیه: داده‌ی دستی یا تبدیل شاخص به تعداد؛ سپس × ضریب تخصص (stock) */
   function generateForces(c) {
     const manual = D().initialForces[c.id];
     const f = emptyForces();
-    if (manual) { Object.assign(f, manual); return f; }
-    const defs = D().units, mix = D().unitMix;
-    for (const b of BRANCHES) {
-      const strength = indexToStrength(c.military[b] || 0, b);
-      for (const [type, share] of Object.entries(mix[b])) f[type] = Math.round(strength * share / defs[type].power);
+    if (manual) Object.assign(f, manual);
+    else {
+      const defs = D().units, mix = D().unitMix;
+      for (const b of BRANCHES) {
+        const strength = indexToStrength(c.military[b] || 0, b);
+        for (const [type, share] of Object.entries(mix[b])) f[type] = Math.round(strength * share / defs[type].power);
+      }
+    }
+    for (const type of Object.keys(f)) {
+      const m = specialty(c, type).stock;
+      if (m && f[type]) f[type] = Math.round(f[type] * m);
     }
     return f;
   }
@@ -102,8 +109,13 @@
       if ((c.tech[def.branch] || 0) < def.factory.requires) { f[type] = 0; continue; }
       // کشوری که این سلاح را اصلاً ندارد، کارخانه‌اش را هم ندارد (ولی می‌تواند بسازد)
       if (manual && !manual[type]) { f[type] = 0; continue; }
-      let n = Math.round(idx / 30 * size);
-      if (type === 'bomber' || type === 'submarine') n = Math.max(0, n - 1);   // تخصصی‌تر و کمیاب‌تر
+      // تعداد کارخانه (نه سرعت تولید) نشان قدرت صنعتی است؛ عمداً کم تا کشورها سریع مسلح نشوند
+      let n;
+      if (type === 'fighter' || type === 'bomber') n = Math.floor((idx - 40) / 25 * size) - (type === 'bomber' ? 1 : 0);   // پرتولید و گران: کمیاب
+      else if (type === 'ship' || type === 'submarine') n = Math.floor((idx - 15) / 40 * size) - (type === 'submarine' ? 1 : 0);
+      else if (type === 'icbm') n = c.military.nuclear ? Math.floor((idx - 70) / 20 * size) : 0;
+      else n = Math.floor(idx / 45 * size);
+      n = Math.max(0, n);
       f[type] = Math.max(0, n + (specialty(c, type).factories || 0));
     }
     return f;
@@ -129,7 +141,7 @@
   /** شهر مناسب برای یک نوع واحد (بندر برای ناو، پایگاه هوایی برای هواپیما، ...) */
   function homeCityFor(c, type, state) {
     const cities = ownCities(state, c);
-    const tag = NAVY.includes(type) ? 'port' : AIR.includes(type) ? 'air' : (type === 'ballistic' || type === 'cruise') ? 'missile' : null;
+    const tag = NAVY.includes(type) ? 'port' : AIR.includes(type) ? 'air' : (type === 'missile' || type === 'icbm') ? 'missile' : null;
     if (tag) {
       const city = cities.find(x => x.tags.includes(tag));
       if (city) return city;
@@ -236,13 +248,16 @@
     return D().units[type].factory.advanced && SG.Economy.sanctionPressure(state, c.id) >= 0.3;
   }
 
-  /** تولید ماهانه‌ی یک نوع (تعداد در ماه، اعشاری) */
+  /** تولید ماهانه‌ی یک نوع = تعداد کارخانه × تولید ثابت هر کارخانه (در همه‌ی کشورها یکسان) */
   function productionRate(state, c, type) {
-    const def = D().units[type];
-    const n = c.factories[type] || 0;
-    if (!n) return 0;
-    const mult = specialty(c, type).output || 1;
-    return n * def.factory.output * capability(c, type) * mult * (sanctionHit(state, c, type) ? 0.7 : 1);
+    return (c.factories[type] || 0) * D().units[type].factory.output;
+  }
+
+  /** نگهداری ماهانه‌ی همه‌ی کارخانه‌ها (روشن یا خاموش) */
+  function factoryUpkeepMonthly(c) {
+    let s = 0;
+    for (const [type, n] of Object.entries(c.factories || {})) s += n * (D().units[type]?.factory.upkeep || 0);
+    return s * (c.mil?.costFactor || 1);
   }
 
   /** قیمت هر عدد برای این کشور (دستمزد ارزان‌تر = ساخت ارزان‌تر؛ تحریم = گران‌تر) */
@@ -254,10 +269,10 @@
     return D().units[type].factory.cost * (c.mil?.costFactor || 1) * (sanctionHit(state, c, type) ? 1.5 : 1);
   }
 
-  /** هزینه‌ی ماهانه‌ی خطوط تولید فعال (میلیارد دلار) */
+  /** هزینه‌ی ماهانه‌ی تولید: خطوط روشن + نگهداری کارخانه‌ها (میلیارد دلار) */
   function productionCostMonthly(state, c) {
     if (!c.mil) return 0;
-    let s = 0;
+    let s = factoryUpkeepMonthly(c);
     for (const type of Object.keys(D().units)) {
       if (c.mil.lines[type]) s += productionRate(state, c, type) * unitCost(state, c, type);
     }
@@ -269,7 +284,7 @@
     let s = 0;
     if (c.mil && c.mil.stacks) {
       // در حرکت ×۲، در نبرد ×۲، در مرز یا خاک دشمن ×۱.۳
-      for (const st of c.mil.stacks) s += st.count * defs[st.type].fuel * (st.move || st.inBattle ? 2 : (st.loc.kind === 'border' || st.loc.country !== c.id) ? 1.3 : 1);
+      for (const st of c.mil.stacks) s += st.count * defs[st.type].fuel * (st.move || st.inBattle ? 2 : st.loc.kind === 'border' ? 1.3 : 1);
     } else {
       for (const [k, n] of Object.entries(c.forces)) s += n * defs[k].fuel;
     }
@@ -360,8 +375,7 @@
 
   /**
    * مقصدهای ممکن برای یک دسته:
-   *   شهرهای خودی (و شهرهای تصرف‌شده)، مرز زمینی/دریایی همسایه‌ها،
-   *   و در جنگ: «حمله به شهر» دشمن — از مرز همان کشور یا از شهری که داخل خاک آن کشور گرفته‌ایم.
+   *   شهرهای خودی و مرز زمینی/دریایی همسایه‌ها. در جنگ، نیروی زمینی در مرز دشمن = «در جبهه».
    */
   function destinations(state, pid, stack) {
     const c = state.countries[pid];
@@ -369,15 +383,9 @@
     const speed = D().units[type].speed;
     const list = [];
     const isNavy = NAVY.includes(type), isAir = AIR.includes(type), isLand = LAND.includes(type);
-    const W = SG.War;
-    for (const city of ownCities(state, c)) {
+    for (const city of c.cities) {
       if (isNavy && !city.tags.includes('port')) continue;
       list.push({ kind: 'city', city: city.id, country: pid, name: city.name, pos: city.pos.slice(), capital: city.capital });
-    }
-    // شهرهای تصرف‌شده (جز ناو، مگر بندر باشد)
-    if (W) for (const city of W.citiesControlledAbroad(state, pid)) {
-      if (isNavy && !city.tags.includes('port')) continue;
-      list.push({ kind: 'city', city: city.id, country: W.origOf(city.id), name: city.name, pos: city.pos.slice(), capital: false, held: true });
     }
     if (isLand || isAir) {
       for (const n of c.neighbors) if (c.borderPos[n] && state.countries[n] && !state.countries[n].annexedBy) list.push({ kind: 'border', target: n, pos: c.borderPos[n].slice(), sea: false });
@@ -387,12 +395,6 @@
         const o = state.countries[n];
         if (!o || o.annexedBy) continue;
         list.push({ kind: 'border', target: n, sea: true, pos: [c.pos[0] * 0.55 + o.pos[0] * 0.45, c.pos[1] * 0.55 + o.pos[1] * 0.45] });
-      }
-    }
-    // حمله: فقط نیروی زمینی، و فقط وقتی از مرز یا داخل خاک کشور دشمن حرکت می‌کند
-    if (isLand && W && !stack.move) {
-      for (const city of W.attackTargets(state, pid, stack)) {
-        list.push({ kind: 'city', city: city.id, country: W.origOf(city.id), name: city.name, pos: city.pos.slice(), capital: city.capital, attack: true });
       }
     }
     return list
@@ -491,18 +493,16 @@
   /**
    * هدف تدارکات یک دسته (۰..۱۰۰):
    *   شهر خودی ۱۰۰، مرز زمینی ۹۲، مرز دریایی ۸۰، در حرکت ۸۵
-   *   خاک دشمن یا شهر تصرف‌شده: ۹۵ منهای ۱۰ برای هر ۳۰۰ کیلومتر فاصله تا نزدیک‌ترین نقطه‌ی خودی (حداقل ۳۰)
+   *   جبهه‌ی جنگ: منهای ۳۰ × درصد خاکی که از دشمن گرفته‌ایم (خط تدارکات طولانی‌تر)
    */
   function supplyTarget(state, c, s) {
     if (s.move) return 85;
-    if (s.loc.kind === 'border') return s.loc.sea ? 80 : 92;
-    const W = SG.War;
-    if (!W) return 100;
-    const ctrl = W.controller(state, s.loc.city);
-    if (ctrl === c.id && W.origOf(s.loc.city) === c.id) return 100;
-    if (ctrl === c.id && W.isHomeCity(state, c, s.loc.city)) return 100;
-    const d = W.distanceToSupply(state, c, s.pos, s.loc.city);
-    return Math.max(30, 95 - 10 * Math.floor(d / 300));
+    if (s.loc.kind === 'border') {
+      // جبهه: هرچه در خاک دشمن جلوتر رفته‌ایم، خط تدارکات طولانی‌تر (تا ۳۰- در ۱۰۰٪)
+      const depth = SG.War && !s.loc.sea ? SG.War.depthInto(state, c.id, s.loc.target) : 0;
+      return (s.loc.sea ? 80 : 92) - 30 * depth;
+    }
+    return 100;
   }
 
   /** حرکت دسته‌ها و تدارکات (برای بازیکن و کشورهای هوش مصنوعیِ درگیر جنگ) */
@@ -538,7 +538,7 @@
   function locName(state, loc) {
     if (loc.kind === 'city') {
       const c = state.countries[loc.country];
-      const city = c.cities.find(x => x.id === loc.city) || (SG.War && SG.War.cityById(state, loc.city));
+      const city = c.cities.find(x => x.id === loc.city);
       return city?.name || c.name;
     }
     return 'مرز ' + state.countries[loc.target].name;
@@ -548,7 +548,7 @@
     init, startPlayer, step, generateForces, generateFactories, refreshIndices, syncForces,
     upkeepMonthly, productionCostMonthly, productionRate, unitCost, factoryCost, capability, rangeOf,
     fuelUse, extraFuel, setLine, buildFactory, destinations, send, demobilize, findStack, locName,
-    distanceKm, branchStrength, sanctionHit, BRANCHES, LAND, AIR, NAVY,
+    distanceKm, branchStrength, sanctionHit, BRANCHES, LAND, AIR, NAVY, factoryUpkeepMonthly,
     stacksOf, ownCities, addToLocation, moveStack, mergeInto, stepStacks, homeCityFor, cityLoc, sameLoc,
     emptyForces, specialty, indexToStrength,
   };

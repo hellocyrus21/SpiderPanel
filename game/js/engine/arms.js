@@ -83,6 +83,7 @@
     let reason = null;
     if (sellerId === buyerId) reason = 'self';
     else if (seller.annexedBy) reason = 'gone';
+    else if (def.noExport) reason = 'no_export';
     else if (!(seller.factories[type] > 0)) reason = 'no_factory';
     else if (E().isAtWar(state, buyerId, sellerId)) reason = 'war';
     else if (sanctions(state, buyerId, sellerId)) reason = 'sanction';
@@ -102,7 +103,7 @@
   function sellersFor(state, buyerId, type) {
     const list = [];
     for (const c of Object.values(state.countries)) {
-      if (c.id === buyerId || c.annexedBy || !(c.factories[type] > 0) || !(c.forces[type] > 0)) continue;
+      if (c.id === buyerId || c.annexedBy || D().units[type].noExport || !(c.factories[type] > 0) || !(c.forces[type] > 0)) continue;
       list.push(offer(state, buyerId, c.id, type));
     }
     const rank = o => (o.reason ? 1 : 0);
@@ -113,7 +114,7 @@
   function catalogOf(state, buyerId, sellerId) {
     const seller = state.countries[sellerId];
     return Object.keys(D().units)
-      .filter(t => seller.factories[t] > 0 && seller.forces[t] > 0)
+      .filter(t => !D().units[t].noExport && seller.factories[t] > 0 && seller.forces[t] > 0)
       .map(t => offer(state, buyerId, sellerId, t));
   }
 

@@ -336,12 +336,31 @@
       updateLabels();
     }
 
-    /** هاشور روی کشورهایی که بخشی از خاکشان اشغال شده */
-    function setHatch(ids) {
-      const set = new Set(ids);
-      hatchLayer.selectAll('path').data(features.filter(f => f.properties.o && set.has(f.properties.o)), f => f.id)
-        .join('path').attr('d', path).attr('fill', 'url(#occ-hatch)');
+    /**
+     * مناطق تصرف‌شده (جنگ درصدی): دایره‌ای به مرکز نقطه‌ی مرزی که با شکل کشور بریده می‌شود.
+     * list: [{ key, country, center:[lon,lat], r (درجه), color, war (bool: اشغال جنگی ← هاشور) }]
+     */
+    const clipDefs = defs.append('g');
+    function setOccupation(list) {
+      const ids = [...new Set(list.map(x => x.country))];
+      clipDefs.selectAll('clipPath').data(ids, d => d).join(enter => {
+        const cp = enter.append('clipPath').attr('id', d => 'occ-clip-' + d);
+        cp.append('path');
+        return cp;
+      }).select('path').attr('d', id => path(topojson.merge(topo, obj.geometries.filter(g => g.properties.o === id))));
+      const data = list.map(x => ({ ...x, d: path(d3.geoCircle().center(x.center).radius(Math.max(0.05, x.r)).precision(1.5)()) }));
+      hatchLayer.selectAll('g.occ').data(data, d => d.key).join(enter => {
+        const g = enter.append('g').attr('class', 'occ');
+        g.append('path').attr('class', 'occ-fill');
+        g.append('path').attr('class', 'occ-hatch').attr('fill', 'url(#occ-hatch)');
+        return g;
+      }).attr('clip-path', d => `url(#occ-clip-${d.country})`)
+        .call(g => {
+          g.select('.occ-fill').attr('d', d => d.d).attr('fill', d => d.color);
+          g.select('.occ-hatch').attr('d', d => d.d).attr('display', d => (d.war ? null : 'none'));
+        });
     }
+    function setHatch() { /* جایگزین شد با setOccupation */ }
 
     function setSelected(id) {
       selectOutline.attr('d', outlineOf(id));
@@ -364,7 +383,7 @@
     resetView(false);
     updateLabels();
 
-    return { refresh, setSelected, setPlayer, zoomTo, zoomBy, resetView, setForces, setCities, zoomToPoint, setStrikes, setOwner, setHatch };
+    return { refresh, setSelected, setPlayer, zoomTo, zoomBy, resetView, setForces, setCities, zoomToPoint, setStrikes, setOwner, setHatch, setOccupation };
   }
 
   SG.MapView = { create };

@@ -39,7 +39,7 @@
     }
 
     const state = {
-      version: 5,
+      version: 6,
       seed,
       scenarioId: scenario.id,
       date: { ...scenario.startDate },
@@ -55,14 +55,13 @@
       cooldowns: {},
       gameOver: null,
       warsInfo: [],        // جنگ‌ها با جزئیات (engine/war.js) — state.wars فقط جفت‌هاست
-      control: {},         // شهرهای اشغال‌شده یا واگذارشده: { cityId: { by, kind, since, integ } }
-      reparations: [],     // غرامت‌ها: [{ from, to, monthly, left }]
-      truces: {},          // آتش‌بس بعد از صلح: { 'A|B': تا نوبت }
+      territory: [],       // خاک واگذارشده با صلح: [{ country, by, pct }]
+      truces: {},          // آتش‌بس بعد از صلح یا باج: { 'A|B': تا نوبت }
     };
     state.relations = buildRelations(state, scenario, rng);
     SG.Economy.init(state);
     SG.Military.init(state);
-    SG.War.initScenario(state);
+    SG.War.initScenario(state, scenario);
     state.rngState = rng.getState();   // ادامه‌ی همان دنباله‌ی تصادفی در نوبت‌ها
     return state;
   }
@@ -85,19 +84,57 @@
       if (state.playerId) SG.Military.startPlayer(state, state.playerId);
       state.version = 4;
     }
-    // نسخه‌ی ۵ (مرحله‌ی ۴): شهرهای جدید با سهم اقتصادی، جنگ با جزئیات، اشغال، خرید سلاح
-    if (state.version < 5) {
+    // نسخه‌ی ۶ (مرحله‌ی ۴ بازسازی‌شده): موشک بالستیک و کروز ← «موشک»، قاره‌پیما، تولید ثابت کارخانه‌ها،
+    // جنگ درصدی. جنگ‌های در جریان از نو ساخته می‌شوند؛ ارتش و اقتصاد حفظ می‌شود.
+    if (state.version < 6) {
+      const merge = obj => {
+        if (!obj) return;
+        obj.missile = (obj.missile || 0) + (obj.ballistic || 0) + (obj.cruise || 0);
+        delete obj.ballistic; delete obj.cruise;
+        if (obj.icbm === undefined) obj.icbm = 0;
+      };
       for (const [id, c] of Object.entries(state.countries)) {
         const fresh = countriesData[id];
-        if (fresh) c.cities = deepCopy(fresh.cities);
+        if (fresh) { c.cities = deepCopy(fresh.cities); c.area = fresh.area; c.front = deepCopy(fresh.front || {}); }
+        delete c.wstacks; delete c.wdmg;
+        merge(c.forces);
+        if (c.ranges) { c.ranges.missile = Math.max(c.ranges.ballistic || 0, c.ranges.cruise || 0) || undefined; delete c.ranges.ballistic; delete c.ranges.cruise; if (!c.ranges.missile) delete c.ranges.missile; }
+        if (c.mil && c.mil.useUnits) {
+          for (const st of c.mil.stacks) if (st.type === 'ballistic' || st.type === 'cruise') st.type = 'missile';
+          // دسته‌های هم‌جای موشک یکی می‌شوند
+          const seen = {};
+          c.mil.stacks = c.mil.stacks.filter(st => {
+            if (st.type !== 'missile' || st.move) return true;
+            const k = JSON.stringify(st.loc);
+            if (seen[k]) { seen[k].count += st.count; return false; }
+            seen[k] = st; return true;
+          });
+          // کارخانه‌ها با قاعده‌ی جدید (تولید ثابت، تعداد کمتر)
+          c.factories = SG.Military.generateFactories(c);
+          merge(c.mil.progress);
+          c.mil.lines.missile = !!(c.mil.lines.ballistic || c.mil.lines.cruise || c.mil.lines.missile);
+          delete c.mil.lines.ballistic; delete c.mil.lines.cruise;
+          c.mil.lines.icbm = !!c.factories.icbm;
+          for (const t of Object.keys(c.factories)) if (!c.factories[t]) c.mil.lines[t] = false; else if (c.mil.lines[t] === undefined) c.mil.lines[t] = true;
+          c.mil.construction = c.mil.construction.map(f => (f.type === 'ballistic' || f.type === 'cruise' ? { ...f, type: 'missile' } : f));
+          (c.mil.orders || []).forEach(o => { if (o.type === 'ballistic' || o.type === 'cruise') o.type = 'missile'; });
+          c.mil.orders ||= []; c.mil.deals ||= {};
+          SG.Military.syncForces(c);
+        } else {
+          // کارخانه‌های هوش مصنوعی با قاعده‌ی جدید (تعداد کمتر، تولید ثابت)
+          c.factories = SG.Military.generateFactories(c);
+        }
+        if (c.eco) c.eco.occ = null;
       }
-      state.control ||= {};
-      state.reparations ||= [];
+      delete state.control; delete state.reparations;
+      state.territory ||= [];
       state.truces ||= {};
-      const p = state.playerId && state.countries[state.playerId];
-      if (p && p.mil) { p.mil.orders ||= []; p.mil.deals ||= {}; }
-      SG.War.initScenario(state);
-      state.version = 5;
+      state.wars = state.wars.filter(([a, b]) => !state.countries[a]?.annexedBy && !state.countries[b]?.annexedBy);
+      // فقط جنگ‌های سناریو دوباره ساخته می‌شوند؛ جنگ بازیکن (اگر بود) تمام‌شده حساب می‌شود
+      const pid = state.playerId;
+      state.wars = state.wars.filter(([a, b]) => a !== pid && b !== pid);
+      SG.War.initScenario(state, window.SG_DATA.scenario);
+      state.version = 6;
     }
     return state;
   }

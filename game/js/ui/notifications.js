@@ -12,7 +12,7 @@
   const D = () => window.SG_DATA;
 
   const MONEY_KEYS = ['amount', 'deficit', 'treasury', 'monthly'];
-  const PCT_KEYS = ['inflation', 'growth', 'pct', 'debtPct', 'rate'];
+  const PCT_KEYS = ['inflation', 'growth', 'pct', 'debtPct', 'rate', 'gain'];
   const COUNTRY_KEYS = ['country', 'other', 'a', 'b'];
 
   let opts = null;          // { getState, onAction(actionId, notification), onFocus(countryId), onCritical() }
@@ -66,14 +66,15 @@
     const def = D().messages[n.type];
     if (!def || !def.actions || n.acted) return [];
     // دکمه‌ها فقط برای اعلان‌های تازه (اعلان‌های قدیمی ممکن است دیگر معنی نداشته باشند)
-    if (n.turn < state.turn - 1 && n.type !== 'game_over_collapse') return [];
+    if (n.turn < state.turn - 1 && !n.type.startsWith('game_over')) return [];
     // پیشنهاد صلح: فقط شرط‌هایی که طرف مقابل می‌پذیرد
     if (n.data && n.data.allowed) return def.actions.filter(a => !a.id.startsWith('peace:') || n.data.allowed.includes(a.id));
     return def.actions;
   }
 
   function actionButtons(n) {
-    return actionsOf(n).map(a => `<button class="btn ${a.id === 'dismiss' ? 'ghost' : ''}" data-act="${a.id}" data-nid="${n.id}">${F.esc(a.label)}</button>`).join('');
+    const state = opts.getState();
+    return actionsOf(n).map(a => `<button class="btn ${a.id === 'dismiss' ? 'ghost' : ''}" data-act="${a.id}" data-nid="${n.id}">${fill(F.esc(a.label), n.data || {}, state)}</button>`).join('');
   }
 
   function findById(id) {

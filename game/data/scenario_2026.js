@@ -639,6 +639,9 @@ SG_DATA.scenario = {
    "UKR"
   ]
  ],
+ "warFronts": {
+  "RUS>UKR": 18
+ },
  "sanctions": [
   [
    "USA",

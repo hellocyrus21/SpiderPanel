@@ -74,6 +74,7 @@
     worldNews(state, rng, before);
 
     // ---------- ۵) فروپاشی ----------
+    if (state.gameOver) { state.rngState = rng.getState(); return state.notifications.filter(n => n.id >= firstNew); }
     if (player.stability <= 5) state.collapseCounter = (state.collapseCounter || 0) + 1;
     else state.collapseCounter = 0;
     if (state.collapseCounter >= 3) {
@@ -267,70 +268,64 @@
   }
 
   // -------------------------------------------------------------------
+  // اعلان‌های جنگ (engine/war.js رویداد می‌دهد؛ متن در data/messages.js)
   function warNotifications(state, events) {
     const pid = state.playerId;
     const c = state.countries[pid];
     const chief = c.mil.chief;
     const W = SG.War;
-    const defs = window.SG_DATA.units;
-    const listText = units => Object.entries(units).map(([k, n]) => `${n.toLocaleString('fa-IR')} ${defs[k].unitWord} ${defs[k].short}`).join('، ');
+    const pctOf = v => Math.round(v * 1000) / 10;
     for (const ev of events) {
-      if (ev.type === 'battle') {
-        const r = ev.report;
-        const weAtt = r.att.owners.includes(pid);
-        const ours = weAtt ? r.att : r.def, theirs = weAtt ? r.def : r.att;
-        const won = (r.result === 'att') === weAtt;
-        // فهرست تلفات: «۱.۲ لشکر پیاده، ۴۰ قبضه توپ»
-        const lossOf = side => {
-          const list = {};
-          for (const [k, [, l]] of Object.entries({ ...side.units, ...side.support })) {
-            const v = defs[k].counted === 'unit' ? Math.round(l * 10) / 10 : Math.round(l);
-            if (v > 0 && !['ballistic', 'cruise', 'drone'].includes(k)) list[k] = v;
-          }
-          return Object.keys(list).length ? listText(list) : '—';
-        };
-        if (ev.fresh && !r.fell) {
-          N.add(state, { type: weAtt ? 'battle_started' : 'battle_defending', level: 'warning', category: 'military', speaker: 'commander',
-            focus: r.country, groupKey: r.city, data: { commander: chief, city: r.cityName, country: theirs.owners[0], rid: r.id, war: r.war } });
+      const war = W.warById(state, ev.war);
+      if (ev.type === 'front' && war) {
+        const r = ev.report, side = W.sideOf(war, pid), es = side === 'A' ? 'B' : 'A';
+        const enemy = war.leaders[es];
+        const air = r.air[side] || {};
+        // گزارش ماهانه‌ی جبهه
+        if (r.advance && r.advance.side === side) {
+          N.add(state, { type: 'front_advance', level: 'info', category: 'military', speaker: 'commander', focus: enemy, groupKey: war.id,
+            data: { commander: chief, country: enemy, gain: pctOf(r.advance.pct), pct: pctOf(W.occupied(war, es)), rid: r.id, war: war.id } });
+        } else if (r.advance && r.advance.side === es) {
+          N.add(state, { type: 'front_lost', level: 'warning', category: 'military', speaker: 'commander', focus: pid, groupKey: war.id,
+            data: { commander: chief, country: enemy, gain: pctOf(r.advance.pct), pct: pctOf(W.occupied(war, side)), rid: r.id, war: war.id } });
+        } else if (r.liberated) {
+          N.add(state, { type: r.liberated.side === side ? 'front_liberated' : 'front_pushed', level: 'info', category: 'military', speaker: 'commander', focus: enemy, groupKey: war.id,
+            data: { commander: chief, country: enemy, gain: pctOf(r.liberated.pct), rid: r.id, war: war.id } });
+        } else if (r.ground) {
+          N.add(state, { type: 'front_stalemate', level: 'info', category: 'military', speaker: 'commander', focus: enemy, groupKey: war.id,
+            data: { commander: chief, country: enemy, rid: r.id, war: war.id } });
         }
-        if (!r.fell) {
-          N.add(state, { type: won ? 'battle_won' : 'battle_lost', level: 'info', category: 'military', speaker: 'commander', focus: r.country,
-            groupKey: r.city, data: { commander: chief, city: r.cityName, ratio: Math.round((weAtt ? r.ratio : 1 / Math.max(r.ratio, 1e-6)) * 10) / 10,
-              ours: lossOf(ours), theirs: lossOf(theirs), rid: r.id, war: r.war, cityId: r.city } });
-          // در حال باختن در حمله ← پیشنهاد عقب‌نشینی
-          if (weAtt && r.ratio < 0.7 && N.cooldownOk(state, 'losing_' + r.city, 3)) {
-            N.add(state, { type: 'battle_losing', level: 'warning', category: 'military', speaker: 'commander', focus: r.country,
-              data: { commander: chief, city: r.cityName, cityId: r.city, rid: r.id, war: r.war } });
-          }
+        if (air.active) {
+          N.add(state, { type: 'air_report', level: 'info', category: 'military', speaker: 'commander', focus: enemy, groupKey: war.id,
+            data: { commander: chief, country: enemy, ad: Math.round(air.adKilled * 10) / 10, left: Math.round(air.enemyAdAfter), rid: r.id, war: war.id } });
         }
-        // مهمات: تدارکات دسته‌های درگیر ما
-        for (const s of c.mil.stacks) {
-          if (!s.inBattle || s.supply >= 40) continue;
-          if (N.cooldownOk(state, 'ammo_' + s.id, 4)) {
-            N.add(state, { type: 'ammo_low', level: 'warning', category: 'military', speaker: 'commander', focus: r.country,
-              data: { commander: chief, city: r.cityName, turns: Math.max(1, Math.ceil((s.supply - 10) / 10)), unit: s.type, stackId: s.id } });
+        // جبهه‌ی خالی: دشمن نیروی زمینی دارد و ما در مرزش نداریم
+        if (war.land && !W.engaged(state, war, pid, 'ground').some(e => e.w === 1) && r.ground && r.ground[es].owners.length && N.cooldownOk(state, 'front_empty_' + war.id, 3)) {
+          N.add(state, { type: 'front_empty', level: 'warning', category: 'military', speaker: 'commander', focus: enemy, data: { commander: chief, country: enemy } });
+        }
+        for (const st of c.mil.stacks) {
+          if (!st.inBattle || st.supply >= 40) continue;
+          if (N.cooldownOk(state, 'ammo_' + st.id, 4)) {
+            N.add(state, { type: 'ammo_low', level: 'warning', category: 'military', speaker: 'commander', focus: enemy,
+              data: { commander: chief, country: enemy, turns: Math.max(1, Math.ceil((st.supply - 10) / 10)), unit: st.type, stackId: st.id } });
           }
         }
-      } else if (ev.type === 'captured') {
-        const city = W.cityById(state, ev.city);
-        const orig = W.origOf(ev.city);
-        if (!ev.playerWar) {
-          // جنگ‌های دیگران: خبر
-          N.add(state, { type: 'world_city_captured', level: 'info', category: 'world', speaker: 'news', focus: orig, groupKey: 'wcc',
-            data: { city: city.name, country: ev.by, other: ev.from } });
-        } else if (ev.by === pid) {
-          N.add(state, { type: ev.liberated ? 'city_liberated' : 'city_captured', level: 'warning', category: 'military', speaker: 'commander', focus: orig,
-            data: { commander: chief, city: city.name, country: orig, rid: ev.report, war: ev.war, cityId: ev.city } });
-        } else if (ev.from === pid) {
-          N.add(state, { type: 'city_lost', level: 'critical', category: 'military', speaker: 'commander', focus: orig,
-            data: { commander: chief, city: city.name, country: ev.by, rid: ev.report, war: ev.war, cityId: ev.city } });
-        } else {
-          // متحد یا دشمن دیگرِ همین جنگ
-          N.add(state, { type: 'war_city_changed', level: 'info', category: 'military', speaker: 'intel', focus: orig,
-            data: { city: city.name, country: ev.by, other: ev.from } });
-        }
+      } else if (ev.type === 'ad_alarm' && war && W.sideOf(war, pid)) {
+        const ours = war.leaders[ev.side] === pid || war.sides[ev.side].includes(pid);
+        const country = war.leaders[ev.side];
+        N.add(state, { type: (ours ? 'our_ad_' : 'ad_') + (ev.level === 100 ? 'gone' : 'half'), level: ours ? 'critical' : 'warning', category: 'military', speaker: 'commander',
+          focus: country, data: { commander: chief, country, left: ev.left, start: ev.start, war: war.id } });
+      } else if ((ev.type === 'capital' || ev.type === 'capital_back') && war) {
+        const ours = ev.country === pid;
+        const type = ev.type === 'capital' ? (ours ? 'capital_lost' : 'capital_captured') : (ours ? 'capital_retaken' : 'capital_freed');
+        N.add(state, { type, level: ours || ev.type === 'capital' ? 'critical' : 'warning', category: 'military', speaker: 'commander', focus: ev.country,
+          data: { commander: chief, country: ev.country, other: ev.by, city: state.countries[ev.country].capital || state.countries[ev.country].cities[0].name, war: war.id } });
       } else if (ev.type === 'weariness') {
         N.add(state, { type: 'war_weariness', level: 'warning', category: 'domestic', speaker: 'interior', data: { pct: ev.level } });
+      } else if (ev.type === 'world_front') {
+        if (N.cooldownOk(state, 'wfront_' + ev.war, 4)) {
+          N.add(state, { type: 'world_front', level: 'info', category: 'world', speaker: 'news', focus: ev.target, data: { a: ev.attacker, b: ev.target, pct: ev.pct } });
+        }
       }
     }
   }

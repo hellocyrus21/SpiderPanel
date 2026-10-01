@@ -338,6 +338,8 @@ export const RELATIONS = {
 
 // جنگ‌های در جریان در شروع ۲۰۲۶ (برای مراحل بعدی سیستم نبرد)
 export const WARS = [['RUS', 'UKR']];
+// درصد خاکی که در شروع ۲۰۲۶ در جنگ‌های جاری اشغال شده: 'مهاجم>مدافع': درصد
+export const WAR_FRONTS = { 'RUS>UKR': 18 };
 
 // تحریم‌های اولیه: [تحریم‌کننده, هدف]
 const WESTERN = ['USA', 'GBR', 'CAN', 'AUS', 'JPN', 'FRA', 'DEU', 'ITA', 'NLD', 'BEL', 'ESP', 'POL',
