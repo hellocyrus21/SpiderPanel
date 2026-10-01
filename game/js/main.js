@@ -134,7 +134,7 @@
     } else {
       const p = s.countries[s.playerId];
       bar.innerHTML = `
-        <button class="player-tag" data-top="me" title="نمایش کشور من">${F.esc(p.name)}</button>
+        <button class="player-tag" data-top="me" title="نمایش کشور من">${SG.Leader.avatar(s.playerId, 26)} ${F.esc(p.name)}</button>
         <div class="date">${F.date(s.date)}</div>
         <div class="spacer"></div>
         <button class="btn icon bell" data-top="inbox" title="صندوق اعلان‌ها">🔔<span class="count hidden"></span></button>
@@ -160,7 +160,7 @@
   // -------------------------------------------------------------------
   function openPanel(name, sub) {
     if (name === 'government') SG.Government.open(app.state, app.state.playerId, onPolicyChange);
-    else if (name === 'military') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowArmy: showArmy }, sub);
+    else if (name === 'military') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowStack: showStack }, sub);
     else if (name === 'advisor') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true));
   }
 
@@ -171,39 +171,57 @@
 
   function onMilitaryChange() {
     renderHud();
-    renderArmies();
+    renderForces();
     SG.Save.save(app.state);
   }
 
   // -------------------------------------------------------------------
-  // ارتش‌ها روی نقشه
+  // نیروها و شهرها روی نقشه
   // -------------------------------------------------------------------
-  function renderArmies() {
-    if (app.phase !== 'game') { app.map.setArmies([]); return; }
-    const c = app.state.countries[app.state.playerId];
-    const defs = window.SG_DATA.units;
-    const list = (c.mil?.armies || []).map(a => {
-      // آیکون = واحدی که بیشترین سهم قدرت را دارد
-      let best = null, bestP = -1, n = 0;
-      for (const [k, cnt] of Object.entries(a.units)) {
-        n += cnt;
-        if (cnt * defs[k].power > bestP) { bestP = cnt * defs[k].power; best = k; }
-      }
-      return {
-        id: a.id, pos: a.pos, icon: defs[best]?.icon || '🎖️', label: F.num(n),
-        dest: a.move ? a.move.to : null, eta: a.move ? F.num(a.move.left) + ' ماه' : '',
-        supply: a.supply, selected: a.id === app.selectedArmy,
-      };
-    });
-    app.map.setArmies(list);
+  /** عدد کوتاه برای نشان روی نقشه: ۶۰۰۰ ← ۶K */
+  function shortNum(n) {
+    if (n >= 10000) return F.num(Math.round(n / 1000)) + 'K';
+    if (n >= 1000) return F.num(Math.round(n / 100) / 10) + 'K';
+    return F.num(n);
   }
 
-  function showArmy(armyId) {
-    const a = SG.Military.findArmy(app.state, app.state.playerId, armyId);
-    if (!a) return;
-    app.selectedArmy = armyId;
-    renderArmies();
-    app.map.zoomToPoint(a.move ? [(a.pos[0] + a.move.to[0]) / 2, (a.pos[1] + a.move.to[1]) / 2] : a.pos);
+  function renderForces() {
+    if (app.phase !== 'game') { app.map.setForces([], []); return; }
+    const c = app.state.countries[app.state.playerId];
+    const defs = window.SG_DATA.units;
+    const groups = {}, routes = [];
+    const typeOrder = Object.keys(defs);
+    for (const s of c.mil.stacks) {
+      // هر دسته‌ی در حال حرکت گروه خودش را دارد؛ بقیه بر اساس محل گروه می‌شوند
+      const key = s.move ? 'm:' + s.id : (s.loc.kind === 'city' ? s.loc.city : 'b:' + s.loc.target + (s.loc.sea ? 's' : ''));
+      const g = (groups[key] ||= { key, pos: s.pos, stacks: [], moving: !!s.move, eta: s.move ? F.num(s.move.left) + ' ماه' : '' });
+      g.stacks.push({ id: s.id, type: s.type, icon: defs[s.type].icon, label: shortNum(s.count), moving: !!s.move,
+        low: s.supply < 50, selected: s.id === app.selectedStack });
+      if (s.move) routes.push({ id: s.id, from: s.pos, to: s.move.to });
+    }
+    for (const g of Object.values(groups)) g.stacks.sort((a, b) => typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type));
+    app.map.setForces(Object.values(groups), routes);
+  }
+
+  /** شهرهای همه‌ی کشورها (پایتخت‌ها و شهرهای مهم) */
+  function renderCities() {
+    const list = [];
+    for (const c of Object.values(app.state.countries)) {
+      for (const city of c.cities || []) {
+        // کشورهای بدون فهرست شهر: فقط پایتخت با نام کشور
+        if (city.name === 'پایتخت') continue;
+        list.push({ id: city.id, name: city.name, pos: city.pos, capital: city.capital, own: c.id === app.state.playerId });
+      }
+    }
+    app.map.setCities(list);
+  }
+
+  function showStack(stackId) {
+    const s = SG.Military.findStack(app.state, app.state.playerId, stackId);
+    if (!s) return;
+    app.selectedStack = stackId;
+    renderForces();
+    app.map.zoomToPoint(s.move ? [(s.pos[0] + s.move.to[0]) / 2, (s.pos[1] + s.move.to[1]) / 2] : s.pos, 5);
   }
 
   document.addEventListener('click', e => {
@@ -233,7 +251,7 @@
     renderTopbar();
     renderHud();
     if (app.mapMode !== 'political' && app.mapMode !== 'alliances') app.map.refresh();
-    renderArmies();
+    renderForces();
     SG.MilitaryPanel.refresh();
     if (app.selected && app.panel.isOpen()) app.panel.show(app.state, app.selected, 'game', { keepScroll: true });
     SG.Government.refresh();
@@ -264,8 +282,7 @@
   // -------------------------------------------------------------------
   function onNotificationAction(act, n) {
     if (act === 'newgame') { newGame(); return; }
-    if (act === 'open:army') { openPanel('military', 'army:' + n.data.armyId); return; }
-    if (act === 'show:army') { showArmy(n.data.armyId); return; }
+    if (act === 'show:stack') { showStack(n.data.stackId); return; }
     if (act.startsWith('open:')) { openPanel(act.slice(5)); return; }
     if (act.startsWith('decree:')) {
       const r = SG.Government.runDecree(app.state, app.state.playerId, act.slice(7));
@@ -347,7 +364,7 @@
     app.map.setPlayer(app.state.playerId);
     app.map.refresh();
     document.body.classList.add('in-game');
-    renderTopbar(); renderLegend(); renderMapModes(); renderHud(); renderArmies();
+    renderTopbar(); renderLegend(); renderMapModes(); renderHud(); renderForces(); renderCities();
   }
 
   function startGame(id) {
@@ -391,7 +408,7 @@
       onSelect: id => select(id),
       fillFor,
       nameFor: id => app.state.countries[id]?.name || id,
-      onArmyClick: id => { app.selectedArmy = id; renderArmies(); openPanel('military', 'army:' + id); },
+      onStackClick: id => { app.selectedStack = id; renderForces(); openPanel('military', 'stack:' + id); },
       getOcclusion: () => {
         const el = document.getElementById('info-panel');
         if (!el.classList.contains('open')) return { right: 0, bottom: 0 };
@@ -431,6 +448,7 @@
       }
     });
 
+    renderCities();
     app.start.render(app.state, saved);
     renderTopbar();
     renderLegend();

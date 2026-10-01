@@ -70,7 +70,9 @@
     const energyImport = surplus < 0 ? -surplus * price * IMPORT_SHARE : 0;
 
     // بازیکن: هزینه‌ی نظامی = نگهداری واحدهای واقعی. بقیه: سهم ثابت از GDP
-    const military = c.mil && c.mil.useUnits ? SG.Military.upkeepMonthly(c) * 12 : c.gdp * p.military;
+    const units = c.mil && c.mil.useUnits;
+    const military = units ? SG.Military.upkeepMonthly(c) * 12 : c.gdp * p.military;
+    const production = units ? SG.Military.productionCostMonthly(state, c) * 12 : 0;   // خطوط تولید نظامی
     const welfare = c.gdp * p.welfare;
     const investment = c.gdp * p.investment;
     const admin = c.gdp * (ADMIN + modSum(c, 'expense'));
@@ -78,10 +80,10 @@
     const interest = e.debt * rate;
 
     const revenue = tax + energyExport + e.aid;
-    const expenses = military + welfare + investment + admin + interest + energyImport;
+    const expenses = military + production + welfare + investment + admin + interest + energyImport;
     return {
       eff, tax, energyExport, aid: e.aid, revenue,
-      military, welfare, investment, admin, interest, energyImport, expenses,
+      military, production, welfare, investment, admin, interest, energyImport, expenses,
       net: revenue - expenses, monthly: (revenue - expenses) / 12,
       rate, pressure, surplus, milFuel,
     };

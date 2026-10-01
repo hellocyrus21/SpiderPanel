@@ -47,7 +47,7 @@
     w.gdp = Object.values(state.countries).reduce((s, c) => s + c.gdp, 0);
 
     // ---------- ۲ب) ارتش بازیکن: تولید، حرکت، تدارکات ----------
-    const milEvents = SG.Military.step(state, pid, rng);
+    const milEvents = SG.Military.step(state, pid);
 
     // تاریخچه‌ی بازیکن (برای گزارش و نمودار)
     player.eco.history.push({ turn: state.turn, gdp: Math.round(player.gdp), treasury: Math.round(player.eco.treasury), stability: Math.round(player.stability) });
@@ -150,38 +150,51 @@
   function militaryNotifications(state, events) {
     const pid = state.playerId;
     const c = state.countries[pid];
+    const chief = c.mil.chief;
+    const defs = window.SG_DATA.units;
+    const listText = units => Object.entries(units).map(([k, n]) => `${n.toLocaleString('fa-IR')} ${defs[k].unitWord} ${defs[k].short}`).join('، ');
     for (const ev of events) {
-      if (ev.type === 'built') {
-        N.add(state, { type: 'unit_built', level: 'info', category: 'military', speaker: 'commander',
-          data: { unit: ev.unit, qty: ev.qty } });
+      if (ev.type === 'delivered') {
+        N.add(state, { type: 'units_delivered', level: 'info', category: 'military', speaker: 'commander',
+          data: { commander: chief, list: listText(ev.units) } });
+      } else if (ev.type === 'factory_done') {
+        N.add(state, { type: 'factory_done', level: 'warning', category: 'military', speaker: 'commander',
+          data: { commander: chief, unit: ev.unit, factories: ev.count } });
       } else if (ev.type === 'arrived') {
-        const a = SG.Military.findArmy(state, pid, ev.army);
-        if (!a) continue;
-        if (ev.kind === 'home') {
-          N.add(state, { type: 'army_home', level: 'info', category: 'military', speaker: 'commander', focus: pid,
-            data: { army: a.name, commander: a.commander.name, armyId: a.id } });
-          continue;
+        const borders = ev.list.filter(a => a.dest.kind === 'border');
+        const cities = ev.list.filter(a => a.dest.kind === 'city');
+        // رسیدن به مرز: یک اعلان برای هر مرز
+        const byTarget = {};
+        for (const a of borders) (byTarget[a.dest.target] ||= []).push(a);
+        for (const [target, list] of Object.entries(byTarget)) {
+          const units = {};
+          for (const a of list) units[a.type] = (units[a.type] || 0) + a.count;
+          N.add(state, { type: 'forces_at_border', level: 'warning', category: 'military', speaker: 'commander', focus: target,
+            groupKey: target, data: { commander: chief, country: target, list: listText(units), stackId: list[0].stackId } });
+          // تجمع نیرو در مرز، همسایه را نگران می‌کند
+          const k = SG.Engine.relKey(pid, target);
+          state.relations[k] = Math.max(-100, (state.relations[k] ?? 0) - 4);
+          if (N.cooldownOk(state, 'massing_' + target, 4)) {
+            N.add(state, { type: 'border_tension', level: 'info', category: 'diplomacy', speaker: 'foreign', focus: target, data: { country: target } });
+          }
         }
-        N.add(state, { type: 'army_arrived', level: 'warning', category: 'military', speaker: 'commander', focus: ev.target,
-          data: { army: a.name, commander: a.commander.name, country: ev.target, armyId: a.id } });
-        // تجمع نیرو در مرز، همسایه را نگران می‌کند
-        const k = SG.Engine.relKey(pid, ev.target);
-        state.relations[k] = Math.max(-100, (state.relations[k] ?? 0) - 4);
-        if (N.cooldownOk(state, 'massing_' + ev.target, 4)) {
-          N.add(state, { type: 'border_tension', level: 'info', category: 'diplomacy', speaker: 'foreign', focus: ev.target,
-            data: { country: ev.target } });
+        if (cities.length) {
+          const units = {};
+          for (const a of cities) units[a.type] = (units[a.type] || 0) + a.count;
+          N.add(state, { type: 'forces_relocated', level: 'info', category: 'military', speaker: 'commander',
+            data: { commander: chief, list: listText(units) } });
         }
       } else if (ev.type === 'supply_low') {
-        const a = SG.Military.findArmy(state, pid, ev.army);
-        if (a) N.add(state, { type: 'army_supply_low', level: 'warning', category: 'military', speaker: 'commander',
-          data: { army: a.name, commander: a.commander.name, supply: a.supply, armyId: a.id } });
+        if (N.cooldownOk(state, 'supply_low', 3)) {
+          N.add(state, { type: 'supply_low', level: 'warning', category: 'military', speaker: 'commander',
+            data: { commander: chief, unit: ev.unit, stackId: ev.stack } });
+        }
       }
     }
     // هزینه‌ی سنگین ارتش
-    const share = SG.Military.upkeepMonthly(c) * 12 / c.gdp;
+    const share = (SG.Military.upkeepMonthly(c) + SG.Military.productionCostMonthly(state, c)) * 12 / c.gdp;
     if (share > 0.08 && N.cooldownOk(state, 'mil_costly', 6)) {
-      N.add(state, { type: 'military_costly', level: 'warning', category: 'economy', speaker: 'economy',
-        data: { pct: share * 100 } });
+      N.add(state, { type: 'military_costly', level: 'warning', category: 'economy', speaker: 'economy', data: { pct: share * 100 } });
     }
   }
 

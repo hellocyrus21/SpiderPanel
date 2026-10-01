@@ -118,6 +118,16 @@ function estimateMilitary(gdp, pop, pct) {
   };
 }
 
+/** شهرهای یک کشور: [{ id, name, pos, capital, tags }] — اولی همیشه پایتخت است */
+function buildCities(id, home, capitalName) {
+  const list = S.CITIES[id];
+  if (!list) return [{ id: id + '-0', name: capitalName || 'پایتخت', pos: home, capital: true, tags: [] }];
+  return list.map(([name, lon, lat, tags], i) => ({
+    id: id + '-' + i, name, pos: i === 0 ? home : [lon, lat], capital: i === 0,
+    tags: tags ? tags.split(' ') : [],
+  }));
+}
+
 const countries = {};
 for (const [id, [gdp, pop, pct, gov, stab]] of Object.entries(S.BASE)) {
   const d = S.DETAILED[id];
@@ -149,6 +159,7 @@ for (const [id, [gdp, pop, pct, gov, stab]] of Object.entries(S.BASE)) {
     energy: { production, consumption },
     terrain: d?.terrain || 'plain',
     pos: homePos[id] || [0, 0],                // [طول, عرض] محل پایتخت/مرکز
+    cities: buildCities(id, homePos[id] || [0, 0], d?.capital),
     borderPos: borderPos[id] || {},            // نقطه‌ی مرزی با هر همسایه‌ی زمینی
     neighbors: [...(landNeighbors[id] || [])].sort(),
     seaNeighbors: [...(seaNeighbors[id] || [])].filter(x => !landNeighbors[id]?.has(x)).sort(),
@@ -167,6 +178,7 @@ S.SANCTIONS.flat().forEach(m => check(m, 'SANCTIONS'));
 S.SEA_NEIGHBORS.flat().forEach(m => check(m, 'SEA_NEIGHBORS'));
 Object.keys(S.MACRO).forEach(m => check(m, 'MACRO'));
 Object.keys(S.CAPITAL_POS).forEach(m => check(m, 'CAPITAL_POS'));
+Object.keys(S.CITIES).forEach(m => { check(m, 'CITIES'); if (!S.CAPITAL_POS[m]) warnings.push('city list without capital pos: ' + m); });
 
 // ---------- ۴) نوشتن فایل‌ها ----------
 // داده‌ها به‌صورت فایل .js (نه .json) نوشته می‌شوند تا بازی با دابل‌کلیک روی

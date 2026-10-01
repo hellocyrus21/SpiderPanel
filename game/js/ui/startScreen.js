@@ -56,6 +56,7 @@
             <span class="cc-name">${F.esc(c.name)}</span>
             <span class="stars" title="سختی">${'★'.repeat(c.difficulty)}${'☆'.repeat(5 - c.difficulty)}</span>
           </div>
+          ${SG.Leader.card(c.id, 36)}
           <div class="cc-stats">
             <span>اقتصاد: <b>${F.money(c.gdp)}</b></span>
             <span>قدرت نظامی: <b>رتبه ${F.num(E.rankOf(state, c.id, E.militaryPower))}</b></span>

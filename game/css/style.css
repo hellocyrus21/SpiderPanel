@@ -450,18 +450,66 @@ body.in-game #actionbar {
 .dest:hover:not(:disabled) { border-color: var(--gold); }
 .dest.off { opacity: .45; }
 
-/* ارتش روی نقشه */
-.army-routes line { stroke: var(--gold); stroke-width: 2; stroke-dasharray: 6 5; vector-effect: non-scaling-stroke;
+/* شهرها روی نقشه */
+.city text { text-anchor: middle; dominant-baseline: middle; pointer-events: none; font-family: 'Vazirmatn', Tahoma, sans-serif;
+  paint-order: stroke; stroke: #0b0f14; stroke-width: 3px; stroke-linejoin: round; }
+.city .c-mark { font-size: 8px; fill: #e6e9ee; }
+.city.capital .c-mark { font-size: 12px; fill: var(--gold); }
+.city .c-name { font-size: 10px; fill: #e6e9ee; display: none; }
+.city.named .c-name { display: block; }
+.city.own .c-mark { fill: var(--gold); }
+
+/* نیروها روی نقشه */
+.force-routes line { stroke: var(--gold); stroke-width: 2; stroke-dasharray: 6 5; vector-effect: non-scaling-stroke;
   animation: march 1s linear infinite; pointer-events: none; }
 @keyframes march { to { stroke-dashoffset: -11; } }
-.army rect { fill: #1a212bf0; stroke: var(--gold); stroke-width: 1.5; }
-.army.selected rect { stroke: #fff; stroke-width: 2.5; }
-.army.low rect { stroke: var(--bad); }
-.army text { text-anchor: middle; dominant-baseline: middle; font-family: 'Vazirmatn', Tahoma, sans-serif; pointer-events: none; }
-.army .a-icon { font-size: 13px; }
-.army .a-num { font-size: 12px; fill: #fff; font-weight: 700; }
-.army .a-eta { font-size: 11px; fill: var(--gold); paint-order: stroke; stroke: #0b0f14; stroke-width: 3px; }
-.army.moving rect { stroke-dasharray: 4 3; }
+.forces text { text-anchor: middle; dominant-baseline: middle; font-family: 'Vazirmatn', Tahoma, sans-serif; pointer-events: none; }
+.chip { cursor: pointer; }
+.chip rect { fill: #1a212bf0; stroke: var(--gold); stroke-width: 1.2; }
+.chip:hover rect { fill: #2a3442; }
+.chip.selected rect { stroke: #fff; stroke-width: 2.2; }
+.chip.low rect { stroke: var(--bad); }
+.chip.moving rect { stroke-dasharray: 3 2; }
+.chip .ch-icon { font-size: 11px; }
+.chip .ch-num { font-size: 10.5px; fill: #fff; font-weight: 700; }
+.fcompact { cursor: pointer; }
+.fcompact rect { fill: #1a212bf0; stroke: var(--gold); stroke-width: 1.2; }
+.fcompact.moving rect { stroke-dasharray: 3 2; }
+.fcompact text { font-size: 11px; fill: #fff; }
+.forces .eta { font-size: 11px; fill: var(--gold); paint-order: stroke; stroke: #0b0f14; stroke-width: 3px; }
+
+/* پنل ارتش */
+.totals { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
+.total-chip { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 1px 7px; font-size: 12px; }
+.loc-group { margin-top: 8px; }
+.stack-list { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.stack-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px; text-align: right;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 9px; }
+.stack-row:hover { border-color: var(--gold); }
+.stack-row small { width: 100%; }
+.fac-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fac-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+.fac-card.off { opacity: .55; }
+.fac-line { display: flex; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+.fac-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 2px; }
+.stack-head { display: flex; gap: 12px; align-items: flex-start; }
+.sh-icon { font-size: 36px; line-height: 1; }
+.stack-head > div:last-child { flex: 1; }
+.send-count { display: flex; align-items: center; gap: 8px; }
+.send-count input { flex: 1; accent-color: var(--gold); direction: ltr; }
+.send-quick { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.send-val { color: var(--gold); font-size: 16px; margin-left: auto; }
+
+/* رهبر */
+.leader { display: flex; align-items: center; gap: 9px; margin: 6px 0; }
+.leader > div { display: flex; flex-direction: column; line-height: 1.35; }
+.leader small { color: var(--muted); font-size: 12px; }
+.avatar { position: relative; display: inline-grid; place-items: center; border-radius: 50%; overflow: hidden; flex: none;
+  background: hsl(var(--hue) 35% 32%); border: 2px solid var(--gold); vertical-align: middle; }
+.avatar b { color: #fff; font-weight: 700; }
+.avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.player-tag { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 4px; }
+.player-tag .avatar { border-width: 1px; }
 
 /* ---------- ادامه‌ی بازی ---------- */
 .continue-card {
@@ -520,6 +568,8 @@ body.in-game #actionbar {
   .b-cols { grid-template-columns: 1fr; gap: 6px; }
   .gov-decrees { grid-template-columns: 1fr; }
   .dests { grid-template-columns: 1fr; }
+  .fac-grid { grid-template-columns: 1fr; }
+  .stack-list { grid-template-columns: 1fr; }
   .unit-grid { grid-template-columns: 1fr; }
   .q-item { grid-template-columns: 1fr 70px auto auto; }
   .btn.icon { padding: 4px 8px; }

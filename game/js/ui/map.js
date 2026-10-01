@@ -22,7 +22,7 @@
    * @param {(id:string|null)=>string} opts.fillFor  رنگ هر کشور
    * @param {(id:string)=>string} opts.nameFor       نام فارسی کشور
    * @param {()=>{right:number,bottom:number}} [opts.getOcclusion]  چند پیکسل از راست/پایین نقشه زیر پنل پنهان است
-   * @param {(armyId:string)=>void} [opts.onArmyClick]  کلیک روی نشان ارتش
+   * @param {(stackId:string)=>void} [opts.onStackClick]  کلیک روی نشان یک نوع نیرو
    */
   function create(container, topo, opts) {
     const obj = topo.objects.countries;
@@ -93,40 +93,82 @@
       .attr('y', d => d.centroid[1])
       .text(d => opts.nameFor(d.id));
 
-    // --- لایه‌ی ارتش‌ها (روی همه چیز) ---
-    // هر ارتش: خط‌چین مسیر حرکت + نشان (آیکون و تعداد واحد) با اندازه‌ی ثابت روی صفحه
-    const routeLayer = root.append('g').attr('class', 'army-routes');
-    const armyLayer = root.append('g').attr('class', 'armies');
-    let armyData = [];
-
-    function setArmies(list) {
-      armyData = list.map(a => {
-        const [x, y] = projection(a.pos);
-        const dest = a.dest ? projection(a.dest) : null;
-        return { ...a, x, y, dx: dest && dest[0], dy: dest && dest[1] };
-      });
-      routeLayer.selectAll('line').data(armyData.filter(a => a.dest), d => d.id).join('line')
-        .attr('x1', d => d.x).attr('y1', d => d.y).attr('x2', d => d.dx).attr('y2', d => d.dy);
-      const g = armyLayer.selectAll('g.army').data(armyData, d => d.id).join(enter => {
-        const e = enter.append('g').attr('class', 'army').style('cursor', 'pointer')
-          .on('click', (event, d) => { event.stopPropagation(); if (opts.onArmyClick) opts.onArmyClick(d.id); });
-        e.append('rect').attr('x', -21).attr('y', -12).attr('width', 42).attr('height', 24).attr('rx', 6);
-        e.append('text').attr('class', 'a-icon').attr('x', 9).attr('y', 1);
-        e.append('text').attr('class', 'a-num').attr('x', -9).attr('y', 1);
-        e.append('text').attr('class', 'a-eta').attr('y', -18);
+    // --- لایه‌ی شهرها ---
+    // پایتخت ★ ، شهرهای دیگر نقطه. نام شهرها با زوم بیشتر ظاهر می‌شود.
+    const cityLayer = root.append('g').attr('class', 'cities');
+    let cityData = [];
+    function setCities(list) {
+      cityData = list.map(c => { const [x, y] = projection(c.pos); return { ...c, x, y }; });
+      const g = cityLayer.selectAll('g.city').data(cityData, d => d.id).join(enter => {
+        const e = enter.append('g').attr('class', d => 'city' + (d.capital ? ' capital' : '') + (d.own ? ' own' : ''));
+        e.append('text').attr('class', 'c-mark').text(d => (d.capital ? '★' : '●'));
+        e.append('text').attr('class', 'c-name').attr('y', -9).text(d => d.name);
         return e;
       });
-      g.classed('moving', d => !!d.dest).classed('selected', d => !!d.selected).classed('low', d => d.supply < 50);
-      g.select('.a-icon').text(d => d.icon);
-      g.select('.a-num').text(d => d.label);
-      g.select('.a-eta').text(d => d.eta || '');
-      scaleArmies();
+      updateCities();
+    }
+    function updateCities() {
+      const k = currentK || 1, rel = k / fitScale;
+      cityLayer.selectAll('g.city')
+        .attr('transform', d => `translate(${d.x},${d.y}) scale(${1 / k})`)
+        .attr('display', d => (rel >= (d.capital ? 1.6 : d.own ? 2 : 4) ? null : 'none'))
+        .classed('named', d => rel >= (d.capital ? 2.5 : 4));
     }
 
-    function scaleArmies() {
-      const k = currentK || 1;
-      armyLayer.selectAll('g.army').attr('transform', d => `translate(${d.x},${d.y}) scale(${1 / k})`);
+    // --- لایه‌ی نیروها ---
+    // هر محل (شهر یا مرز) یک گروه است؛ داخلش برای هر نوع واحد یک نشان (آیکون + تعداد).
+    // با زوم کم، گروه جمع می‌شود و فقط یک نشان «🎖️ تعداد نوع» دارد.
+    const routeLayer = root.append('g').attr('class', 'force-routes');
+    const forceLayer = root.append('g').attr('class', 'forces');
+    let groupData = [];
+    const CHIP_W = 46, CHIP_H = 20, COLS = 4;
+
+    function setForces(groups, routes) {
+      groupData = groups.map(g => { const [x, y] = projection(g.pos); return { ...g, x, y }; });
+      routeLayer.selectAll('line').data(routes.map(r => {
+        const [x1, y1] = projection(r.from), [x2, y2] = projection(r.to);
+        return { ...r, x1, y1, x2, y2 };
+      }), d => d.id).join('line')
+        .attr('x1', d => d.x1).attr('y1', d => d.y1).attr('x2', d => d.x2).attr('y2', d => d.y2);
+
+      const groupsSel = forceLayer.selectAll('g.fgroup').data(groupData, d => d.key).join('g').attr('class', 'fgroup');
+      // نشان جمع‌شده (زوم کم)
+      groupsSel.selectAll('g.fcompact').data(d => [d]).join(enter => {
+        const e = enter.append('g').attr('class', 'fcompact')
+          .on('click', (event, d) => { event.stopPropagation(); zoomToPoint(d.pos, 4); });
+        e.append('rect').attr('x', -20).attr('y', 6).attr('width', 40).attr('height', 18).attr('rx', 9);
+        e.append('text').attr('y', 16);
+        return e;
+      }).classed('moving', d => d.moving).select('text').text(d => '🎖️' + d.stacks.length.toLocaleString('fa-IR'));
+      // نشان هر نوع واحد (زوم زیاد)
+      groupsSel.selectAll('g.chip').data(d => d.stacks.map((s, i) => ({ ...s, i, n: d.stacks.length })), s => s.id).join(enter => {
+        const e = enter.append('g').attr('class', 'chip')
+          .on('click', (event, s) => { event.stopPropagation(); if (opts.onStackClick) opts.onStackClick(s.id); });
+        e.append('rect').attr('width', CHIP_W - 2).attr('height', CHIP_H - 2).attr('rx', 5);
+        e.append('text').attr('class', 'ch-icon').attr('x', CHIP_W - 13).attr('y', CHIP_H / 2);
+        e.append('text').attr('class', 'ch-num').attr('x', (CHIP_W - 22) / 2).attr('y', CHIP_H / 2);
+        return e;
+      })
+        .attr('transform', s => {
+          const cols = Math.min(COLS, s.n), row = Math.floor(s.i / COLS), col = s.i % COLS;
+          return `translate(${-cols * CHIP_W / 2 + col * CHIP_W},${8 + row * CHIP_H})`;
+        })
+        .classed('moving', s => s.moving).classed('low', s => s.low).classed('selected', s => s.selected)
+        .call(sel => { sel.select('.ch-icon').text(s => s.icon); sel.select('.ch-num').text(s => s.label); });
+      // برچسب زمان رسیدن
+      groupsSel.selectAll('text.eta').data(d => (d.eta ? [d] : [])).join('text').attr('class', 'eta').attr('y', 2).text(d => d.eta);
+      updateForces();
     }
+
+    function updateForces() {
+      const k = currentK || 1, rel = k / fitScale;
+      const compact = rel < 2.2;
+      forceLayer.selectAll('g.fgroup').attr('transform', d => `translate(${d.x},${d.y}) scale(${1 / k})`);
+      forceLayer.selectAll('g.fcompact').attr('display', compact ? null : 'none');
+      forceLayer.selectAll('g.chip').attr('display', compact ? 'none' : null);
+    }
+
+    function scaleArmies() { updateCities(); updateForces(); }
 
     // --- راهنمای موس (فقط دسکتاپ) ---
     const tooltip = d3.select(container).append('div').attr('class', 'map-tooltip').style('display', 'none');
@@ -253,7 +295,7 @@
     resetView(false);
     updateLabels();
 
-    return { refresh, setSelected, setPlayer, zoomTo, zoomBy, resetView, setArmies, zoomToPoint };
+    return { refresh, setSelected, setPlayer, zoomTo, zoomBy, resetView, setForces, setCities, zoomToPoint };
   }
 
   SG.MapView = { create };

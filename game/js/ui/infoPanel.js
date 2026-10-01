@@ -127,6 +127,7 @@
           ${c.military.nuclear ? '<span class="badge warn">هسته‌ای</span>' : ''}
           ${wars.length ? '<span class="badge danger">در جنگ</span>' : ''}
         </div>
+        ${SG.Leader.card(id, 48)}
         <div class="sub">${F.GOV[c.gov] || ''}${c.capital ? ' | پایتخت: ' + F.esc(c.capital) : ''} | زمین ${F.TERRAIN[c.terrain] || ''}</div>
       </header>`;
 
@@ -197,6 +198,8 @@
           ${Object.keys(F.BRANCH).map(k =>
             `<div class="branch"><span>${F.BRANCH[k]}</span>${bar(m[k])}<b>${F.num(Math.round(m[k]))}</b></div>`).join('')}
         </div>
+        ${c.forces ? `<div class="row-label">نیروها</div><div class="totals">${Object.entries(window.SG_DATA.units)
+          .filter(([k]) => c.forces[k] > 0).map(([k, d]) => `<span class="total-chip" title="${d.name}">${d.icon} ${F.num(c.forces[k])}</span>`).join('') || '<span class="muted">—</span>'}</div>` : ''}
         <div class="muted small">هزینه‌ی نظامی: ${F.num(c.militarySpendPct)}٪ از GDP</div>
       </section>`;
 

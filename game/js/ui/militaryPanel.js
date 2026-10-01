@@ -1,210 +1,169 @@
 // =====================================================================
-// پنل «ارتش»: نیروها، تولید، ارتش‌ها و اعزام
+// پنل «ارتش» و پنجره‌ی «فرستادن نیرو»
 // ---------------------------------------------------------------------
-// سه زبانه:
-//   نیروها  ← همه‌ی واحدها، هزینه، سوخت، قدرت هر شاخه
-//   تولید   ← سفارش ساخت با ظرفیت محدود کارخانه‌ها + صف تولید
-//   ارتش‌ها ← ساختن ارتش از نیروهای ذخیره، انتخاب فرمانده، اعزام روی نقشه
+// پنل ارتش دو زبانه دارد:
+//   نیروها     ← همه‌ی نیروها به تفکیک محل (روی هر ردیف بزنی، پنجره‌ی فرستادن باز می‌شود)
+//   کارخانه‌ها ← هر نوع واحد: چند کارخانه، تولید ماهانه، روشن/خاموش، ساخت کارخانه‌ی جدید
+// پنجره‌ی فرستادن (با زدن روی نشان نیرو روی نقشه هم باز می‌شود):
+//   «۲۸ تیپ زرهی در تهران» ← چندتا؟ ← کجا؟ (شهر خودی، مرز زمینی یا دریایی)
 // =====================================================================
 (function (SG) {
   'use strict';
   const F = SG.Fmt, M = SG.Military;
   const U = () => window.SG_DATA.units;
 
-  let ctx = null;   // { state, id, onChange, onShowArmy }
-  let view = 'forces';                 // forces | production | armies | army:<id>
-  let draft = {};                      // واحدهای انتخاب‌شده برای ارتش جدید
-  let draftCommander = null;
-  let qty = {};                        // تعداد سفارش هر نوع
+  let ctx = null;   // { state, id, onChange, onShowStack }
+  let view = 'forces';
+  let sendCount = 0;
 
   const country = () => ctx.state.countries[ctx.id];
   const num = v => F.num(Math.round(v));
+  const qty = (type, n) => `${F.num(Math.round(n))} ${U()[type].unitWord}`;
+
+  function rateText(r) {
+    if (r >= 1) return F.num(Math.round(r * 10) / 10) + ' در ماه';
+    if (r > 0) return 'هر ' + F.num(Math.round(1 / r)) + ' ماه یکی';
+    return '—';
+  }
 
   // -------------------------------------------------------------------
   function tabs() {
-    const t = [['forces', '🎖️ نیروها'], ['production', '🏭 تولید'], ['armies', '🗺️ ارتش‌ها']];
-    const cur = view.startsWith('army:') ? 'armies' : view;
+    const t = [['forces', '🎖️ نیروها'], ['factories', '🏭 کارخانه‌ها']];
+    const cur = view.startsWith('stack:') ? 'forces' : view;
     return `<div class="seg mil-tabs">${t.map(([k, l]) => `<button class="${cur === k ? 'on' : ''}" data-view="${k}">${l}</button>`).join('')}</div>`;
   }
 
-  function stepper(key, value, max, attr) {
-    return `<span class="stepper">
-      <button data-${attr}="${key}" data-d="-1" ${value <= 0 ? 'disabled' : ''}>−</button>
-      <b>${F.num(value)}</b>
-      <button data-${attr}="${key}" data-d="1" ${value >= max ? 'disabled' : ''}>+</button>
-    </span>`;
-  }
-
   // -------------------------------------------------------------------
-  // زبانه‌ی نیروها
+  // نیروها
   // -------------------------------------------------------------------
   function forcesView() {
-    const c = country();
-    const total = M.totalForces(c);
-    const upkeep = M.upkeepMonthly(c);
-    const rows = Object.entries(U()).map(([k, d]) => {
-      const inArmies = total[k] - c.forces[k];
-      if (!total[k]) return '';
-      return `<tr>
-        <td>${d.icon} ${d.name}</td>
-        <td><b>${F.num(total[k])}</b></td>
-        <td class="muted">${inArmies ? F.num(inArmies) : '—'}</td>
-        <td>${c.forces[k] ? `<button class="btn tiny ghost" data-demob="${k}" title="مرخص کردن یک واحد از ذخیره">مرخص</button>` : ''}</td>
-      </tr>`;
-    }).join('');
-    const branches = M.BRANCHES.map(b => `<div class="branch"><span>${F.BRANCH[b]}</span>
-      <div class="bar"><span style="width:${Math.min(100, c.military[b])}%"></span></div><b>${num(c.military[b])}</b></div>`).join('');
+    const c = country(), st = ctx.state;
+    const upkeep = M.upkeepMonthly(c), prod = M.productionCostMonthly(st, c);
+    // گروه‌بندی بر اساس محل
+    const groups = {};
+    for (const s of c.mil.stacks) {
+      const key = s.move ? 'moving' : (s.loc.kind === 'city' ? s.loc.city : 'b:' + s.loc.target + (s.loc.sea ? 's' : ''));
+      (groups[key] ||= { title: s.move ? '🚚 در حال حرکت' : (s.loc.kind === 'city' ? '🏙️ ' : (s.loc.sea ? '⚓ ' : '🚩 ')) + M.locName(st, s.loc), list: [] }).list.push(s);
+    }
+    const order = Object.keys(groups).sort((a, b) => (a === 'moving') - (b === 'moving') || (a.startsWith('b:')) - (b.startsWith('b:')));
+    const sections = order.map(k => `<div class="loc-group"><div class="row-label">${F.esc(groups[k].title)}</div>
+      <div class="stack-list">${groups[k].list.map(s => `<button class="stack-row" data-stack="${s.id}">
+        <span>${U()[s.type].icon} ${U()[s.type].name}</span><b>${qty(s.type, s.count)}</b>
+        ${s.move ? `<small class="muted">→ ${F.esc(M.locName(st, s.move.dest))} | ${F.num(s.move.left)} ماه</small>` : ''}
+      </button>`).join('')}</div></div>`).join('');
+    const totals = Object.entries(U()).filter(([k]) => c.forces[k] > 0)
+      .map(([k, d]) => `<span class="total-chip">${d.icon} ${F.num(c.forces[k])}</span>`).join('');
     return `
       <div class="gov-kpis">
-        <div class="kpi"><span>قدرت کل</span><b>${num(SG.Engine.militaryPower(c))}</b><small>رتبه ${F.num(SG.Engine.rankOf(ctx.state, ctx.id, SG.Engine.militaryPower))} جهان</small></div>
-        <div class="kpi"><span>نگهداری ماهانه</span><b>${F.money(upkeep)}</b><small>${F.num(Math.round(upkeep * 12 / c.gdp * 1000) / 10)}٪ از GDP</small></div>
-        <div class="kpi"><span>مصرف سوخت ارتش</span><b>${num(M.fuelUse(c))}</b><small>واحد انرژی در سال</small></div>
-        <div class="kpi"><span>کارخانه‌ها</span><b>${F.num(M.factories(c))}</b><small>ساخت هم‌زمان</small></div>
+        <div class="kpi"><span>قدرت کل</span><b>${num(SG.Engine.militaryPower(c))}</b><small>رتبه ${F.num(SG.Engine.rankOf(st, ctx.id, SG.Engine.militaryPower))} جهان</small></div>
+        <div class="kpi"><span>نگهداری ماهانه</span><b>${F.money(upkeep)}</b></div>
+        <div class="kpi"><span>تولید ماهانه</span><b>${F.money(prod)}</b><small>خطوط روشن</small></div>
+        <div class="kpi"><span>سوخت ارتش</span><b>${num(M.fuelUse(c))}</b><small>واحد انرژی در سال</small></div>
       </div>
-      <section class="card"><h3>واحدها</h3>
-        <table class="mil-table"><thead><tr><th>نوع</th><th>کل</th><th>در ارتش‌ها</th><th></th></tr></thead><tbody>${rows}</tbody></table>
-        <p class="muted small">مرخص کردن واحد، هزینه‌ی نگهداری را کم می‌کند ولی پولی برنمی‌گردد.</p>
-      </section>
-      <section class="card"><h3>قدرت شاخه‌ها</h3><div class="branches">${branches}</div></section>`;
+      <div class="totals">${totals}</div>
+      <p class="muted small">روی هر ردیف (یا روی نشان نیرو روی نقشه) بزنید تا تعداد دلخواه را به شهر یا مرز بفرستید.</p>
+      ${sections}`;
   }
 
   // -------------------------------------------------------------------
-  // زبانه‌ی تولید
+  // کارخانه‌ها
   // -------------------------------------------------------------------
-  function productionView() {
-    const c = country();
-    const fac = M.factories(c);
-    const used = c.mil.queue.reduce((s, i) => s + i.qty, 0);
-    const cards = Object.entries(U()).map(([k, d]) => {
-      const t = M.buildTerms(ctx.state, c, k);
-      const q = qty[k] || 1;
-      const weak = Object.entries(d.weakVs).map(([w]) => U()[w].name).join('، ');
-      return `<div class="unit-card ${t.allowed ? '' : 'off'}">
-        <div class="uc-head"><span class="uc-icon">${d.icon}</span><b>${d.name}</b>
-          ${t.sanctioned ? '<span class="badge danger" title="تحریم: گران‌تر و کندتر">تحریم</span>' : ''}</div>
-        <div class="uc-stats">
-          <span title="حمله">⚔️ ${F.num(d.attack)}</span><span title="دفاع">🛡 ${F.num(d.defense)}</span>
-          ${d.range ? `<span title="برد">📏 ${d.range > 9000 ? '∞' : F.num(d.range) + 'km'}</span>` : ''}
-          <span title="نگهداری ماهانه">🔧 ${F.money(d.upkeep * c.mil.upkeepFactor)}</span>
-        </div>
-        ${weak ? `<div class="muted small">ضعیف در برابر: ${weak}</div>` : ''}
-        ${t.allowed ? `<div class="uc-buy">
-            ${stepper(k, q, fac, 'qty')}
-            <button class="btn primary tiny" data-order="${k}">ساخت | ${F.money(t.cost * q)} | ${F.num(t.time)} ماه</button>
-          </div>`
-          : `<div class="muted small">🔒 فناوری لازم: ${F.BRANCH[d.branch]} ${F.num(d.requires)} (شما ${num(c.tech[d.branch])})</div>`}
+  function factoriesView() {
+    const c = country(), st = ctx.state;
+    const rows = Object.entries(U()).map(([k, d]) => {
+      const n = c.factories[k] || 0;
+      const rate = M.productionRate(st, c, k);
+      const perFactory = n ? rate / n : 0;
+      const on = !!c.mil.lines[k];
+      const allowed = (c.tech[d.branch] || 0) >= d.factory.requires;
+      const building = c.mil.construction.filter(x => x.type === k);
+      const sanctioned = M.sanctionHit(st, c, k);
+      const spec = (window.SG_DATA.specialties[c.id] || {})[k];
+      const range = M.rangeOf(c, k);
+      return `<div class="fac-card ${allowed ? '' : 'off'}">
+        <div class="uc-head"><span class="uc-icon">${d.icon}</span><b>${d.factory.name}</b>
+          ${spec && spec.output ? '<span class="badge gold" title="تخصص این کشور">تخصص</span>' : ''}
+          ${sanctioned ? '<span class="badge danger" title="تحریم: تولید کمتر و گران‌تر">تحریم</span>' : ''}</div>
+        ${allowed ? `
+          <div class="fac-line"><span>کارخانه‌ها: <b>${F.num(n)}</b></span>
+            <span>هر کارخانه: <b>${perFactory ? rateText(perFactory) : '—'}</b></span></div>
+          <div class="fac-line"><span>تولید کل: <b class="${on ? 'good' : 'muted'}">${n ? rateText(rate) : '—'}</b> ${d.unitWord}</span>
+            <span>قیمت هر ${d.unitWord}: <b>${F.money(M.unitCost(st, c, k))}</b></span></div>
+          ${range && range < 9000 ? `<div class="muted small">برد: ${F.num(range)} کیلومتر</div>` : ''}
+          <div class="fac-actions">
+            ${n ? `<button class="btn tiny ${on ? 'primary' : ''}" data-line="${k}">${on ? '⏸ خاموش کن' : '▶ روشن کن'}</button>
+              ${on ? `<small class="muted">${F.money(rate * M.unitCost(st, c, k))} در ماه</small>` : ''}` : '<small class="muted">کارخانه‌ای ندارید</small>'}
+            <button class="btn tiny" data-build="${k}">➕ کارخانه‌ی جدید | ${F.money(M.factoryCost(st, c, k))} | ${F.num(d.factory.time)} ماه</button>
+          </div>
+          ${building.length ? `<div class="small">🏗️ در حال ساخت: ${building.map(b => F.num(b.left) + ' ماه').join('، ')}</div>` : ''}`
+        : `<div class="muted small">🔒 فناوری لازم: ${F.BRANCH[d.branch]} ${F.num(d.factory.requires)} (شما ${num(c.tech[d.branch])}). با درخت پیشرفت (مرحله‌ی ۶) باز می‌شود.</div>`}
       </div>`;
     }).join('');
-    const queue = c.mil.queue.length ? c.mil.queue.map((i, idx) => `<div class="q-item">
-        <span>${U()[i.type].icon} ${F.num(i.qty)} × ${U()[i.type].name}</span>
-        <div class="bar"><span style="width:${(1 - i.left / i.total) * 100}%"></span></div>
-        <small>${F.num(i.left)} ماه</small>
-        <button class="btn tiny ghost" data-cancel="${idx}" title="لغو (نصف پول برمی‌گردد)">×</button>
-      </div>`).join('') : '<p class="muted">صف خالی است.</p>';
     return `
-      <section class="card"><h3>صف تولید <small class="muted">(${F.num(used)} از ${F.num(fac)} جای کارخانه)</small></h3>${queue}
-        <p class="muted small">اگر صف از ظرفیت کارخانه‌ها بیشتر شود، سفارش‌های بعدی منتظر می‌مانند. پول هنگام سفارش پرداخت می‌شود.</p></section>
-      <section class="card"><h3>ساخت واحد جدید <small class="muted">خزانه: ${F.money(c.eco.treasury)}</small></h3>
-        <div class="unit-grid">${cards}</div></section>`;
+      <p class="muted small">تولید هر کارخانه به فناوری و تخصص کشور بستگی دارد. هزینه‌ی خطوط روشن هر ماه از بودجه کم می‌شود.
+        خزانه: <b>${F.money(c.eco.treasury)}</b></p>
+      <div class="fac-grid">${rows}</div>`;
   }
 
   // -------------------------------------------------------------------
-  // زبانه‌ی ارتش‌ها
+  // فرستادن نیرو
   // -------------------------------------------------------------------
-  function locText(a) {
-    const st = ctx.state;
-    if (a.move) {
-      const d = a.move.dest;
-      return `🚚 در حال حرکت به ${d.kind === 'home' ? 'پایتخت' : 'مرز ' + F.esc(st.countries[d.target].name)} — ${F.num(a.move.left)} ماه دیگر`;
-    }
-    if (a.loc.kind === 'home') return '🏠 در پایتخت';
-    return `📍 مرز ${F.esc(st.countries[a.loc.target].name)}${a.loc.sea ? ' (از راه دریا)' : ''} — آماده`;
-  }
+  function stackView(stackId) {
+    const c = country(), st = ctx.state;
+    const s = M.findStack(st, ctx.id, stackId);
+    if (!s) { view = 'forces'; return forcesView(); }
+    const d = U()[s.type];
+    if (sendCount <= 0 || sendCount > s.count) sendCount = s.count;
+    const weak = Object.keys(d.weakVs).map(w => U()[w].name).join('، ');
+    const head = `<section class="card stack-head">
+        <div class="sh-icon">${d.icon}</div>
+        <div><h3>${d.name}: ${qty(s.type, s.count)}</h3>
+          <div class="small">${s.move ? `🚚 در راه ${F.esc(M.locName(st, s.move.dest))} | ${F.num(s.move.left)} ماه دیگر` : '📍 ' + F.esc(M.locName(st, s.loc))}</div>
+          <div class="muted small">⚔️ حمله ${F.num(d.attack)} | 🛡 دفاع ${F.num(d.defense)}${M.rangeOf(c, s.type) && M.rangeOf(c, s.type) < 9000 ? ` | 📏 برد ${F.num(M.rangeOf(c, s.type))} کیلومتر` : ''}${weak ? ` | ضعیف در برابر: ${weak}` : ''}</div>
+          <div class="ac-bars"><span>تدارکات</span><div class="bar ${s.supply < 50 ? 'bad' : s.supply < 75 ? 'mid' : 'good'}"><span style="width:${s.supply}%"></span></div><b>${num(s.supply)}</b></div>
+        </div></section>`;
+    if (s.move) return `<button class="btn ghost tiny" data-view="forces">→ همه‌ی نیروها</button>${head}
+      <p class="muted">این نیرو در حال حرکت است؛ وقتی رسید می‌توانید دوباره جابه‌جایش کنید.</p>`;
 
-  function unitsLine(units) {
-    return Object.entries(units).filter(([, n]) => n > 0).map(([k, n]) => `${U()[k].icon}${F.num(n)}`).join(' ');
-  }
-
-  function skills(cmd) {
-    return `<span title="تهاجم">⚔️${F.num(cmd.attack)}</span> <span title="دفاع">🛡${F.num(cmd.defense)}</span> <span title="لجستیک">📦${F.num(cmd.logistics)}</span>`;
-  }
-
-  function armiesView() {
-    const c = country();
-    const list = c.mil.armies.map(a => `<div class="army-card" data-army="${a.id}">
-        <div class="ac-head"><b>${F.esc(a.name)}</b><span class="muted small">${F.esc(a.commander.name)} ${skills(a.commander)}</span></div>
-        <div>${unitsLine(a.units)}</div>
-        <div class="small">${locText(a)}</div>
-        <div class="ac-bars"><span>تدارکات</span><div class="bar ${a.supply < 50 ? 'bad' : a.supply < 75 ? 'mid' : 'good'}"><span style="width:${a.supply}%"></span></div><b>${num(a.supply)}</b>
-          <span>روحیه</span><div class="bar"><span style="width:${a.morale}%"></span></div><b>${num(a.morale)}</b></div>
-      </div>`).join('') || '<p class="muted">هنوز ارتشی نساخته‌اید. از نیروهای ذخیره پایین یک ارتش بسازید.</p>';
-
-    // فرم ساخت ارتش
-    if (draftCommander === null || !c.mil.commanders.some(x => x.id === draftCommander)) draftCommander = c.mil.commanders[0]?.id ?? null;
-    const pool = Object.entries(U()).filter(([k]) => c.forces[k] > 0).map(([k, d]) =>
-      `<div class="pool-row"><span>${d.icon} ${d.name} <small class="muted">(ذخیره ${F.num(c.forces[k])})</small></span>${stepper(k, draft[k] || 0, c.forces[k], 'draft')}</div>`).join('');
-    const cmds = c.mil.commanders.map(x => `<label class="cmd ${x.id === draftCommander ? 'on' : ''}">
-        <input type="radio" name="cmd" value="${x.id}" ${x.id === draftCommander ? 'checked' : ''} data-cmd="${x.id}"> ${F.esc(x.name)} <small>${skills(x)}</small></label>`).join('');
-    const total = M.countUnits(draft);
-    return `
-      <section class="card"><h3>ارتش‌های شما</h3>${list}</section>
-      <section class="card"><h3>➕ ساخت ارتش جدید</h3>
-        ${pool || '<p class="muted">نیروی ذخیره‌ای نمانده.</p>'}
-        <div class="row-label">فرمانده</div><div class="cmds">${cmds}</div>
-        <p class="muted small">⚔️ تهاجم، 🛡 دفاع (اثر در نبرد مرحله‌ی ۴)، 📦 لجستیک (تدارکات بهتر).</p>
-        <button class="btn primary" data-create ${total && draftCommander !== null ? '' : 'disabled'}>ساخت ارتش (${F.num(total)} واحد)</button>
-      </section>`;
-  }
-
-  // -------------------------------------------------------------------
-  // جزئیات یک ارتش و اعزام
-  // -------------------------------------------------------------------
-  function armyView(armyId) {
-    const c = country();
-    const a = M.findArmy(ctx.state, ctx.id, armyId);
-    if (!a) { view = 'armies'; return armiesView(); }
-    const atHome = a.loc.kind === 'home' && !a.move;
-    const unitRows = Object.entries(U()).filter(([k]) => (a.units[k] || 0) > 0 || (atHome && c.forces[k] > 0)).map(([k, d]) =>
-      `<div class="pool-row"><span>${d.icon} ${d.name}${atHome ? ` <small class="muted">(ذخیره ${F.num(c.forces[k])})</small>` : ''}</span>
-        ${atHome ? stepper(k, a.units[k] || 0, (a.units[k] || 0) + c.forces[k], 'tr') : `<b>${F.num(a.units[k])}</b>`}</div>`).join('');
-    const dests = M.destinations(ctx.state, ctx.id, a)
-      .filter(d => !(d.kind === 'home' && atHome) && !(d.kind === a.loc.kind && d.target === a.loc.target && !a.move))
-      .map(d => {
-        const name = d.kind === 'home' ? '🏠 بازگشت به پایتخت' : `${d.sea ? '⚓' : '🚩'} مرز ${F.esc(ctx.state.countries[d.target].name)}`;
-        const rel = d.target ? SG.Engine.getRelation(ctx.state, ctx.id, d.target) : null;
-        const relLab = rel !== null ? F.relationLabel(rel) : null;
-        const blocked = d.allowed === false;
-        return `<button class="dest ${blocked ? 'off' : ''}" data-dest="${d.kind}|${d.target || ''}|${d.sea ? 1 : 0}" ${blocked ? 'disabled' : ''}>
-          <span>${name}${relLab ? ` <small class="${relLab.cls}">${relLab.text}</small>` : ''}</span>
-          <small>${blocked ? 'ناو کافی نیست' : F.num(d.turns) + ' ماه'}</small></button>`;
-      }).join('');
-    return `
-      <button class="btn ghost tiny" data-view="armies">→ همه‌ی ارتش‌ها</button>
-      <section class="card"><h3>${F.esc(a.name)}</h3>
-        <div>فرمانده: <b>${F.esc(a.commander.name)}</b> ${skills(a.commander)}</div>
-        <div class="small">${locText(a)}</div>
-        <div class="ac-bars"><span>تدارکات</span><div class="bar ${a.supply < 50 ? 'bad' : 'good'}"><span style="width:${a.supply}%"></span></div><b>${num(a.supply)}</b>
-          <span>روحیه</span><div class="bar"><span style="width:${a.morale}%"></span></div><b>${num(a.morale)}</b>
-          <span>تجربه</span><div class="bar"><span style="width:${a.experience}%"></span></div><b>${num(a.experience)}</b></div>
-        <div class="muted small">سرعت: ${F.num(M.armySpeed(a))} کیلومتر در ماه (کندترین واحد)</div>
-        <button class="btn" data-showarmy="${a.id}">🗺️ نمایش روی نقشه</button>
+    const dests = M.destinations(st, ctx.id, s);
+    const destBtn = x => {
+      let name, extra = '';
+      if (x.kind === 'city') name = `${x.capital ? '★' : '🏙️'} ${F.esc(x.name)}`;
+      else {
+        name = `${x.sea ? '⚓' : '🚩'} مرز ${F.esc(st.countries[x.target].name)}`;
+        const lab = F.relationLabel(SG.Engine.getRelation(st, ctx.id, x.target));
+        extra = ` <small class="${lab.cls}">${lab.text}</small>`;
+      }
+      return `<button class="dest" data-dest="${x.kind}|${x.city || x.target}|${x.sea ? 1 : 0}"><span>${name}${extra}</span><small>${F.num(x.turns)} ماه</small></button>`;
+    };
+    const borders = dests.filter(x => x.kind === 'border'), cities = dests.filter(x => x.kind === 'city');
+    const step = s.count >= 1000 ? 100 : s.count >= 100 ? 10 : 1;
+    return `<button class="btn ghost tiny" data-view="forces">→ همه‌ی نیروها</button>${head}
+      <section class="card"><h3>چندتا بفرستیم؟</h3>
+        <div class="send-count">
+          <button class="btn tiny" data-cnt="-${step}">−${F.num(step)}</button>
+          <input type="range" min="1" max="${s.count}" value="${sendCount}" data-range>
+          <button class="btn tiny" data-cnt="${step}">+${F.num(step)}</button>
+        </div>
+        <div class="send-quick">
+          <b class="send-val">${qty(s.type, sendCount)}</b>
+          <button class="btn tiny ghost" data-frac="0.25">ربع</button>
+          <button class="btn tiny ghost" data-frac="0.5">نصف</button>
+          <button class="btn tiny ghost" data-frac="1">همه</button>
+        </div>
       </section>
-      <section class="card"><h3>واحدها ${atHome ? '<small class="muted">(فقط در پایتخت می‌شود کم و زیاد کرد)</small>' : ''}</h3>${unitRows}</section>
-      <section class="card"><h3>🚚 اعزام</h3>
-        <p class="muted small">ارتش در مرز «آماده‌ی حمله» می‌شود (نبرد از مرحله‌ی ۴). تجمع نیرو در مرز، همسایه را نگران می‌کند.
-          راه دریایی به ازای هر ۳ واحد زمینی یک ناو جنگی لازم دارد.</p>
-        <div class="dests">${dests}</div>
-      </section>
-      ${atHome ? `<button class="btn ghost" data-disband="${a.id}">انحلال ارتش (واحدها به ذخیره برمی‌گردند)</button>` : ''}`;
+      ${borders.length ? `<section class="card"><h3>🚩 به مرز</h3><p class="muted small">در مرز آماده‌ی حمله می‌شوند (نبرد از مرحله‌ی ۴). تجمع نیرو، همسایه را نگران می‌کند.</p>
+        <div class="dests">${borders.map(destBtn).join('')}</div></section>` : ''}
+      ${cities.length ? `<section class="card"><h3>🏙️ به شهرهای خودی</h3><div class="dests">${cities.map(destBtn).join('')}</div></section>` : ''}
+      ${s.loc.kind === 'city' ? `<button class="btn ghost tiny" data-demob title="هزینه‌ی نگهداری کم می‌شود؛ پولی برنمی‌گردد">مرخص کردن ${qty(s.type, sendCount)}</button>` : ''}`;
   }
 
   // -------------------------------------------------------------------
   function body() {
     let html = tabs();
     if (view === 'forces') html += forcesView();
-    else if (view === 'production') html += productionView();
-    else if (view === 'armies') html += armiesView();
-    else if (view.startsWith('army:')) html += armyView(view.slice(5));
+    else if (view === 'factories') html += factoriesView();
+    else if (view.startsWith('stack:')) html += stackView(view.slice(6));
     return html;
   }
 
@@ -214,62 +173,74 @@
     const top = el.scrollTop;
     el.innerHTML = body();
     el.scrollTop = top;
+    bindRange();
   }
 
-  function changed() {
-    ctx.onChange();
+  function bindRange() {
+    const r = document.querySelector('.modal-body [data-range]');
+    if (!r) return;
+    r.addEventListener('input', () => {
+      sendCount = +r.value;
+      const s = M.findStack(ctx.state, ctx.id, view.slice(6));
+      document.querySelector('.modal-body .send-val').textContent = qty(s.type, sendCount);
+      const demob = document.querySelector('.modal-body [data-demob]');
+      if (demob) demob.textContent = 'مرخص کردن ' + qty(s.type, sendCount);
+    });
+  }
+
+  function go(v) {
+    view = v;
     rerender();
+    const el = document.querySelector('.modal-body');
+    if (el) el.scrollTop = 0;
   }
 
   function onClick(e) {
-    const t = e.target.closest('button, input');
-    if (!t) {
-      const card = e.target.closest('[data-army]');
-      if (card) { view = 'army:' + card.dataset.army; rerender(); document.querySelector('.modal-body').scrollTop = 0; }
-      return;
-    }
+    const t = e.target.closest('button');
+    if (!t) return;
     const ds = t.dataset, st = ctx.state, id = ctx.id;
-    if (ds.view) { view = ds.view; rerender(); document.querySelector('.modal-body').scrollTop = 0; return; }
-    if (ds.qty) { qty[ds.qty] = Math.max(1, (qty[ds.qty] || 1) + +ds.d); rerender(); return; }
-    if (ds.order) {
-      const r = M.order(st, id, ds.order, qty[ds.order] || 1);
+    if (ds.view) { go(ds.view); return; }
+    if (ds.stack) { sendCount = 0; go('stack:' + ds.stack); return; }
+    if (ds.line) { M.setLine(st, id, ds.line, !st.countries[id].mil.lines[ds.line]); changed(); return; }
+    if (ds.build) {
+      const r = M.buildFactory(st, id, ds.build);
       if (r === 'money') SG.NotifyUI.simpleToast('پول کافی در خزانه نیست.', 'lvl-warning');
-      else if (!r) SG.NotifyUI.simpleToast(`🏭 سفارش ${U()[ds.order].name} ثبت شد.`, 'lvl-info');
+      else if (!r) SG.NotifyUI.simpleToast(`🏗️ ساخت ${U()[ds.build].factory.name} شروع شد.`, 'lvl-info');
       changed(); return;
     }
-    if (ds.cancel !== undefined) { M.cancelOrder(st, id, +ds.cancel); changed(); return; }
-    if (ds.demob) { M.demobilize(st, id, ds.demob, 1); changed(); return; }
-    if (ds.draft) { draft[ds.draft] = Math.max(0, (draft[ds.draft] || 0) + +ds.d); rerender(); return; }
-    if (ds.cmd) { draftCommander = +ds.cmd; rerender(); return; }
-    if (ds.create !== undefined) {
-      const a = M.createArmy(st, id, draft, draftCommander);
-      if (a) {
-        draft = {};
-        SG.NotifyUI.simpleToast(`🎖️ ${a.name} به فرماندهی ${a.commander.name} تشکیل شد.`, 'lvl-info');
-        view = 'army:' + a.id;
-      }
-      changed(); return;
+    const s = view.startsWith('stack:') ? M.findStack(st, id, view.slice(6)) : null;
+    if (!s) return;
+    if (ds.cnt) { sendCount = Math.max(1, Math.min(s.count, sendCount + +ds.cnt)); rerender(); return; }
+    if (ds.frac) { sendCount = Math.max(1, Math.round(s.count * +ds.frac)); rerender(); return; }
+    if (ds.demob !== undefined) {
+      if (!confirm(`${qty(s.type, sendCount)} ${U()[s.type].name} مرخص شوند؟`)) return;
+      M.demobilize(st, id, s.id, sendCount); sendCount = 0; go('forces'); ctx.onChange(); return;
     }
-    if (ds.tr) { M.transfer(st, id, view.slice(5), ds.tr, +ds.d); changed(); return; }
-    if (ds.disband) { M.disbandArmy(st, id, ds.disband); view = 'armies'; changed(); return; }
-    if (ds.showarmy) { SG.Modal.close(); ctx.onShowArmy(ds.showarmy); return; }
     if (ds.dest) {
-      const armyId = view.slice(5);
-      const [kind, target, sea] = ds.dest.split('|');
-      const a = M.findArmy(st, id, armyId);
-      const d = M.destinations(st, id, a).find(x => x.kind === kind && (x.target || '') === target && (x.sea ? '1' : '0') === sea);
-      if (d && !M.deploy(st, id, armyId, d)) {
-        SG.NotifyUI.simpleToast(`🚚 ${a.name} حرکت کرد؛ ${F.num(d.turns)} ماه تا رسیدن.`, 'lvl-info');
-        changed();
+      const [kind, key, sea] = ds.dest.split('|');
+      const d = M.destinations(st, id, s).find(x => x.kind === kind && (x.city || x.target) === key && (x.sea ? '1' : '0') === sea);
+      if (!d) return;
+      const n = sendCount;
+      const mover = M.send(st, id, s.id, n, d);
+      if (mover) {
+        SG.NotifyUI.simpleToast(`🚚 ${qty(mover.type, n)} ${U()[mover.type].name} به ${d.kind === 'city' ? F.esc(d.name) : 'مرز ' + F.esc(st.countries[d.target].name)} حرکت کرد؛ ${F.num(d.turns)} ماه تا رسیدن.`, 'lvl-info');
+        sendCount = 0;
+        ctx.onChange();
+        SG.Modal.close();
+        ctx.onShowStack(mover.id);
       }
     }
   }
 
-  /** @param {string} [startView] زبانه یا 'army:<id>' */
-  function open(state, id, { onChange, onShowArmy }, startView) {
-    ctx = { state, id, onChange, onShowArmy };
+  function changed() { ctx.onChange(); rerender(); }
+
+  /** @param {string} [startView] 'forces' | 'factories' | 'stack:<id>' */
+  function open(state, id, { onChange, onShowStack }, startView) {
+    ctx = { state, id, onChange, onShowStack };
     if (startView) view = startView;
+    if (startView && startView.startsWith('stack:')) sendCount = 0;
     SG.Modal.open({ title: '⚔️ ارتش — ' + state.countries[id].name, html: body(), onClick });
+    bindRange();
   }
 
   SG.MilitaryPanel = { open, refresh: rerender };

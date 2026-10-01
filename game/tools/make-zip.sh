@@ -8,6 +8,6 @@ cd "$(dirname "$0")/.."            # پوشه‌ی game
 OUT="../dist/geopolitics2026.zip"
 mkdir -p ../dist
 rm -f "$OUT"
-zip -r -q -X "$OUT" index.html css data fonts js lib
+zip -r -q -X "$OUT" index.html css data fonts js lib img
 echo "ساخته شد: dist/geopolitics2026.zip"
 unzip -l "$OUT" | tail -1

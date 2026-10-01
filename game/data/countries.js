@@ -35,6 +35,130 @@ SG_DATA.countries = {
    -77.04,
    38.9
   ],
+  "cities": [
+   {
+    "id": "USA-0",
+    "name": "واشنگتن",
+    "pos": [
+     -77.04,
+     38.9
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "USA-1",
+    "name": "نیویورک",
+    "pos": [
+     -74,
+     40.71
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "USA-2",
+    "name": "نورفولک",
+    "pos": [
+     -76.29,
+     36.85
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "USA-3",
+    "name": "شیکاگو",
+    "pos": [
+     -87.63,
+     41.88
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "USA-4",
+    "name": "هیوستون",
+    "pos": [
+     -95.37,
+     29.76
+    ],
+    "capital": false,
+    "tags": [
+     "industry",
+     "missile"
+    ]
+   },
+   {
+    "id": "USA-5",
+    "name": "لس‌آنجلس",
+    "pos": [
+     -118.24,
+     34.05
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "USA-6",
+    "name": "سن‌دیگو",
+    "pos": [
+     -117.16,
+     32.72
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "USA-7",
+    "name": "سیاتل",
+    "pos": [
+     -122.33,
+     47.61
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "USA-8",
+    "name": "آنکوریج",
+    "pos": [
+     -149.9,
+     61.22
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "USA-9",
+    "name": "هونولولو",
+    "pos": [
+     -157.86,
+     21.31
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "air"
+    ]
+   }
+  ],
   "borderPos": {
    "MEX": [
     -102.89,
@@ -89,6 +213,54 @@ SG_DATA.countries = {
    -75.7,
    45.42
   ],
+  "cities": [
+   {
+    "id": "CAN-0",
+    "name": "اتاوا",
+    "pos": [
+     -75.7,
+     45.42
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "CAN-1",
+    "name": "تورنتو",
+    "pos": [
+     -79.38,
+     43.65
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "CAN-2",
+    "name": "ونکوور",
+    "pos": [
+     -123.12,
+     49.28
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "CAN-3",
+    "name": "هالیفاکس",
+    "pos": [
+     -63.57,
+     44.65
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {
    "USA": [
     -82.2,
@@ -133,6 +305,52 @@ SG_DATA.countries = {
   "pos": [
    -99.13,
    19.43
+  ],
+  "cities": [
+   {
+    "id": "MEX-0",
+    "name": "مکزیکوسیتی",
+    "pos": [
+     -99.13,
+     19.43
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "MEX-1",
+    "name": "مونتری",
+    "pos": [
+     -100.31,
+     25.69
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "MEX-2",
+    "name": "وراکروز",
+    "pos": [
+     -96.13,
+     19.17
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "MEX-3",
+    "name": "تیخوانا",
+    "pos": [
+     -117.04,
+     32.51
+    ],
+    "capital": false,
+    "tags": []
+   }
   ],
   "borderPos": {
    "USA": [
@@ -188,6 +406,18 @@ SG_DATA.countries = {
   "pos": [
    -90.37,
    15.69
+  ],
+  "cities": [
+   {
+    "id": "GTM-0",
+    "name": "پایتخت",
+    "pos": [
+     -90.37,
+     15.69
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "MEX": [
@@ -249,6 +479,18 @@ SG_DATA.countries = {
    -88.72,
    17.19
   ],
+  "cities": [
+   {
+    "id": "BLZ-0",
+    "name": "پایتخت",
+    "pos": [
+     -88.72,
+     17.19
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "MEX": [
     -88.86,
@@ -299,6 +541,18 @@ SG_DATA.countries = {
    -88.87,
    13.74
   ],
+  "cities": [
+   {
+    "id": "SLV-0",
+    "name": "پایتخت",
+    "pos": [
+     -88.87,
+     13.74
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "HND": [
     -88.45,
@@ -348,6 +602,18 @@ SG_DATA.countries = {
   "pos": [
    -86.62,
    14.83
+  ],
+  "cities": [
+   {
+    "id": "HND-0",
+    "name": "پایتخت",
+    "pos": [
+     -86.62,
+     14.83
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "NIC": [
@@ -404,6 +670,18 @@ SG_DATA.countries = {
    -85.03,
    12.85
   ],
+  "cities": [
+   {
+    "id": "NIC-0",
+    "name": "پایتخت",
+    "pos": [
+     -85.03,
+     12.85
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "HND": [
     -85.2,
@@ -453,6 +731,18 @@ SG_DATA.countries = {
   "pos": [
    -84.19,
    9.98
+  ],
+  "cities": [
+   {
+    "id": "CRI-0",
+    "name": "پایتخت",
+    "pos": [
+     -84.19,
+     9.98
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "PAN": [
@@ -504,6 +794,18 @@ SG_DATA.countries = {
    -80.11,
    8.53
   ],
+  "cities": [
+   {
+    "id": "PAN-0",
+    "name": "پایتخت",
+    "pos": [
+     -80.11,
+     8.53
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "CRI": [
     -82.74,
@@ -554,6 +856,18 @@ SG_DATA.countries = {
    -78.91,
    21.63
   ],
+  "cities": [
+   {
+    "id": "CUB-0",
+    "name": "پایتخت",
+    "pos": [
+     -78.91,
+     21.63
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -596,6 +910,18 @@ SG_DATA.countries = {
    -77.31,
    18.16
   ],
+  "cities": [
+   {
+    "id": "JAM-0",
+    "name": "پایتخت",
+    "pos": [
+     -77.31,
+     18.16
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -635,6 +961,18 @@ SG_DATA.countries = {
   "pos": [
    -72.68,
    18.93
+  ],
+  "cities": [
+   {
+    "id": "HTI-0",
+    "name": "پایتخت",
+    "pos": [
+     -72.68,
+     18.93
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "DOM": [
@@ -683,6 +1021,18 @@ SG_DATA.countries = {
    -70.51,
    18.9
   ],
+  "cities": [
+   {
+    "id": "DOM-0",
+    "name": "پایتخت",
+    "pos": [
+     -70.51,
+     18.9
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "HTI": [
     -71.73,
@@ -728,6 +1078,18 @@ SG_DATA.countries = {
    -78.04,
    24.7
   ],
+  "cities": [
+   {
+    "id": "BHS-0",
+    "name": "پایتخت",
+    "pos": [
+     -78.04,
+     24.7
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -767,6 +1129,18 @@ SG_DATA.countries = {
   "pos": [
    -61.29,
    10.42
+  ],
+  "cities": [
+   {
+    "id": "TTO-0",
+    "name": "پایتخت",
+    "pos": [
+     -61.29,
+     10.42
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -808,6 +1182,18 @@ SG_DATA.countries = {
    -59.56,
    13.18
   ],
+  "cities": [
+   {
+    "id": "BRB-0",
+    "name": "پایتخت",
+    "pos": [
+     -59.56,
+     13.18
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -845,6 +1231,18 @@ SG_DATA.countries = {
   "pos": [
    -61.79,
    17.08
+  ],
+  "cities": [
+   {
+    "id": "ATG-0",
+    "name": "پایتخت",
+    "pos": [
+     -61.79,
+     17.08
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -884,6 +1282,18 @@ SG_DATA.countries = {
    -61.36,
    15.44
   ],
+  "cities": [
+   {
+    "id": "DMA-0",
+    "name": "پایتخت",
+    "pos": [
+     -61.36,
+     15.44
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -921,6 +1331,18 @@ SG_DATA.countries = {
   "pos": [
    -61.68,
    12.12
+  ],
+  "cities": [
+   {
+    "id": "GRD-0",
+    "name": "پایتخت",
+    "pos": [
+     -61.68,
+     12.12
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -960,6 +1382,18 @@ SG_DATA.countries = {
    -62.75,
    17.33
   ],
+  "cities": [
+   {
+    "id": "KNA-0",
+    "name": "پایتخت",
+    "pos": [
+     -62.75,
+     17.33
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -997,6 +1431,18 @@ SG_DATA.countries = {
   "pos": [
    -60.97,
    13.89
+  ],
+  "cities": [
+   {
+    "id": "LCA-0",
+    "name": "پایتخت",
+    "pos": [
+     -60.97,
+     13.89
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -1036,6 +1482,18 @@ SG_DATA.countries = {
    -61.2,
    13.25
   ],
+  "cities": [
+   {
+    "id": "VCT-0",
+    "name": "پایتخت",
+    "pos": [
+     -61.2,
+     13.25
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -1073,6 +1531,18 @@ SG_DATA.countries = {
   "pos": [
    -53.24,
    -10.69
+  ],
+  "cities": [
+   {
+    "id": "BRA-0",
+    "name": "پایتخت",
+    "pos": [
+     -53.24,
+     -10.69
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "VEN": [
@@ -1159,6 +1629,18 @@ SG_DATA.countries = {
    -64.75,
    -34.54
   ],
+  "cities": [
+   {
+    "id": "ARG-0",
+    "name": "پایتخت",
+    "pos": [
+     -64.75,
+     -34.54
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "URY": [
     -58.03,
@@ -1226,6 +1708,18 @@ SG_DATA.countries = {
    -73.08,
    3.9
   ],
+  "cities": [
+   {
+    "id": "COL-0",
+    "name": "پایتخت",
+    "pos": [
+     -73.08,
+     3.9
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "VEN": [
     -69.44,
@@ -1291,6 +1785,18 @@ SG_DATA.countries = {
    -70.95,
    -34.36
   ],
+  "cities": [
+   {
+    "id": "CHL-0",
+    "name": "پایتخت",
+    "pos": [
+     -70.95,
+     -34.36
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "PER": [
     -69.8,
@@ -1345,6 +1851,18 @@ SG_DATA.countries = {
   "pos": [
    -74.42,
    -9.11
+  ],
+  "cities": [
+   {
+    "id": "PER-0",
+    "name": "پایتخت",
+    "pos": [
+     -74.42,
+     -9.11
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ECU": [
@@ -1411,6 +1929,18 @@ SG_DATA.countries = {
    -66.18,
    7.12
   ],
+  "cities": [
+   {
+    "id": "VEN-0",
+    "name": "پایتخت",
+    "pos": [
+     -66.18,
+     7.12
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "GUY": [
     -60.32,
@@ -1468,6 +1998,18 @@ SG_DATA.countries = {
    -78.39,
    -1.44
   ],
+  "cities": [
+   {
+    "id": "ECU-0",
+    "name": "پایتخت",
+    "pos": [
+     -78.39,
+     -1.44
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "PER": [
     -78.6,
@@ -1517,6 +2059,18 @@ SG_DATA.countries = {
   "pos": [
    -64.7,
    -16.68
+  ],
+  "cities": [
+   {
+    "id": "BOL-0",
+    "name": "پایتخت",
+    "pos": [
+     -64.7,
+     -16.68
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "PER": [
@@ -1583,6 +2137,18 @@ SG_DATA.countries = {
    -58.44,
    -23.21
   ],
+  "cities": [
+   {
+    "id": "PRY-0",
+    "name": "پایتخت",
+    "pos": [
+     -58.44,
+     -23.21
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "BRA": [
     -56.45,
@@ -1638,6 +2204,18 @@ SG_DATA.countries = {
    -56.03,
    -32.79
   ],
+  "cities": [
+   {
+    "id": "URY-0",
+    "name": "پایتخت",
+    "pos": [
+     -56.03,
+     -32.79
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "BRA": [
     -55.09,
@@ -1687,6 +2265,18 @@ SG_DATA.countries = {
   "pos": [
    -58.98,
    4.79
+  ],
+  "cities": [
+   {
+    "id": "GUY-0",
+    "name": "پایتخت",
+    "pos": [
+     -58.98,
+     4.79
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "VEN": [
@@ -1743,6 +2333,18 @@ SG_DATA.countries = {
    -55.91,
    4.13
   ],
+  "cities": [
+   {
+    "id": "SUR-0",
+    "name": "پایتخت",
+    "pos": [
+     -55.91,
+     4.13
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "GUY": [
     -57.65,
@@ -1792,6 +2394,66 @@ SG_DATA.countries = {
   "pos": [
    -0.13,
    51.5
+  ],
+  "cities": [
+   {
+    "id": "GBR-0",
+    "name": "لندن",
+    "pos": [
+     -0.13,
+     51.5
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "GBR-1",
+    "name": "پورتسموث",
+    "pos": [
+     -1.09,
+     50.8
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "GBR-2",
+    "name": "منچستر",
+    "pos": [
+     -2.24,
+     53.48
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "GBR-3",
+    "name": "گلاسکو",
+    "pos": [
+     -4.25,
+     55.86
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "GBR-4",
+    "name": "بلفاست",
+    "pos": [
+     -5.93,
+     54.6
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
   ],
   "borderPos": {
    "IRL": [
@@ -1845,6 +2507,67 @@ SG_DATA.countries = {
   "pos": [
    2.35,
    48.86
+  ],
+  "cities": [
+   {
+    "id": "FRA-0",
+    "name": "پاریس",
+    "pos": [
+     2.35,
+     48.86
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "FRA-1",
+    "name": "مارسی",
+    "pos": [
+     5.37,
+     43.3
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "FRA-2",
+    "name": "برست",
+    "pos": [
+     -4.49,
+     48.39
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "FRA-3",
+    "name": "تولوز",
+    "pos": [
+     1.44,
+     43.6
+    ],
+    "capital": false,
+    "tags": [
+     "industry",
+     "air"
+    ]
+   },
+   {
+    "id": "FRA-4",
+    "name": "لیون",
+    "pos": [
+     4.84,
+     45.76
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   }
   ],
   "borderPos": {
    "CHE": [
@@ -1929,6 +2652,66 @@ SG_DATA.countries = {
   "pos": [
    13.4,
    52.52
+  ],
+  "cities": [
+   {
+    "id": "DEU-0",
+    "name": "برلین",
+    "pos": [
+     13.4,
+     52.52
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "DEU-1",
+    "name": "هامبورگ",
+    "pos": [
+     9.99,
+     53.55
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "DEU-2",
+    "name": "مونیخ",
+    "pos": [
+     11.58,
+     48.14
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "DEU-3",
+    "name": "کلن",
+    "pos": [
+     6.96,
+     50.94
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "DEU-4",
+    "name": "اشتوتگارت",
+    "pos": [
+     9.18,
+     48.78
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   }
   ],
   "borderPos": {
    "CHE": [
@@ -2017,6 +2800,54 @@ SG_DATA.countries = {
    12.5,
    41.9
   ],
+  "cities": [
+   {
+    "id": "ITA-0",
+    "name": "رم",
+    "pos": [
+     12.5,
+     41.9
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "ITA-1",
+    "name": "میلان",
+    "pos": [
+     9.19,
+     45.46
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "ITA-2",
+    "name": "ناپل",
+    "pos": [
+     14.27,
+     40.85
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "ITA-3",
+    "name": "تارانتو",
+    "pos": [
+     17.24,
+     40.47
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {
    "CHE": [
     9.07,
@@ -2093,6 +2924,43 @@ SG_DATA.countries = {
    -3.7,
    40.42
   ],
+  "cities": [
+   {
+    "id": "ESP-0",
+    "name": "مادرید",
+    "pos": [
+     -3.7,
+     40.42
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "ESP-1",
+    "name": "بارسلونا",
+    "pos": [
+     2.17,
+     41.39
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "ESP-2",
+    "name": "کادیز",
+    "pos": [
+     -6.29,
+     36.53
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {
    "PRT": [
     -6.88,
@@ -2150,6 +3018,18 @@ SG_DATA.countries = {
    -7.98,
    39.65
   ],
+  "cities": [
+   {
+    "id": "PRT-0",
+    "name": "پایتخت",
+    "pos": [
+     -7.98,
+     39.65
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "ESP": [
     -6.88,
@@ -2194,6 +3074,18 @@ SG_DATA.countries = {
   "pos": [
    5.63,
    52.28
+  ],
+  "cities": [
+   {
+    "id": "NLD-0",
+    "name": "پایتخت",
+    "pos": [
+     5.63,
+     52.28
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "DEU": [
@@ -2246,6 +3138,18 @@ SG_DATA.countries = {
   "pos": [
    4.65,
    50.64
+  ],
+  "cities": [
+   {
+    "id": "BEL-0",
+    "name": "پایتخت",
+    "pos": [
+     4.65,
+     50.64
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "NLD": [
@@ -2309,6 +3213,18 @@ SG_DATA.countries = {
    6.07,
    49.77
   ],
+  "cities": [
+   {
+    "id": "LUX-0",
+    "name": "پایتخت",
+    "pos": [
+     6.07,
+     49.77
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "DEU": [
     6.49,
@@ -2363,6 +3279,18 @@ SG_DATA.countries = {
   "pos": [
    8.21,
    46.8
+  ],
+  "cities": [
+   {
+    "id": "CHE-0",
+    "name": "پایتخت",
+    "pos": [
+     8.21,
+     46.8
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "LIE": [
@@ -2428,6 +3356,18 @@ SG_DATA.countries = {
   "pos": [
    14.11,
    47.59
+  ],
+  "cities": [
+   {
+    "id": "AUT-0",
+    "name": "پایتخت",
+    "pos": [
+     14.11,
+     47.59
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "CHE": [
@@ -2509,6 +3449,18 @@ SG_DATA.countries = {
    -8.14,
    53.16
   ],
+  "cities": [
+   {
+    "id": "IRL-0",
+    "name": "پایتخت",
+    "pos": [
+     -8.14,
+     53.16
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "GBR": [
     -7.61,
@@ -2555,6 +3507,18 @@ SG_DATA.countries = {
   "pos": [
    9.35,
    56.23
+  ],
+  "cities": [
+   {
+    "id": "DNK-0",
+    "name": "پایتخت",
+    "pos": [
+     9.35,
+     56.23
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "DEU": [
@@ -2603,6 +3567,44 @@ SG_DATA.countries = {
   "pos": [
    10.75,
    59.91
+  ],
+  "cities": [
+   {
+    "id": "NOR-0",
+    "name": "اسلو",
+    "pos": [
+     10.75,
+     59.91
+    ],
+    "capital": true,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "NOR-1",
+    "name": "برگن",
+    "pos": [
+     5.32,
+     60.39
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "NOR-2",
+    "name": "بودو",
+    "pos": [
+     14.4,
+     67.28
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
   ],
   "borderPos": {
    "SWE": [
@@ -2661,6 +3663,18 @@ SG_DATA.countries = {
    16.25,
    62.43
   ],
+  "cities": [
+   {
+    "id": "SWE-0",
+    "name": "پایتخت",
+    "pos": [
+     16.25,
+     62.43
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "NOR": [
     14.14,
@@ -2716,6 +3730,18 @@ SG_DATA.countries = {
   "pos": [
    26.21,
    64.26
+  ],
+  "cities": [
+   {
+    "id": "FIN-0",
+    "name": "پایتخت",
+    "pos": [
+     26.21,
+     64.26
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SWE": [
@@ -2774,6 +3800,18 @@ SG_DATA.countries = {
    -18.58,
    65
   ],
+  "cities": [
+   {
+    "id": "ISL-0",
+    "name": "پایتخت",
+    "pos": [
+     -18.58,
+     65
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -2813,6 +3851,54 @@ SG_DATA.countries = {
   "pos": [
    21.01,
    52.23
+  ],
+  "cities": [
+   {
+    "id": "POL-0",
+    "name": "ورشو",
+    "pos": [
+     21.01,
+     52.23
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "POL-1",
+    "name": "گدانسک",
+    "pos": [
+     18.65,
+     54.35
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "POL-2",
+    "name": "کراکوف",
+    "pos": [
+     19.94,
+     50.06
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "POL-3",
+    "name": "ژشوف",
+    "pos": [
+     22,
+     50.04
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
   ],
   "borderPos": {
    "UKR": [
@@ -2891,6 +3977,18 @@ SG_DATA.countries = {
    15.32,
    49.74
   ],
+  "cities": [
+   {
+    "id": "CZE-0",
+    "name": "پایتخت",
+    "pos": [
+     15.32,
+     49.74
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SVK": [
     18.08,
@@ -2950,6 +4048,18 @@ SG_DATA.countries = {
   "pos": [
    19.47,
    48.71
+  ],
+  "cities": [
+   {
+    "id": "SVK-0",
+    "name": "پایتخت",
+    "pos": [
+     19.47,
+     48.71
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "UKR": [
@@ -3015,6 +4125,18 @@ SG_DATA.countries = {
   "pos": [
    19.38,
    47.17
+  ],
+  "cities": [
+   {
+    "id": "HUN-0",
+    "name": "پایتخت",
+    "pos": [
+     19.38,
+     47.17
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "UKR": [
@@ -3091,6 +4213,18 @@ SG_DATA.countries = {
    24.98,
    45.85
   ],
+  "cities": [
+   {
+    "id": "ROU-0",
+    "name": "پایتخت",
+    "pos": [
+     24.98,
+     45.85
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "UKR": [
     24.49,
@@ -3158,6 +4292,18 @@ SG_DATA.countries = {
    25.21,
    42.77
   ],
+  "cities": [
+   {
+    "id": "BGR-0",
+    "name": "پایتخت",
+    "pos": [
+     25.21,
+     42.77
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "TUR": [
     27.01,
@@ -3223,6 +4369,44 @@ SG_DATA.countries = {
    23.73,
    37.98
   ],
+  "cities": [
+   {
+    "id": "GRC-0",
+    "name": "آتن",
+    "pos": [
+     23.73,
+     37.98
+    ],
+    "capital": true,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "GRC-1",
+    "name": "تسالونیکی",
+    "pos": [
+     22.94,
+     40.64
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "GRC-2",
+    "name": "هراکلیون",
+    "pos": [
+     25.14,
+     35.34
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
+  ],
   "borderPos": {
    "TUR": [
     26.33,
@@ -3285,6 +4469,18 @@ SG_DATA.countries = {
   "pos": [
    16.42,
    45.16
+  ],
+  "cities": [
+   {
+    "id": "HRV-0",
+    "name": "پایتخت",
+    "pos": [
+     16.42,
+     45.16
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SVN": [
@@ -3351,6 +4547,18 @@ SG_DATA.countries = {
    14.8,
    46.12
   ],
+  "cities": [
+   {
+    "id": "SVN-0",
+    "name": "پایتخت",
+    "pos": [
+     14.8,
+     46.12
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "ITA": [
     13.55,
@@ -3410,6 +4618,18 @@ SG_DATA.countries = {
   "pos": [
    20.81,
    44.21
+  ],
+  "cities": [
+   {
+    "id": "SRB-0",
+    "name": "پایتخت",
+    "pos": [
+     20.81,
+     44.21
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "XKX": [
@@ -3491,6 +4711,18 @@ SG_DATA.countries = {
    17.77,
    44.17
   ],
+  "cities": [
+   {
+    "id": "BIH-0",
+    "name": "پایتخت",
+    "pos": [
+     17.77,
+     44.17
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SRB": [
     19.55,
@@ -3545,6 +4777,18 @@ SG_DATA.countries = {
   "pos": [
    19.24,
    42.79
+  ],
+  "cities": [
+   {
+    "id": "MNE-0",
+    "name": "پایتخت",
+    "pos": [
+     19.24,
+     42.79
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SRB": [
@@ -3611,6 +4855,18 @@ SG_DATA.countries = {
    21.68,
    41.6
   ],
+  "cities": [
+   {
+    "id": "MKD-0",
+    "name": "پایتخت",
+    "pos": [
+     21.68,
+     41.6
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SRB": [
     21.98,
@@ -3676,6 +4932,18 @@ SG_DATA.countries = {
    20.05,
    41.13
   ],
+  "cities": [
+   {
+    "id": "ALB-0",
+    "name": "پایتخت",
+    "pos": [
+     20.05,
+     41.13
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "MNE": [
     19.6,
@@ -3738,6 +5006,18 @@ SG_DATA.countries = {
    20.87,
    42.57
   ],
+  "cities": [
+   {
+    "id": "XKX-0",
+    "name": "پایتخت",
+    "pos": [
+     20.87,
+     42.57
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SRB": [
     20.97,
@@ -3798,6 +5078,18 @@ SG_DATA.countries = {
    25.84,
    58.68
   ],
+  "cities": [
+   {
+    "id": "EST-0",
+    "name": "پایتخت",
+    "pos": [
+     25.84,
+     58.68
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "RUS": [
     27.53,
@@ -3849,6 +5141,18 @@ SG_DATA.countries = {
   "pos": [
    24.92,
    56.86
+  ],
+  "cities": [
+   {
+    "id": "LVA-0",
+    "name": "پایتخت",
+    "pos": [
+     24.92,
+     56.86
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "LTU": [
@@ -3909,6 +5213,18 @@ SG_DATA.countries = {
   "pos": [
    23.9,
    55.32
+  ],
+  "cities": [
+   {
+    "id": "LTU-0",
+    "name": "پایتخت",
+    "pos": [
+     23.9,
+     55.32
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "RUS": [
@@ -3971,6 +5287,38 @@ SG_DATA.countries = {
   "pos": [
    27.56,
    53.9
+  ],
+  "cities": [
+   {
+    "id": "BLR-0",
+    "name": "مینسک",
+    "pos": [
+     27.56,
+     53.9
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "BLR-1",
+    "name": "برست",
+    "pos": [
+     23.69,
+     52.1
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "BLR-2",
+    "name": "گومل",
+    "pos": [
+     30.98,
+     52.44
+    ],
+    "capital": false,
+    "tags": []
+   }
   ],
   "borderPos": {
    "UKR": [
@@ -4036,6 +5384,64 @@ SG_DATA.countries = {
   "pos": [
    30.52,
    50.45
+  ],
+  "cities": [
+   {
+    "id": "UKR-0",
+    "name": "کی‌یف",
+    "pos": [
+     30.52,
+     50.45
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "UKR-1",
+    "name": "خارکیف",
+    "pos": [
+     36.23,
+     49.99
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "UKR-2",
+    "name": "دنیپرو",
+    "pos": [
+     35.05,
+     48.46
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "UKR-3",
+    "name": "اودسا",
+    "pos": [
+     30.72,
+     46.48
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "UKR-4",
+    "name": "لویو",
+    "pos": [
+     24.03,
+     49.84
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
   ],
   "borderPos": {
    "SVK": [
@@ -4114,6 +5520,18 @@ SG_DATA.countries = {
    28.47,
    47.19
   ],
+  "cities": [
+   {
+    "id": "MDA-0",
+    "name": "پایتخت",
+    "pos": [
+     28.47,
+     47.19
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "UKR": [
     29.51,
@@ -4164,6 +5582,18 @@ SG_DATA.countries = {
    33.01,
    34.92
   ],
+  "cities": [
+   {
+    "id": "CYP-0",
+    "name": "پایتخت",
+    "pos": [
+     33.01,
+     34.92
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -4208,6 +5638,18 @@ SG_DATA.countries = {
    14.44,
    35.89
   ],
+  "cities": [
+   {
+    "id": "MLT-0",
+    "name": "پایتخت",
+    "pos": [
+     14.44,
+     35.89
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -4247,6 +5689,18 @@ SG_DATA.countries = {
   "pos": [
    1.56,
    42.54
+  ],
+  "cities": [
+   {
+    "id": "AND-0",
+    "name": "پایتخت",
+    "pos": [
+     1.56,
+     42.54
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ESP": [
@@ -4298,6 +5752,18 @@ SG_DATA.countries = {
    7.41,
    43.75
   ],
+  "cities": [
+   {
+    "id": "MCO-0",
+    "name": "پایتخت",
+    "pos": [
+     7.41,
+     43.75
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "FRA": [
     7.41,
@@ -4343,6 +5809,18 @@ SG_DATA.countries = {
    12.46,
    43.94
   ],
+  "cities": [
+   {
+    "id": "SMR-0",
+    "name": "پایتخت",
+    "pos": [
+     12.46,
+     43.94
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "ITA": [
     12.44,
@@ -4387,6 +5865,18 @@ SG_DATA.countries = {
   "pos": [
    9.54,
    47.14
+  ],
+  "cities": [
+   {
+    "id": "LIE-0",
+    "name": "پایتخت",
+    "pos": [
+     9.54,
+     47.14
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "CHE": [
@@ -4438,6 +5928,18 @@ SG_DATA.countries = {
    12.43,
    41.9
   ],
+  "cities": [
+   {
+    "id": "VAT-0",
+    "name": "پایتخت",
+    "pos": [
+     12.43,
+     41.9
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "ITA": [
     12.43,
@@ -4482,6 +5984,117 @@ SG_DATA.countries = {
   "pos": [
    37.62,
    55.75
+  ],
+  "cities": [
+   {
+    "id": "RUS-0",
+    "name": "مسکو",
+    "pos": [
+     37.62,
+     55.75
+    ],
+    "capital": true,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "RUS-1",
+    "name": "سن‌پترزبورگ",
+    "pos": [
+     30.31,
+     59.94
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "RUS-2",
+    "name": "ولگوگراد",
+    "pos": [
+     44.5,
+     48.71
+    ],
+    "capital": false,
+    "tags": [
+     "missile"
+    ]
+   },
+   {
+    "id": "RUS-3",
+    "name": "روستوف",
+    "pos": [
+     39.7,
+     47.24
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "RUS-4",
+    "name": "یکاترینبورگ",
+    "pos": [
+     60.6,
+     56.84
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "RUS-5",
+    "name": "نووسیبیرسک",
+    "pos": [
+     82.92,
+     55.03
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "RUS-6",
+    "name": "ولادی‌وستوک",
+    "pos": [
+     131.9,
+     43.12
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "RUS-7",
+    "name": "مورمانسک",
+    "pos": [
+     33.08,
+     68.97
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "RUS-8",
+    "name": "کالینینگراد",
+    "pos": [
+     20.5,
+     54.71
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
   ],
   "borderPos": {
    "UKR": [
@@ -4599,6 +6212,93 @@ SG_DATA.countries = {
    32.86,
    39.93
   ],
+  "cities": [
+   {
+    "id": "TUR-0",
+    "name": "آنکارا",
+    "pos": [
+     32.86,
+     39.93
+    ],
+    "capital": true,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "TUR-1",
+    "name": "استانبول",
+    "pos": [
+     28.98,
+     41.01
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "TUR-2",
+    "name": "ازمیر",
+    "pos": [
+     27.14,
+     38.42
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "TUR-3",
+    "name": "دیاربکر",
+    "pos": [
+     40.23,
+     37.91
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "TUR-4",
+    "name": "ارزروم",
+    "pos": [
+     41.27,
+     39.9
+    ],
+    "capital": false,
+    "tags": [
+     "missile"
+    ]
+   },
+   {
+    "id": "TUR-5",
+    "name": "آدانا",
+    "pos": [
+     35.32,
+     37
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "TUR-6",
+    "name": "ترابزون",
+    "pos": [
+     39.72,
+     41
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {
    "SYR": [
     38.19,
@@ -4684,6 +6384,99 @@ SG_DATA.countries = {
    51.39,
    35.69
   ],
+  "cities": [
+   {
+    "id": "IRN-0",
+    "name": "تهران",
+    "pos": [
+     51.39,
+     35.69
+    ],
+    "capital": true,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "IRN-1",
+    "name": "اصفهان",
+    "pos": [
+     51.67,
+     32.65
+    ],
+    "capital": false,
+    "tags": [
+     "industry",
+     "air"
+    ]
+   },
+   {
+    "id": "IRN-2",
+    "name": "تبریز",
+    "pos": [
+     46.29,
+     38.08
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "IRN-3",
+    "name": "مشهد",
+    "pos": [
+     59.6,
+     36.3
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "IRN-4",
+    "name": "شیراز",
+    "pos": [
+     52.53,
+     29.59
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "IRN-5",
+    "name": "بندرعباس",
+    "pos": [
+     56.27,
+     27.18
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "IRN-6",
+    "name": "اهواز",
+    "pos": [
+     48.67,
+     31.32
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "IRN-7",
+    "name": "کرمانشاه",
+    "pos": [
+     47.06,
+     34.31
+    ],
+    "capital": false,
+    "tags": [
+     "missile"
+    ]
+   }
+  ],
   "borderPos": {
    "TKM": [
     57.98,
@@ -4768,6 +6561,62 @@ SG_DATA.countries = {
    44.36,
    33.31
   ],
+  "cities": [
+   {
+    "id": "IRQ-0",
+    "name": "بغداد",
+    "pos": [
+     44.36,
+     33.31
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "IRQ-1",
+    "name": "بصره",
+    "pos": [
+     47.78,
+     30.51
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "IRQ-2",
+    "name": "موصل",
+    "pos": [
+     43.13,
+     36.34
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "IRQ-3",
+    "name": "اربیل",
+    "pos": [
+     44.01,
+     36.19
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "IRQ-4",
+    "name": "کربلا",
+    "pos": [
+     44.02,
+     32.6
+    ],
+    "capital": false,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "TUR": [
     44.01,
@@ -4837,6 +6686,68 @@ SG_DATA.countries = {
   "pos": [
    46.68,
    24.71
+  ],
+  "cities": [
+   {
+    "id": "SAU-0",
+    "name": "ریاض",
+    "pos": [
+     46.68,
+     24.71
+    ],
+    "capital": true,
+    "tags": [
+     "missile"
+    ]
+   },
+   {
+    "id": "SAU-1",
+    "name": "جده",
+    "pos": [
+     39.17,
+     21.49
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "SAU-2",
+    "name": "دمام",
+    "pos": [
+     50.1,
+     26.43
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "SAU-3",
+    "name": "تبوک",
+    "pos": [
+     36.57,
+     28.38
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "SAU-4",
+    "name": "خمیس مشیط",
+    "pos": [
+     42.73,
+     18.3
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
   ],
   "borderPos": {
    "ARE": [
@@ -4919,6 +6830,33 @@ SG_DATA.countries = {
    54.37,
    24.45
   ],
+  "cities": [
+   {
+    "id": "ARE-0",
+    "name": "ابوظبی",
+    "pos": [
+     54.37,
+     24.45
+    ],
+    "capital": true,
+    "tags": [
+     "port",
+     "air"
+    ]
+   },
+   {
+    "id": "ARE-1",
+    "name": "دبی",
+    "pos": [
+     55.27,
+     25.2
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {
    "SAU": [
     52.51,
@@ -4971,6 +6909,21 @@ SG_DATA.countries = {
    51.53,
    25.29
   ],
+  "cities": [
+   {
+    "id": "QAT-0",
+    "name": "دوحه",
+    "pos": [
+     51.53,
+     25.29
+    ],
+    "capital": true,
+    "tags": [
+     "port",
+     "air"
+    ]
+   }
+  ],
   "borderPos": {
    "SAU": [
     51.02,
@@ -5018,6 +6971,20 @@ SG_DATA.countries = {
   "pos": [
    47.98,
    29.37
+  ],
+  "cities": [
+   {
+    "id": "KWT-0",
+    "name": "کویت",
+    "pos": [
+     47.98,
+     29.37
+    ],
+    "capital": true,
+    "tags": [
+     "port"
+    ]
+   }
   ],
   "borderPos": {
    "SAU": [
@@ -5071,6 +7038,20 @@ SG_DATA.countries = {
    50.58,
    26.23
   ],
+  "cities": [
+   {
+    "id": "BHR-0",
+    "name": "منامه",
+    "pos": [
+     50.58,
+     26.23
+    ],
+    "capital": true,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -5112,6 +7093,32 @@ SG_DATA.countries = {
   "pos": [
    58.41,
    23.59
+  ],
+  "cities": [
+   {
+    "id": "OMN-0",
+    "name": "مسقط",
+    "pos": [
+     58.41,
+     23.59
+    ],
+    "capital": true,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "OMN-1",
+    "name": "صلاله",
+    "pos": [
+     54.09,
+     17.02
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
   ],
   "borderPos": {
    "ARE": [
@@ -5170,6 +7177,18 @@ SG_DATA.countries = {
    47.52,
    15.94
   ],
+  "cities": [
+   {
+    "id": "YEM-0",
+    "name": "پایتخت",
+    "pos": [
+     47.52,
+     15.94
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SAU": [
     45.24,
@@ -5222,6 +7241,30 @@ SG_DATA.countries = {
   "pos": [
    35.93,
    31.95
+  ],
+  "cities": [
+   {
+    "id": "JOR-0",
+    "name": "امان",
+    "pos": [
+     35.93,
+     31.95
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "JOR-1",
+    "name": "عقبه",
+    "pos": [
+     35,
+     29.53
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
   ],
   "borderPos": {
    "SYR": [
@@ -5287,6 +7330,45 @@ SG_DATA.countries = {
   "pos": [
    34.78,
    32.08
+  ],
+  "cities": [
+   {
+    "id": "ISR-0",
+    "name": "تل‌آویو",
+    "pos": [
+     34.78,
+     32.08
+    ],
+    "capital": true,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "ISR-1",
+    "name": "حیفا",
+    "pos": [
+     34.99,
+     32.79
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "ISR-2",
+    "name": "بئرشبع",
+    "pos": [
+     34.79,
+     31.25
+    ],
+    "capital": false,
+    "tags": [
+     "air",
+     "missile"
+    ]
+   }
   ],
   "borderPos": {
    "SYR": [
@@ -5355,6 +7437,18 @@ SG_DATA.countries = {
    35.25,
    31.95
   ],
+  "cities": [
+   {
+    "id": "PSE-0",
+    "name": "پایتخت",
+    "pos": [
+     35.25,
+     31.95
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "JOR": [
     35.53,
@@ -5410,6 +7504,20 @@ SG_DATA.countries = {
    35.5,
    33.89
   ],
+  "cities": [
+   {
+    "id": "LBN-0",
+    "name": "بیروت",
+    "pos": [
+     35.5,
+     33.89
+    ],
+    "capital": true,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {
    "SYR": [
     36.28,
@@ -5461,6 +7569,40 @@ SG_DATA.countries = {
   "pos": [
    36.29,
    33.51
+  ],
+  "cities": [
+   {
+    "id": "SYR-0",
+    "name": "دمشق",
+    "pos": [
+     36.29,
+     33.51
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "SYR-1",
+    "name": "حلب",
+    "pos": [
+     37.16,
+     36.2
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "SYR-2",
+    "name": "لاذقیه",
+    "pos": [
+     35.78,
+     35.52
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
   ],
   "borderPos": {
    "TUR": [
@@ -5529,6 +7671,56 @@ SG_DATA.countries = {
    31.24,
    30.04
   ],
+  "cities": [
+   {
+    "id": "EGY-0",
+    "name": "قاهره",
+    "pos": [
+     31.24,
+     30.04
+    ],
+    "capital": true,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "EGY-1",
+    "name": "اسکندریه",
+    "pos": [
+     29.92,
+     31.2
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "EGY-2",
+    "name": "پورت سعید",
+    "pos": [
+     32.3,
+     31.26
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "EGY-3",
+    "name": "اسوان",
+    "pos": [
+     32.9,
+     24.09
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
+  ],
   "borderPos": {
    "SDN": [
     31.46,
@@ -5590,6 +7782,42 @@ SG_DATA.countries = {
   "pos": [
    49.87,
    40.41
+  ],
+  "cities": [
+   {
+    "id": "AZE-0",
+    "name": "باکو",
+    "pos": [
+     49.87,
+     40.41
+    ],
+    "capital": true,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "AZE-1",
+    "name": "گنجه",
+    "pos": [
+     46.36,
+     40.68
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "AZE-2",
+    "name": "نخجوان",
+    "pos": [
+     45.41,
+     39.21
+    ],
+    "capital": false,
+    "tags": []
+   }
   ],
   "borderPos": {
    "TUR": [
@@ -5659,6 +7887,30 @@ SG_DATA.countries = {
    44.51,
    40.18
   ],
+  "cities": [
+   {
+    "id": "ARM-0",
+    "name": "ایروان",
+    "pos": [
+     44.51,
+     40.18
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "ARM-1",
+    "name": "گیومری",
+    "pos": [
+     43.85,
+     40.79
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
+  ],
   "borderPos": {
    "TUR": [
     43.68,
@@ -5719,6 +7971,30 @@ SG_DATA.countries = {
    44.79,
    41.72
   ],
+  "cities": [
+   {
+    "id": "GEO-0",
+    "name": "تفلیس",
+    "pos": [
+     44.79,
+     41.72
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "GEO-1",
+    "name": "باتومی",
+    "pos": [
+     41.64,
+     41.64
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {
    "TUR": [
     42.76,
@@ -5778,6 +8054,40 @@ SG_DATA.countries = {
   "pos": [
    58.38,
    37.95
+  ],
+  "cities": [
+   {
+    "id": "TKM-0",
+    "name": "عشق‌آباد",
+    "pos": [
+     58.38,
+     37.95
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "TKM-1",
+    "name": "ترکمن‌باشی",
+    "pos": [
+     52.97,
+     40.02
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "TKM-2",
+    "name": "مرو",
+    "pos": [
+     61.83,
+     37.6
+    ],
+    "capital": false,
+    "tags": []
+   }
   ],
   "borderPos": {
    "UZB": [
@@ -5840,6 +8150,18 @@ SG_DATA.countries = {
   "pos": [
    63.29,
    41.78
+  ],
+  "cities": [
+   {
+    "id": "UZB-0",
+    "name": "پایتخت",
+    "pos": [
+     63.29,
+     41.78
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "TKM": [
@@ -5905,6 +8227,42 @@ SG_DATA.countries = {
   "pos": [
    71.45,
    51.17
+  ],
+  "cities": [
+   {
+    "id": "KAZ-0",
+    "name": "آستانه",
+    "pos": [
+     71.45,
+     51.17
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "KAZ-1",
+    "name": "آلماتی",
+    "pos": [
+     76.89,
+     43.24
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "KAZ-2",
+    "name": "آکتائو",
+    "pos": [
+     51.2,
+     43.65
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
   ],
   "borderPos": {
    "UZB": [
@@ -5974,6 +8332,18 @@ SG_DATA.countries = {
    74.51,
    41.47
   ],
+  "cities": [
+   {
+    "id": "KGZ-0",
+    "name": "پایتخت",
+    "pos": [
+     74.51,
+     41.47
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "UZB": [
     72.11,
@@ -6034,6 +8404,18 @@ SG_DATA.countries = {
    71.03,
    38.53
   ],
+  "cities": [
+   {
+    "id": "TJK-0",
+    "name": "پایتخت",
+    "pos": [
+     71.03,
+     38.53
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "UZB": [
     68.79,
@@ -6093,6 +8475,48 @@ SG_DATA.countries = {
   "pos": [
    69.17,
    34.53
+  ],
+  "cities": [
+   {
+    "id": "AFG-0",
+    "name": "کابل",
+    "pos": [
+     69.17,
+     34.53
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "AFG-1",
+    "name": "هرات",
+    "pos": [
+     62.2,
+     34.35
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "AFG-2",
+    "name": "قندهار",
+    "pos": [
+     65.71,
+     31.61
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "AFG-3",
+    "name": "مزار شریف",
+    "pos": [
+     67.11,
+     36.71
+    ],
+    "capital": false,
+    "tags": []
+   }
   ],
   "borderPos": {
    "UZB": [
@@ -6163,6 +8587,127 @@ SG_DATA.countries = {
   "pos": [
    116.4,
    39.9
+  ],
+  "cities": [
+   {
+    "id": "CHN-0",
+    "name": "پکن",
+    "pos": [
+     116.4,
+     39.9
+    ],
+    "capital": true,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "CHN-1",
+    "name": "شانگهای",
+    "pos": [
+     121.47,
+     31.23
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "CHN-2",
+    "name": "گوانگژو",
+    "pos": [
+     113.26,
+     23.13
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "CHN-3",
+    "name": "چینگدائو",
+    "pos": [
+     120.38,
+     36.07
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "CHN-4",
+    "name": "شیامن",
+    "pos": [
+     118.09,
+     24.48
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "air"
+    ]
+   },
+   {
+    "id": "CHN-5",
+    "name": "چنگدو",
+    "pos": [
+     104.07,
+     30.57
+    ],
+    "capital": false,
+    "tags": [
+     "industry",
+     "air"
+    ]
+   },
+   {
+    "id": "CHN-6",
+    "name": "ووهان",
+    "pos": [
+     114.3,
+     30.59
+    ],
+    "capital": false,
+    "tags": [
+     "missile"
+    ]
+   },
+   {
+    "id": "CHN-7",
+    "name": "شنیانگ",
+    "pos": [
+     123.43,
+     41.8
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "CHN-8",
+    "name": "کاشغر",
+    "pos": [
+     75.99,
+     39.47
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "CHN-9",
+    "name": "لاسا",
+    "pos": [
+     91.17,
+     29.65
+    ],
+    "capital": false,
+    "tags": []
+   }
   ],
   "borderPos": {
    "VNM": [
@@ -6279,6 +8824,101 @@ SG_DATA.countries = {
    77.2,
    28.6
   ],
+  "cities": [
+   {
+    "id": "IND-0",
+    "name": "دهلی نو",
+    "pos": [
+     77.2,
+     28.6
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "IND-1",
+    "name": "بمبئی",
+    "pos": [
+     72.88,
+     19.08
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "IND-2",
+    "name": "کلکته",
+    "pos": [
+     88.36,
+     22.57
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "IND-3",
+    "name": "چنای",
+    "pos": [
+     80.27,
+     13.08
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "IND-4",
+    "name": "بنگلور",
+    "pos": [
+     77.59,
+     12.97
+    ],
+    "capital": false,
+    "tags": [
+     "industry",
+     "air"
+    ]
+   },
+   {
+    "id": "IND-5",
+    "name": "حیدرآباد",
+    "pos": [
+     78.49,
+     17.39
+    ],
+    "capital": false,
+    "tags": [
+     "missile"
+    ]
+   },
+   {
+    "id": "IND-6",
+    "name": "سرینگر",
+    "pos": [
+     74.8,
+     34.08
+    ],
+    "capital": false,
+    "tags": []
+   },
+   {
+    "id": "IND-7",
+    "name": "گواهاتی",
+    "pos": [
+     91.74,
+     26.14
+    ],
+    "capital": false,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "PAK": [
     73.38,
@@ -6352,6 +8992,67 @@ SG_DATA.countries = {
    73.05,
    33.68
   ],
+  "cities": [
+   {
+    "id": "PAK-0",
+    "name": "اسلام‌آباد",
+    "pos": [
+     73.05,
+     33.68
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "PAK-1",
+    "name": "کراچی",
+    "pos": [
+     67,
+     24.86
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "PAK-2",
+    "name": "لاهور",
+    "pos": [
+     74.35,
+     31.55
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "PAK-3",
+    "name": "پیشاور",
+    "pos": [
+     71.58,
+     34.01
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "PAK-4",
+    "name": "کویته",
+    "pos": [
+     67,
+     30.18
+    ],
+    "capital": false,
+    "tags": [
+     "missile"
+    ]
+   }
+  ],
   "borderPos": {
    "IRN": [
     63.26,
@@ -6412,6 +9113,30 @@ SG_DATA.countries = {
    90.41,
    23.81
   ],
+  "cities": [
+   {
+    "id": "BGD-0",
+    "name": "داکا",
+    "pos": [
+     90.41,
+     23.81
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "BGD-1",
+    "name": "چیتاگونگ",
+    "pos": [
+     91.78,
+     22.36
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
+  ],
   "borderPos": {
    "IND": [
     89.57,
@@ -6461,6 +9186,18 @@ SG_DATA.countries = {
   "pos": [
    85.32,
    27.72
+  ],
+  "cities": [
+   {
+    "id": "NPL-0",
+    "name": "کاتماندو",
+    "pos": [
+     85.32,
+     27.72
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "IND": [
@@ -6512,6 +9249,18 @@ SG_DATA.countries = {
    90.4,
    27.41
   ],
+  "cities": [
+   {
+    "id": "BTN-0",
+    "name": "پایتخت",
+    "pos": [
+     90.4,
+     27.41
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "IND": [
     91.13,
@@ -6562,6 +9311,18 @@ SG_DATA.countries = {
    80.7,
    7.61
   ],
+  "cities": [
+   {
+    "id": "LKA-0",
+    "name": "پایتخت",
+    "pos": [
+     80.7,
+     7.61
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -6602,6 +9363,18 @@ SG_DATA.countries = {
    73.5,
    4.2
   ],
+  "cities": [
+   {
+    "id": "MDV-0",
+    "name": "پایتخت",
+    "pos": [
+     73.5,
+     4.2
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -6641,6 +9414,66 @@ SG_DATA.countries = {
   "pos": [
    139.69,
    35.69
+  ],
+  "cities": [
+   {
+    "id": "JPN-0",
+    "name": "توکیو",
+    "pos": [
+     139.69,
+     35.69
+    ],
+    "capital": true,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "JPN-1",
+    "name": "یوکوسوکا",
+    "pos": [
+     139.67,
+     35.28
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   },
+   {
+    "id": "JPN-2",
+    "name": "اوساکا",
+    "pos": [
+     135.5,
+     34.69
+    ],
+    "capital": false,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "JPN-3",
+    "name": "ناها",
+    "pos": [
+     127.68,
+     26.21
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   },
+   {
+    "id": "JPN-4",
+    "name": "ساپورو",
+    "pos": [
+     141.35,
+     43.06
+    ],
+    "capital": false,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -6684,6 +9517,45 @@ SG_DATA.countries = {
   "pos": [
    126.98,
    37.57
+  ],
+  "cities": [
+   {
+    "id": "KOR-0",
+    "name": "سئول",
+    "pos": [
+     126.98,
+     37.57
+    ],
+    "capital": true,
+    "tags": [
+     "industry"
+    ]
+   },
+   {
+    "id": "KOR-1",
+    "name": "بوسان",
+    "pos": [
+     129.08,
+     35.18
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "KOR-2",
+    "name": "ده‌گو",
+    "pos": [
+     128.6,
+     35.87
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
   ],
   "borderPos": {
    "PRK": [
@@ -6732,6 +9604,43 @@ SG_DATA.countries = {
   "pos": [
    125.75,
    39.03
+  ],
+  "cities": [
+   {
+    "id": "PRK-0",
+    "name": "پیونگ‌یانگ",
+    "pos": [
+     125.75,
+     39.03
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "PRK-1",
+    "name": "ونسان",
+    "pos": [
+     127.44,
+     39.15
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "missile"
+    ]
+   },
+   {
+    "id": "PRK-2",
+    "name": "سینپو",
+    "pos": [
+     128.18,
+     40.03
+    ],
+    "capital": false,
+    "tags": [
+     "port"
+    ]
+   }
   ],
   "borderPos": {
    "KOR": [
@@ -6788,6 +9697,43 @@ SG_DATA.countries = {
    121.56,
    25.03
   ],
+  "cities": [
+   {
+    "id": "TWN-0",
+    "name": "تایپه",
+    "pos": [
+     121.56,
+     25.03
+    ],
+    "capital": true,
+    "tags": []
+   },
+   {
+    "id": "TWN-1",
+    "name": "کائوسیونگ",
+    "pos": [
+     120.3,
+     22.63
+    ],
+    "capital": false,
+    "tags": [
+     "port",
+     "industry"
+    ]
+   },
+   {
+    "id": "TWN-2",
+    "name": "تایچونگ",
+    "pos": [
+     120.68,
+     24.15
+    ],
+    "capital": false,
+    "tags": [
+     "air"
+    ]
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -6829,6 +9775,18 @@ SG_DATA.countries = {
   "pos": [
    103.12,
    46.96
+  ],
+  "cities": [
+   {
+    "id": "MNG-0",
+    "name": "پایتخت",
+    "pos": [
+     103.12,
+     46.96
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "RUS": [
@@ -6879,6 +9837,18 @@ SG_DATA.countries = {
   "pos": [
    106.35,
    16.55
+  ],
+  "cities": [
+   {
+    "id": "VNM-0",
+    "name": "پایتخت",
+    "pos": [
+     106.35,
+     16.55
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "LAO": [
@@ -6934,6 +9904,18 @@ SG_DATA.countries = {
   "pos": [
    101,
    15.1
+  ],
+  "cities": [
+   {
+    "id": "THA-0",
+    "name": "پایتخت",
+    "pos": [
+     101,
+     15.1
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "MYS": [
@@ -6995,6 +9977,18 @@ SG_DATA.countries = {
    114.72,
    3.62
   ],
+  "cities": [
+   {
+    "id": "MYS-0",
+    "name": "پایتخت",
+    "pos": [
+     114.72,
+     3.62
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "THA": [
     100.98,
@@ -7052,6 +10046,18 @@ SG_DATA.countries = {
    103.82,
    1.36
   ],
+  "cities": [
+   {
+    "id": "SGP-0",
+    "name": "پایتخت",
+    "pos": [
+     103.82,
+     1.36
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -7092,6 +10098,18 @@ SG_DATA.countries = {
   "pos": [
    114.01,
    -0.19
+  ],
+  "cities": [
+   {
+    "id": "IDN-0",
+    "name": "پایتخت",
+    "pos": [
+     114.01,
+     -0.19
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "TLS": [
@@ -7152,6 +10170,18 @@ SG_DATA.countries = {
    121.42,
    15.95
   ],
+  "cities": [
+   {
+    "id": "PHL-0",
+    "name": "پایتخت",
+    "pos": [
+     121.42,
+     15.95
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -7193,6 +10223,18 @@ SG_DATA.countries = {
   "pos": [
    96.49,
    21.15
+  ],
+  "cities": [
+   {
+    "id": "MMR-0",
+    "name": "پایتخت",
+    "pos": [
+     96.49,
+     21.15
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "LAO": [
@@ -7259,6 +10301,18 @@ SG_DATA.countries = {
    104.91,
    12.72
   ],
+  "cities": [
+   {
+    "id": "KHM-0",
+    "name": "پایتخت",
+    "pos": [
+     104.91,
+     12.72
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "VNM": [
     105.95,
@@ -7313,6 +10367,18 @@ SG_DATA.countries = {
   "pos": [
    103.78,
    18.49
+  ],
+  "cities": [
+   {
+    "id": "LAO-0",
+    "name": "پایتخت",
+    "pos": [
+     103.78,
+     18.49
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "VNM": [
@@ -7379,6 +10445,18 @@ SG_DATA.countries = {
    114.59,
    4.49
   ],
+  "cities": [
+   {
+    "id": "BRN-0",
+    "name": "پایتخت",
+    "pos": [
+     114.59,
+     4.49
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "MYS": [
     114.79,
@@ -7423,6 +10501,18 @@ SG_DATA.countries = {
   "pos": [
    125.92,
    -8.81
+  ],
+  "cities": [
+   {
+    "id": "TLS-0",
+    "name": "پایتخت",
+    "pos": [
+     125.92,
+     -8.81
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "IDN": [
@@ -7469,6 +10559,18 @@ SG_DATA.countries = {
    123.58,
    -12.43
   ],
+  "cities": [
+   {
+    "id": "AUS-0",
+    "name": "پایتخت",
+    "pos": [
+     123.58,
+     -12.43
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -7511,6 +10613,18 @@ SG_DATA.countries = {
    170.61,
    -43.95
   ],
+  "cities": [
+   {
+    "id": "NZL-0",
+    "name": "پایتخت",
+    "pos": [
+     170.61,
+     -43.95
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": [
@@ -7550,6 +10664,18 @@ SG_DATA.countries = {
   "pos": [
    144.23,
    -6.6
+  ],
+  "cities": [
+   {
+    "id": "PNG-0",
+    "name": "پایتخت",
+    "pos": [
+     144.23,
+     -6.6
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "IDN": [
@@ -7598,6 +10724,18 @@ SG_DATA.countries = {
    177.97,
    -17.82
   ],
+  "cities": [
+   {
+    "id": "FJI-0",
+    "name": "پایتخت",
+    "pos": [
+     177.97,
+     -17.82
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -7635,6 +10773,18 @@ SG_DATA.countries = {
   "pos": [
    160.17,
    -9.62
+  ],
+  "cities": [
+   {
+    "id": "SLB-0",
+    "name": "پایتخت",
+    "pos": [
+     160.17,
+     -9.62
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -7674,6 +10824,18 @@ SG_DATA.countries = {
    166.85,
    -15.23
   ],
+  "cities": [
+   {
+    "id": "VUT-0",
+    "name": "پایتخت",
+    "pos": [
+     166.85,
+     -15.23
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -7711,6 +10873,18 @@ SG_DATA.countries = {
   "pos": [
    -172.44,
    -13.63
+  ],
+  "cities": [
+   {
+    "id": "WSM-0",
+    "name": "پایتخت",
+    "pos": [
+     -172.44,
+     -13.63
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -7750,6 +10924,18 @@ SG_DATA.countries = {
    -175.22,
    -21.17
   ],
+  "cities": [
+   {
+    "id": "TON-0",
+    "name": "پایتخت",
+    "pos": [
+     -175.22,
+     -21.17
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -7787,6 +10973,18 @@ SG_DATA.countries = {
   "pos": [
    158.23,
    6.89
+  ],
+  "cities": [
+   {
+    "id": "FSM-0",
+    "name": "پایتخت",
+    "pos": [
+     158.23,
+     6.89
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -7826,6 +11024,18 @@ SG_DATA.countries = {
    171.19,
    7.11
   ],
+  "cities": [
+   {
+    "id": "MHL-0",
+    "name": "پایتخت",
+    "pos": [
+     171.19,
+     7.11
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -7863,6 +11073,18 @@ SG_DATA.countries = {
   "pos": [
    134.58,
    7.51
+  ],
+  "cities": [
+   {
+    "id": "PLW-0",
+    "name": "پایتخت",
+    "pos": [
+     134.58,
+     7.51
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],
@@ -7902,6 +11124,18 @@ SG_DATA.countries = {
    -157.37,
    1.85
   ],
+  "cities": [
+   {
+    "id": "KIR-0",
+    "name": "پایتخت",
+    "pos": [
+     -157.37,
+     1.85
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -7940,6 +11174,18 @@ SG_DATA.countries = {
    166.93,
    -0.52
   ],
+  "cities": [
+   {
+    "id": "NRU-0",
+    "name": "پایتخت",
+    "pos": [
+     166.93,
+     -0.52
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -7977,6 +11223,18 @@ SG_DATA.countries = {
   "pos": [
    8.08,
    9.59
+  ],
+  "cities": [
+   {
+    "id": "NGA-0",
+    "name": "پایتخت",
+    "pos": [
+     8.08,
+     9.59
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "TCD": [
@@ -8037,6 +11295,18 @@ SG_DATA.countries = {
   "pos": [
    25.19,
    -28.97
+  ],
+  "cities": [
+   {
+    "id": "ZAF-0",
+    "name": "پایتخت",
+    "pos": [
+     25.19,
+     -28.97
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SWZ": [
@@ -8108,6 +11378,18 @@ SG_DATA.countries = {
    39.61,
    8.61
   ],
+  "cities": [
+   {
+    "id": "ETH-0",
+    "name": "پایتخت",
+    "pos": [
+     39.61,
+     8.61
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SSD": [
     33.51,
@@ -8178,6 +11460,18 @@ SG_DATA.countries = {
    37.8,
    0.6
   ],
+  "cities": [
+   {
+    "id": "KEN-0",
+    "name": "پایتخت",
+    "pos": [
+     37.8,
+     0.6
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "UGA": [
     34.98,
@@ -8242,6 +11536,18 @@ SG_DATA.countries = {
   "pos": [
    34.79,
    -6.27
+  ],
+  "cities": [
+   {
+    "id": "TZA-0",
+    "name": "پایتخت",
+    "pos": [
+     34.79,
+     -6.27
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ZMB": [
@@ -8323,6 +11629,18 @@ SG_DATA.countries = {
    32.37,
    1.27
   ],
+  "cities": [
+   {
+    "id": "UGA-0",
+    "name": "پایتخت",
+    "pos": [
+     32.37,
+     1.27
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "TZA": [
     31.66,
@@ -8387,6 +11705,18 @@ SG_DATA.countries = {
   "pos": [
    2.63,
    28.06
+  ],
+  "cities": [
+   {
+    "id": "DZA-0",
+    "name": "پایتخت",
+    "pos": [
+     2.63,
+     28.06
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "TUN": [
@@ -8460,6 +11790,18 @@ SG_DATA.countries = {
    -8.73,
    29.77
   ],
+  "cities": [
+   {
+    "id": "MAR-0",
+    "name": "پایتخت",
+    "pos": [
+     -8.73,
+     29.77
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "MRT": [
     -12.08,
@@ -8512,6 +11854,18 @@ SG_DATA.countries = {
    9.55,
    34.09
   ],
+  "cities": [
+   {
+    "id": "TUN-0",
+    "name": "پایتخت",
+    "pos": [
+     9.55,
+     34.09
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "LBY": [
     10.47,
@@ -8563,6 +11917,18 @@ SG_DATA.countries = {
   "pos": [
    18.07,
    27.02
+  ],
+  "cities": [
+   {
+    "id": "LBY-0",
+    "name": "پایتخت",
+    "pos": [
+     18.07,
+     27.02
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "TUN": [
@@ -8635,6 +12001,18 @@ SG_DATA.countries = {
   "pos": [
    29.91,
    15.97
+  ],
+  "cities": [
+   {
+    "id": "SDN-0",
+    "name": "پایتخت",
+    "pos": [
+     29.91,
+     15.97
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SSD": [
@@ -8713,6 +12091,18 @@ SG_DATA.countries = {
    30.25,
    7.31
   ],
+  "cities": [
+   {
+    "id": "SSD-0",
+    "name": "پایتخت",
+    "pos": [
+     30.25,
+     7.31
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "UGA": [
     32.14,
@@ -8783,6 +12173,18 @@ SG_DATA.countries = {
    45.68,
    4.74
   ],
+  "cities": [
+   {
+    "id": "SOM-0",
+    "name": "پایتخت",
+    "pos": [
+     45.68,
+     4.74
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "KEN": [
     40.97,
@@ -8837,6 +12239,18 @@ SG_DATA.countries = {
   "pos": [
    42.56,
    11.75
+  ],
+  "cities": [
+   {
+    "id": "DJI-0",
+    "name": "پایتخت",
+    "pos": [
+     42.56,
+     11.75
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SOM": [
@@ -8895,6 +12309,18 @@ SG_DATA.countries = {
    38.85,
    15.36
   ],
+  "cities": [
+   {
+    "id": "ERI-0",
+    "name": "پایتخت",
+    "pos": [
+     38.85,
+     15.36
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SDN": [
     37.45,
@@ -8952,6 +12378,18 @@ SG_DATA.countries = {
   "pos": [
    17.56,
    -12.31
+  ],
+  "cities": [
+   {
+    "id": "AGO-0",
+    "name": "پایتخت",
+    "pos": [
+     17.56,
+     -12.31
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ZMB": [
@@ -9012,6 +12450,18 @@ SG_DATA.countries = {
   "pos": [
    23.64,
    -2.87
+  ],
+  "cities": [
+   {
+    "id": "COD-0",
+    "name": "پایتخت",
+    "pos": [
+     23.64,
+     -2.87
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ZMB": [
@@ -9098,6 +12548,18 @@ SG_DATA.countries = {
    15.22,
    -0.84
   ],
+  "cities": [
+   {
+    "id": "COG-0",
+    "name": "پایتخت",
+    "pos": [
+     15.22,
+     -0.84
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "COD": [
     15.11,
@@ -9162,6 +12624,18 @@ SG_DATA.countries = {
   "pos": [
    12.73,
    5.68
+  ],
+  "cities": [
+   {
+    "id": "CMR-0",
+    "name": "پایتخت",
+    "pos": [
+     12.73,
+     5.68
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "CAF": [
@@ -9233,6 +12707,18 @@ SG_DATA.countries = {
    11.79,
    -0.59
   ],
+  "cities": [
+   {
+    "id": "GAB-0",
+    "name": "پایتخت",
+    "pos": [
+     11.79,
+     -0.59
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "GNQ": [
     10.18,
@@ -9288,6 +12774,18 @@ SG_DATA.countries = {
    10.47,
    1.57
   ],
+  "cities": [
+   {
+    "id": "GNQ-0",
+    "name": "پایتخت",
+    "pos": [
+     10.47,
+     1.57
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "GAB": [
     10.18,
@@ -9337,6 +12835,18 @@ SG_DATA.countries = {
   "pos": [
    20.46,
    6.57
+  ],
+  "cities": [
+   {
+    "id": "CAF-0",
+    "name": "پایتخت",
+    "pos": [
+     20.46,
+     6.57
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SSD": [
@@ -9408,6 +12918,18 @@ SG_DATA.countries = {
    18.64,
    15.28
   ],
+  "cities": [
+   {
+    "id": "TCD-0",
+    "name": "پایتخت",
+    "pos": [
+     18.64,
+     15.28
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SDN": [
     22.34,
@@ -9477,6 +12999,18 @@ SG_DATA.countries = {
   "pos": [
    9.33,
    17.41
+  ],
+  "cities": [
+   {
+    "id": "NER-0",
+    "name": "پایتخت",
+    "pos": [
+     9.33,
+     17.41
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "NGA": [
@@ -9553,6 +13087,18 @@ SG_DATA.countries = {
    -3.59,
    17.32
   ],
+  "cities": [
+   {
+    "id": "MLI-0",
+    "name": "پایتخت",
+    "pos": [
+     -3.59,
+     17.32
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SEN": [
     -11.83,
@@ -9628,6 +13174,18 @@ SG_DATA.countries = {
    -1.76,
    12.27
   ],
+  "cities": [
+   {
+    "id": "BFA-0",
+    "name": "پایتخت",
+    "pos": [
+     -1.76,
+     12.27
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "TGO": [
     0.49,
@@ -9698,6 +13256,18 @@ SG_DATA.countries = {
    -14.47,
    14.36
   ],
+  "cities": [
+   {
+    "id": "SEN-0",
+    "name": "پایتخت",
+    "pos": [
+     -14.47,
+     14.36
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "MRT": [
     -13.76,
@@ -9763,6 +13333,18 @@ SG_DATA.countries = {
    -15.4,
    13.45
   ],
+  "cities": [
+   {
+    "id": "GMB-0",
+    "name": "پایتخت",
+    "pos": [
+     -15.4,
+     13.45
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "SEN": [
     -14.01,
@@ -9807,6 +13389,18 @@ SG_DATA.countries = {
   "pos": [
    -14.92,
    12.06
+  ],
+  "cities": [
+   {
+    "id": "GNB-0",
+    "name": "پایتخت",
+    "pos": [
+     -14.92,
+     12.06
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SEN": [
@@ -9857,6 +13451,18 @@ SG_DATA.countries = {
   "pos": [
    -10.93,
    10.44
+  ],
+  "cities": [
+   {
+    "id": "GIN-0",
+    "name": "پایتخت",
+    "pos": [
+     -10.93,
+     10.44
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SLE": [
@@ -9928,6 +13534,18 @@ SG_DATA.countries = {
    -11.79,
    8.57
   ],
+  "cities": [
+   {
+    "id": "SLE-0",
+    "name": "پایتخت",
+    "pos": [
+     -11.79,
+     8.57
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "LBR": [
     -10.69,
@@ -9977,6 +13595,18 @@ SG_DATA.countries = {
   "pos": [
    -9.32,
    6.45
+  ],
+  "cities": [
+   {
+    "id": "LBR-0",
+    "name": "پایتخت",
+    "pos": [
+     -9.32,
+     6.45
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "SLE": [
@@ -10032,6 +13662,18 @@ SG_DATA.countries = {
   "pos": [
    -5.57,
    7.63
+  ],
+  "cities": [
+   {
+    "id": "CIV-0",
+    "name": "پایتخت",
+    "pos": [
+     -5.57,
+     7.63
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "MLI": [
@@ -10098,6 +13740,18 @@ SG_DATA.countries = {
    -1.22,
    7.95
   ],
+  "cities": [
+   {
+    "id": "GHA-0",
+    "name": "پایتخت",
+    "pos": [
+     -1.22,
+     7.95
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "TGO": [
     0.5,
@@ -10153,6 +13807,18 @@ SG_DATA.countries = {
    0.96,
    8.52
   ],
+  "cities": [
+   {
+    "id": "TGO-0",
+    "name": "پایتخت",
+    "pos": [
+     0.96,
+     8.52
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "GHA": [
     0.5,
@@ -10207,6 +13873,18 @@ SG_DATA.countries = {
   "pos": [
    2.33,
    9.64
+  ],
+  "cities": [
+   {
+    "id": "BEN-0",
+    "name": "پایتخت",
+    "pos": [
+     2.33,
+     9.64
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "TGO": [
@@ -10268,6 +13946,18 @@ SG_DATA.countries = {
    -10.37,
    20.22
   ],
+  "cities": [
+   {
+    "id": "MRT-0",
+    "name": "پایتخت",
+    "pos": [
+     -10.37,
+     20.22
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "MAR": [
     -12.08,
@@ -10328,6 +14018,18 @@ SG_DATA.countries = {
    -23.64,
    15.08
   ],
+  "cities": [
+   {
+    "id": "CPV-0",
+    "name": "پایتخت",
+    "pos": [
+     -23.64,
+     15.08
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -10366,6 +14068,18 @@ SG_DATA.countries = {
    6.61,
    0.24
   ],
+  "cities": [
+   {
+    "id": "STP-0",
+    "name": "پایتخت",
+    "pos": [
+     6.61,
+     0.24
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -10403,6 +14117,18 @@ SG_DATA.countries = {
   "pos": [
    27.81,
    -13.46
+  ],
+  "cities": [
+   {
+    "id": "ZMB-0",
+    "name": "پایتخت",
+    "pos": [
+     27.81,
+     -13.46
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ZWE": [
@@ -10479,6 +14205,18 @@ SG_DATA.countries = {
    29.85,
    -19
   ],
+  "cities": [
+   {
+    "id": "ZWE-0",
+    "name": "پایتخت",
+    "pos": [
+     29.85,
+     -19
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "ZMB": [
     27.93,
@@ -10539,6 +14277,18 @@ SG_DATA.countries = {
    34.28,
    -13.21
   ],
+  "cities": [
+   {
+    "id": "MWI-0",
+    "name": "پایتخت",
+    "pos": [
+     34.28,
+     -13.21
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "MOZ": [
     35.29,
@@ -10593,6 +14343,18 @@ SG_DATA.countries = {
   "pos": [
    35.6,
    -17.2
+  ],
+  "cities": [
+   {
+    "id": "MOZ-0",
+    "name": "پایتخت",
+    "pos": [
+     35.6,
+     -17.2
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ZWE": [
@@ -10664,6 +14426,18 @@ SG_DATA.countries = {
    46.74,
    -19.32
   ],
+  "cities": [
+   {
+    "id": "MDG-0",
+    "name": "پایتخت",
+    "pos": [
+     46.74,
+     -19.32
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -10701,6 +14475,18 @@ SG_DATA.countries = {
   "pos": [
    23.81,
    -22.17
+  ],
+  "cities": [
+   {
+    "id": "BWA-0",
+    "name": "پایتخت",
+    "pos": [
+     23.81,
+     -22.17
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ZWE": [
@@ -10756,6 +14542,18 @@ SG_DATA.countries = {
   "pos": [
    17.2,
    -22.07
+  ],
+  "cities": [
+   {
+    "id": "NAM-0",
+    "name": "پایتخت",
+    "pos": [
+     17.2,
+     -22.07
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ZMB": [
@@ -10817,6 +14615,18 @@ SG_DATA.countries = {
    28.23,
    -29.58
   ],
+  "cities": [
+   {
+    "id": "LSO-0",
+    "name": "پایتخت",
+    "pos": [
+     28.23,
+     -29.58
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "ZAF": [
     27.42,
@@ -10861,6 +14671,18 @@ SG_DATA.countries = {
   "pos": [
    31.48,
    -26.56
+  ],
+  "cities": [
+   {
+    "id": "SWZ-0",
+    "name": "پایتخت",
+    "pos": [
+     31.48,
+     -26.56
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "ZAF": [
@@ -10911,6 +14733,18 @@ SG_DATA.countries = {
   "pos": [
    29.92,
    -1.99
+  ],
+  "cities": [
+   {
+    "id": "RWA-0",
+    "name": "پایتخت",
+    "pos": [
+     29.92,
+     -1.99
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {
    "UGA": [
@@ -10972,6 +14806,18 @@ SG_DATA.countries = {
    29.88,
    -3.36
   ],
+  "cities": [
+   {
+    "id": "BDI-0",
+    "name": "پایتخت",
+    "pos": [
+     29.88,
+     -3.36
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {
    "TZA": [
     30.81,
@@ -11027,6 +14873,18 @@ SG_DATA.countries = {
    43.34,
    -11.65
   ],
+  "cities": [
+   {
+    "id": "COM-0",
+    "name": "پایتخت",
+    "pos": [
+     43.34,
+     -11.65
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -11065,6 +14923,18 @@ SG_DATA.countries = {
    57.57,
    -20.28
   ],
+  "cities": [
+   {
+    "id": "MUS-0",
+    "name": "پایتخت",
+    "pos": [
+     57.57,
+     -20.28
+    ],
+    "capital": true,
+    "tags": []
+   }
+  ],
   "borderPos": {},
   "neighbors": [],
   "seaNeighbors": []
@@ -11102,6 +14972,18 @@ SG_DATA.countries = {
   "pos": [
    55.48,
    -4.66
+  ],
+  "cities": [
+   {
+    "id": "SYC-0",
+    "name": "پایتخت",
+    "pos": [
+     55.48,
+     -4.66
+    ],
+    "capital": true,
+    "tags": []
+   }
   ],
   "borderPos": {},
   "neighbors": [],

@@ -39,7 +39,7 @@
     }
 
     const state = {
-      version: 3,
+      version: 4,
       seed,
       scenarioId: scenario.id,
       date: { ...scenario.startDate },
@@ -67,14 +67,18 @@
    * نسخه‌ی ۲ (مرحله‌ی ۲) ← ۳: اضافه شدن واحدهای نظامی و موقعیت روی نقشه
    */
   function migrate(state, countriesData) {
-    if (!state.version || state.version < 3) {
+    // نسخه‌ی ۴: نیروها در شهرها + کارخانه‌ها. ارتش از نو ساخته می‌شود؛ اقتصاد و دیپلماسی حفظ می‌شود.
+    if (!state.version || state.version < 4) {
       for (const [id, c] of Object.entries(state.countries)) {
         const fresh = countriesData[id];
-        if (fresh) { c.pos = fresh.pos; c.borderPos = fresh.borderPos; }
+        if (!fresh) continue;
+        c.pos = fresh.pos; c.borderPos = fresh.borderPos; c.cities = fresh.cities;
+        c.military = deepCopy(fresh.military);
+        delete c.mil;
       }
       SG.Military.init(state);
       if (state.playerId) SG.Military.startPlayer(state, state.playerId);
-      state.version = 3;
+      state.version = 4;
     }
     return state;
   }

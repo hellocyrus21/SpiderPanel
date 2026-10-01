@@ -56,6 +56,7 @@
           <div>
             <div class="b-title bad">هزینه ${m(b.expenses)}</div>
             ${row('ارتش (نگهداری)', m(b.military))}
+            ${b.production ? row('تولید نظامی', m(b.production)) : ''}
             ${row('رفاه', m(b.welfare))}
             ${row('سرمایه‌گذاری', m(b.investment))}
             ${row('اداره‌ی دولت', m(b.admin))}
@@ -94,8 +95,8 @@
       if (s.key === 'military' && units) {
         // با سیستم واحدها، هزینه‌ی نظامی از تعداد واحدها می‌آید (پنل ارتش)
         return `<div class="slider"><div class="s-head"><b>بودجه‌ی نظامی</b>
-          <span class="s-val">${pct(SG.Military.upkeepMonthly(c) * 12 / c.gdp)}</span></div>
-          <small class="muted">هزینه‌ی نظامی = نگهداری واحدها. برای تغییرش از پنل ⚔️ ارتش واحد بسازید یا مرخص کنید.</small></div>`;
+          <span class="s-val">${pct((SG.Military.upkeepMonthly(c) + SG.Military.productionCostMonthly(ctx.state, c)) * 12 / c.gdp)}</span></div>
+          <small class="muted">هزینه‌ی نظامی = نگهداری نیروها + خطوط تولید روشن. برای تغییرش در پنل ⚔️ ارتش خطوط تولید را روشن/خاموش کنید یا نیرو مرخص کنید.</small></div>`;
       }
       const [lo, hi] = A.LIMITS[s.key];
       const v = valueOf(c, s.key);
