@@ -165,6 +165,49 @@
     else if (name === 'econ') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true), 'economy', onPolicyChange);
     else if (name === 'arms') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowStack: showStack }, sub || 'arms');
     else if (name === 'war') SG.WarPanel.open(app.state, app.state.playerId, warHandlers());
+    else if (name === 'diplomacy') SG.DiplomacyPanel.open(app.state, app.state.playerId, { onGoto: id => select(id, true), onDiplo, onProposal });
+  }
+
+  // -------------------------------------------------------------------
+  // دیپلماسی (مرحله‌ی ۵)
+  // -------------------------------------------------------------------
+  const DIPLO_TEXT = {
+    improve: () => '🤝 هیئت دیپلماتیک فرستاده شد؛ رابطه بهتر شد.',
+    trade: ok => ok ? '📦 قرارداد تجاری بسته شد!' : '❌ پیشنهاد تجاری رد شد.',
+    cancel: () => '✂️ قرارداد تجاری لغو شد.',
+    pact: ok => ok ? '🛡️ پیمان دفاعی بسته شد!' : '❌ پیشنهاد پیمان رد شد.',
+    break: () => '💔 پیمان دفاعی شکسته شد.',
+    sanction: () => '🚫 تحریم اعمال شد.',
+    lift: () => '✅ تحریم لغو شد.',
+    negotiate: ok => ok ? '🕊️ مذاکره موفق بود؛ تحریم لغو شد!' : '❌ مذاکره بی‌نتیجه ماند.',
+  };
+  function onDiplo(id, act) {
+    const s = app.state, name = s.countries[id].name;
+    if ((act === 'sanction' || act === 'break' || act === 'cancel') && !confirm(`${{ sanction: 'تحریم', break: 'شکستن پیمان با', cancel: 'لغو قرارداد تجاری با' }[act]} ${name}؟`)) return;
+    const rng = SG.Rng.create(s.rngState);
+    const r = SG.Diplomacy.perform(s, s.playerId, id, act, rng);
+    s.rngState = rng.getState();
+    if (!r.ok) { SG.NotifyUI.simpleToast('ممکن نیست.', 'lvl-warning'); return; }
+    SG.NotifyUI.simpleToast(`${DIPLO_TEXT[act](r.accepted)} (${F.esc(name)})`, r.accepted === false ? 'lvl-warning' : 'lvl-info');
+    afterDiplo();
+  }
+  const PROP_TEXT = { pact_ok: '🛡️ پیمان دفاعی بسته شد.', pact_no: 'پیشنهاد پیمان رد شد.', trade_ok: '📦 قرارداد تجاری بسته شد.', trade_no: 'پیشنهاد تجاری رد شد.',
+    arms_ok: '💰 سلاح فروخته شد.', arms_no: 'فروش سلاح رد شد.', arms_fail: 'فروش ممکن نشد (موجودی یا شرایط عوض شده).', ally_ok: '⚔️ وارد جنگ شدیم تا از متحدمان دفاع کنیم.',
+    ally_no: 'بی‌طرف ماندیم؛ پیمان شکست.', ult_paid: '💰 باج پرداخت شد؛ ۲۴ ماه آتش‌بس.', ult_war: '⚔️ اولتیماتوم رد شد — جنگ!', expired: 'این پیشنهاد دیگر معتبر نیست.' };
+  function onProposal(propId, yes) {
+    const s = app.state;
+    const rng = SG.Rng.create(s.rngState);
+    const r = SG.Diplomacy.respond(s, propId, yes, rng);
+    s.rngState = rng.getState();
+    SG.NotifyUI.simpleToast(PROP_TEXT[r.code] || 'انجام شد.', r.ok ? 'lvl-info' : 'lvl-warning');
+    afterDiplo();
+    onWarChange();
+  }
+  function afterDiplo() {
+    renderHud();
+    if (app.selected && app.panel.isOpen()) app.panel.show(app.state, app.selected, 'game', { keepScroll: true });
+    if (app.mapMode === 'relations' || app.mapMode === 'alliances') app.map.refresh();
+    SG.Save.save(app.state);
   }
 
   function warHandlers() {
@@ -361,6 +404,7 @@
       if (!ok) SG.NotifyUI.simpleToast('این جنگ دیگر در جریان نیست.', 'lvl-warning');
       onWarChange(); return;
     }
+    if (act === 'prop:accept' || act === 'prop:decline') { onProposal(n.data.prop, act === 'prop:accept'); return; }
     if (act.startsWith('open:')) { openPanel(act.slice(5)); return; }
     if (act.startsWith('decree:')) {
       const r = SG.Government.runDecree(app.state, app.state.playerId, act.slice(7));
@@ -515,6 +559,7 @@
       onWar: () => openPanel('war'),
       onArms: id => openPanel('arms', 'seller:' + id),
       onCity: () => {},
+      onDiplo: (id, act) => onDiplo(id, act),
     });
 
     const saved = SG.Save.load();

@@ -58,8 +58,19 @@
     }
     const c = state.countries[id];
     if (c.puppetOf && state.countries[c.puppetOf]) payments += c.gdp * TRIBUTE;
-    for (const o of Object.values(state.countries)) if (o.puppetOf === id && !o.annexedBy) income += o.gdp * TRIBUTE;
+    for (const o of puppetsOf(state, id)) income += o.gdp * TRIBUTE;
     return { income, payments };
+  }
+  // دست‌نشانده‌ها (فقط در ذخیره‌های قدیمی) — یک بار در هر نوبت جمع می‌شوند تا بودجه سریع حساب شود
+  const puppetCache = new WeakMap();
+  function puppetsOf(state, id) {
+    let pc = puppetCache.get(state);
+    if (!pc || pc.turn !== state.turn) {
+      pc = { turn: state.turn, map: {} };
+      for (const o of Object.values(state.countries)) if (o.puppetOf && !o.annexedBy) (pc.map[o.puppetOf] ||= []).push(o);
+      puppetCache.set(state, pc);
+    }
+    return pc.map[id] || [];
   }
   const TRIBUTE = 0.012;   // باج سالانه‌ی دولت دست‌نشانده: ۱.۲٪ GDP خودش
 
@@ -110,10 +121,11 @@
     const interest = e.debt * rate;
 
     const tr = warTransfers(state, id);
-    const revenue = tax + energyExport + e.aid + tr.income;
+    const trade = SG.Diplomacy ? SG.Diplomacy.tradeIncome(state, id) : 0;   // قراردادهای تجاری (مرحله‌ی ۵)
+    const revenue = tax + energyExport + e.aid + tr.income + trade;
     const expenses = military + production + welfare + investment + admin + interest + energyImport + tr.payments;
     return {
-      eff, tax, energyExport, aid: e.aid, warIncome: tr.income, revenue,
+      eff, tax, energyExport, aid: e.aid, warIncome: tr.income, trade, revenue,
       military, production, welfare, investment, admin, interest, energyImport, warPayments: tr.payments, expenses,
       net: revenue - expenses, monthly: (revenue - expenses) / 12,
       rate, pressure, surplus, milFuel,

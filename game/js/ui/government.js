@@ -52,6 +52,7 @@
             ${b.energyExport ? row('صادرات انرژی', m(b.energyExport)) : ''}
             ${b.aid ? row('کمک خارجی', m(b.aid)) : ''}
             ${b.warIncome ? row('غرامت و باج دریافتی', m(b.warIncome)) : ''}
+            ${b.trade ? row('قراردادهای تجاری', m(b.trade)) : ''}
             ${row('کارایی جمع مالیات', pct(b.eff), 'muted')}
           </div>
           <div>

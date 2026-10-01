@@ -297,6 +297,56 @@ SG_DATA.messages = {
     actions: [{ id: 'newgame', label: 'بازی جدید' }],
   },
 
+  // ---------- هوش مصنوعی و دیپلماسی (مرحله‌ی ۵) ----------
+  war_declared_on_us: {
+    variants: ['🚨 {country} به ما اعلان جنگ داد! پیاده، زرهی و توپخانه را فوراً به مرزش بفرستید و دستور دفاع را در پنل جنگ بدهید.'],
+    actions: [{ id: 'open:war', label: '🔥 پنل جنگ' }, { id: 'open:military', label: '⚔️ ارتش' }],
+  },
+  ally_joined_us: {
+    variants: ['🤝 {country} به کمک ما آمد و وارد جنگ شد!'],
+  },
+  ally_attacked: {
+    variants: ['{other} به متحد ما {country} حمله کرد! طبق پیمان دفاعی، کمک کنیم؟ اگر نه، پیمان می‌شکند و رابطه خراب می‌شود.'],
+    actions: [{ id: 'prop:accept', label: '⚔️ کمک می‌کنیم (ورود به جنگ)' }, { id: 'prop:decline', label: 'بی‌طرف می‌مانیم' }],
+  },
+  alliance_proposal: {
+    variants: ['{country} پیشنهاد پیمان دفاعی داده: اگر به یکی حمله شود، دیگری کمک می‌کند.'],
+    actions: [{ id: 'prop:accept', label: '🛡️ قبول' }, { id: 'prop:decline', label: 'رد' }],
+  },
+  trade_proposal: {
+    variants: ['{country} پیشنهاد قرارداد تجاری داده: سالانه حدود {amount} درآمد برای ما.'],
+    actions: [{ id: 'prop:accept', label: '📦 قبول' }, { id: 'prop:decline', label: 'رد' }],
+  },
+  arms_request: {
+    variants: ['{country} می‌خواهد {qty} {unit} از ما بخرد به قیمت {amount}. سلاح از انبار ما کم می‌شود.'],
+    actions: [{ id: 'prop:accept', label: '💰 بفروش' }, { id: 'prop:decline', label: 'نه' }],
+  },
+  ai_ultimatum: {
+    variants: ['⚠️ اولتیماتوم {country}: «{amount} بپردازید وگرنه جنگ می‌شود.» اگر جواب ندهیم، جنگ شروع می‌شود.'],
+    actions: [{ id: 'prop:accept', label: '💰 می‌پردازیم' }, { id: 'prop:decline', label: '⚔️ رد — آماده‌ی جنگیم' }],
+  },
+  intel_war_plan: {
+    variants: ['🕵️ گزارش‌ها حاکی است {country} نیرو جمع می‌کند و برای حمله به ما برنامه دارد (حدود ۳ ماه دیگر). مرز را تقویت کنید یا رابطه را بهتر کنید.'],
+    actions: [{ id: 'open:military', label: '⚔️ ارتش' }, { id: 'open:diplomacy', label: '🌐 دیپلماسی' }],
+  },
+  intel_war_plan_other: {
+    variants: ['🕵️ {country} برای حمله به {other} آماده می‌شود.'],
+  },
+  coalition_forming: {
+    variants: ['🕵️ همسایه‌ها از ما می‌ترسند (شاخص تهدید {pct}) و علیه ما متحد می‌شوند. جنگ و فتح بیشتر، ائتلاف قوی‌تر.'],
+    actions: [{ id: 'open:diplomacy', label: '🌐 دیپلماسی' }],
+  },
+  sanctioned_us: {
+    variants: ['{country} ما را تحریم کرد. تجارت با او قطع شد و فشار تحریم بیشتر شد.'],
+    actions: [{ id: 'open:diplomacy', label: '🌐 دیپلماسی' }],
+  },
+  sanction_lifted_us: { variants: ['خبر خوب: {country} تحریم ما را لغو کرد.'] },
+  pact_broken: { variants: ['{country} پیمان دفاعی با ما را لغو کرد.'] },
+  diplo_result: { variants: ['{text}'] },
+  world_pact: { variants: ['{a} و {b} پیمان دفاعی بستند.'], plural: ['{count} پیمان دفاعی تازه در جهان بسته شد، از جمله {a} و {b}.'] },
+  world_sanction: { variants: ['{a} کشور {b} را تحریم کرد.'], plural: ['{count} تحریم تازه در جهان، از جمله {a} بر {b}.'] },
+  world_tribute: { variants: ['{b} برای جلوگیری از جنگ به {a} باج ({amount}) داد.'] },
+
   // ---------- جهان ----------
   world_war_declared: {
     variants: ['{a} به {b} اعلان جنگ داد.'],

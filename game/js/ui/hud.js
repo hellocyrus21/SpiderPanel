@@ -58,6 +58,7 @@
       <button class="ab" data-open="government">🏛️<span>دولت</span></button>
       <button class="ab" data-open="military">⚔️<span>ارتش</span></button>
       ${atWar ? `<button class="ab at-war" data-open="war" title="در جنگیم — دستور جنگ و صلح">🔥<span>جنگ</span><i class="ab-badge">${SG.Fmt.num(atWar)}</i></button>` : ''}
+      <button class="ab" data-open="diplomacy">🌐<span>دیپلماسی</span>${(state.proposals || []).some(p => p.to === state.playerId) ? '<i class="ab-badge">!</i>' : ''}</button>
       <button class="ab" data-open="advisor">🧑‍💼<span>مشاور</span></button>
       <div class="ab-turn">
         <button class="ab" data-play title="${autoplay.on ? 'توقف' : 'پخش خودکار'}" ${over ? 'disabled' : ''}>${autoplay.on ? '⏸' : '▶'}</button>

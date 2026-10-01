@@ -189,7 +189,7 @@
     }
     // هوش مصنوعی: رهبر جبهه با سهم commit، متحد با سهم اعزامی (بعد از ۲ ماه)
     const leader = war.leaders[side] === id;
-    if (!leader && state.turn - war.startTurn < 2) return out;
+    if (!leader && state.turn - ((war.joinTurn && war.joinTurn[id]) ?? war.startTurn) < 2) return out;
     const share = leader ? (war.commit[id] ?? 0.5) : (c.neighbors.includes(enemy) ? 0.15 : 0.3);
     const morale = war.morale[id] ?? 75;
     for (const [type, n] of Object.entries(c.forces)) {
@@ -517,6 +517,7 @@
     amount = Math.min(amount, Math.max(0, d.eco.treasury));
     d.eco.treasury -= amount;
     a.eco.treasury += amount;
+    a.aggression = clamp((a.aggression || 0) + 8, 0, 100);
     addRel(state, att, def, -30);
     for (const x of E().activeCountries(state)) if (x.id !== att && x.id !== def) addRel(state, x.id, att, -3);
     (state.truces ||= {})[E().relKey(att, def)] = state.turn + 24;
@@ -563,19 +564,31 @@
         a.stability = clamp(a.stability - 5, 0, 100);
         a.eco.mods.push({ stat: 'stability', value: -3, turns: 6 });
       }
+      // متحدان مدافع (بازیکن خودکار وارد نمی‌شود؛ از او پرسیده می‌شود)
       for (const j of joinCandidates(state, att, def)) {
+        if (j.id === state.playerId) { if (j.score > 30) out.askPlayer = true; continue; }
         if (j.score + rng.range(-10, 10) > 55) { war.sides.B.push(j.id); out.joiners.push(j.id); }
       }
+      // متحدان مهاجم (جنگ تهاجمی؛ سخت‌تر وارد می‌شوند)
+      out.attJoiners = [];
+      for (const j of joinCandidates(state, def, att)) {
+        if (j.id === state.playerId || sideOf(war, j.id)) continue;
+        if (j.score + rng.range(-10, 10) > 68) { war.sides.A.push(j.id); out.attJoiners.push(j.id); }
+      }
+      // پرخاشگری: حافظه‌ی جهان (شاخص تهدید)
+      const ca = state.countries[att];
+      ca.aggression = clamp((ca.aggression || 0) + (justified ? 10 : 20), 0, 100);
       for (const x of Object.values(state.countries)) {
         if (x.id === att || sideOf(war, x.id) || x.annexedBy || x.gdp < 30) continue;
         if (state.sanctions.some(([by, t]) => by === x.id && t === att)) continue;
         if (E().getRelation(state, x.id, att) <= -40 && E().getRelation(state, x.id, def) >= 10 && rng.next() < (justified ? 0.2 : 0.6)) {
           state.sanctions.push([x.id, att]);
+          if (SG.Diplomacy) SG.Diplomacy.removeTrade(state, x.id, att);
           out.sanctions.push(x.id);
         }
       }
     }
-    for (const a of war.sides.A) for (const b of war.sides.B) setRel(state, a, b, -100);
+    for (const a of war.sides.A) for (const b of war.sides.B) { setRel(state, a, b, -100); if (SG.Diplomacy) SG.Diplomacy.removeTrade(state, a, b); }
     syncPairs(state);
     for (const id of members(war)) {
       const c = state.countries[id];
@@ -596,13 +609,19 @@
     const pid = state.playerId;
     if (pid && (att === pid || def === pid)) {
       const enemy = att === pid ? def : att;
-      N().add(state, { type: land ? 'war_declared' : 'war_declared_air', level: 'critical', category: 'military', speaker: 'commander', focus: enemy,
+      N().add(state, { type: def === pid ? 'war_declared_on_us' : land ? 'war_declared' : 'war_declared_air', level: 'critical', category: 'military', speaker: 'commander', focus: enemy,
         data: { commander: chiefOf(state), country: enemy, ad: state.countries[enemy].forces.airdefense || 0, war: war.id } });
       for (const j of out.joiners) N().add(state, { type: 'ally_joined', level: 'warning', category: 'diplomacy', speaker: 'foreign', focus: j, data: { country: j, other: def } });
       if (out.sanctions.length) N().add(state, { type: 'sanctions_new', level: 'warning', category: 'diplomacy', speaker: 'foreign', data: { n: out.sanctions.length, country: out.sanctions[0] } });
       for (const al of out.expelled) N().add(state, { type: 'alliance_expelled', level: 'warning', category: 'diplomacy', speaker: 'foreign', data: { alliance: state.alliances.find(x => x.id === al)?.name || al } });
+      for (const j of out.attJoiners || []) N().add(state, { type: att === pid ? 'ally_joined_us' : 'ally_joined', level: 'warning', category: 'diplomacy', speaker: 'foreign', focus: j, data: { country: j, other: att } });
     } else if (!opts.scenario && pid) {
       N().add(state, { type: 'world_war_declared', level: 'info', category: 'world', speaker: 'news', focus: def, data: { a: att, b: def } });
+      // متحد ما مورد حمله قرار گرفت: کمک می‌کنیم؟
+      if (out.askPlayer && SG.Diplomacy) {
+        const prop = SG.Diplomacy.propose(state, { type: 'ally', from: def, to: pid, data: { war: war.id, enemy: att } });
+        N().add(state, { type: 'ally_attacked', level: 'critical', category: 'diplomacy', speaker: 'foreign', focus: def, data: { country: def, other: att, prop: prop.id } });
+      }
     }
     return out;
   }
@@ -618,6 +637,20 @@
     if (war.scenario) return 'ground';
     const strike = sideEngaged(state, war, side, 'air').reduce((s, e) => s + e.n * (D().units[e.type].strike?.ad || 0) * (e.type === 'missile' || e.type === 'drone' ? 0.1 : 1), 0);
     return strike >= 0.5 ? 'combined' : 'ground';
+  }
+
+  /** افزودن یک کشور به یک طرف جنگ در جریان (کمک به متحد) */
+  function addToWar(state, war, id, side) {
+    if (!side || sideOf(war, id)) return;
+    war.sides[side].push(id);
+    for (const e of war.sides[other(side)]) { setRel(state, id, e, -100); if (SG.Diplomacy) SG.Diplomacy.removeTrade(state, id, e); }
+    syncPairs(state);
+    const c = state.countries[id];
+    war.base[id] = Math.max(1, armyValue(c)); war.lost[id] = 0;
+    let g = 0; for (const t of GROUND) g += (c.forces[t] || 0) * D().units[t].power * quality(c, t);
+    war.groundBase[id] = Math.max(1, g);
+    if (!usesStacks(c)) { war.morale[id] = 75; war.commit[id] = 0.3; }
+    war.joinTurn = war.joinTurn || {}; war.joinTurn[id] = state.turn;
   }
 
   /** دستور جنگ بازیکن: نقشه (ground/combined)، شدت شلیک، اجازه‌ی قاره‌پیما */
@@ -823,6 +856,7 @@
     w.gdp += gdp * 0.5; w.population += pop; w.energy.production += prod * 0.5; w.energy.consumption += cons;
     (w.integ ||= []).push({ from: L, gdp, energy: prod, level: 0.5 });
     state.territory ||= [];
+    w.aggression = clamp((w.aggression || 0) + 10, 0, 100);
     const t = state.territory.find(x => x.country === L && x.by === W);
     if (t) t.pct = Math.min(0.97, pctTotal); else state.territory.push({ country: L, by: W, pct: Math.min(0.97, pctTotal) });
   }
@@ -919,6 +953,7 @@
       if (war.leaders[s] === L || !war.sides[s].length) { const i = wars(state).indexOf(war); if (i >= 0) wars(state).splice(i, 1); }
     }
     syncPairs(state);
+    w.aggression = clamp((w.aggression || 0) + 25, 0, 100);
     const ratio = people / Math.max(w.population - people, 1);
     const hit = Math.min(15, 35 * ratio);
     w.eco.mods.push({ stat: 'stability', value: -hit, turns: 12 }, { stat: 'stability', value: -hit / 2, turns: 24 });
@@ -1066,7 +1101,7 @@
     effectiveOwner, warOf, warsOfCountry, warById, sideOf, scoreFor, peaceTerms, predict, canDeclare, isJustified,
     armyValue, quality, role, radiusFor, capitalAt, frontPoint, citiesInside, depthInto, occupied, enemyFronts, occupationAreas,
     engaged, sideEngaged, sumN, payAmount, atBorder, collapsed, surrendered, groundPower,
-    ultimatum, acceptTribute, declare, setOrders, makePeace, initScenario,
+    ultimatum, acceptTribute, declare, setOrders, makePeace, initScenario, addToWar, joinCandidates,
     step, refreshOccupation, branchSnapshot, adjustAiIndex, syncPairs, computeScore,
     PEACE_TERMS, GROUND, AIRSTRIKE, SALVO,
   };

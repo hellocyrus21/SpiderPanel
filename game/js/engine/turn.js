@@ -55,6 +55,8 @@
 
     // ---------- ۲ج) جنگ‌ها ----------
     const warEvents = SG.War.step(state, rng);
+    // ---------- ۲د) هوش مصنوعی کشورها: اقتصاد، تولید، خرید سلاح، دیپلماسی، جنگ ----------
+    SG.AI.step(state, rng);
     // تلفات نبرد ← نیروها، شاخص‌ها و هزینه‌ی ارتش بازیکن به‌روز
     SG.Military.syncForces(player);
     SG.Military.refreshIndices(player);

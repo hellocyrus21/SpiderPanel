@@ -36,6 +36,37 @@
     return out;
   }
 
+  const PERSON = { aggressive: '⚔️ تهاجمی', cautious: '🛡️ محتاط', opportunist: '🎲 فرصت‌طلب', mercantile: '💼 تجاری' };
+  const DREASON = { war: 'در جنگیم', cooldown: 'زمان انتظار', money: 'پول کافی نیست', relation: 'رابطه‌ی ۴۰+ لازم است', already: 'برقرار است',
+    none: '—', pacts: 'حداکثر ۵ پیمان', sanction: 'تحریم برقرار است', self: '' };
+
+  /** کارت دیپلماسی: وضعیت و اقدام‌ها (همان قوانین هوش مصنوعی) */
+  function diploCard(state, pid, id) {
+    const Dp = SG.Diplomacy, c = state.countries[id];
+    const trade = Dp.hasTrade(state, pid, id), pact = Dp.hasPact(state, pid, id);
+    const weSanc = Dp.sanctions(state, pid, id), theySanc = Dp.sanctions(state, id, pid);
+    const btn = (act, label, desc) => {
+      const st = Dp.status(state, pid, id, act);
+      const extra = st.ok ? [st.cost ? F.money(st.cost) : '', ['trade', 'pact', 'negotiate'].includes(act) ? `شانس ${F.num(Math.round(st.chance * 100))}٪` : ''].filter(Boolean).join(' | ')
+        : (DREASON[st.reason] || '') + (st.reason === 'cooldown' ? ` (${F.num(st.wait)} ماه)` : '');
+      return `<button class="dip-btn ${st.ok ? '' : 'off'}" data-action="diplo" data-id="${id}" data-act="${act}" ${st.ok ? '' : 'disabled'}>
+        <b>${label}</b><small>${desc}</small><small class="${st.ok ? 'good' : 'muted'}">${extra}</small></button>`;
+    };
+    return `<section class="card"><h3>🕊️ دیپلماسی</h3>
+      <div class="b-row"><span>شخصیت دولت</span><b>${PERSON[c.ai?.personality] || '—'}</b></div>
+      <div class="b-row"><span>قرارداد تجاری</span><b class="${trade ? 'good' : 'muted'}">${trade ? '✓ +' + F.money(Dp.tradeValue(state, pid, id)) + ' در سال' : 'ندارد'}</b></div>
+      <div class="b-row"><span>پیمان دفاعی</span><b class="${pact ? 'good' : 'muted'}">${pact ? '✓ دارد' : 'ندارد'}</b></div>
+      ${theySanc ? '<div class="b-row"><span>تحریم</span><b class="bad">ما را تحریم کرده</b></div>' : ''}
+      ${weSanc ? '<div class="b-row"><span>تحریم</span><b>ما تحریمش کرده‌ایم</b></div>' : ''}
+      <div class="dip-grid">
+        ${btn('improve', '🤝 بهبود رابطه', 'هیئت دیپلماتیک و کمک')}
+        ${trade ? btn('cancel', '✂️ لغو قرارداد تجاری', 'رابطه −۱۰') : btn('trade', '📦 قرارداد تجاری', 'درآمد سالانه برای هر دو؛ +' + F.money(Dp.tradeValue(state, pid, id)))}
+        ${pact ? btn('break', '💔 شکستن پیمان', 'رابطه −۳۰؛ بقیه بی‌اعتماد') : btn('pact', '🛡️ پیمان دفاعی', 'در جنگ به کمک هم می‌آیید')}
+        ${weSanc ? btn('lift', '✅ لغو تحریم ما', 'رابطه +۱۰') : btn('sanction', '🚫 تحریم', 'تجارت قطع؛ رابطه −۲۵؛ فشار اقتصادی بر او')}
+        ${theySanc ? btn('negotiate', '🕊️ مذاکره برای لغو تحریم', 'هزینه دارد؛ اگر نپذیرد پول برنمی‌گردد') : ''}
+      </div></section>`;
+  }
+
   function bar(value, max = 100, cls = '') {
     const pct = Math.max(0, Math.min(100, (value / max) * 100));
     return `<div class="bar ${cls}"><span style="width:${pct}%"></span></div>`;
@@ -80,6 +111,7 @@
       else if (b.dataset.action === 'war') handlers.onWar();
       else if (b.dataset.action === 'arms') handlers.onArms(b.dataset.id);
       else if (b.dataset.action === 'city') handlers.onCity(b.dataset.id);
+      else if (b.dataset.action === 'diplo') handlers.onDiplo(b.dataset.id, b.dataset.act);
     });
 
     // موبایل: کشیدن دستگیره به پایین = بستن
@@ -173,6 +205,9 @@
           </div>` : ''}
         </section>`;
       }
+
+      // --- دیپلماسی با این کشور (مرحله‌ی ۵) ---
+      if (mode === 'game' && player && !isPlayer && !c.annexedBy && SG.Diplomacy) html += diploCard(state, player, id);
 
       // --- خاک اشغالی و واگذارشده (فقط داخل بازی) ---
       if (mode === 'game' && SG.War) {

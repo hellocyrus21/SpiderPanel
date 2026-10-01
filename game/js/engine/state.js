@@ -39,7 +39,7 @@
     }
 
     const state = {
-      version: 6,
+      version: 7,
       seed,
       scenarioId: scenario.id,
       date: { ...scenario.startDate },
@@ -57,10 +57,15 @@
       warsInfo: [],        // جنگ‌ها با جزئیات (engine/war.js) — state.wars فقط جفت‌هاست
       territory: [],       // خاک واگذارشده با صلح: [{ country, by, pct }]
       truces: {},          // آتش‌بس بعد از صلح یا باج: { 'A|B': تا نوبت }
+      trade: {},           // قراردادهای تجاری: { ISO3: [شرکا] } (engine/diplomacy.js)
+      proposals: [],       // پیشنهادهای هوش مصنوعی به بازیکن (قبول/رد)
+      diploCd: {},         // زمان انتظار اقدام‌های دیپلماتیک
     };
     state.relations = buildRelations(state, scenario, rng);
+    SG.Diplomacy.seedTrade(state);       // قبل از اقتصاد: بودجه‌ی روز اول درآمد تجارت را هم حساب می‌کند
     SG.Economy.init(state);
     SG.Military.init(state);
+    SG.AI.init(state, rng);
     SG.War.initScenario(state, scenario);
     state.rngState = rng.getState();   // ادامه‌ی همان دنباله‌ی تصادفی در نوبت‌ها
     return state;
@@ -135,6 +140,14 @@
       state.wars = state.wars.filter(([a, b]) => a !== pid && b !== pid);
       SG.War.initScenario(state, window.SG_DATA.scenario);
       state.version = 6;
+    }
+    // نسخه‌ی ۷ (مرحله‌ی ۵): شخصیت هوش مصنوعی، تجارت، پیشنهادها، حافظه‌ی پرخاشگری
+    if (state.version < 7) {
+      SG.Diplomacy.seedTrade(state);
+      state.proposals ||= [];
+      state.diploCd ||= {};
+      SG.AI.init(state, SG.Rng.create((state.seed ^ 0x9e3779b9) >>> 0));
+      state.version = 7;
     }
     return state;
   }

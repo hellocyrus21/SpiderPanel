@@ -29,6 +29,21 @@
   };
   const BULKY = ['ship', 'submarine', 'armor'];   // حمل سنگین‌تر = یک ماه بیشتر
 
+  // سفارش‌ها و آخرین قرارداد با هر فروشنده: بازیکن در c.mil، هوش مصنوعی در c.armsOrders / c.armsDeals
+  const usesStacks = c => !!(c.mil && c.mil.useUnits);
+  function ordersOf(c) { if (usesStacks(c)) return (c.mil.orders ||= []); return (c.armsOrders ||= []); }
+  function dealsOf(c) { if (usesStacks(c)) return (c.mil.deals ||= {}); return (c.armsDeals ||= {}); }
+
+  /** کم کردن count از انبار فروشنده (بازیکن: از دسته‌های شهرها، بعد مرزها) */
+  function takeFromStock(state, seller, type, count) {
+    if (!usesStacks(seller)) { seller.forces[type] -= count; return; }
+    let left = count;
+    const list = seller.mil.stacks.filter(s => s.type === type && !s.move).sort((a, b) => (a.loc.kind === 'city' ? 0 : 1) - (b.loc.kind === 'city' ? 0 : 1));
+    for (const s of list) { const k = Math.min(s.count, left); s.count -= k; left -= k; if (!left) break; }
+    seller.mil.stacks = seller.mil.stacks.filter(s => s.count > 0);
+    M().syncForces(seller); M().refreshIndices(seller);
+  }
+
   /** ضریب هزینه‌ی ساخت در هر کشور (همان فرمول ساخت داخلی: دستمزد ارزان‌تر = ارزان‌تر) */
   function costFactor(c) {
     const perCap = c.gdp / Math.max(c.population, 0.001);
@@ -79,7 +94,7 @@
     out.capacity = capacity(state, seller, type);
     out.months = deliveryMonths(buyer, seller, type);
 
-    const last = buyer.mil?.deals?.[sellerId];
+    const last = dealsOf(buyer)[sellerId];
     let reason = null;
     if (sellerId === buyerId) reason = 'self';
     else if (seller.annexedBy) reason = 'gone';
@@ -131,43 +146,50 @@
     buyer.eco.treasury -= total;
     seller.eco.treasury += total;                         // پول به خزانه‌ی فروشنده می‌رود (بدون تقلب)
     const before = SG.War ? SG.War.branchSnapshot(seller) : null;
-    seller.forces[type] -= count;                         // از انبار فروشنده کم می‌شود
+    takeFromStock(state, seller, type, count);            // از انبار فروشنده کم می‌شود
     if (before) SG.War.adjustAiIndex(seller, before);
     // معامله‌ی تسلیحاتی روابط را گرم می‌کند
     const k = E().relKey(buyerId, sellerId);
     state.relations[k] = clamp((state.relations[k] ?? 0) + 3, -100, 100);
 
-    buyer.mil.orders ||= [];
-    buyer.mil.deals ||= {};
     const order = { id: 'O' + (state.nextOrderId = (state.nextOrderId || 0) + 1), seller: sellerId, type, count,
       cost: total, left: o.months, total: o.months };
-    buyer.mil.orders.push(order);
-    buyer.mil.deals[sellerId] = state.turn;
+    ordersOf(buyer).push(order);
+    dealsOf(buyer)[sellerId] = state.turn;
     return { ok: true, order };
   }
 
   /** یک نوبت: تحویل سفارش‌های رسیده (یا لغو اگر جنگ/تحریم پیش آمده). خروجی: رویدادها */
   function step(state, buyerId) {
     const c = state.countries[buyerId];
-    if (!c.mil || !c.mil.orders || !c.mil.orders.length) return [];
+    const orders = ordersOf(c);
+    if (!orders.length) return [];
     const events = [];
-    for (const o of c.mil.orders) o.left--;
-    for (const o of c.mil.orders.filter(x => x.left <= 0)) {
+    for (const o of orders) o.left--;
+    for (const o of orders.filter(x => x.left <= 0)) {
       const seller = state.countries[o.seller];
       const blocked = !seller || seller.annexedBy || E().isAtWar(state, buyerId, o.seller) || sanctions(state, buyerId, o.seller);
       if (blocked) {
         const refund = o.cost * RULES.refundOnCancel;
         c.eco.treasury += refund;
-        events.push({ type: 'arms_cancelled', seller: o.seller, unit: o.type, count: o.count, refund });
+        events.push({ type: 'arms_cancelled', buyer: buyerId, seller: o.seller, unit: o.type, count: o.count, refund });
         continue;
       }
-      const city = M().homeCityFor(c, o.type, state);
-      const s = M().addToLocation(state, c, o.type, o.count, M().cityLoc(c, city), city.pos);
-      events.push({ type: 'arms_delivered', seller: o.seller, unit: o.type, count: o.count, city: city.name, stackId: s && s.id });
+      if (usesStacks(c)) {
+        const city = M().homeCityFor(c, o.type, state);
+        const s = M().addToLocation(state, c, o.type, o.count, M().cityLoc(c, city), city.pos);
+        events.push({ type: 'arms_delivered', buyer: buyerId, seller: o.seller, unit: o.type, count: o.count, city: city.name, stackId: s && s.id });
+      } else {
+        const before = SG.War.branchSnapshot(c);
+        c.forces[o.type] = (c.forces[o.type] || 0) + o.count;
+        SG.War.adjustAiIndex(c, before);
+        events.push({ type: 'arms_delivered', buyer: buyerId, seller: o.seller, unit: o.type, count: o.count });
+      }
     }
-    c.mil.orders = c.mil.orders.filter(x => x.left > 0);
+    const rest = orders.filter(x => x.left > 0);
+    if (usesStacks(c)) c.mil.orders = rest; else c.armsOrders = rest;
     return events;
   }
 
-  SG.Arms = { RULES, offer, sellersFor, catalogOf, buy, step, capacity };
+  SG.Arms = { RULES, offer, sellersFor, catalogOf, buy, step, capacity, ordersOf };
 })(window.SG = window.SG || {});
