@@ -161,7 +161,8 @@
   function openPanel(name, sub) {
     if (name === 'government') SG.Government.open(app.state, app.state.playerId, onPolicyChange);
     else if (name === 'military') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowStack: showStack }, sub);
-    else if (name === 'advisor') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true));
+    else if (name === 'advisor') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true), undefined, onPolicyChange);
+    else if (name === 'econ') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true), 'economy', onPolicyChange);
   }
 
   function onPolicyChange() {

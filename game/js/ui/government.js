@@ -123,10 +123,15 @@
       title: '🏛️ دولت — ' + state.countries[id].name,
       html: `<div class="gov">
         <div class="gov-summary"></div>
+        <button class="btn" data-econ>💼 مشاور اقتصادی: الان چه کنم؟</button>
         <section class="card"><h3>📊 سیاست‌ها (از نوبت بعد اعمال می‌شود)</h3>${slidersHtml()}</section>
         <section class="card"><h3>📜 فرمان‌ها</h3><div class="gov-decrees"></div></section>
       </div>`,
       onClick: e => {
+        if (e.target.closest('[data-econ]')) {
+          SG.AdvisorPanel.open(ctx.state, ctx.id, () => {}, 'economy', ctx.onChange);
+          return;
+        }
         const d = e.target.closest('[data-decree]');
         if (!d) return;
         const ok = A.perform(ctx.state, ctx.id, d.dataset.decree);

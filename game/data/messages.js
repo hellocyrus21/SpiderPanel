@@ -42,7 +42,7 @@ SG_DATA.messages = {
       'هشدار: ماهی {deficit} کسری داریم؛ پول خزانه فقط {turns} ماه دیگر کفاف می‌دهد.',
       'خزانه دارد ته می‌کشد — {turns} ماه دیگر مجبوریم قرض بگیریم یا پول چاپ کنیم.',
     ],
-    actions: [{ id: 'open:government', label: '🏛️ اصلاح بودجه' }, { id: 'decree:foreign_loan', label: '💳 وام خارجی' }, { id: 'dismiss', label: 'بعداً' }],
+    actions: [{ id: 'open:econ', label: '💼 مشاور اقتصادی' }, { id: 'open:government', label: '🏛️ اصلاح بودجه' }, { id: 'decree:foreign_loan', label: '💳 وام خارجی' }, { id: 'dismiss', label: 'بعداً' }],
   },
   treasury_borrowed: {
     variants: [
@@ -56,7 +56,7 @@ SG_DATA.messages = {
       'هیچ‌کس به ما وام نمی‌دهد؛ بانک مرکزی {amount} پول چاپ کرد. منتظر تورم باشید.',
       'خزانه خالی بود و راه وام بسته؛ {amount} اسکناس چاپ شد. تورم بالا خواهد رفت.',
     ],
-    actions: [{ id: 'open:government', label: '🏛️ اصلاح بودجه' }, { id: 'decree:austerity', label: '✂️ ریاضت' }],
+    actions: [{ id: 'open:econ', label: '💼 مشاور اقتصادی' }, { id: 'open:government', label: '🏛️ اصلاح بودجه' }, { id: 'decree:austerity', label: '✂️ ریاضت' }],
   },
   debt_high: {
     variants: [
@@ -69,7 +69,7 @@ SG_DATA.messages = {
       'تورم به {inflation}٪ رسید. قیمت‌ها هر روز بالاتر می‌رود و مردم ناراضی‌اند.',
       'نرخ تورم {inflation}٪ شد؛ اگر کنترل نشود ثبات را می‌خورد.',
     ],
-    actions: [{ id: 'decree:austerity', label: '✂️ ریاضت اقتصادی' }, { id: 'dismiss', label: 'بعداً' }],
+    actions: [{ id: 'open:econ', label: '💼 مشاور اقتصادی' }, { id: 'decree:austerity', label: '✂️ ریاضت اقتصادی' }, { id: 'dismiss', label: 'بعداً' }],
   },
   inflation_tamed: {
     variants: ['خبر خوب: تورم به {inflation}٪ رسید و کنترل شد.', 'تورم مهار شد: {inflation}٪.'],
@@ -100,7 +100,7 @@ SG_DATA.messages = {
       'مردم در {city} به خیابان آمده‌اند. ثبات: {stability}.',
       'تجمع‌های اعتراضی در {city} گسترش یافته. ثبات {stability} است.',
     ],
-    actions: [{ id: 'decree:welfare_package', label: '🎁 بسته‌ی حمایتی' }, { id: 'decree:crackdown', label: '🚔 سرکوب' }, { id: 'dismiss', label: 'نادیده بگیر' }],
+    actions: [{ id: 'open:econ', label: '💼 مشاور اقتصادی' }, { id: 'decree:welfare_package', label: '🎁 بسته‌ی حمایتی' }, { id: 'decree:crackdown', label: '🚔 سرکوب' }, { id: 'dismiss', label: 'نادیده بگیر' }],
   },
   stability_riots: {
     variants: [
@@ -121,7 +121,7 @@ SG_DATA.messages = {
       'رضایت مردم به‌سرعت پایین می‌آید (ثبات {stability}).',
       'نارضایتی رو به افزایش است؛ ثبات به {stability} رسید.',
     ],
-    actions: [{ id: 'open:government', label: '🏛️ دولت' }],
+    actions: [{ id: 'open:econ', label: '💼 مشاور اقتصادی' }, { id: 'open:government', label: '🏛️ دولت' }],
   },
   stability_recovered: {
     variants: ['آرامش به خیابان‌ها برگشت. ثبات به {stability} رسید.', 'اوضاع داخلی بهتر شد؛ ثبات {stability}.'],

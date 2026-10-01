@@ -198,6 +198,8 @@
     //    فقط با بودجه‌ی مازاد خیلی آرام کم می‌شود؛ کسری بودجه با بدهی بالا آن را بالا می‌برد.
     //    تورم واقعی به سمت تورم پایه می‌رود.
     const printed = events.some(x => x.type === 'printed');
+    // حافظه‌ی چاپ پول (برای تحلیل مشاور اقتصادی): چند ماه اخیر پول چاپ شده؟
+    e.printedRecent = printed ? 6 : Math.max(0, (e.printedRecent || 0) - 1);
     if (!printed) {
       if (b.net > 0) e.baseInflation += (3 - e.baseInflation) * 0.0025;
       else if (e.debt / c.gdp > 1) e.baseInflation += 0.03;

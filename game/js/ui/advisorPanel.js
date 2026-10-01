@@ -162,17 +162,200 @@
     return html;
   }
 
-  /** باز کردن پنجره‌ی مشاور برای یک کشور */
-  function open(s, id, onGoto) {
+  // ===================================================================
+  // مشاور اقتصادی
+  // ===================================================================
+  const FACTOR_TEXT = {
+    welfare: ['رفاه و خدمات', 'نسبت به اول بازی'],
+    tax: ['مالیات', 'نسبت به اول بازی'],
+    inflation: ['تورم', 'گرانی، مردم را ناراضی می‌کند'],
+    growth: ['رشد اقتصادی', 'رونق یا رکود'],
+    temporary: ['اثر فرمان‌های اخیر', 'بسته‌ی حمایتی، سرکوب، ریاضت و ...'],
+  };
+
+  const signedMoney = v => (v >= 0 ? '+' : '−') + F.money(Math.abs(v));
+  const signed = (v, d = 1) => (v >= 0 ? '+' : '−') + F.num(Math.round(Math.abs(v) * 10 ** d) / 10 ** d);
+
+  /** خلاصه‌ی اثر یک پیشنهاد: تراز ماهانه | ثبات | رشد */
+  function effectLine(ef) {
+    const parts = [];
+    if (Math.abs(ef.monthly) >= 0.005) parts.push(`<span class="${ef.monthly >= 0 ? 'good' : 'bad'}">بودجه ${signedMoney(ef.monthly)}/ماه</span>`);
+    if (Math.abs(ef.target) >= 0.1) parts.push(`<span class="${ef.target >= 0 ? 'good' : 'bad'}">ثبات ${signed(ef.target)}</span>`);
+    if (Math.abs(ef.growth) >= 0.05) parts.push(`<span class="${ef.growth >= 0 ? 'good' : 'bad'}">رشد ${signed(ef.growth)}٪</span>`);
+    return parts.join(' | ') || '<span class="muted">اثر ناچیز</span>';
+  }
+
+  function policyBtn(o, label) {
+    return `<div class="rx"><div><b>${label}</b><div class="small">${effectLine(o.effect)}</div></div>
+      <button class="btn tiny" data-apply="${o.key}">اعمال</button></div>`;
+  }
+
+  function decreeBtn(a, key, note) {
+    const st = a.decrees[key], t = window.SG_DATA.decrees[key];
+    const why = st.ready ? (st.cost > 0 ? 'هزینه: ' + F.money(st.cost) : 'رایگان')
+      : st.reason === 'cooldown' ? `${F.num(st.waitTurns)} ماه دیگر آماده می‌شود` : window.SG_DATA.decreeReasons[st.reason];
+    return `<div class="rx"><div><b>${t.icon} فرمان «${t.name}»</b><div class="small muted">${note} | ${why}</div></div>
+      <button class="btn tiny" data-decree="${key}" ${st.ready ? '' : 'disabled'}>اجرا</button></div>`;
+  }
+
+  function renderEconomy(s, id) {
+    state = s;
+    const a = SG.EconAdvisor.analyze(s, id);
+    const c = s.countries[id], e = c.eco, b = a.budget, o = a.options;
+    const statusTxt = { ok: ['🟢', 'وضع اقتصاد قابل قبول است'], warning: ['🟠', 'اقتصاد زیر فشار است'], crisis: ['🔴', 'اقتصاد در بحران است'] }[a.status];
+    let html = `<p class="adv-intro">💼 «قربان، ${statusTxt[0]} ${statusTxt[1]}.
+      تورم ${F.num(Math.round(e.inflation * 10) / 10)}٪، رشد ${F.num(Math.round(e.growth * 1000) / 10)}٪،
+      تراز ماهانه ${signedMoney(b.monthly)}، ثبات ${F.num(Math.round(c.stability))} (به سمت ${F.num(Math.round(a.target))}).»</p>`;
+
+    // ---------- چرا مردم راضی/ناراضی‌اند ----------
+    if (a.stabilityFactors.length) {
+      html += `<section class="card"><h3>⚖️ چه چیزی روی رضایت مردم اثر دارد؟</h3>
+        ${a.stabilityFactors.map(f => {
+          const w = Math.min(100, Math.abs(f.value) * 4);
+          return `<div class="factor"><span>${FACTOR_TEXT[f.key][0]} <small class="muted">${FACTOR_TEXT[f.key][1]}</small></span>
+            <div class="fbar ${f.value >= 0 ? 'pos' : 'neg'}"><span style="width:${w}%"></span></div>
+            <b class="${f.value >= 0 ? 'good' : 'bad'}">${signed(f.value)}</b></div>`;
+        }).join('')}
+        <p class="muted small">عددها یعنی هر عامل چند امتیاز «ثبات هدف» را بالا یا پایین برده؛ ثبات هر ماه کم‌کم به سمت هدف می‌رود.</p>
+      </section>`;
+    }
+
+    if (!a.problems.length) {
+      html += `<section class="card"><h3>✅ مشکل جدی نیست</h3>
+        <p>فرصت خوبی برای رشد بلندمدت است:</p>${policyBtn(o.investUp, '📈 سرمایه‌گذاری +۲٪ GDP')}
+        ${decreeBtn(a, 'infrastructure', 'رشد اقتصادی ۱۸ ماه بیشتر')}</section>`;
+    }
+
+    for (const p of a.problems) {
+      const sev = ['🔴', '🟠', '🟡'][3 - p.severity] || '🟡';
+      if (p.key === 'inflation') {
+        const causes = [];
+        if (a.inflationCauses.includes('printing')) causes.push('در ماه‌های اخیر <b>پول چاپ شده</b>؛ تا وقتی کسری بودجه با چاپ پول جبران شود، تورم پایین نمی‌آید.');
+        if (a.inflationCauses.includes('deficit_no_credit')) causes.push(`بودجه کسری دارد و <b>کسی به ما وام نمی‌دهد</b>${b.pressure >= 0.3 ? ' (به‌خاطر تحریم)' : ' (بدهی زیاد است)'}؛ پس خزانه که خالی شود، پول چاپ می‌شود.`);
+        if (a.inflationCauses.includes('structural')) causes.push(`تورم «ساختاری» این کشور بالاست (حدود ${F.num(Math.round(e.baseInflation))}٪)؛ فقط با بودجه‌ی مازاد یا ریاضت آرام پایین می‌آید.`);
+        if (a.inflationCauses.includes('converging_down')) causes.push('تورم در حال پایین آمدن به سمت سطح ساختاری است. 👍');
+        if (a.inflationCauses.includes('austerity_working')) causes.push('برنامه‌ی ریاضت در حال اثر گذاشتن است. 👍');
+        html += `<section class="card rx-card"><h3>${sev} تورم ${F.num(Math.round(e.inflation))}٪ — چه کنیم؟</h3>
+          <div class="row-label">علت</div><ul>${causes.map(x => `<li>${x}</li>`).join('') || '<li>تورم وارداتی و انتظارات.</li>'}</ul>
+          <div class="row-label">راه‌حل</div>
+          ${b.monthly < 0 ? `<p class="small">اول باید <b>کسری بودجه</b> بسته شود (${signedMoney(b.monthly)} در ماه):</p>` : ''}
+          ${b.monthly < 0 ? policyBtn(o.welfareDown, '✂️ رفاه −۲٪ GDP') : ''}
+          ${b.monthly < 0 ? policyBtn(o.taxUp, '💰 مالیات +۳٪') : ''}
+          ${o.lineOff && b.monthly < 0 ? policyBtn(o.lineOff, `🏭 خاموش کردن خط ${window.SG_DATA.units[o.lineOff.unit].factory.name}`) : ''}
+          ${decreeBtn(a, 'austerity', 'تورم ساختاری را ۶ ماه پایین می‌آورد؛ ولی رضایت و رشد کم می‌شود')}
+          ${a.canBorrow ? decreeBtn(a, 'foreign_loan', 'به‌جای چاپ پول، کسری را با وام بپوشان') : '<p class="small muted">وام خارجی در دسترس نیست؛ چاپ پول را با بستن کسری متوقف کنید.</p>'}
+          <p class="small muted">⚠️ هر دو راه (ریاضت و افزایش مالیات) کوتاه‌مدت نارضایتی می‌آورند؛ اگر ثبات پایین است، هم‌زمان «بسته‌ی حمایتی» را در نظر بگیرید.</p>
+        </section>`;
+      } else if (p.key === 'unrest') {
+        const worst = a.stabilityFactors.filter(f => f.value < 0).slice(0, 2).map(f => FACTOR_TEXT[f.key][0]);
+        html += `<section class="card rx-card"><h3>${sev} نارضایتی مردم (ثبات ${F.num(Math.round(c.stability))}) — چه کنیم؟</h3>
+          <div class="row-label">علت</div>
+          <p class="small">${worst.length ? `بیشترین فشار از طرف <b>${worst.join(' و ')}</b> است (نمودار بالا).` : 'عامل منفی بزرگی دیده نمی‌شود؛ ثبات پایه‌ی این کشور پایین است.'}
+            ${c.stability < 25 ? '<b class="bad">خطر شورش و کودتا؛ اگر ۳ ماه زیر ۵ بماند دولت سقوط می‌کند.</b>' : ''}</p>
+          <div class="row-label">راه‌حل فوری</div>
+          ${decreeBtn(a, 'welfare_package', 'ثبات ۶ ماه بالا می‌رود')}
+          ${decreeBtn(a, 'crackdown', a.democracy ? 'فوری ولی در دموکراسی بعدش نارضایتی خیلی بیشتر می‌شود' : 'فوری و ارزان، ولی بعدش واکنش منفی دارد')}
+          <div class="row-label">راه‌حل پایدار</div>
+          ${policyBtn(o.welfareUp, '🎁 رفاه +۲٪ GDP')}
+          ${policyBtn(o.taxDown, '💸 مالیات −۳٪')}
+          ${decreeBtn(a, 'anti_corruption', 'مالیات بهتر جمع می‌شود و مردم کمی راضی‌تر')}
+          ${e.inflation > 15 ? '<p class="small">💡 تورم بالا ریشه‌ی نارضایتی است؛ بخش تورم را هم ببینید.</p>' : ''}
+          <p class="small muted">⚠️ رفاه بیشتر و مالیات کمتر، بودجه را منفی‌تر می‌کند؛ اگر وام ندارید، به چاپ پول و تورم می‌رسد.</p>
+        </section>`;
+      } else if (p.key === 'deficit') {
+        html += `<section class="card rx-card"><h3>${sev} کسری بودجه ${signedMoney(b.monthly)} در ماه</h3>
+          <p class="small">${a.months === Infinity ? '' : `خزانه حدود ${F.num(Math.floor(a.months))} ماه دیگر خالی می‌شود؛ بعد ${a.canBorrow ? 'قرض می‌گیریم (بدهی و بهره بالا می‌رود)' : '<b>پول چاپ می‌شود (تورم)</b>'}.`}</p>
+          ${o.lineOff ? policyBtn(o.lineOff, `🏭 خاموش کردن خط ${window.SG_DATA.units[o.lineOff.unit].factory.name} (گران‌ترین خط تولید)`) : ''}
+          ${policyBtn(o.taxUp, '💰 مالیات +۳٪')}
+          ${policyBtn(o.welfareDown, '✂️ رفاه −۲٪ GDP')}
+          ${decreeBtn(a, 'anti_corruption', 'درآمد مالیاتی بیشتر بدون افزایش نرخ')}
+          ${a.canBorrow ? decreeBtn(a, 'foreign_loan', 'پول نقد فوری؛ بدهی بیشتر') : ''}
+        </section>`;
+      } else if (p.key === 'debt') {
+        html += `<section class="card rx-card"><h3>${sev} بدهی ${F.num(Math.round(a.debtRatio * 100))}٪ GDP</h3>
+          <p class="small">بهره‌ی بدهی ماهانه ${F.money(b.interest / 12)} است (نرخ ${F.num(Math.round(b.rate * 1000) / 10)}٪). با بدهی بیشتر، نرخ بهره و خطر بسته شدن راه وام بالا می‌رود.
+            راه‌حل: بودجه را مازاد کنید (مالیات بیشتر یا هزینه‌ی کمتر). رشد اقتصادی هم نسبت بدهی را کم می‌کند.</p>
+          ${policyBtn(o.taxUp, '💰 مالیات +۳٪')}
+        </section>`;
+      } else if (p.key === 'growth') {
+        html += `<section class="card rx-card"><h3>${sev} رشد کم (${F.num(Math.round(e.growth * 1000) / 10)}٪)</h3>
+          <p class="small">${b.pressure >= 0.3 ? 'تحریم بزرگ‌ترین ترمز رشد است. ' : ''}${e.inflation > 15 ? 'تورم بالا رشد را کند می‌کند. ' : ''}${e.taxRate > 0.3 ? 'مالیات بالا رشد را کم کرده. ' : ''}${c.stability < 50 ? 'بی‌ثباتی سرمایه را فراری می‌دهد. ' : ''}</p>
+          ${policyBtn(o.investUp, '📈 سرمایه‌گذاری +۲٪ GDP')}
+          ${decreeBtn(a, 'infrastructure', 'رشد اقتصادی ۱۸ ماه بیشتر')}
+        </section>`;
+      } else if (p.key === 'sanctions') {
+        html += `<section class="card rx-card"><h3>${sev} تحریم (فشار ${F.num(Math.round(b.pressure * 100))}٪)</h3>
+          <p class="small">تحریم درآمد نفت را کم می‌کند، راه وام را می‌بندد و تجهیزات پیشرفته را گران می‌کند.
+            تا دیپلماسی (مرحله‌ی ۵) فعال شود: کسری بودجه نداشته باشید چون تنها راه جبرانش چاپ پول است؛
+            ${a.exporter ? 'صادرات انرژی هنوز مهم‌ترین منبع ارز شماست.' : 'وابستگی به واردات انرژی را کم کنید.'}</p>
+        </section>`;
+      } else if (p.key === 'energy') {
+        html += `<section class="card rx-card"><h3>${sev} هزینه‌ی سنگین واردات انرژی</h3>
+          <p class="small">ماهانه ${F.money(b.energyImport / 12)} برای انرژی می‌پردازیم. وقتی قیمت جهانی بالا می‌رود، بودجه آسیب می‌بیند.
+            نیروهای نظامی هم سوخت مصرف می‌کنند؛ جابه‌جایی‌های غیرضروری را کم کنید.</p>
+        </section>`;
+      }
+    }
+    html += `<p class="muted small">عددهای «اثر» برای همین کشور و همین لحظه محاسبه شده‌اند و از نوبت بعد اعمال می‌شوند.</p>`;
+    return html;
+  }
+
+  // ===================================================================
+  // پنجره با دو زبانه: راهبرد کلی | مشاور اقتصادی
+  // ===================================================================
+  let tab = 'strategy', ctxOpen = null;
+
+  function body() {
+    const { s, id } = ctxOpen;
+    const isPlayer = id === s.playerId && s.countries[id].eco;
+    const tabs = isPlayer ? `<div class="seg mil-tabs">
+        <button class="${tab === 'strategy' ? 'on' : ''}" data-tab="strategy">🧭 راهبرد کلی</button>
+        <button class="${tab === 'economy' ? 'on' : ''}" data-tab="economy">💼 مشاور اقتصادی</button></div>` : '';
+    return tabs + (isPlayer && tab === 'economy' ? renderEconomy(s, id) : render(s, id));
+  }
+
+  function rerender() {
+    const el = document.querySelector('.modal-body');
+    if (!el) return;
+    const top = el.scrollTop;
+    el.innerHTML = body();
+    el.scrollTop = top;
+  }
+
+  /**
+   * باز کردن پنجره‌ی مشاور
+   * @param {string} [startTab] 'strategy' | 'economy'
+   * @param {()=>void} [onChange] بعد از اعمال پیشنهاد (برای به‌روز کردن نوار منابع)
+   */
+  function open(s, id, onGoto, startTab, onChange) {
+    ctxOpen = { s, id, onGoto, onChange: onChange || (() => {}) };
+    if (startTab) tab = startTab;
+    else if (id !== s.playerId) tab = 'strategy';
     SG.Modal.open({
-      title: 'مشاور ارشد — ' + s.countries[id].name,
-      html: render(s, id),
+      title: (tab === 'economy' ? 'مشاور اقتصادی — ' : 'مشاور ارشد — ') + s.countries[id].name,
+      html: body(),
       onClick: e => {
+        const t = e.target.closest('[data-tab]');
+        if (t) { tab = t.dataset.tab; rerender(); document.querySelector('.modal-head h2').textContent = (tab === 'economy' ? 'مشاور اقتصادی — ' : 'مشاور ارشد — ') + s.countries[id].name; return; }
+        const ap = e.target.closest('[data-apply]');
+        if (ap) {
+          const o = SG.EconAdvisor.analyze(s, id).options[ap.dataset.apply];
+          if (o.key === 'lineOff') SG.Military.setLine(s, id, o.unit, false);
+          else for (const [k, v] of Object.entries(o.changes)) SG.Actions.setPolicy(s, id, k, v);
+          SG.NotifyUI.simpleToast('✅ پیشنهاد مشاور اعمال شد (از نوبت بعد اثر می‌کند).', 'lvl-info');
+          ctxOpen.onChange(); rerender(); return;
+        }
+        const dc = e.target.closest('[data-decree]');
+        if (dc) {
+          const r = SG.Government.runDecree(s, id, dc.dataset.decree);
+          SG.NotifyUI.simpleToast(r.text, r.ok ? 'lvl-info' : 'lvl-warning');
+          ctxOpen.onChange(); rerender(); return;
+        }
         const b = e.target.closest('[data-goto]');
         if (b) { SG.Modal.close(); onGoto(b.dataset.goto); }
       },
     });
   }
 
-  SG.AdvisorPanel = { open, render };
+  SG.AdvisorPanel = { open, render, renderEconomy };
 })(window.SG = window.SG || {});

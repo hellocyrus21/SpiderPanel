@@ -500,6 +500,18 @@ body.in-game #actionbar {
 .send-quick { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
 .send-val { color: var(--gold); font-size: 16px; margin-left: auto; }
 
+/* مشاور اقتصادی */
+.factor { display: grid; grid-template-columns: 1fr 110px 36px; align-items: center; gap: 8px; padding: 3px 0; font-size: 13px; }
+.factor small { display: block; font-size: 11px; }
+.fbar { height: 7px; background: #ffffff14; border-radius: 4px; overflow: hidden; }
+.fbar span { display: block; height: 100%; border-radius: 4px; }
+.fbar.pos span { background: var(--good); }
+.fbar.neg span { background: var(--bad); margin-right: auto; }
+.rx { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); }
+.rx b { font-weight: 700; }
+.rx-card ul { margin: 2px 0 6px; padding-right: 18px; font-size: 13px; }
+.rx-card p { margin: 4px 0; }
+
 /* رهبر */
 .leader { display: flex; align-items: center; gap: 9px; margin: 6px 0; }
 .leader > div { display: flex; flex-direction: column; line-height: 1.35; }
