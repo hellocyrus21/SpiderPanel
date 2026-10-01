@@ -103,6 +103,8 @@ for (const [id, [gdp, pop, pct, gov, stab]] of Object.entries(S.BASE)) {
     population: pop,         // میلیون نفر
     stability: stab,         // ۰ تا ۱۰۰
     militarySpendPct: pct,   // درصد GDP
+    inflation: (S.MACRO[id] || [4, 0.5])[0],  // تورم سالانه ٪
+    debtRatio: (S.MACRO[id] || [4, 0.5])[1],  // بدهی دولت / GDP
     military,
     energy: { production, consumption },
     terrain: d?.terrain || 'plain',
@@ -121,6 +123,7 @@ S.ALLIANCES.forEach(al => al.members.forEach(m => check(m, al.id)));
 S.DEFENSE_PACTS.flat().forEach(m => check(m, 'DEFENSE_PACTS'));
 S.SANCTIONS.flat().forEach(m => check(m, 'SANCTIONS'));
 S.SEA_NEIGHBORS.flat().forEach(m => check(m, 'SEA_NEIGHBORS'));
+Object.keys(S.MACRO).forEach(m => check(m, 'MACRO'));
 
 // ---------- ۴) نوشتن فایل‌ها ----------
 // داده‌ها به‌صورت فایل .js (نه .json) نوشته می‌شوند تا بازی با دابل‌کلیک روی

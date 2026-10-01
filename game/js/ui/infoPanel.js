@@ -75,6 +75,7 @@
       else if (b.dataset.action === 'start') handlers.onStart(b.dataset.id);
       else if (b.dataset.action === 'back') handlers.onBack();
       else if (b.dataset.action === 'advisor') handlers.onAdvisor(b.dataset.id);
+      else if (b.dataset.action === 'government') handlers.onGovernment();
     });
 
     // موبایل: کشیدن دستگیره به پایین = بستن
@@ -98,7 +99,8 @@
      * @param {string} id      کشور نمایش داده‌شده
      * @param {'choose'|'game'} mode  choose = صفحه‌ی انتخاب کشور، game = داخل بازی
      */
-    function show(state, id, mode) {
+    function show(state, id, mode, { keepScroll = false } = {}) {
+      const scroll = body.scrollTop;
       const c = state.countries[id];
       const player = state.playerId;
       const isPlayer = id === player;
@@ -174,8 +176,13 @@
           <dt>جمعیت</dt><dd>${F.population(c.population)}</dd>
           <dt>انرژی</dt><dd>تولید ${F.num(c.energy.production)} / مصرف ${F.num(c.energy.consumption)}
             <small class="${energyBal >= 0 ? 'good' : 'bad'}">${energyBal >= 0 ? 'مازاد' : 'کسری'}</small></dd>
+          ${c.eco ? `<dt>رشد سالانه</dt><dd class="${c.eco.growth >= 0 ? 'good' : 'bad'}">${F.num(Math.round(c.eco.growth * 1000) / 10)}٪</dd>
+          <dt>تورم</dt><dd>${F.num(Math.round(c.eco.inflation * 10) / 10)}٪</dd>
+          <dt>بدهی دولت</dt><dd>${F.num(Math.round(c.eco.debt / c.gdp * 100))}٪ GDP</dd>` : ''}
+          ${c.eco && isPlayer ? `<dt>خزانه</dt><dd>${F.money(c.eco.treasury)}</dd>` : ''}
         </dl>
-        <div class="stat-line"><span>ثبات داخلی</span><b>${F.num(c.stability)}</b></div>
+        ${isPlayer && mode === 'game' ? '<button class="btn" data-action="government">🏛️ مدیریت بودجه و دولت</button>' : ''}
+        <div class="stat-line"><span>ثبات داخلی</span><b>${F.num(Math.round(c.stability))}</b></div>
         ${bar(c.stability, 100, c.stability < 40 ? 'bad' : c.stability < 60 ? 'mid' : 'good')}
       </section>`;
 
@@ -188,7 +195,7 @@
         <div class="stat-line"><span>نیروی فعال</span><b>${m.active >= 1 ? F.num(m.active) + ' هزار نفر' : 'بسیار کم'}</b></div>
         <div class="branches">
           ${Object.keys(F.BRANCH).map(k =>
-            `<div class="branch"><span>${F.BRANCH[k]}</span>${bar(m[k])}<b>${F.num(m[k])}</b></div>`).join('')}
+            `<div class="branch"><span>${F.BRANCH[k]}</span>${bar(m[k])}<b>${F.num(Math.round(m[k]))}</b></div>`).join('')}
         </div>
         <div class="muted small">هزینه‌ی نظامی: ${F.num(c.militarySpendPct)}٪ از GDP</div>
       </section>`;
@@ -213,7 +220,7 @@
       </section>`;
 
       body.innerHTML = html;
-      body.scrollTop = 0;
+      body.scrollTop = keepScroll ? scroll : 0;
       el.classList.add('open');
     }
 

@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------
 // فازها:
 //   choose  ← صفحه‌ی انتخاب کشور (می‌شود روی نقشه هم گشت و کشورها را دید)
-//   game    ← بازی شروع شده (در مراحل بعد: نوبت، اقتصاد، ارتش و ...)
+//   game    ← بازی: نوبت، اقتصاد، اعلان‌ها (و در مراحل بعد ارتش و دیپلماسی)
 // =====================================================================
 (function (SG) {
   'use strict';
@@ -13,9 +13,10 @@
     state: null,
     phase: 'choose',
     selected: null,       // کشوری که پنل اطلاعاتش باز است
-    mapMode: 'political', // political | alliances | relations
+    mapMode: 'political', // political | alliances | relations | stability
     map: null, panel: null, start: null,
     politicalColor: {},
+    autoplay: { on: false, speed: 0, timer: null },
   };
 
   // -------------------------------------------------------------------
@@ -27,6 +28,8 @@
   const UNOWNED = '#2c3440';
   const relScale = d3.scaleLinear().domain([-100, -30, 0, 30, 100])
     .range(['#9b1c1c', '#c2603a', '#5b6575', '#4c8d6b', '#2f9e5b']).clamp(true);
+  const stabScale = d3.scaleLinear().domain([0, 25, 50, 75, 100])
+    .range(['#7f1d1d', '#c2410c', '#a8892f', '#4c8d6b', '#2f9e5b']).clamp(true);
 
   /**
    * رنگ سیاسی: «رنگ‌آمیزی گراف» ساده تا دو همسایه هم‌رنگ نشوند.
@@ -39,7 +42,6 @@
     for (const id of ids) {
       const c = countries[id];
       const used = new Set([...c.neighbors, ...c.seaNeighbors].map(n => color[n]));
-      // شروع از یک رنگ وابسته به کد کشور، تا نقشه یکنواخت نشود
       const start = (id.charCodeAt(0) + id.charCodeAt(1) * 3 + id.charCodeAt(2) * 7) % PALETTE.length;
       let pick = PALETTE[start];
       for (let i = 0; i < PALETTE.length; i++) {
@@ -63,10 +65,10 @@
   function fillFor(id) {
     if (!id) return UNOWNED;
     const s = app.state;
+    if (app.mapMode === 'stability' && app.phase === 'game') return stabScale(s.countries[id].stability);
     if (id === s.playerId) return PLAYER_COLOR;
 
     if (app.phase === 'choose') {
-      // در صفحه‌ی انتخاب، کشورهای قابل‌بازی پررنگ‌اند
       return s.countries[id].playable ? app.politicalColor[id] : d3.interpolateRgb(app.politicalColor[id], UNOWNED)(0.6);
     }
     if (app.mapMode === 'alliances') return allianceColor(id);
@@ -78,7 +80,7 @@
   }
 
   // -------------------------------------------------------------------
-  // راهنمای رنگ (legend)
+  // راهنمای رنگ و انتخاب حالت نقشه
   // -------------------------------------------------------------------
   function renderLegend() {
     const el = document.getElementById('legend');
@@ -91,6 +93,9 @@
       html = [[80, 'متحد'], [35, 'دوست'], [0, 'خنثی'], [-40, 'خصمانه'], [-90, 'دشمن']]
         .map(([v, t]) => `<div><i style="background:${relScale(v)}"></i>${t}</div>`).join('') +
         `<div><i style="background:#6b0f0f"></i>در جنگ</div>`;
+    } else if (app.phase === 'game' && app.mapMode === 'stability') {
+      html = [[85, 'باثبات'], [60, 'آرام'], [40, 'ناراضی'], [20, 'بحرانی'], [5, 'در حال فروپاشی']]
+        .map(([v, t]) => `<div><i style="background:${stabScale(v)}"></i>${t}</div>`).join('');
     } else if (app.phase === 'choose') {
       html = `<div><i style="background:${PALETTE[0]}"></i>قابل‌بازی</div>
               <div><i style="background:${d3.interpolateRgb(PALETTE[0], UNOWNED)(0.6)}"></i>کنترل هوش مصنوعی</div>`;
@@ -98,6 +103,21 @@
     el.innerHTML = html;
     el.classList.toggle('hidden', !html);
   }
+
+  function renderMapModes() {
+    const el = document.getElementById('mapmodes');
+    if (app.phase !== 'game') { el.classList.add('hidden'); return; }
+    const modes = [['political', 'سیاسی'], ['alliances', 'اتحادها'], ['relations', 'روابط'], ['stability', 'ثبات']];
+    el.innerHTML = modes.map(([k, t]) => `<button class="${app.mapMode === k ? 'on' : ''}" data-mode="${k}">${t}</button>`).join('');
+    el.classList.remove('hidden');
+  }
+
+  document.getElementById('mapmodes').addEventListener('click', e => {
+    const b = e.target.closest('[data-mode]');
+    if (!b) return;
+    app.mapMode = b.dataset.mode;
+    renderMapModes(); renderLegend(); app.map.refresh();
+  });
 
   // -------------------------------------------------------------------
   // نوار بالا
@@ -113,35 +133,128 @@
         <button class="btn" data-top="choose">انتخاب کشور</button>`;
     } else {
       const p = s.countries[s.playerId];
-      const modes = [['political', 'سیاسی'], ['alliances', 'اتحادها'], ['relations', 'روابط']];
       bar.innerHTML = `
         <button class="player-tag" data-top="me" title="نمایش کشور من">${F.esc(p.name)}</button>
         <div class="date">${F.date(s.date)}</div>
         <div class="spacer"></div>
-        <div class="seg" role="group" aria-label="حالت نقشه">
-          ${modes.map(([k, t]) => `<button class="${app.mapMode === k ? 'on' : ''}" data-mode="${k}">${t}</button>`).join('')}
-        </div>
-        <button class="btn icon" data-top="advisor" title="مشاور ارشد">🧑‍💼<span> مشاور</span></button>
-        <button class="btn icon" data-top="guide" title="راهنما">❓<span> راهنما</span></button>`;
+        <button class="btn icon bell" data-top="inbox" title="صندوق اعلان‌ها">🔔<span class="count hidden"></span></button>
+        <button class="btn icon" data-top="settings" title="تنظیمات">⚙️</button>
+        <button class="btn icon" data-top="guide" title="راهنما">❓</button>`;
+      SG.NotifyUI.updateBell();
     }
   }
 
   document.getElementById('topbar').addEventListener('click', e => {
     const b = e.target.closest('button');
     if (!b) return;
-    if (b.dataset.mode) {
-      app.mapMode = b.dataset.mode;
-      renderTopbar(); renderLegend(); app.map.refresh();
-    } else if (b.dataset.top === 'choose') {
-      app.panel.hide(); app.start.show();
-    } else if (b.dataset.top === 'guide') {
-      SG.Guide.open();
-    } else if (b.dataset.top === 'advisor') {
-      SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true));
-    } else if (b.dataset.top === 'me') {
-      select(app.state.playerId, true);
+    const t = b.dataset.top;
+    if (t === 'choose') { app.panel.hide(); app.start.show(); }
+    else if (t === 'guide') SG.Guide.open();
+    else if (t === 'me') select(app.state.playerId, true);
+    else if (t === 'inbox') SG.NotifyUI.openInbox();
+    else if (t === 'settings') openSettings();
+  });
+
+  // -------------------------------------------------------------------
+  // دکمه‌های نوار منابع و نوار فرمان
+  // -------------------------------------------------------------------
+  function openPanel(name) {
+    if (name === 'government') SG.Government.open(app.state, app.state.playerId, onPolicyChange);
+    else if (name === 'advisor') SG.AdvisorPanel.open(app.state, app.state.playerId, id => select(id, true));
+  }
+
+  function onPolicyChange() {
+    renderHud();
+    SG.Save.save(app.state);
+  }
+
+  document.addEventListener('click', e => {
+    const o = e.target.closest('[data-open]');
+    if (o && (o.closest('#hud') || o.closest('#actionbar'))) { openPanel(o.dataset.open); return; }
+    if (e.target.closest('#actionbar [data-next]')) { stopAuto(); nextTurn(); return; }
+    if (e.target.closest('#actionbar [data-play]')) { app.autoplay.on ? stopAuto() : startAuto(); return; }
+    if (e.target.closest('#actionbar [data-speed]')) {
+      app.autoplay.speed = (app.autoplay.speed + 1) % SG.Hud.SPEEDS.length;
+      if (app.autoplay.on) { stopAuto(); startAuto(); } else renderHud();
     }
   });
+
+  function renderHud() {
+    if (app.phase !== 'game') return;
+    SG.Hud.renderResources(app.state);
+    SG.Hud.renderActionBar(app.state, app.autoplay);
+  }
+
+  // -------------------------------------------------------------------
+  // نوبت
+  // -------------------------------------------------------------------
+  function nextTurn() {
+    if (app.state.gameOver || SG.NotifyUI.hasCritical()) return;
+    const fresh = SG.Turn.advance(app.state);
+    SG.Save.save(app.state);
+    renderTopbar();
+    renderHud();
+    if (app.mapMode !== 'political' && app.mapMode !== 'alliances') app.map.refresh();
+    if (app.selected && app.panel.isOpen()) app.panel.show(app.state, app.selected, 'game', { keepScroll: true });
+    SG.Government.refresh();
+    SG.NotifyUI.showNew(fresh);
+    if (app.state.gameOver) stopAuto();
+  }
+
+  function startAuto() {
+    if (app.state.gameOver) return;
+    app.autoplay.on = true;
+    clearInterval(app.autoplay.timer);
+    app.autoplay.timer = setInterval(() => {
+      // وقتی پنجره‌ای باز است یا اعلان بحرانی هست، صبر کن
+      if (SG.Modal.isOpen() || SG.NotifyUI.hasCritical()) return;
+      nextTurn();
+    }, SG.Hud.SPEEDS[app.autoplay.speed].ms);
+    renderHud();
+  }
+
+  function stopAuto() {
+    app.autoplay.on = false;
+    clearInterval(app.autoplay.timer);
+    renderHud();
+  }
+
+  // -------------------------------------------------------------------
+  // اقدام‌های اعلان‌ها
+  // -------------------------------------------------------------------
+  function onNotificationAction(act, n) {
+    if (act === 'newgame') { newGame(); return; }
+    if (act.startsWith('open:')) { openPanel(act.slice(5)); return; }
+    if (act.startsWith('decree:')) {
+      const r = SG.Government.runDecree(app.state, app.state.playerId, act.slice(7));
+      SG.NotifyUI.simpleToast(r.text, r.ok ? 'lvl-info' : 'lvl-warning');
+      onPolicyChange();
+    }
+  }
+
+  // -------------------------------------------------------------------
+  // تنظیمات و بازی جدید
+  // -------------------------------------------------------------------
+  function openSettings() {
+    SG.Modal.open({
+      title: '⚙️ تنظیمات',
+      html: SG.NotifyUI.settingsHtml() + `
+        <div class="card"><h3>بازی</h3>
+          <p class="muted small">بازی بعد از هر نوبت خودکار ذخیره می‌شود. بذر این دنیا: ${app.state.seed}</p>
+          <button class="btn" data-newgame>🔄 شروع بازی جدید</button>
+        </div>`,
+      onClick: e => {
+        if (e.target.closest('[data-newgame]') && confirm('بازی فعلی پاک شود و بازی جدید شروع شود؟')) newGame();
+      },
+    });
+    SG.NotifyUI.bindSettings(document.querySelector('.modal-body'));
+  }
+
+  function newGame() {
+    stopAuto();
+    SG.Save.clear();
+    location.reload();
+  }
 
   // -------------------------------------------------------------------
   // انتخاب کشور روی نقشه / پنل
@@ -154,16 +267,32 @@
     if (zoom) app.map.zoomTo(id);
   }
 
-  function startGame(id) {
-    E.startGame(app.state, id);
+  /** ورود به حالت بازی (برای بازی جدید و ادامه‌ی بازی ذخیره‌شده) */
+  function enterGame() {
     app.phase = 'game';
     app.mapMode = 'political';
     app.start.hide();
-    app.map.setPlayer(id);
+    app.map.setPlayer(app.state.playerId);
     app.map.refresh();
-    renderTopbar(); renderLegend();
+    document.body.classList.add('in-game');
+    renderTopbar(); renderLegend(); renderMapModes(); renderHud();
+  }
+
+  function startGame(id) {
+    E.startGame(app.state, id);
+    enterGame();
     select(id, true);
-    console.info('Game started', { player: id, seed: app.state.seed });
+    SG.Save.save(app.state);
+    SG.NotifyUI.showNew(app.state.notifications.slice());
+  }
+
+  function continueGame(saved) {
+    app.state = saved;
+    app.politicalColor = buildPoliticalColors(app.state.countries);
+    enterGame();
+    app.map.zoomTo(saved.playerId);
+    SG.NotifyUI.updateBell();
+    if (saved.gameOver) SG.NotifyUI.showNew(saved.notifications.filter(n => n.type === 'game_over_collapse'));
   }
 
   // -------------------------------------------------------------------
@@ -171,13 +300,20 @@
   // -------------------------------------------------------------------
   function init() {
     const D = window.SG_DATA;
-    if (!D || !D.world || !D.countries || !D.scenario) {
+    if (!D || !D.world || !D.countries || !D.scenario || !D.messages) {
       document.body.innerHTML = '<p class="fatal">فایل‌های داده (پوشه‌ی data) پیدا نشد.</p>';
       return;
     }
 
     app.state = E.createWorld({ countries: D.countries, scenario: D.scenario });
     app.politicalColor = buildPoliticalColors(app.state.countries);
+
+    SG.NotifyUI.init({
+      getState: () => app.state,
+      onAction: onNotificationAction,
+      onFocus: id => select(id, true),
+      onCritical: () => stopAuto(),
+    });
 
     app.map = SG.MapView.create(document.getElementById('map'), D.world, {
       onSelect: id => select(id),
@@ -186,7 +322,6 @@
       getOcclusion: () => {
         const el = document.getElementById('info-panel');
         if (!el.classList.contains('open')) return { right: 0, bottom: 0 };
-        // offsetWidth/Height تحت تأثیر انیمیشن باز شدن (transform) نیست
         return window.matchMedia('(max-width: 720px)').matches
           ? { right: 0, bottom: el.offsetHeight }
           : { right: el.offsetWidth, bottom: 0 };
@@ -199,23 +334,33 @@
       onStart: id => startGame(id),
       onAdvisor: id => SG.AdvisorPanel.open(app.state, id, gid => select(gid, true)),
       onBack: () => { select(null); app.start.show(); },
+      onGovernment: () => openPanel('government'),
     });
 
+    const saved = SG.Save.load();
     app.start = SG.StartScreen.create(document.getElementById('start-screen'), {
       onPick: id => { app.start.hide(); select(id, true); },
       onBrowse: () => app.start.hide(),
+      onContinue: () => continueGame(saved),
+      onNewGame: () => { SG.Save.clear(); app.start.render(app.state, null); },
     });
 
     document.getElementById('zoom-in').addEventListener('click', () => app.map.zoomBy(1.6));
     document.getElementById('zoom-out').addEventListener('click', () => app.map.zoomBy(1 / 1.6));
     document.getElementById('zoom-reset').addEventListener('click', () => app.map.resetView());
 
-    // کلید Esc پنل را می‌بندد
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !SG.Modal.isOpen()) select(null); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !SG.Modal.isOpen()) select(null);
+      // فاصله (Space) = نوبت بعد، وقتی چیزی باز نیست
+      if (e.key === ' ' && app.phase === 'game' && !SG.Modal.isOpen() && !/input|textarea/i.test(e.target.tagName)) {
+        e.preventDefault(); stopAuto(); nextTurn();
+      }
+    });
 
-    app.start.render(app.state);
+    app.start.render(app.state, saved);
     renderTopbar();
     renderLegend();
+    renderMapModes();
     document.body.classList.remove('loading');
 
     // برای کنجکاوها و تست از کنسول مرورگر

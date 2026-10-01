@@ -29,6 +29,7 @@
   --bad: #e0605a;
   --accent: #4f8fd6;
   --topbar-h: 52px;
+  --hud-h: 0px;          /* داخل بازی مقدار می‌گیرد */
   --panel-w: 360px;
   --radius: 10px;
 }
@@ -142,7 +143,7 @@ body.loading #loader { display: grid; }
 /* ---------- پنل اطلاعات ---------- */
 .panel {
   position: fixed; z-index: 30;
-  top: var(--topbar-h); right: 0; bottom: 0;
+  top: calc(var(--topbar-h) + var(--hud-h)); right: 0; bottom: 0;
   width: var(--panel-w);
   background: var(--panel); border-left: 1px solid var(--line);
   transform: translateX(105%);
@@ -290,6 +291,139 @@ button.chip:hover { border-color: var(--gold); }
 }
 .start-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
+/* ---------- داخل بازی: نوار منابع ---------- */
+body.in-game { --hud-h: 42px; }
+#hud { display: none; }
+body.in-game #hud {
+  display: flex; height: var(--hud-h); flex: none; gap: 4px; align-items: center;
+  padding: 0 8px; background: #151b23; border-bottom: 1px solid var(--line);
+  overflow-x: auto; scrollbar-width: none; z-index: 19;
+}
+#hud::-webkit-scrollbar { display: none; }
+.res {
+  display: flex; align-items: center; gap: 5px; white-space: nowrap;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px;
+  padding: 3px 9px; font-size: 13px;
+}
+.res:hover { border-color: var(--muted); }
+.res small { font-size: 11px; }
+.res i { font-style: normal; font-size: 10px; }
+.res i.up { color: var(--good); } .res i.down { color: var(--bad); }
+.mid { color: var(--mid); }
+
+/* ---------- نوار فرمان پایین ---------- */
+#actionbar { display: none; }
+body.in-game #actionbar {
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 7;
+  display: flex; gap: 6px; align-items: center;
+  background: #1a212bf2; border: 1px solid var(--line); border-radius: 14px; padding: 6px;
+  box-shadow: 0 6px 24px #0008;
+}
+.ab {
+  display: flex; align-items: center; gap: 4px; white-space: nowrap;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px;
+  padding: 7px 12px; font-size: 14px;
+}
+.ab:hover:not(:disabled) { border-color: var(--muted); }
+.ab:disabled { opacity: .4; cursor: not-allowed; }
+.ab-turn { display: flex; gap: 4px; padding-right: 6px; border-right: 1px solid var(--line); }
+.ab.next { background: var(--gold); color: #1b1404; border-color: var(--gold); font-weight: 700; }
+.ab.speed { min-width: 42px; justify-content: center; }
+
+/* حالت نقشه (شناور) */
+#mapmodes { position: absolute; top: 10px; left: 10px; z-index: 6; background: #1a212be6; }
+
+/* زنگ */
+.bell { position: relative; }
+.bell .count {
+  position: absolute; top: -5px; left: -5px; min-width: 18px; height: 18px; border-radius: 9px;
+  background: var(--bad); color: #fff; font-size: 11px; line-height: 18px; text-align: center; padding: 0 4px;
+}
+
+/* ---------- پیام کوتاه ---------- */
+#toasts {
+  position: fixed; top: calc(var(--topbar-h) + var(--hud-h) + 10px); left: 50%; transform: translateX(-50%);
+  z-index: 55; display: flex; flex-direction: column; gap: 8px; width: min(440px, calc(100% - 24px));
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto; cursor: pointer;
+  background: #1f2732f7; border: 1px solid var(--line); border-right: 4px solid var(--accent);
+  border-radius: 10px; padding: 8px 12px; box-shadow: 0 6px 20px #0009;
+  animation: toast-in .25s ease; transition: transform .25s, opacity .25s;
+}
+.toast.lvl-warning { border-right-color: var(--mid); }
+.toast.lvl-info { border-right-color: var(--good); }
+.toast.out { opacity: 0; transform: translateY(-10px); }
+.t-head { font-size: 12px; color: var(--muted); }
+.t-head b { color: var(--text); }
+.t-text { font-size: 14px; }
+.t-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.t-actions .btn { padding: 3px 10px; font-size: 13px; }
+@keyframes toast-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+
+/* ---------- پنجره‌ی بحرانی ---------- */
+#critical {
+  position: fixed; inset: 0; z-index: 70; background: #200808cc;
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.crit-box {
+  width: min(480px, 100%); background: var(--panel); border: 2px solid var(--bad); border-radius: 14px;
+  padding: 18px; box-shadow: 0 0 40px #e0605a44; animation: toast-in .3s ease;
+}
+.crit-speaker { color: var(--bad); font-weight: 700; margin-bottom: 8px; }
+.crit-text { font-size: 16px; margin-bottom: 14px; }
+.crit-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- صندوق اعلان‌ها ---------- */
+.inbox-filter { margin: 10px 0; position: sticky; top: 0; background: var(--panel); padding: 4px 0; z-index: 1; }
+.chip.on { border-color: var(--gold); color: var(--gold); }
+.inbox-item { border: 1px solid var(--line); border-right: 3px solid var(--line); border-radius: 8px; padding: 7px 10px; margin-bottom: 6px; cursor: pointer; }
+.inbox-item.unread { background: var(--panel-2); }
+.inbox-item.lvl-warning { border-right-color: var(--mid); }
+.inbox-item.lvl-critical { border-right-color: var(--bad); }
+.ii-head { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+.switch-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; cursor: pointer; }
+
+/* ---------- پنل دولت ---------- */
+.gov-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+.kpi { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; }
+.kpi span { color: var(--muted); font-size: 12px; }
+.kpi b { font-size: 17px; }
+.kpi small { font-size: 11px; color: var(--muted); }
+.kpi small.good { color: var(--good); } .kpi small.bad { color: var(--bad); }
+.budget { margin-top: 10px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+.budget summary { cursor: pointer; color: var(--gold); }
+.b-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+.b-title { font-weight: 700; margin-bottom: 2px; }
+.b-row { display: flex; justify-content: space-between; font-size: 13px; }
+.b-row b { font-weight: 400; }
+.b-foot { margin-top: 6px; }
+.slider { padding: 6px 0; border-top: 1px solid var(--line); }
+.slider:first-of-type { border-top: 0; }
+.s-head { display: flex; align-items: baseline; gap: 8px; }
+.s-val { color: var(--gold); font-weight: 700; }
+.slider input[type=range] { width: 100%; accent-color: var(--gold); direction: ltr; }
+.gov-decrees { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.decree {
+  display: flex; align-items: center; gap: 8px; text-align: right;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 7px 9px;
+}
+.decree:hover:not(:disabled) { border-color: var(--gold); }
+.decree.off { opacity: .45; cursor: not-allowed; }
+.d-icon { font-size: 20px; }
+.d-main { flex: 1; display: flex; flex-direction: column; }
+.d-main small { color: var(--muted); font-size: 11px; line-height: 1.4; }
+.d-cost { font-size: 11px; color: var(--gold); white-space: nowrap; }
+
+/* ---------- ادامه‌ی بازی ---------- */
+.continue-card {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between;
+  background: var(--panel); border: 1px solid var(--gold); border-radius: var(--radius);
+  padding: 12px; margin-bottom: 14px; text-align: right;
+}
+.continue-card > div { flex: 1; min-width: 180px; }
+
 /* =====================================================================
    موبایل
    ===================================================================== */
@@ -323,6 +457,21 @@ button.chip:hover { border-color: var(--gold); }
   body:has(.panel.open) .zoom-ctrl, body:has(.panel.open) #legend { display: none; }
 
   .country-grid { grid-template-columns: 1fr; }
+  body.in-game { --hud-h: 38px; }
+  .res { padding: 2px 7px; font-size: 12px; }
+  .res.wide small { display: none; }
+  body.in-game #actionbar { bottom: 8px; width: calc(100% - 16px); justify-content: space-between; padding: 5px; }
+  .ab { padding: 7px 9px; }
+  .ab span { display: none; }
+  .ab.next span { display: inline; }
+  body.in-game .zoom-ctrl { bottom: 76px; }
+  body.in-game #legend { bottom: 76px; }
+  #mapmodes button { padding: 3px 6px; font-size: 11px; }
+  #toasts { top: auto; bottom: 72px; }
+  .toast.out { transform: translateY(10px); }
+  .gov-kpis { grid-template-columns: 1fr 1fr; }
+  .b-cols { grid-template-columns: 1fr; gap: 6px; }
+  .gov-decrees { grid-template-columns: 1fr; }
   .btn.icon { padding: 4px 8px; }
   .btn.icon span { display: none; }
   .modal-wrap { padding: 0; align-items: flex-end; }

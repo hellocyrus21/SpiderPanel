@@ -11,6 +11,8 @@
   <div id="app">
     <!-- نوار بالا (محتوا با js/main.js ساخته می‌شود) -->
     <header id="topbar"></header>
+    <!-- نوار منابع (فقط داخل بازی) -->
+    <div id="hud"></div>
 
     <!-- نقشه -->
     <main id="map-wrap">
@@ -21,7 +23,17 @@
         <button id="zoom-reset" aria-label="کل جهان">⌂</button>
       </div>
       <div id="legend" class="hidden"></div>
+      <div id="mapmodes" class="seg hidden" role="group" aria-label="حالت نقشه"></div>
+      <div id="actionbar"></div>
     </main>
+
+    <!-- پیام‌های کوتاه (اعلان هشدار) -->
+    <div id="toasts" aria-live="polite"></div>
+
+    <!-- پنجره‌ی اعلان بحرانی (بازی را متوقف می‌کند) -->
+    <div id="critical" class="hidden" role="alertdialog" aria-modal="true">
+      <div class="crit-box"><div class="crit-body"></div></div>
+    </div>
 
     <!-- پنل اطلاعات کشور -->
     <aside id="info-panel" class="panel" aria-live="polite">
@@ -35,6 +47,7 @@
       <div class="start-box">
         <h1>ژئوپلیتیک ۲۰۲۶</h1>
         <p class="lead">کشورت را انتخاب کن. اقتصاد، دیپلماسی، ثبات داخلی و ارتش همه هم‌زمان فشار می‌آورند — هر بازی متفاوت پیش می‌رود.</p>
+        <div class="continue-box hidden"></div>
         <div class="country-grid"></div>
         <div class="start-actions">
           <button class="btn ghost" data-action="browse">اول نقشه را ببینم</button>
@@ -54,10 +67,16 @@
   <script src="data/world.js"></script>
   <script src="data/countries.js"></script>
   <script src="data/scenario_2026.js"></script>
+  <script src="data/messages.js"></script>
 
   <!-- موتور بازی (بدون وابستگی به صفحه) -->
   <script src="js/engine/rng.js"></script>
+  <script src="js/engine/notify.js"></script>
+  <script src="js/engine/economy.js"></script>
+  <script src="js/engine/actions.js"></script>
   <script src="js/engine/state.js"></script>
+  <script src="js/engine/turn.js"></script>
+  <script src="js/engine/save.js"></script>
   <script src="js/engine/advisor.js"></script>
 
   <!-- رابط کاربری -->
@@ -68,6 +87,9 @@
   <script src="js/ui/startScreen.js"></script>
   <script src="js/ui/advisorPanel.js"></script>
   <script src="js/ui/guide.js"></script>
+  <script src="js/ui/notifications.js"></script>
+  <script src="js/ui/government.js"></script>
+  <script src="js/ui/hud.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -13,6 +13,8 @@ SG_DATA.countries = {
   "population": 342,
   "stability": 66,
   "militarySpendPct": 3.2,
+  "inflation": 2.8,
+  "debtRatio": 1.22,
   "military": {
    "active": 1330,
    "nuclear": true,
@@ -51,6 +53,8 @@ SG_DATA.countries = {
   "population": 41,
   "stability": 80,
   "militarySpendPct": 1.4,
+  "inflation": 2.2,
+  "debtRatio": 1.1,
   "military": {
    "active": 68,
    "nuclear": false,
@@ -84,6 +88,8 @@ SG_DATA.countries = {
   "population": 131,
   "stability": 55,
   "militarySpendPct": 0.7,
+  "inflation": 4,
+  "debtRatio": 0.55,
   "military": {
    "active": 220,
    "nuclear": false,
@@ -119,6 +125,8 @@ SG_DATA.countries = {
   "population": 18.7,
   "stability": 50,
   "militarySpendPct": 0.4,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 39,
    "nuclear": false,
@@ -155,6 +163,8 @@ SG_DATA.countries = {
   "population": 0.42,
   "stability": 60,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -189,6 +199,8 @@ SG_DATA.countries = {
   "population": 6.4,
   "stability": 62,
   "militarySpendPct": 1.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 21,
    "nuclear": false,
@@ -223,6 +235,8 @@ SG_DATA.countries = {
   "population": 10.8,
   "stability": 45,
   "militarySpendPct": 1.6,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 42,
    "nuclear": false,
@@ -258,6 +272,8 @@ SG_DATA.countries = {
   "population": 7,
   "stability": 45,
   "militarySpendPct": 0.6,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 17,
    "nuclear": false,
@@ -292,6 +308,8 @@ SG_DATA.countries = {
   "population": 5.2,
   "stability": 75,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 8,
    "nuclear": false,
@@ -326,6 +344,8 @@ SG_DATA.countries = {
   "population": 4.5,
   "stability": 65,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 7,
    "nuclear": false,
@@ -360,6 +380,8 @@ SG_DATA.countries = {
   "population": 10.9,
   "stability": 38,
   "militarySpendPct": 2.9,
+  "inflation": 30,
+  "debtRatio": 1,
   "military": {
    "active": 64,
    "nuclear": false,
@@ -395,6 +417,8 @@ SG_DATA.countries = {
   "population": 2.8,
   "stability": 60,
   "militarySpendPct": 1.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 9,
    "nuclear": false,
@@ -428,6 +452,8 @@ SG_DATA.countries = {
   "population": 11.9,
   "stability": 12,
   "militarySpendPct": 0,
+  "inflation": 25,
+  "debtRatio": 0.3,
   "military": {
    "active": 18,
    "nuclear": false,
@@ -463,6 +489,8 @@ SG_DATA.countries = {
   "population": 11.4,
   "stability": 65,
   "militarySpendPct": 0.7,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 29,
    "nuclear": false,
@@ -496,6 +524,8 @@ SG_DATA.countries = {
   "population": 0.41,
   "stability": 75,
   "militarySpendPct": 0.8,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -529,6 +559,8 @@ SG_DATA.countries = {
   "population": 1.5,
   "stability": 62,
   "militarySpendPct": 0.9,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 4,
    "nuclear": false,
@@ -562,6 +594,8 @@ SG_DATA.countries = {
   "population": 0.28,
   "stability": 75,
   "militarySpendPct": 0.7,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -593,6 +627,8 @@ SG_DATA.countries = {
   "population": 0.09,
   "stability": 72,
   "militarySpendPct": 0.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -624,6 +660,8 @@ SG_DATA.countries = {
   "population": 0.07,
   "stability": 70,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -655,6 +693,8 @@ SG_DATA.countries = {
   "population": 0.13,
   "stability": 72,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -686,6 +726,8 @@ SG_DATA.countries = {
   "population": 0.05,
   "stability": 72,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -717,6 +759,8 @@ SG_DATA.countries = {
   "population": 0.18,
   "stability": 70,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -748,6 +792,8 @@ SG_DATA.countries = {
   "population": 0.1,
   "stability": 70,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -779,6 +825,8 @@ SG_DATA.countries = {
   "population": 213,
   "stability": 55,
   "militarySpendPct": 1.1,
+  "inflation": 5,
+  "debtRatio": 0.88,
   "military": {
    "active": 671,
    "nuclear": false,
@@ -820,6 +868,8 @@ SG_DATA.countries = {
   "population": 46,
   "stability": 50,
   "militarySpendPct": 0.5,
+  "inflation": 35,
+  "debtRatio": 0.8,
   "military": {
    "active": 104,
    "nuclear": false,
@@ -859,6 +909,8 @@ SG_DATA.countries = {
   "population": 53,
   "stability": 45,
   "militarySpendPct": 3,
+  "inflation": 5,
+  "debtRatio": 0.6,
   "military": {
    "active": 318,
    "nuclear": false,
@@ -896,6 +948,8 @@ SG_DATA.countries = {
   "population": 19.8,
   "stability": 65,
   "militarySpendPct": 1.6,
+  "inflation": 4,
+  "debtRatio": 0.42,
   "military": {
    "active": 77,
    "nuclear": false,
@@ -931,6 +985,8 @@ SG_DATA.countries = {
   "population": 34.5,
   "stability": 45,
   "militarySpendPct": 1.1,
+  "inflation": 2.5,
+  "debtRatio": 0.33,
   "military": {
    "active": 109,
    "nuclear": false,
@@ -968,6 +1024,8 @@ SG_DATA.countries = {
   "population": 28.5,
   "stability": 28,
   "militarySpendPct": 0.8,
+  "inflation": 150,
+  "debtRatio": 1.5,
   "military": {
    "active": 77,
    "nuclear": false,
@@ -1005,6 +1063,8 @@ SG_DATA.countries = {
   "population": 18.2,
   "stability": 40,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 82,
    "nuclear": false,
@@ -1039,6 +1099,8 @@ SG_DATA.countries = {
   "population": 12.6,
   "stability": 42,
   "militarySpendPct": 1.3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 43,
    "nuclear": false,
@@ -1076,6 +1138,8 @@ SG_DATA.countries = {
   "population": 6.9,
   "stability": 58,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 21,
    "nuclear": false,
@@ -1111,6 +1175,8 @@ SG_DATA.countries = {
   "population": 3.4,
   "stability": 78,
   "militarySpendPct": 1.9,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 15,
    "nuclear": false,
@@ -1145,6 +1211,8 @@ SG_DATA.countries = {
   "population": 0.83,
   "stability": 60,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 2,
    "nuclear": false,
@@ -1180,6 +1248,8 @@ SG_DATA.countries = {
   "population": 0.63,
   "stability": 55,
   "militarySpendPct": 0.8,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 2,
    "nuclear": false,
@@ -1214,6 +1284,8 @@ SG_DATA.countries = {
   "population": 69,
   "stability": 72,
   "militarySpendPct": 2.4,
+  "inflation": 3.2,
+  "debtRatio": 1,
   "military": {
    "active": 140,
    "nuclear": true,
@@ -1255,6 +1327,8 @@ SG_DATA.countries = {
   "population": 68.5,
   "stability": 62,
   "militarySpendPct": 2.1,
+  "inflation": 1.5,
+  "debtRatio": 1.15,
   "military": {
    "active": 200,
    "nuclear": true,
@@ -1299,6 +1373,8 @@ SG_DATA.countries = {
   "population": 83.5,
   "stability": 72,
   "militarySpendPct": 2.4,
+  "inflation": 2.2,
+  "debtRatio": 0.63,
   "military": {
    "active": 182,
    "nuclear": false,
@@ -1342,6 +1418,8 @@ SG_DATA.countries = {
   "population": 58.9,
   "stability": 63,
   "militarySpendPct": 1.6,
+  "inflation": 1.5,
+  "debtRatio": 1.37,
   "military": {
    "active": 165,
    "nuclear": false,
@@ -1386,6 +1464,8 @@ SG_DATA.countries = {
   "population": 49,
   "stability": 65,
   "militarySpendPct": 1.3,
+  "inflation": 2.5,
+  "debtRatio": 1.02,
   "military": {
    "active": 120,
    "nuclear": false,
@@ -1423,6 +1503,8 @@ SG_DATA.countries = {
   "population": 10.6,
   "stability": 75,
   "militarySpendPct": 1.6,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 41,
    "nuclear": false,
@@ -1456,6 +1538,8 @@ SG_DATA.countries = {
   "population": 18,
   "stability": 78,
   "militarySpendPct": 2,
+  "inflation": 3,
+  "debtRatio": 0.45,
   "military": {
    "active": 81,
    "nuclear": false,
@@ -1492,6 +1576,8 @@ SG_DATA.countries = {
   "population": 11.9,
   "stability": 72,
   "militarySpendPct": 1.3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 41,
    "nuclear": false,
@@ -1530,6 +1616,8 @@ SG_DATA.countries = {
   "population": 0.67,
   "stability": 88,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 2,
    "nuclear": false,
@@ -1565,6 +1653,8 @@ SG_DATA.countries = {
   "population": 9,
   "stability": 92,
   "militarySpendPct": 0.7,
+  "inflation": 0.5,
+  "debtRatio": 0.38,
   "military": {
    "active": 23,
    "nuclear": false,
@@ -1602,6 +1692,8 @@ SG_DATA.countries = {
   "population": 9.2,
   "stability": 82,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 28,
    "nuclear": false,
@@ -1642,6 +1734,8 @@ SG_DATA.countries = {
   "population": 5.4,
   "stability": 82,
   "militarySpendPct": 0.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 10,
    "nuclear": false,
@@ -1677,6 +1771,8 @@ SG_DATA.countries = {
   "population": 6,
   "stability": 88,
   "militarySpendPct": 2.4,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 31,
    "nuclear": false,
@@ -1713,6 +1809,8 @@ SG_DATA.countries = {
   "population": 5.6,
   "stability": 90,
   "militarySpendPct": 2.2,
+  "inflation": 3,
+  "debtRatio": 0.4,
   "military": {
    "active": 25,
    "nuclear": false,
@@ -1750,6 +1848,8 @@ SG_DATA.countries = {
   "population": 10.6,
   "stability": 82,
   "militarySpendPct": 2.4,
+  "inflation": 2,
+  "debtRatio": 0.33,
   "military": {
    "active": 54,
    "nuclear": false,
@@ -1790,6 +1890,8 @@ SG_DATA.countries = {
   "population": 5.6,
   "stability": 86,
   "militarySpendPct": 2.4,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 29,
    "nuclear": false,
@@ -1827,6 +1929,8 @@ SG_DATA.countries = {
   "population": 0.39,
   "stability": 90,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -1860,6 +1964,8 @@ SG_DATA.countries = {
   "population": 37.5,
   "stability": 70,
   "militarySpendPct": 4.5,
+  "inflation": 4,
+  "debtRatio": 0.58,
   "military": {
    "active": 200,
    "nuclear": false,
@@ -1901,6 +2007,8 @@ SG_DATA.countries = {
   "population": 10.9,
   "stability": 76,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 49,
    "nuclear": false,
@@ -1937,6 +2045,8 @@ SG_DATA.countries = {
   "population": 5.4,
   "stability": 65,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 24,
    "nuclear": false,
@@ -1974,6 +2084,8 @@ SG_DATA.countries = {
   "population": 9.6,
   "stability": 62,
   "militarySpendPct": 2.1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 45,
    "nuclear": false,
@@ -2013,6 +2125,8 @@ SG_DATA.countries = {
   "population": 19,
   "stability": 60,
   "militarySpendPct": 2.3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 94,
    "nuclear": false,
@@ -2052,6 +2166,8 @@ SG_DATA.countries = {
   "population": 6.4,
   "stability": 58,
   "militarySpendPct": 2.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 31,
    "nuclear": false,
@@ -2089,6 +2205,8 @@ SG_DATA.countries = {
   "population": 10.4,
   "stability": 65,
   "militarySpendPct": 3.1,
+  "inflation": 2.8,
+  "debtRatio": 1.5,
   "military": {
    "active": 140,
    "nuclear": false,
@@ -2128,6 +2246,8 @@ SG_DATA.countries = {
   "population": 3.9,
   "stability": 70,
   "militarySpendPct": 1.8,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 16,
    "nuclear": false,
@@ -2165,6 +2285,8 @@ SG_DATA.countries = {
   "population": 2.1,
   "stability": 78,
   "militarySpendPct": 1.3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 7,
    "nuclear": false,
@@ -2201,6 +2323,8 @@ SG_DATA.countries = {
   "population": 6.6,
   "stability": 55,
   "militarySpendPct": 2.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 35,
    "nuclear": false,
@@ -2241,6 +2365,8 @@ SG_DATA.countries = {
   "population": 3.2,
   "stability": 45,
   "militarySpendPct": 0.8,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 9,
    "nuclear": false,
@@ -2276,6 +2402,8 @@ SG_DATA.countries = {
   "population": 0.62,
   "stability": 60,
   "militarySpendPct": 1.7,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 3,
    "nuclear": false,
@@ -2313,6 +2441,8 @@ SG_DATA.countries = {
   "population": 1.8,
   "stability": 58,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 8,
    "nuclear": false,
@@ -2350,6 +2480,8 @@ SG_DATA.countries = {
   "population": 2.7,
   "stability": 60,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 12,
    "nuclear": false,
@@ -2388,6 +2520,8 @@ SG_DATA.countries = {
   "population": 1.6,
   "stability": 52,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 5,
    "nuclear": false,
@@ -2424,6 +2558,8 @@ SG_DATA.countries = {
   "population": 1.37,
   "stability": 80,
   "militarySpendPct": 3.4,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 9,
    "nuclear": false,
@@ -2460,6 +2596,8 @@ SG_DATA.countries = {
   "population": 1.86,
   "stability": 75,
   "militarySpendPct": 3.3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 12,
    "nuclear": false,
@@ -2496,6 +2634,8 @@ SG_DATA.countries = {
   "population": 2.88,
   "stability": 76,
   "militarySpendPct": 3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 17,
    "nuclear": false,
@@ -2534,6 +2674,8 @@ SG_DATA.countries = {
   "population": 9.1,
   "stability": 55,
   "militarySpendPct": 1.5,
+  "inflation": 6,
+  "debtRatio": 0.4,
   "military": {
    "active": 48,
    "nuclear": false,
@@ -2571,6 +2713,8 @@ SG_DATA.countries = {
   "population": 33,
   "stability": 40,
   "militarySpendPct": 26,
+  "inflation": 12,
+  "debtRatio": 0.95,
   "military": {
    "active": 900,
    "nuclear": false,
@@ -2612,6 +2756,8 @@ SG_DATA.countries = {
   "population": 2.4,
   "stability": 48,
   "militarySpendPct": 0.6,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 6,
    "nuclear": false,
@@ -2646,6 +2792,8 @@ SG_DATA.countries = {
   "population": 1.4,
   "stability": 72,
   "militarySpendPct": 1.8,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 6,
    "nuclear": false,
@@ -2683,6 +2831,8 @@ SG_DATA.countries = {
   "population": 0.55,
   "stability": 78,
   "militarySpendPct": 0.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -2716,6 +2866,8 @@ SG_DATA.countries = {
   "population": 0.08,
   "stability": 90,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -2750,6 +2902,8 @@ SG_DATA.countries = {
   "population": 0.04,
   "stability": 92,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -2783,6 +2937,8 @@ SG_DATA.countries = {
   "population": 0.03,
   "stability": 90,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -2816,6 +2972,8 @@ SG_DATA.countries = {
   "population": 0.04,
   "stability": 92,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -2850,6 +3008,8 @@ SG_DATA.countries = {
   "population": 0.001,
   "stability": 95,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -2883,6 +3043,8 @@ SG_DATA.countries = {
   "population": 144,
   "stability": 55,
   "militarySpendPct": 6.5,
+  "inflation": 8,
+  "debtRatio": 0.2,
   "military": {
    "active": 1320,
    "nuclear": true,
@@ -2935,6 +3097,8 @@ SG_DATA.countries = {
   "population": 86,
   "stability": 52,
   "militarySpendPct": 1.9,
+  "inflation": 35,
+  "debtRatio": 0.3,
   "military": {
    "active": 355,
    "nuclear": false,
@@ -2980,6 +3144,8 @@ SG_DATA.countries = {
   "population": 91,
   "stability": 42,
   "militarySpendPct": 2.5,
+  "inflation": 38,
+  "debtRatio": 0.35,
   "military": {
    "active": 610,
    "nuclear": false,
@@ -3028,6 +3194,8 @@ SG_DATA.countries = {
   "population": 46,
   "stability": 38,
   "militarySpendPct": 3,
+  "inflation": 3,
+  "debtRatio": 0.5,
   "military": {
    "active": 195,
    "nuclear": false,
@@ -3066,6 +3234,8 @@ SG_DATA.countries = {
   "population": 35,
   "stability": 68,
   "militarySpendPct": 6.5,
+  "inflation": 2,
+  "debtRatio": 0.3,
   "military": {
    "active": 257,
    "nuclear": false,
@@ -3111,6 +3281,8 @@ SG_DATA.countries = {
   "population": 10.5,
   "stability": 82,
   "militarySpendPct": 4.5,
+  "inflation": 2,
+  "debtRatio": 0.32,
   "military": {
    "active": 65,
    "nuclear": false,
@@ -3147,6 +3319,8 @@ SG_DATA.countries = {
   "population": 3,
   "stability": 85,
   "militarySpendPct": 4,
+  "inflation": 2,
+  "debtRatio": 0.42,
   "military": {
    "active": 16,
    "nuclear": false,
@@ -3183,6 +3357,8 @@ SG_DATA.countries = {
   "population": 4.9,
   "stability": 72,
   "militarySpendPct": 4.8,
+  "inflation": 3,
+  "debtRatio": 0.1,
   "military": {
    "active": 18,
    "nuclear": false,
@@ -3219,6 +3395,8 @@ SG_DATA.countries = {
   "population": 1.6,
   "stability": 58,
   "militarySpendPct": 3.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 18,
    "nuclear": false,
@@ -3254,6 +3432,8 @@ SG_DATA.countries = {
   "population": 5.3,
   "stability": 72,
   "militarySpendPct": 5.5,
+  "inflation": 1.5,
+  "debtRatio": 0.35,
   "military": {
    "active": 43,
    "nuclear": false,
@@ -3291,6 +3471,8 @@ SG_DATA.countries = {
   "population": 35,
   "stability": 10,
   "militarySpendPct": 3,
+  "inflation": 30,
+  "debtRatio": 0.8,
   "military": {
    "active": 210,
    "nuclear": false,
@@ -3328,6 +3510,8 @@ SG_DATA.countries = {
   "population": 11.5,
   "stability": 60,
   "militarySpendPct": 4.5,
+  "inflation": 2,
+  "debtRatio": 0.9,
   "military": {
    "active": 100,
    "nuclear": false,
@@ -3365,6 +3549,8 @@ SG_DATA.countries = {
   "population": 10,
   "stability": 52,
   "militarySpendPct": 8,
+  "inflation": 3,
+  "debtRatio": 0.68,
   "military": {
    "active": 170,
    "nuclear": true,
@@ -3404,6 +3590,8 @@ SG_DATA.countries = {
   "population": 5.5,
   "stability": 10,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 8,
    "nuclear": false,
@@ -3439,6 +3627,8 @@ SG_DATA.countries = {
   "population": 5.8,
   "stability": 25,
   "militarySpendPct": 3,
+  "inflation": 20,
+  "debtRatio": 1.5,
   "military": {
    "active": 80,
    "nuclear": false,
@@ -3475,6 +3665,8 @@ SG_DATA.countries = {
   "population": 24,
   "stability": 22,
   "militarySpendPct": 3,
+  "inflation": 40,
+  "debtRatio": 1,
   "military": {
    "active": 100,
    "nuclear": false,
@@ -3514,6 +3706,8 @@ SG_DATA.countries = {
   "population": 117,
   "stability": 48,
   "militarySpendPct": 1.2,
+  "inflation": 15,
+  "debtRatio": 0.9,
   "military": {
    "active": 440,
    "nuclear": false,
@@ -3552,6 +3746,8 @@ SG_DATA.countries = {
   "population": 10.2,
   "stability": 62,
   "militarySpendPct": 5,
+  "inflation": 5,
+  "debtRatio": 0.2,
   "military": {
    "active": 65,
    "nuclear": false,
@@ -3592,6 +3788,8 @@ SG_DATA.countries = {
   "population": 3,
   "stability": 50,
   "militarySpendPct": 5.5,
+  "inflation": 3,
+  "debtRatio": 0.5,
   "military": {
    "active": 45,
    "nuclear": false,
@@ -3628,6 +3826,8 @@ SG_DATA.countries = {
   "population": 3.7,
   "stability": 50,
   "militarySpendPct": 1.6,
+  "inflation": 3,
+  "debtRatio": 0.4,
   "military": {
    "active": 20,
    "nuclear": false,
@@ -3664,6 +3864,8 @@ SG_DATA.countries = {
   "population": 7.4,
   "stability": 55,
   "militarySpendPct": 2.5,
+  "inflation": 8,
+  "debtRatio": 0.05,
   "military": {
    "active": 36,
    "nuclear": false,
@@ -3702,6 +3904,8 @@ SG_DATA.countries = {
   "population": 37,
   "stability": 58,
   "militarySpendPct": 2.8,
+  "inflation": 10,
+  "debtRatio": 0.35,
   "military": {
    "active": 211,
    "nuclear": false,
@@ -3739,6 +3943,8 @@ SG_DATA.countries = {
   "population": 20.5,
   "stability": 60,
   "militarySpendPct": 0.9,
+  "inflation": 10,
+  "debtRatio": 0.24,
   "military": {
    "active": 70,
    "nuclear": false,
@@ -3779,6 +3985,8 @@ SG_DATA.countries = {
   "population": 7.2,
   "stability": 52,
   "militarySpendPct": 1.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 27,
    "nuclear": false,
@@ -3815,6 +4023,8 @@ SG_DATA.countries = {
   "population": 10.6,
   "stability": 45,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 32,
    "nuclear": false,
@@ -3851,6 +4061,8 @@ SG_DATA.countries = {
   "population": 42,
   "stability": 30,
   "militarySpendPct": 2,
+  "inflation": 5,
+  "debtRatio": 0.1,
   "military": {
    "active": 150,
    "nuclear": false,
@@ -3889,6 +4101,8 @@ SG_DATA.countries = {
   "population": 1408,
   "stability": 70,
   "militarySpendPct": 1.7,
+  "inflation": 0.5,
+  "debtRatio": 0.9,
   "military": {
    "active": 2035,
    "nuclear": true,
@@ -3940,6 +4154,8 @@ SG_DATA.countries = {
   "population": 1460,
   "stability": 60,
   "militarySpendPct": 2.3,
+  "inflation": 3,
+  "debtRatio": 0.82,
   "military": {
    "active": 1455,
    "nuclear": true,
@@ -3981,6 +4197,8 @@ SG_DATA.countries = {
   "population": 252,
   "stability": 35,
   "militarySpendPct": 2.8,
+  "inflation": 5,
+  "debtRatio": 0.75,
   "military": {
    "active": 655,
    "nuclear": true,
@@ -4017,6 +4235,8 @@ SG_DATA.countries = {
   "population": 175,
   "stability": 40,
   "militarySpendPct": 1,
+  "inflation": 9,
+  "debtRatio": 0.4,
   "military": {
    "active": 165,
    "nuclear": false,
@@ -4051,6 +4271,8 @@ SG_DATA.countries = {
   "population": 30,
   "stability": 48,
   "militarySpendPct": 1.1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 95,
    "nuclear": false,
@@ -4085,6 +4307,8 @@ SG_DATA.countries = {
   "population": 0.79,
   "stability": 80,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -4119,6 +4343,8 @@ SG_DATA.countries = {
   "population": 22,
   "stability": 50,
   "militarySpendPct": 1.5,
+  "inflation": 3,
+  "debtRatio": 1,
   "military": {
    "active": 83,
    "nuclear": false,
@@ -4152,6 +4378,8 @@ SG_DATA.countries = {
   "population": 0.52,
   "stability": 60,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -4185,6 +4413,8 @@ SG_DATA.countries = {
   "population": 123.5,
   "stability": 80,
   "militarySpendPct": 1.6,
+  "inflation": 3,
+  "debtRatio": 2.3,
   "military": {
    "active": 247,
    "nuclear": false,
@@ -4221,6 +4451,8 @@ SG_DATA.countries = {
   "population": 51.6,
   "stability": 70,
   "militarySpendPct": 2.6,
+  "inflation": 2,
+  "debtRatio": 0.53,
   "military": {
    "active": 500,
    "nuclear": false,
@@ -4257,6 +4489,8 @@ SG_DATA.countries = {
   "population": 26.5,
   "stability": 55,
   "militarySpendPct": 20,
+  "inflation": 10,
+  "debtRatio": 0.5,
   "military": {
    "active": 1280,
    "nuclear": true,
@@ -4292,6 +4526,8 @@ SG_DATA.countries = {
   "population": 23.3,
   "stability": 75,
   "militarySpendPct": 2.5,
+  "inflation": 2,
+  "debtRatio": 0.27,
   "military": {
    "active": 170,
    "nuclear": false,
@@ -4327,6 +4563,8 @@ SG_DATA.countries = {
   "population": 3.5,
   "stability": 60,
   "militarySpendPct": 0.7,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 9,
    "nuclear": false,
@@ -4361,6 +4599,8 @@ SG_DATA.countries = {
   "population": 101,
   "stability": 70,
   "militarySpendPct": 2.3,
+  "inflation": 3.5,
+  "debtRatio": 0.35,
   "military": {
    "active": 500,
    "nuclear": false,
@@ -4396,6 +4636,8 @@ SG_DATA.countries = {
   "population": 71.6,
   "stability": 55,
   "militarySpendPct": 1.2,
+  "inflation": 1,
+  "debtRatio": 0.63,
   "military": {
    "active": 236,
    "nuclear": false,
@@ -4432,6 +4674,8 @@ SG_DATA.countries = {
   "population": 34,
   "stability": 68,
   "militarySpendPct": 1,
+  "inflation": 2,
+  "debtRatio": 0.65,
   "military": {
    "active": 102,
    "nuclear": false,
@@ -4469,6 +4713,8 @@ SG_DATA.countries = {
   "population": 6,
   "stability": 90,
   "militarySpendPct": 2.8,
+  "inflation": 2,
+  "debtRatio": 1.6,
   "military": {
    "active": 34,
    "nuclear": false,
@@ -4503,6 +4749,8 @@ SG_DATA.countries = {
   "population": 284,
   "stability": 62,
   "militarySpendPct": 0.8,
+  "inflation": 2,
+  "debtRatio": 0.4,
   "military": {
    "active": 767,
    "nuclear": false,
@@ -4542,6 +4790,8 @@ SG_DATA.countries = {
   "population": 116,
   "stability": 52,
   "militarySpendPct": 1.3,
+  "inflation": 3,
+  "debtRatio": 0.6,
   "military": {
    "active": 400,
    "nuclear": false,
@@ -4577,6 +4827,8 @@ SG_DATA.countries = {
   "population": 54.5,
   "stability": 15,
   "militarySpendPct": 3.5,
+  "inflation": 25,
+  "debtRatio": 0.6,
   "military": {
    "active": 368,
    "nuclear": false,
@@ -4614,6 +4866,8 @@ SG_DATA.countries = {
   "population": 17.6,
   "stability": 55,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 79,
    "nuclear": false,
@@ -4649,6 +4903,8 @@ SG_DATA.countries = {
   "population": 7.8,
   "stability": 55,
   "militarySpendPct": 0.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 14,
    "nuclear": false,
@@ -4686,6 +4942,8 @@ SG_DATA.countries = {
   "population": 0.46,
   "stability": 82,
   "militarySpendPct": 2.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 2,
    "nuclear": false,
@@ -4719,6 +4977,8 @@ SG_DATA.countries = {
   "population": 1.4,
   "stability": 55,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 4,
    "nuclear": false,
@@ -4752,6 +5012,8 @@ SG_DATA.countries = {
   "population": 27.5,
   "stability": 82,
   "militarySpendPct": 2,
+  "inflation": 3,
+  "debtRatio": 0.5,
   "military": {
    "active": 124,
    "nuclear": false,
@@ -4787,6 +5049,8 @@ SG_DATA.countries = {
   "population": 5.3,
   "stability": 85,
   "militarySpendPct": 1.2,
+  "inflation": 3,
+  "debtRatio": 0.45,
   "military": {
    "active": 17,
    "nuclear": false,
@@ -4820,6 +5084,8 @@ SG_DATA.countries = {
   "population": 10.5,
   "stability": 35,
   "militarySpendPct": 0.3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 20,
    "nuclear": false,
@@ -4855,6 +5121,8 @@ SG_DATA.countries = {
   "population": 0.93,
   "stability": 58,
   "militarySpendPct": 1.3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 3,
    "nuclear": false,
@@ -4886,6 +5154,8 @@ SG_DATA.countries = {
   "population": 0.82,
   "stability": 50,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -4917,6 +5187,8 @@ SG_DATA.countries = {
   "population": 0.33,
   "stability": 60,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -4948,6 +5220,8 @@ SG_DATA.countries = {
   "population": 0.22,
   "stability": 65,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -4979,6 +5253,8 @@ SG_DATA.countries = {
   "population": 0.1,
   "stability": 65,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -5010,6 +5286,8 @@ SG_DATA.countries = {
   "population": 0.11,
   "stability": 65,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -5041,6 +5319,8 @@ SG_DATA.countries = {
   "population": 0.04,
   "stability": 65,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -5072,6 +5352,8 @@ SG_DATA.countries = {
   "population": 0.02,
   "stability": 68,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -5103,6 +5385,8 @@ SG_DATA.countries = {
   "population": 0.13,
   "stability": 60,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -5134,6 +5418,8 @@ SG_DATA.countries = {
   "population": 0.01,
   "stability": 60,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -5165,6 +5451,8 @@ SG_DATA.countries = {
   "population": 230,
   "stability": 30,
   "militarySpendPct": 0.6,
+  "inflation": 25,
+  "debtRatio": 0.5,
   "military": {
    "active": 552,
    "nuclear": false,
@@ -5201,6 +5489,8 @@ SG_DATA.countries = {
   "population": 64,
   "stability": 48,
   "militarySpendPct": 0.7,
+  "inflation": 4,
+  "debtRatio": 0.75,
   "military": {
    "active": 163,
    "nuclear": false,
@@ -5239,6 +5529,8 @@ SG_DATA.countries = {
   "population": 132,
   "stability": 28,
   "militarySpendPct": 0.8,
+  "inflation": 15,
+  "debtRatio": 0.4,
   "military": {
    "active": 356,
    "nuclear": false,
@@ -5277,6 +5569,8 @@ SG_DATA.countries = {
   "population": 57,
   "stability": 48,
   "militarySpendPct": 1,
+  "inflation": 5,
+  "debtRatio": 0.7,
   "military": {
    "active": 171,
    "nuclear": false,
@@ -5314,6 +5608,8 @@ SG_DATA.countries = {
   "population": 70,
   "stability": 58,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 210,
    "nuclear": false,
@@ -5354,6 +5650,8 @@ SG_DATA.countries = {
   "population": 51,
   "stability": 48,
   "militarySpendPct": 2.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 245,
    "nuclear": false,
@@ -5391,6 +5689,8 @@ SG_DATA.countries = {
   "population": 47,
   "stability": 55,
   "militarySpendPct": 8,
+  "inflation": 5,
+  "debtRatio": 0.5,
   "military": {
    "active": 635,
    "nuclear": false,
@@ -5431,6 +5731,8 @@ SG_DATA.countries = {
   "population": 38,
   "stability": 62,
   "militarySpendPct": 4,
+  "inflation": 2,
+  "debtRatio": 0.7,
   "military": {
    "active": 285,
    "nuclear": false,
@@ -5467,6 +5769,8 @@ SG_DATA.countries = {
   "population": 12.3,
   "stability": 48,
   "militarySpendPct": 2.5,
+  "inflation": 6,
+  "debtRatio": 0.8,
   "military": {
    "active": 65,
    "nuclear": false,
@@ -5503,6 +5807,8 @@ SG_DATA.countries = {
   "population": 7.4,
   "stability": 25,
   "militarySpendPct": 2,
+  "inflation": 3,
+  "debtRatio": 0.4,
   "military": {
    "active": 33,
    "nuclear": false,
@@ -5543,6 +5849,8 @@ SG_DATA.countries = {
   "population": 51,
   "stability": 8,
   "militarySpendPct": 3,
+  "inflation": 60,
+  "debtRatio": 1.5,
   "military": {
    "active": 306,
    "nuclear": false,
@@ -5584,6 +5892,8 @@ SG_DATA.countries = {
   "population": 11.9,
   "stability": 12,
   "militarySpendPct": 3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 71,
    "nuclear": false,
@@ -5622,6 +5932,8 @@ SG_DATA.countries = {
   "population": 19,
   "stability": 15,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 86,
    "nuclear": false,
@@ -5657,6 +5969,8 @@ SG_DATA.countries = {
   "population": 1.2,
   "stability": 55,
   "militarySpendPct": 3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 7,
    "nuclear": false,
@@ -5694,6 +6008,8 @@ SG_DATA.countries = {
   "population": 3.6,
   "stability": 40,
   "militarySpendPct": 10,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 59,
    "nuclear": false,
@@ -5732,6 +6048,8 @@ SG_DATA.countries = {
   "population": 39,
   "stability": 45,
   "militarySpendPct": 1.3,
+  "inflation": 20,
+  "debtRatio": 0.6,
   "military": {
    "active": 135,
    "nuclear": false,
@@ -5768,6 +6086,8 @@ SG_DATA.countries = {
   "population": 112,
   "stability": 15,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 336,
    "nuclear": false,
@@ -5809,6 +6129,8 @@ SG_DATA.countries = {
   "population": 6.3,
   "stability": 45,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 28,
    "nuclear": false,
@@ -5846,6 +6168,8 @@ SG_DATA.countries = {
   "population": 30,
   "stability": 38,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 90,
    "nuclear": false,
@@ -5884,6 +6208,8 @@ SG_DATA.countries = {
   "population": 2.5,
   "stability": 45,
   "militarySpendPct": 1.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 8,
    "nuclear": false,
@@ -5919,6 +6245,8 @@ SG_DATA.countries = {
   "population": 1.9,
   "stability": 45,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 6,
    "nuclear": false,
@@ -5953,6 +6281,8 @@ SG_DATA.countries = {
   "population": 5.5,
   "stability": 15,
   "militarySpendPct": 1.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 21,
    "nuclear": false,
@@ -5991,6 +6321,8 @@ SG_DATA.countries = {
   "population": 20.3,
   "stability": 28,
   "militarySpendPct": 3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 122,
    "nuclear": false,
@@ -6029,6 +6361,8 @@ SG_DATA.countries = {
   "population": 27.9,
   "stability": 25,
   "militarySpendPct": 2.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 146,
    "nuclear": false,
@@ -6068,6 +6402,8 @@ SG_DATA.countries = {
   "population": 24.5,
   "stability": 22,
   "militarySpendPct": 3.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 165,
    "nuclear": false,
@@ -6107,6 +6443,8 @@ SG_DATA.countries = {
   "population": 24,
   "stability": 20,
   "militarySpendPct": 4,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 180,
    "nuclear": false,
@@ -6145,6 +6483,8 @@ SG_DATA.countries = {
   "population": 19,
   "stability": 62,
   "militarySpendPct": 1.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 71,
    "nuclear": false,
@@ -6182,6 +6522,8 @@ SG_DATA.countries = {
   "population": 2.8,
   "stability": 55,
   "militarySpendPct": 0.7,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 7,
    "nuclear": false,
@@ -6215,6 +6557,8 @@ SG_DATA.countries = {
   "population": 2.2,
   "stability": 35,
   "militarySpendPct": 1.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 8,
    "nuclear": false,
@@ -6249,6 +6593,8 @@ SG_DATA.countries = {
   "population": 14.8,
   "stability": 38,
   "militarySpendPct": 1.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 56,
    "nuclear": false,
@@ -6287,6 +6633,8 @@ SG_DATA.countries = {
   "population": 8.8,
   "stability": 48,
   "militarySpendPct": 0.6,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 21,
    "nuclear": false,
@@ -6321,6 +6669,8 @@ SG_DATA.countries = {
   "population": 5.6,
   "stability": 45,
   "militarySpendPct": 0.6,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 13,
    "nuclear": false,
@@ -6356,6 +6706,8 @@ SG_DATA.countries = {
   "population": 32,
   "stability": 55,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 96,
    "nuclear": false,
@@ -6393,6 +6745,8 @@ SG_DATA.countries = {
   "population": 35,
   "stability": 60,
   "militarySpendPct": 0.4,
+  "inflation": 15,
+  "debtRatio": 0.7,
   "military": {
    "active": 74,
    "nuclear": false,
@@ -6428,6 +6782,8 @@ SG_DATA.countries = {
   "population": 9.5,
   "stability": 50,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 43,
    "nuclear": false,
@@ -6463,6 +6819,8 @@ SG_DATA.countries = {
   "population": 14.5,
   "stability": 52,
   "militarySpendPct": 0.8,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 39,
    "nuclear": false,
@@ -6499,6 +6857,8 @@ SG_DATA.countries = {
   "population": 5.2,
   "stability": 50,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 23,
    "nuclear": false,
@@ -6535,6 +6895,8 @@ SG_DATA.countries = {
   "population": 0.53,
   "stability": 72,
   "militarySpendPct": 0.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -6566,6 +6928,8 @@ SG_DATA.countries = {
   "population": 0.23,
   "stability": 62,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,
@@ -6597,6 +6961,8 @@ SG_DATA.countries = {
   "population": 21.5,
   "stability": 55,
   "militarySpendPct": 1.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 71,
    "nuclear": false,
@@ -6636,6 +7002,8 @@ SG_DATA.countries = {
   "population": 17,
   "stability": 38,
   "militarySpendPct": 0.8,
+  "inflation": 50,
+  "debtRatio": 0.7,
   "military": {
    "active": 46,
    "nuclear": false,
@@ -6672,6 +7040,8 @@ SG_DATA.countries = {
   "population": 22,
   "stability": 48,
   "militarySpendPct": 0.8,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 59,
    "nuclear": false,
@@ -6707,6 +7077,8 @@ SG_DATA.countries = {
   "population": 35,
   "stability": 30,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 105,
    "nuclear": false,
@@ -6745,6 +7117,8 @@ SG_DATA.countries = {
   "population": 32,
   "stability": 40,
   "militarySpendPct": 0.6,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 77,
    "nuclear": false,
@@ -6776,6 +7150,8 @@ SG_DATA.countries = {
   "population": 2.5,
   "stability": 72,
   "militarySpendPct": 2.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 13,
    "nuclear": false,
@@ -6811,6 +7187,8 @@ SG_DATA.countries = {
   "population": 3.1,
   "stability": 68,
   "militarySpendPct": 3,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 19,
    "nuclear": false,
@@ -6847,6 +7225,8 @@ SG_DATA.countries = {
   "population": 2.3,
   "stability": 50,
   "militarySpendPct": 1.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 9,
    "nuclear": false,
@@ -6880,6 +7260,8 @@ SG_DATA.countries = {
   "population": 1.2,
   "stability": 50,
   "militarySpendPct": 1.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 5,
    "nuclear": false,
@@ -6914,6 +7296,8 @@ SG_DATA.countries = {
   "population": 14.6,
   "stability": 62,
   "militarySpendPct": 1.5,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 55,
    "nuclear": false,
@@ -6950,6 +7334,8 @@ SG_DATA.countries = {
   "population": 14.4,
   "stability": 35,
   "militarySpendPct": 2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 65,
    "nuclear": false,
@@ -6985,6 +7371,8 @@ SG_DATA.countries = {
   "population": 0.88,
   "stability": 50,
   "militarySpendPct": 0,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 1,
    "nuclear": false,
@@ -7016,6 +7404,8 @@ SG_DATA.countries = {
   "population": 1.26,
   "stability": 75,
   "militarySpendPct": 0.2,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 2,
    "nuclear": false,
@@ -7047,6 +7437,8 @@ SG_DATA.countries = {
   "population": 0.13,
   "stability": 75,
   "militarySpendPct": 1,
+  "inflation": 4,
+  "debtRatio": 0.5,
   "military": {
    "active": 0,
    "nuclear": false,

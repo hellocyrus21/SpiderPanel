@@ -39,7 +39,7 @@
     }
 
     const state = {
-      version: 1,
+      version: 2,
       seed,
       scenarioId: scenario.id,
       date: { ...scenario.startDate },
@@ -51,9 +51,13 @@
       wars: deepCopy(scenario.wars),
       sanctions: deepCopy(scenario.sanctions),
       relations: {},
-      notifications: [],   // از مرحله‌ی ۲ استفاده می‌شود
+      notifications: [],   // اعلان‌ها (engine/notify.js)
+      cooldowns: {},
+      gameOver: null,
     };
     state.relations = buildRelations(state, scenario, rng);
+    SG.Economy.init(state);
+    state.rngState = rng.getState();   // ادامه‌ی همان دنباله‌ی تصادفی در نوبت‌ها
     return state;
   }
 
@@ -62,6 +66,7 @@
     const c = state.countries[playerId];
     if (!c || !c.playable) throw new Error('Country is not playable: ' + playerId);
     state.playerId = playerId;
+    SG.Notify.add(state, { type: 'welcome', level: 'warning', category: 'domestic', speaker: 'advisor', focus: playerId, data: { country: playerId } });
     return state;
   }
 

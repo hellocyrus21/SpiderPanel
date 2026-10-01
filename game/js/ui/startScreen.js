@@ -20,7 +20,27 @@
     el.querySelector('[data-action="browse"]').addEventListener('click', () => handlers.onBrowse());
     el.querySelector('[data-action="guide"]').addEventListener('click', () => SG.Guide.open());
 
-    function render(state) {
+    // کارت «ادامه‌ی بازی ذخیره‌شده»
+    const cont = el.querySelector('.continue-box');
+    cont.addEventListener('click', e => {
+      if (e.target.closest('[data-action="continue"]')) handlers.onContinue();
+      if (e.target.closest('[data-action="discard"]') && confirm('بازی ذخیره‌شده پاک شود؟')) handlers.onNewGame();
+    });
+
+    function render(state, saved) {
+      if (saved) {
+        const p = saved.countries[saved.playerId];
+        cont.innerHTML = `<div class="continue-card">
+          <div><b>بازی ذخیره‌شده: ${F.esc(p.name)}</b>
+            <div class="muted small">${F.date(saved.date)} · ماه ${F.num(saved.turn)} از بازی${saved.gameOver ? ' · پایان‌یافته' : ''}</div></div>
+          <button class="btn primary" data-action="continue">▶ ادامه‌ی بازی</button>
+          <button class="btn ghost" data-action="discard">پاک کردن</button>
+        </div>`;
+        cont.classList.remove('hidden');
+      } else {
+        cont.innerHTML = '';
+        cont.classList.add('hidden');
+      }
       const playable = Object.values(state.countries)
         .filter(c => c.playable)
         .sort((a, b) => a.difficulty - b.difficulty || b.gdp - a.gdp);
