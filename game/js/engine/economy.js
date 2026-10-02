@@ -46,7 +46,9 @@
   /** تولید انرژی مؤثر (منهای میدان‌های اشغال‌شده، به‌علاوه‌ی میدان‌های تصرف‌شده) */
   function energyProduction(c) {
     const o = occOf(c);
-    return c.energy.production * (1 - o.energy) + o.energyGain;
+    // mod موقت energyProd (رویداد خرابکاری در خط لوله و ...)
+    const m = c.eco ? modSum(c, 'energyProd') : 0;
+    return c.energy.production * (1 - o.energy) * Math.max(0, 1 + m) + o.energyGain;
   }
 
   /** غرامت و باج (سالانه): { income, payments } */

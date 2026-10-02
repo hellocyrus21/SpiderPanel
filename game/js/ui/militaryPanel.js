@@ -94,7 +94,8 @@
       return `<div class="fac-card ${allowed ? '' : 'off'}">
         <div class="uc-head"><span class="uc-icon">${d.icon}</span><b>${d.factory.name}</b>
           ${spec && spec.output ? '<span class="badge gold" title="تخصص این کشور">تخصص</span>' : ''}
-          ${sanctioned ? '<span class="badge danger" title="تحریم: تولید کمتر و گران‌تر">تحریم</span>' : ''}</div>
+          ${sanctioned ? '<span class="badge danger" title="تحریم: تولید کمتر و گران‌تر">تحریم</span>' : ''}
+          ${c.outMul && c.outMul[k] ? `<span class="badge gold" title="درخت پیشرفت">+${F.num(Math.round(c.outMul[k] * 100))}٪</span>` : ''}</div>
         ${allowed ? `
           <div class="fac-line"><span>کارخانه‌ها: <b>${F.num(n)}</b></span>
             <span>هر کارخانه: <b>${perFactory ? rateText(perFactory) : '—'}</b></span></div>
@@ -107,7 +108,7 @@
             <button class="btn tiny" data-build="${k}">➕ کارخانه‌ی جدید | ${F.money(M.factoryCost(st, c, k))} | ${F.num(d.factory.time)} ماه | نگهداری ${F.money(d.factory.upkeep * (c.mil.costFactor || 1))}/ماه</button>
           </div>
           ${building.length ? `<div class="small">🏗️ در حال ساخت: ${building.map(b => F.num(b.left) + ' ماه').join('، ')}</div>` : ''}`
-        : `<div class="muted small">🔒 فناوری لازم: ${F.BRANCH[d.branch]} ${F.num(d.factory.requires)} (شما ${num(c.tech[d.branch])}). با درخت پیشرفت (مرحله‌ی ۶) باز می‌شود.
+        : `<div class="muted small">🔒 فناوری لازم: ${F.BRANCH[d.branch]} ${F.num(d.factory.requires)} (شما ${num(c.tech[d.branch])}). با «🔬 فناوری» (درخت پیشرفت) باز می‌شود.
             فعلاً می‌توانید <button class="btn tiny" data-armstype="${k}">🛒 از کشورهای دیگر بخرید</button></div>`}
       </div>`;
     }).join('');

@@ -31,7 +31,27 @@
       if (e.target.closest('[data-action="discard"]') && confirm('بازی ذخیره‌شده پاک شود؟')) handlers.onNewGame();
     });
 
+    // اسلات‌های ذخیره و حالت سخت (مرحله‌ی ۶)
+    const slotsBox = el.querySelector('.slots-box');
+    slotsBox.addEventListener('click', e => {
+      const b = e.target.closest('[data-slot]');
+      if (b) handlers.onSlot(b.dataset.slotact, +b.dataset.slot);
+    });
+    const modeBox = el.querySelector('.mode-box');
+    let hard = false;
+    modeBox.addEventListener('change', e => { if (e.target.matches('[data-hard]')) hard = e.target.checked; });
+
     function render(state, saved) {
+      const used = SG.Save.slots().filter(s => !s.empty);
+      slotsBox.innerHTML = used.length ? `<div class="continue-card col"><b>💾 ذخیره‌های دستی</b><div class="slots">${handlers.slotsHtml()}</div></div>` : '';
+      slotsBox.classList.toggle('hidden', !used.length);
+      const prof = SG.Save.loadProfile();
+      const unlocked = !!prof.achievements.decade;
+      const nAch = Object.keys(prof.achievements).length;
+      modeBox.innerHTML = `<label class="switch-row ${unlocked ? '' : 'locked'}">
+          <input type="checkbox" data-hard ${unlocked ? '' : 'disabled'} ${hard && unlocked ? 'checked' : ''}>
+          🔥 حالت سخت ${unlocked ? '<small class="muted">(رویدادهای بد بیشتر، هوش مصنوعی حساس‌تر، امتیاز ×۱.۵)</small>' : '<small class="muted">🔒 با تمام کردن یک دوره‌ی ۱۰ ساله باز می‌شود</small>'}
+        </label>${nAch ? `<span class="muted small">🏅 ${SG.Fmt.num(nAch)} دستاورد${prof.best.length ? ` · 🥇 بهترین امتیاز ${SG.Fmt.num(prof.best[0].score)}` : ''}</span>` : ''}`;
       if (saved) {
         const p = saved.countries[saved.playerId];
         cont.innerHTML = `<div class="continue-card">
@@ -70,6 +90,7 @@
 
     return {
       render,
+      hardMode: () => hard,
       show() { el.classList.remove('hidden'); },
       hide() { el.classList.add('hidden'); },
     };

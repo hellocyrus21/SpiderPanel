@@ -383,8 +383,24 @@
       buyArms(state, c, ti, rng);
       diplomacy(state, c, ti, rng);
       if (imp) { helpAllies(state, c, rng); executeWar(state, c, rng); planWar(state, c, rng); }
+      research(state, c, ti, rng);
     }
     coalition(state);
+  }
+
+  // -------------------------------------------------------------------
+  // درخت پیشرفت (مرحله‌ی ۶): همان قانون بازیکن — پول از خزانه، یک تحقیق در هر زمان
+  // تهدیدشده ← نظامی و دکترین؛ تاجر/محتاط ← اقتصاد
+  // -------------------------------------------------------------------
+  function research(state, c, ti, rng) {
+    if (c.research || rng.next() > 0.25) return;
+    const list = SG.Tech.available(state, c).filter(n => SG.Tech.costOf(state, c, n) <= c.eco.treasury * 0.3);
+    if (!list.length) return;
+    const P = c.ai.personality;
+    const milFirst = ti.atWar || ti.threatened || P === 'aggressive';
+    const pref = list.filter(n => milFirst ? n.branch !== 'economy' : n.branch === 'economy');
+    const pool = pref.length && rng.next() < 0.75 ? pref : list;
+    SG.Tech.start(state, c.id, pool[Math.floor(rng.next() * pool.length)].id);
   }
 
   SG.AI = { init, step, threatInfo, PERSONALITIES };

@@ -38,16 +38,68 @@
       if (key === 'stability') return F.num(Math.round(v));
       if (key === 'unit') return F.esc(D().units[v]?.name || v);
       if (key === 'term') return F.esc(D().peaceTerms[v]?.name || v);
+      if (key === 'goal') return F.esc(D().goalTexts?.[v]?.name || v);
       if (key === 'year') return new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(v);
       if (typeof v === 'number') return F.num(v);
       return F.esc(v);
     });
   }
 
+  // -------------------------------------------------------------------
+  // رویدادهای تصادفی (مرحله‌ی ۶): متن و گزینه‌ها از data/events.js
+  // -------------------------------------------------------------------
+  const evOf = n => (D().events || []).find(e => e.id === n.data?.event);
+  const sgn = v => (v >= 0 ? '+' : '−');
+  const pct1 = v => F.num(Math.round(Math.abs(v) * 10) / 10);
+  /** خلاصه‌ی اثر یک گزینه: «💰 −۳٫۷ میلیارد · ⚖️ +۶ ثبات» */
+  function effectHint(state, id, ef) {
+    const T = (turns) => turns ? ` (${F.num(turns)} ماه)` : '';
+    return SG.Events.preview(state, id, ef).map(x => {
+      switch (x.k) {
+        case 'treasury': return `💰 ${sgn(x.v)}${F.money(Math.abs(x.v))}`;
+        case 'stability': return `⚖️ ${sgn(x.v)}${F.num(Math.abs(x.v))} ثبات`;
+        case 'gdp': return `📉 ${sgn(x.v)}${pct1(x.v)}٪ اقتصاد`;
+        case 'inflation': return `🔥 ${sgn(x.v)}${pct1(x.v)} تورم`;
+        case 'debt': return `💳 +${F.money(x.v)} بدهی`;
+        case 'relation': return `🤝 ${sgn(x.v)}${F.num(Math.abs(x.v))} رابطه با همه`;
+        case 'energy': return `🛢️ +${pct1(x.v)}٪ تولید انرژی`;
+        case 'research': return `🔬 تحقیق ${F.num(x.v)} ماه جلو`;
+        case 'mod:growth': return `📈 ${sgn(x.v)}${pct1(x.v * 100)}٪ رشد${T(x.turns)}`;
+        case 'mod:stability': return `⚖️ ${sgn(x.v)}${F.num(Math.abs(x.v))} ثبات${T(x.turns)}`;
+        case 'mod:taxEff': return `🧾 ${sgn(x.v)}${pct1(x.v * 100)}٪ کارایی مالیات${T(x.turns)}`;
+        case 'mod:expense': return `🏛️ ${x.v > 0 ? 'هزینه‌ی دولت +' : 'صرفه‌جویی '}${pct1(x.v * 100)}٪ GDP${T(x.turns)}`;
+        case 'mod:energyProd': return `🛢️ ${sgn(x.v)}${pct1(x.v * 100)}٪ تولید انرژی${T(x.turns)}`;
+        case 'mod:inflation': return `🔥 ${sgn(x.v)}${pct1(x.v)} تورم${T(x.turns)}`;
+        case 'coup': return `🎲 ${F.num(x.v)}٪ خطر سرنگونی`;
+        case 'chain': return `⚠️ ${F.num(x.v)}٪ احتمال بدتر شدن`;
+      }
+      return '';
+    }).filter(Boolean).join(' · ');
+  }
+  function eventDef(n) {
+    const ev = evOf(n);
+    if (!ev) return null;
+    const state = opts.getState();
+    const head = `<b>${ev.icon} ${F.esc(ev.title)}</b><br>`;
+    const chose = n.data.chose !== undefined && ev.options[n.data.chose] ? `<div class="muted small">انتخاب: ${F.esc(ev.options[n.data.chose].label)}</div>` : '';
+    const auto = ev.effects ? effectHint(state, n.data.country, ev.effects) : '';
+    return {
+      variants: ev.text.map(t => head + t + (auto ? `<div class="ev-auto small">${auto}</div>` : '') + chose),
+      actions: n.data.info ? null : (ev.options || []).map((o, i) => ({ id: 'event:' + i, label: o.label, hint: effectHint(state, n.data.country, o.effects) })),
+    };
+  }
+  function worldEventText(n, state) {
+    const ev = evOf(n);
+    if (!ev) return n.type;
+    return `${ev.icon} ${F.esc(ev.title)} در ${F.esc(state.countries[n.data.country]?.name || '')}${n.data.coup ? ' — <b>دولت سرنگون شد!</b>' : '.'}`;
+  }
+  const defOf = n => n.type === 'event' ? eventDef(n) : D().messages[n.type];
+
   /** متن نهایی یک اعلان (انتخاب متن بر اساس شناسه، تا با هر بار نمایش عوض نشود) */
   function textOf(n) {
     const state = opts.getState();
-    const def = D().messages[n.type];
+    if (n.type === 'world_event') return worldEventText(n, state);
+    const def = defOf(n);
     if (!def) return n.type;
     const list = n.count > 1 && def.plural ? def.plural : def.variants;
     const tpl = list[n.id % list.length];
@@ -63,7 +115,7 @@
 
   function actionsOf(n) {
     const state = opts.getState();
-    const def = D().messages[n.type];
+    const def = defOf(n);
     if (!def || !def.actions || n.acted) return [];
     // دکمه‌ها فقط برای اعلان‌های تازه (اعلان‌های قدیمی ممکن است دیگر معنی نداشته باشند)
     if (n.turn < state.turn - 1 && !n.type.startsWith('game_over')) return [];
@@ -74,7 +126,7 @@
 
   function actionButtons(n) {
     const state = opts.getState();
-    return actionsOf(n).map(a => `<button class="btn ${a.id === 'dismiss' ? 'ghost' : ''}" data-act="${a.id}" data-nid="${n.id}">${fill(F.esc(a.label), n.data || {}, state)}</button>`).join('');
+    return actionsOf(n).map(a => `<button class="btn ${a.id === 'dismiss' ? 'ghost' : ''} ${a.hint !== undefined ? 'opt' : ''}" data-act="${a.id}" data-nid="${n.id}">${fill(F.esc(a.label), n.data || {}, state)}${a.hint ? `<small class="opt-hint">${a.hint}</small>` : ''}</button>`).join('');
   }
 
   function findById(id) {

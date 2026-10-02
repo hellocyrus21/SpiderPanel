@@ -137,6 +137,7 @@
         <button class="player-tag" data-top="me" title="نمایش کشور من">${SG.Leader.avatar(s.playerId, 26)} ${F.esc(p.name)}</button>
         <div class="date">${F.date(s.date)}</div>
         <div class="spacer"></div>
+        <button class="btn icon" data-top="goals" title="اهداف، امتیاز و دستاوردها">🏆</button>
         <button class="btn icon bell" data-top="inbox" title="صندوق اعلان‌ها">🔔<span class="count hidden"></span></button>
         <button class="btn icon" data-top="settings" title="تنظیمات">⚙️</button>
         <button class="btn icon" data-top="guide" title="راهنما">❓</button>`;
@@ -153,6 +154,7 @@
     else if (t === 'me') select(app.state.playerId, true);
     else if (t === 'inbox') SG.NotifyUI.openInbox();
     else if (t === 'settings') openSettings();
+    else if (t === 'goals') openPanel('goals');
   });
 
   // -------------------------------------------------------------------
@@ -166,6 +168,8 @@
     else if (name === 'arms') SG.MilitaryPanel.open(app.state, app.state.playerId, { onChange: onMilitaryChange, onShowStack: showStack }, sub || 'arms');
     else if (name === 'war') SG.WarPanel.open(app.state, app.state.playerId, warHandlers());
     else if (name === 'diplomacy') SG.DiplomacyPanel.open(app.state, app.state.playerId, { onGoto: id => select(id, true), onDiplo, onProposal });
+    else if (name === 'tech') SG.TechPanel.open(app.state, app.state.playerId, () => { renderHud(); SG.Save.save(app.state); });
+    else if (name === 'goals') SG.GoalsPanel.open(app.state, app.state.playerId, sub);
   }
 
   // -------------------------------------------------------------------
@@ -365,9 +369,26 @@
     SG.WarPanel.refresh();
     if (app.selected && app.panel.isOpen()) app.panel.show(app.state, app.selected, 'game', { keepScroll: true });
     SG.Government.refresh();
+    SG.TechPanel.refresh();
+    afterTurnProfile();
     fresh.forEach(n => { n.shown = true; });
     SG.NotifyUI.showNew(fresh);
     if (app.state.gameOver) stopAuto();
+  }
+
+  /** دستاوردها به پروفایل مرورگر؛ امتیاز پایان دوره/بازی در «بهترین‌ها» (مرحله‌ی ۶) */
+  function afterTurnProfile() {
+    const s = app.state;
+    SG.Save.syncAchievements(s);
+    if (s.gameOver && !s.scoreRecorded) {
+      s.scoreRecorded = true;
+      SG.Save.recordScore(s, SG.Goals.score(s).total, s.gameOver.reason);
+      SG.Save.save(s);
+    } else if (s.termEnded && !s.termRecorded) {
+      s.termRecorded = true;
+      SG.Save.recordScore(s, s.finalScore ? s.finalScore.total : SG.Goals.score(s).total, 'term');
+      SG.Save.save(s);
+    }
   }
 
   function startAuto() {
@@ -405,6 +426,17 @@
       onWarChange(); return;
     }
     if (act === 'prop:accept' || act === 'prop:decline') { onProposal(n.data.prop, act === 'prop:accept'); return; }
+    if (act.startsWith('event:')) {
+      const s = app.state, rng = SG.Rng.create(s.rngState);
+      const r = SG.Events.choose(s, n.data.key, +act.slice(6), rng);
+      s.rngState = rng.getState();
+      if (!r.ok) SG.NotifyUI.simpleToast('این رویداد دیگر منتظر جواب نیست.', 'lvl-warning');
+      else if (r.ev.id === 'coup' && !r.coup && r.opt.effects.coup) SG.NotifyUI.simpleToast('🪖 کودتا شکست خورد! دولت سر جایش است.', 'lvl-info');
+      onPolicyChange();
+      afterDiplo();
+      if (s.gameOver) { afterTurnProfile(); stopAuto(); SG.NotifyUI.showNew(s.notifications.filter(x => x.type === 'game_over_coup' && !x.shown).map(x => (x.shown = true, x))); }
+      return;
+    }
     if (act.startsWith('open:')) { openPanel(act.slice(5)); return; }
     if (act.startsWith('decree:')) {
       const r = SG.Government.runDecree(app.state, app.state.playerId, act.slice(7));
@@ -424,6 +456,10 @@
           <p class="muted small">بازی بعد از هر نوبت خودکار ذخیره می‌شود. بذر این دنیا: ${app.state.seed}</p>
           <button class="btn" data-newgame>🔄 شروع بازی جدید</button>
         </div>
+        <div class="card"><h3>💾 ذخیره‌ی دستی</h3>
+          <p class="muted small">علاوه بر ذخیره‌ی خودکار، می‌توانید بازی را در ۳ اسلات نگه دارید و بعداً از همین‌جا یا صفحه‌ی اول برگردید.</p>
+          <div class="slots">${slotsHtml(true)}</div>
+        </div>
         <div class="card"><h3>انتقال به دستگاه دیگر</h3>
           <p class="muted small">ذخیره داخل همین مرورگر است. برای ادامه روی دستگاه دیگر: اینجا فایل ذخیره را بگیرید،
             به آن دستگاه بفرستید و در صفحه‌ی اول بازی با «بارگذاری فایل ذخیره» بازش کنید.</p>
@@ -432,9 +468,47 @@
       onClick: e => {
         if (e.target.closest('[data-newgame]') && confirm('بازی فعلی پاک شود و بازی جدید شروع شود؟')) newGame();
         if (e.target.closest('[data-export]')) exportSave();
+        const b = e.target.closest('[data-slot]');
+        if (b) slotAction(b.dataset.slotact, +b.dataset.slot);
       },
     });
     SG.NotifyUI.bindSettings(document.querySelector('.modal-body'));
+  }
+
+  // -------------------------------------------------------------------
+  // اسلات‌های ذخیره (مرحله‌ی ۶)
+  // -------------------------------------------------------------------
+  function slotsHtml(inGame) {
+    return SG.Save.slots().map(sl => `<div class="slot-row">
+      <span><b>اسلات ${F.num(sl.slot)}</b> ${sl.empty ? '<span class="muted">— خالی</span>'
+        : `— ${F.esc(sl.name)} <small class="muted">${F.date(sl.date)} · ماه ${F.num(sl.turn)}${sl.gameOver ? ' · پایان‌یافته' : ''}</small>`}</span>
+      <span class="slot-btns">
+        ${inGame ? `<button class="btn tiny" data-slot="${sl.slot}" data-slotact="save">💾 ذخیره</button>` : ''}
+        ${sl.empty ? '' : `<button class="btn tiny ${inGame ? '' : 'primary'}" data-slot="${sl.slot}" data-slotact="load">📂 بارگذاری</button>
+        <button class="btn tiny ghost" data-slot="${sl.slot}" data-slotact="delete">🗑️</button>`}
+      </span></div>`).join('');
+  }
+  function slotAction(act, n) {
+    const refresh = () => { const el = document.querySelector('.slots'); if (el) el.innerHTML = slotsHtml(app.phase === 'game'); };
+    if (act === 'save') {
+      const cur = SG.Save.slots()[n - 1];
+      if (!cur.empty && !confirm(`اسلات ${n} (${cur.name}) بازنویسی شود؟`)) return;
+      SG.NotifyUI.simpleToast(SG.Save.saveSlot(n, app.state) ? `💾 در اسلات ${n} ذخیره شد.` : '❌ حافظه‌ی مرورگر پر است؛ یک اسلات را پاک کنید.', 'lvl-info');
+      refresh();
+    } else if (act === 'load') {
+      if (app.phase === 'game' && !confirm(`بازی فعلی کنار گذاشته شود و اسلات ${n} بارگذاری شود؟ (بازی فعلی در ذخیره‌ی خودکار نمی‌ماند)`)) return;
+      const s = SG.Save.loadSlot(n);
+      if (!s) { alert('این اسلات خراب یا خالی است.'); return; }
+      stopAuto();
+      SG.Save.save(s);
+      try { sessionStorage.setItem('sg2026_autoload', '1'); } catch (e) { /* ignore */ }
+      location.reload();   // ساده‌ترین راه پاک کردن نقشه و پنل‌ها؛ بعد از بارگذاری «ادامه‌ی بازی» همین است
+    } else if (act === 'delete') {
+      if (!confirm(`اسلات ${n} پاک شود؟`)) return;
+      SG.Save.deleteSlot(n);
+      refresh();
+      if (app.phase !== 'game') app.start.render(app.state, SG.Save.load());
+    }
   }
 
   function exportSave() {
@@ -491,6 +565,7 @@
 
   function startGame(id) {
     E.startGame(app.state, id);
+    if (app.start.hardMode()) app.state.hard = true;
     enterGame();
     select(id, true);
     SG.Save.save(app.state);
@@ -505,7 +580,7 @@
     enterGame();
     app.map.zoomTo(saved.playerId);
     SG.NotifyUI.updateBell();
-    if (saved.gameOver) SG.NotifyUI.showNew(saved.notifications.filter(n => n.type === 'game_over_collapse' || n.type === 'game_over_conquered'));
+    if (saved.gameOver) SG.NotifyUI.showNew(saved.notifications.filter(n => n.type === 'game_over_collapse' || n.type === 'game_over_conquered' || n.type === 'game_over_coup'));
   }
 
   // -------------------------------------------------------------------
@@ -569,6 +644,8 @@
       onContinue: () => continueGame(saved),
       onNewGame: () => { SG.Save.clear(); app.start.render(app.state, null); },
       onImport: file => importSave(file),
+      slotsHtml: () => slotsHtml(false),
+      onSlot: (act, n) => slotAction(act, n),
     });
 
     document.getElementById('zoom-in').addEventListener('click', () => app.map.zoomBy(1.6));
@@ -585,6 +662,8 @@
 
     renderCities();
     app.start.render(app.state, saved);
+    // بعد از بارگذاری اسلات (صفحه دوباره بار می‌شود) مستقیم وارد بازی شو
+    try { if (sessionStorage.getItem('sg2026_autoload')) { sessionStorage.removeItem('sg2026_autoload'); if (saved) continueGame(saved); } } catch (e) { /* ignore */ }
     renderTopbar();
     renderLegend();
     renderMapModes();

@@ -88,7 +88,8 @@
     return clamp((c.aggression || 0) + Math.max(0, powerRel - 1.2) * 15, 0, 100);
   }
   /** حساسیت جهان به تهدید با گذشت زمان بالا می‌رود (سختی) */
-  function timeFactor(state) { return 1 + Math.floor(state.turn / 12) * 0.15; }
+  // حالت سخت (مرحله‌ی ۶): جهان سریع‌تر به تهدید بازیکن حساس می‌شود
+  function timeFactor(state) { return 1 + Math.floor(state.turn / 12) * (state.hard ? 0.25 : 0.15); }
 
   function personality(state, id) { return state.countries[id].ai?.personality || 'cautious'; }
 

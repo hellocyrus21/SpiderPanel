@@ -248,9 +248,10 @@
     return D().units[type].factory.advanced && SG.Economy.sanctionPressure(state, c.id) >= 0.3;
   }
 
-  /** تولید ماهانه‌ی یک نوع = تعداد کارخانه × تولید ثابت هر کارخانه (در همه‌ی کشورها یکسان) */
+  /** تولید ماهانه‌ی یک نوع = تعداد کارخانه × تولید ثابت هر کارخانه (در همه‌ی کشورها یکسان) × پیشرفت */
   function productionRate(state, c, type) {
-    return (c.factories[type] || 0) * D().units[type].factory.output;
+    // درخت پیشرفت می‌تواند تولید هر کارخانه‌ی یک نوع را برای همین کشور بیشتر کند (c.outMul)
+    return (c.factories[type] || 0) * D().units[type].factory.output * (1 + ((c.outMul && c.outMul[type]) || 0));
   }
 
   /** نگهداری ماهانه‌ی همه‌ی کارخانه‌ها (روشن یا خاموش) */

@@ -57,6 +57,9 @@
     const warEvents = SG.War.step(state, rng);
     // ---------- ۲د) هوش مصنوعی کشورها: اقتصاد، تولید، خرید سلاح، دیپلماسی، جنگ ----------
     SG.AI.step(state, rng);
+    // ---------- ۲ه) درخت پیشرفت (همه‌ی کشورها) و رویدادهای تصادفی (مرحله‌ی ۶) ----------
+    techStep(state);
+    SG.Events.step(state, rng);
     // تلفات نبرد ← نیروها، شاخص‌ها و هزینه‌ی ارتش بازیکن به‌روز
     SG.Military.syncForces(player);
     SG.Military.refreshIndices(player);
@@ -75,6 +78,9 @@
     // ---------- ۴) اخبار جهان ----------
     worldNews(state, rng, before);
 
+    // ---------- ۴ب) اهداف و دستاوردها ----------
+    if (!state.gameOver) SG.Goals.step(state);
+
     // ---------- ۵) فروپاشی ----------
     if (state.gameOver) { state.rngState = rng.getState(); return state.notifications.filter(n => n.id >= firstNew); }
     if (player.stability <= 5) state.collapseCounter = (state.collapseCounter || 0) + 1;
@@ -86,6 +92,21 @@
 
     state.rngState = rng.getState();
     return state.notifications.filter(n => n.id >= firstNew);
+  }
+
+  // -------------------------------------------------------------------
+  /** یک ماه تحقیق برای همه‌ی کشورها + اعلان‌های بازیکن */
+  function techStep(state) {
+    const pid = state.playerId;
+    for (const c of SG.Engine.activeCountries(state)) {
+      const n = SG.Tech.stepCountry(state, c);
+      if (n && c.id === pid) N.add(state, { type: 'tech_done', level: 'warning', category: 'economy', speaker: 'advisor', groupKey: n.id, data: { tech: n.id, name: n.name } });
+    }
+    const p = state.countries[pid];
+    // آزمایشگاه بیکار: هر ۱۲ ماه یادآوری
+    if (p && !p.research && state.turn >= 2 && SG.Tech.available(state, p).some(n => SG.Tech.costOf(state, p, n) <= p.eco.treasury * 0.5) && N.cooldownOk(state, 'research_idle', 12)) {
+      N.add(state, { type: 'research_idle', level: 'info', category: 'economy', speaker: 'advisor' });
+    }
   }
 
   // -------------------------------------------------------------------

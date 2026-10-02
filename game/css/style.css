@@ -697,3 +697,65 @@ details summary { cursor: pointer; color: var(--muted); margin: 6px 0; }
 .dip-btn small { font-size: 11px; color: var(--muted); }
 .dip-btn.off { opacity: .5; cursor: not-allowed; }
 @media (max-width: 720px) { .dip-grid { grid-template-columns: 1fr; } }
+
+/* ===================== مرحله‌ی ۶ ===================== */
+.mid { color: var(--mid); }
+.tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 8px; border: 1px solid var(--line); }
+.tag.good { border-color: var(--good); color: var(--good); }
+.tag.mid { border-color: var(--mid); color: var(--mid); }
+.tag.muted { color: var(--muted); }
+.ab-badge.idle { background: var(--mid); color: #1b1404; font-weight: 700; }
+
+/* گزینه‌های رویداد: هر دکمه با خلاصه‌ی اثر */
+.btn.opt { display: flex; flex-direction: column; align-items: flex-start; text-align: right; gap: 2px; white-space: normal; }
+.opt-hint { font-size: 11px; color: var(--muted); font-weight: 400; line-height: 1.6; }
+.btn.primary .opt-hint { color: #3a2a06; }
+.crit-actions:has(.btn.opt) { flex-direction: column; align-items: stretch; }
+.ev-auto { margin-top: 6px; color: var(--muted); }
+
+/* درخت پیشرفت */
+.tech-tabs { margin: 10px 0 6px; }
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+.tech-node { border: 1px solid var(--line); border-radius: var(--radius); padding: 9px 10px; display: flex; flex-direction: column; gap: 5px; background: #ffffff05; }
+.tech-node .tn-head { display: flex; gap: 6px; align-items: center; }
+.tech-node .tn-icon { font-size: 18px; }
+.tech-node .tn-desc { color: var(--muted); flex: 1; }
+.tech-node .tn-meta { font-size: 12px; }
+.tech-node.st-done { border-color: var(--good); opacity: .75; }
+.tech-node.st-active { border-color: var(--mid); box-shadow: 0 0 0 1px var(--mid) inset; }
+.tech-node.st-locked, .tech-node.st-blocked { opacity: .55; }
+.tech-node .btn { align-self: flex-start; }
+
+/* اهداف و امتیاز */
+.score-card { text-align: center; }
+.score-big { font-size: 34px; font-weight: 800; color: var(--gold); }
+.score-big small { font-size: 14px; color: var(--muted); font-weight: 400; }
+.score-parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 12px; margin-top: 10px; text-align: right; font-size: 13px; }
+.score-parts div { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--line); padding: 2px 0; }
+.goal-row { padding: 8px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
+.goal-row:last-child { border-bottom: 0; }
+.goal-row .gr-head { display: flex; justify-content: space-between; align-items: center; }
+.goal-row.done b { color: var(--good); }
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.ach { display: flex; gap: 8px; border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; opacity: .5; }
+.ach.on { opacity: 1; border-color: var(--gold); }
+.ach-icon { font-size: 24px; }
+
+/* اسلات‌های ذخیره */
+.slots { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.slot-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 8px; }
+.slot-btns { display: flex; gap: 4px; }
+.continue-card.col { flex-direction: column; align-items: stretch; }
+.slots-box, .mode-box { margin-bottom: 10px; }
+.mode-box { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; justify-content: center; }
+.switch-row.locked { opacity: .6; }
+
+/* نوار فرمان در گوشی‌های باریک: ۹–۱۰ دکمه باید جا شوند */
+@media (max-width: 480px) {
+  body.in-game #actionbar { gap: 2px; padding: 4px; }
+  .ab { padding: 7px 5px; min-width: 0; }
+  .ab.next span { display: none; }
+  .ab.next { padding: 7px 12px; }
+  .ab.speed { min-width: 30px; }
+  .ab-turn { gap: 2px; padding-right: 3px; }
+}

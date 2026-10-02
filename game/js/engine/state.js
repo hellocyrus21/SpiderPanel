@@ -39,7 +39,7 @@
     }
 
     const state = {
-      version: 7,
+      version: 8,
       seed,
       scenarioId: scenario.id,
       date: { ...scenario.startDate },
@@ -149,6 +149,15 @@
       SG.AI.init(state, SG.Rng.create((state.seed ^ 0x9e3779b9) >>> 0));
       state.version = 7;
     }
+    // نسخه‌ی ۸ (مرحله‌ی ۶): درخت پیشرفت، رویدادها، اهداف و دستاوردها
+    if (state.version < 8) {
+      for (const c of Object.values(state.countries)) { c.techs ||= {}; c.research ||= null; }
+      state.eventQueue ||= []; state.pendingEvents ||= [];
+      state.stats ||= {}; state.achieved ||= {};
+      // اهداف از وضع فعلی ساخته می‌شوند (بازی قدیمی: «شروع» = همین حالا)
+      if (state.playerId && !state.goals) SG.Goals.init(state);
+      state.version = 8;
+    }
     return state;
   }
 
@@ -158,6 +167,7 @@
     if (!c || !c.playable) throw new Error('Country is not playable: ' + playerId);
     state.playerId = playerId;
     SG.Military.startPlayer(state, playerId);
+    SG.Goals.init(state);
     SG.Notify.add(state, { type: 'welcome', level: 'warning', category: 'domestic', speaker: 'advisor', focus: playerId, data: { country: playerId } });
     return state;
   }

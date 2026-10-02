@@ -23,6 +23,7 @@
 (function (SG) {
   'use strict';
   const D = () => window.SG_DATA;
+  const Tc = () => SG.Tech;
   const E = () => SG.Engine, M = () => SG.Military, N = () => SG.Notify;
   const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
@@ -268,7 +269,7 @@
       let n;
       if (e.type === 'missile' || e.type === 'drone') n = Math.round(e.n * salvo);
       else if (e.type === 'icbm') n = war.icbm[side] ? Math.min(Math.floor(e.n), Math.max(1, Math.round(e.n * 0.05))) : 0;
-      else n = Math.round(e.n * SORTIE);   // جنگنده و بمب‌افکن: سهم عملیاتی
+      else n = Math.round(e.n * SORTIE * (1 + Tc().warMul(e.c, 'sortie')));   // جنگنده و بمب‌افکن: سهم عملیاتی (دکترین برتری هوایی بیشتر)
       if (n > 0) shots.push({ e, n });
     }
     if (!shots.length) return out;
@@ -298,7 +299,8 @@
       out.fired[t] = (out.fired[t] || 0) + n;
       if (t === 'missile' || t === 'drone' || t === 'icbm') removeUnits(state, e.c, e, n, rng);   // شلیک‌شده مصرف می‌شود
       else { const k = removeUnits(state, e.c, e, down, rng); out.lost[t] = (out.lost[t] || 0) + k; recordLoss(war, e.c, t, k); }
-      const leak = n - down;
+      // دکترین جنگ نامتقارن: موشک و پهپاد کاری‌تر
+      const leak = (n - down) * (t === 'missile' || t === 'drone' ? 1 + Tc().warMul(e.c, 'strike') : 1);
       poolAd += leak * def.strike.ad;
       poolGround += leak * def.strike.ground;
     }
@@ -340,7 +342,8 @@
   // ===================================================================
   function groundPower(list, kind) {
     let v = 0;
-    for (const e of list) v += e.n * D().units[e.type].power * role(e.type, kind) * quality(e.c, e.type) * moraleMul(e.morale) * supplyMul(e.supply);
+    const dk = kind === 'att' ? 'groundAtt' : 'groundDef';   // دکترین (درخت پیشرفت)
+    for (const e of list) v += e.n * D().units[e.type].power * role(e.type, kind) * quality(e.c, e.type) * moraleMul(e.morale) * supplyMul(e.supply) * (1 + Tc().warMul(e.c, dk));
     return v;
   }
   function sizeScale(state, id) {
@@ -866,6 +869,8 @@
     const i = list.indexOf(war);
     if (i >= 0) list.splice(i, 1);
     syncPairs(state);
+    // آمار برای اهداف و دستاوردها (مرحله‌ی ۶)
+    if (state.playerId && W === state.playerId && term !== 'white') (state.stats ||= {}).warsWon = (state.stats.warsWon || 0) + 1;
     for (const a of war.sides.A) for (const b of war.sides.B) {
       const ca = state.countries[a], cb = state.countries[b];
       if (!ca || !cb || ca.annexedBy || cb.annexedBy) continue;
@@ -873,6 +878,8 @@
       (state.truces ||= {})[E().relKey(a, b)] = state.turn + 24;
     }
     const pid = state.playerId;
+    // آمار برای اهداف و دستاوردها (مرحله‌ی ۶)
+    if (pid && W === pid && term !== 'white') (state.stats ||= {}).warsWon = (state.stats.warsWon || 0) + 1;
     if (pid && state.countries[pid].mil) for (const s of state.countries[pid].mil.stacks) s.inBattle = false;
     for (const id of members(war)) { const c = state.countries[id]; if (c) delete c.wdmg; }
     refreshOccupation(state);
